@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SceneManger : MonoBehaviour
+public class SceneManager : MonoBehaviour
 {
     //Panel of Scene
     public S_StateMenu m_menuScene ;
@@ -16,7 +16,7 @@ public class SceneManger : MonoBehaviour
     public S_StateBase CurrentState { get => currentState; set => currentState = value; }
 
     #region Init
-    public static SceneManger s_instance;
+    public static SceneManager s_instance;
     private void Awake()
     {
         if(s_instance != null)
@@ -65,7 +65,7 @@ public class SceneManger : MonoBehaviour
         m_pauseGameScene.gameObject.SetActive(panelName.Contains(m_pauseGameScene.name));
     }
 
-    public static SceneManger GetInstance()
+    public static SceneManager GetInstance()
     {
         return s_instance;
     }
