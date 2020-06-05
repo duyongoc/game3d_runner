@@ -3,7 +3,7 @@
 public abstract class S_StateBase: MonoBehaviour
 {
     //reference to our state machine
-    public SceneManager owner;
+    public SceneMgr owner;
     //public  S_SceneState CurrentState { get => currentState; set => currentState = value; }
 
     //Method called to prepare state

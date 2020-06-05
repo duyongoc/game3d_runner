@@ -36,7 +36,7 @@ public class ObjectJump : MonoBehaviour
 
         if(dirUp)
         {
-            Debug.Log("a");
+
             transform.position = new Vector3(
                 transform.position.x,
                 Mathf.Lerp(0, high , Mathf.PingPong(Time.time*speed, 1.0f)),
