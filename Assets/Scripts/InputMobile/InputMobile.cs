@@ -39,7 +39,7 @@ public class InputMobile : MonoBehaviour, IDragHandler, IPointerUpHandler, IPoin
         
         //to define the area in which joystick can move around
         joystick.rectTransform.anchoredPosition = new Vector3 (InputDirection.x * (jsContainer.rectTransform.sizeDelta.x/3)
-                                                                ,InputDirection.y * (jsContainer.rectTransform.sizeDelta.y)/3);
+                                                                ,0);
             
     }
     
