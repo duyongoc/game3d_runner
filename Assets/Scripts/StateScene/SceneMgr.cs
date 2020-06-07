@@ -57,9 +57,11 @@ public class SceneMgr : MonoBehaviour
 
     public void SetActivePanelScene(string panelName)
     {
-        //m_sceneMenu.gameObject.SetActive(panelName.Contains(m_sceneMenu.name));
-        //m_sceneInGame.gameObject.SetActive(panelName.Contains(m_sceneInGame.name));
-
+        m_sceneMenu.gameObject.SetActive(panelName.Contains(m_sceneMenu.name));
+        m_sceneInGame.gameObject.SetActive(panelName.Contains(m_sceneInGame.name));
+        m_sceneMission.gameObject.SetActive(panelName.Contains(m_sceneMission.name));
+        m_sceneShop.gameObject.SetActive(panelName.Contains(m_sceneShop.name));
+        m_sceneGameOver.gameObject.SetActive(panelName.Contains(m_sceneGameOver.name));
 
     }
 

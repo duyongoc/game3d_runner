@@ -51,5 +51,6 @@ public class SpawnEnemy : MonoBehaviour
 				Destroy(obj);
 		}
 
+		timerProcess = 0;
 	}
 }

@@ -15,7 +15,7 @@ public class SceneInGame : StateScene
     public override void UpdateState()
     {
         base.UpdateState();
-
+        
     }
 
     public override void EndState()

@@ -34,9 +34,11 @@ public class BallMove : StateBall
 
         //Player moving
         //UpdatePlayerMovement();
+        if (SceneMgr.GetInstance().IsInGame())
+        {
+            Move();
+        }
 
-        Move();
-        
     }
     
     public override void EndState()
@@ -81,7 +83,8 @@ public class BallMove : StateBall
             }
         }
 
-        transform.Translate(Vector3.forward * m_speed * Time.deltaTime);       
+        transform.Translate(Vector3.forward * m_speed * Time.deltaTime); 
+ 
     }
 
     void OnTriggerEnter(Collider other)
@@ -91,10 +94,25 @@ public class BallMove : StateBall
             owner.ChangeState(owner.m_ballGravity);
             owner.m_ballGravity.SetTarget(other.transform);
         }
-
-        if(other.tag.Contains("Enemy"))
+        else if(other.tag.Contains("Enemy"))
         {
-            
+            // loading gameover scene;
+            var mgr = SceneMgr.GetInstance();
+            mgr.ChangeState(mgr.m_sceneGameOver);
+
+
+            Instantiate(owner.ballExplosion, transform.position, Quaternion.identity);
+            gameObject.SetActive(false);
+        }
+        else if(other.tag.Contains("Ground"))
+        {
+            // loading gameover scene;
+            var mgr = SceneMgr.GetInstance();
+            mgr.ChangeState(mgr.m_sceneGameOver);
+
+
+            Instantiate(owner.ballExplosion, transform.position, Quaternion.identity);
+            gameObject.SetActive(false);
         }
     }
 

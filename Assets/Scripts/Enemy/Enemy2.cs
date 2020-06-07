@@ -31,24 +31,26 @@ public class Enemy2 : MonoBehaviour
     
     void Update()
     {
-        switch(currentState)
+        if (SceneMgr.GetInstance().IsInGame())
         {
-            case EnemyState.Moving:
+            switch(currentState)
             {
-                EnemyMoving();
-                break;
-            }
-            case EnemyState.Attraction:
-            {
-                EnenmyAttraction();
-                break;
-            }
-            case EnemyState.None:
-            {
+                case EnemyState.Moving:
+                {
+                    EnemyMoving();
+                    break;
+                }
+                case EnemyState.Attraction:
+                {
+                    EnenmyAttraction();
+                    break;
+                }
+                case EnemyState.None:
+                {
 
-                break;
+                    break;
+                }
             }
-
         }
     }
 

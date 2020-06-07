@@ -4903,7 +4903,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 5634576834456339931}
-  moveSpeed: 5
+  moveSpeed: 3
   enemyExplosion: {fileID: 2142434823418736912, guid: ae885d5d3e3f9db409b63bad36fef2e8,
     type: 3}
   target: {fileID: 0}

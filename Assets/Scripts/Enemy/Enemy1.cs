@@ -13,12 +13,12 @@ public class Enemy1 : MonoBehaviour
 
     [Header("Enemy dead explosion")]
     public GameObject enemyExplosion;
-    
+
     //enemy's target
     public Transform target;
 
     //enmey state
-    public enum EnemyState{ Moving, Attraction, None }
+    public enum EnemyState { Moving, Attraction, None }
     public EnemyState currentState = EnemyState.Moving;
 
 
@@ -27,30 +27,29 @@ public class Enemy1 : MonoBehaviour
         m_rigidbody2D = GetComponent<Rigidbody2D>();
         target = TransformTheBall.GetInstance().GetTransform();
     }
-    
+
     private void Update()
     {
-        switch(currentState)
+        if (SceneMgr.GetInstance().IsInGame())
         {
-            case EnemyState.Moving:
+            switch (currentState)
             {
-                EnemyMoving();
-                break;
+                case EnemyState.Moving:
+                {
+                    EnemyMoving();
+                    break;
+                }
+                case EnemyState.Attraction:
+                {
+                    EnenmyAttraction();
+                    break;
+                }
+                case EnemyState.None:
+                {
+                    break;
+                }
             }
-            case EnemyState.Attraction:
-            {
-                EnenmyAttraction();
-                break;
-            }
-            case EnemyState.None:
-            {
-
-                break;
-            }
-
         }
-
-        
     }
 
     private void EnemyMoving()
@@ -62,8 +61,8 @@ public class Enemy1 : MonoBehaviour
     private void EnenmyAttraction()
     {
         transform.position = Vector3.MoveTowards(transform.position, target.position, Time.deltaTime * moveSpeed);
-        
-        if(Vector3.Distance(transform.position, target.position) <= 0.1f)
+
+        if (Vector3.Distance(transform.position, target.position) <= 0.1f)
         {
             Instantiate(enemyExplosion, transform.position, Quaternion.identity);
             Destroy(this.gameObject);
@@ -72,7 +71,7 @@ public class Enemy1 : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag.Contains("Enemy"))
+        if (other.gameObject.tag.Contains("Enemy"))
         {
             Instantiate(enemyExplosion, transform.position, Quaternion.identity);
             Destroy(this.gameObject);
