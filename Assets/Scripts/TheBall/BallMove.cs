@@ -83,6 +83,15 @@ public class BallMove : StateBall
         transform.Translate(Vector3.forward * m_speed * Time.deltaTime);       
     }
 
+    void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.CompareTag("Hole"))
+        {
+            owner.ChangeState(owner.m_ballGravity);
+            owner.m_ballGravity.SetTarget(other.transform);
+        }
+    }
+
     // private void UpdatePlayerMovement()
     // {
     //     float m_moveHorizontal = owner.m_inputMobile.InputDirection.x;
@@ -92,5 +101,7 @@ public class BallMove : StateBall
 
     //     owner.m_rigidbody.MovePosition(transform.position + m_vectorMovement);
     // }
+
+
 
 }

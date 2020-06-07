@@ -5,12 +5,15 @@ using UnityEngine;
 public class TheBall : MonoBehaviour
 {
     // Info of player
+    [Header("Data of the ball")]
     public Rigidbody m_rigidbody = default;
     public InputMobile m_inputMobile;
     
     //
+    [Header("State of the ball")]
     public BallMove m_ballMove;
     public BallNone m_ballNone;
+    public BallGravity m_ballGravity;
 
     private StateBall currentState;
     public StateBall CurrentState { get => currentState; set => currentState = value; }

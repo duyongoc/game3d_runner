@@ -3,7 +3,11 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Enemy1
+  - Enemy2
+  - TheBall
+  - Hole
   layers:
   - Default
   - TransparentFX
