@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class BallMove : StateBall
 {
-    private Vector3 m_vectorMovement;
+    
+    [Header("Material's the ball when turn around")]
+    public GameObject marTurnAround;
 
-    //
-    [Header("Material's weapon player")]
-    public Renderer m_gunMaticle;
+    private Vector3 m_vectorMovement;
 
     public float m_speed = 5f;
     public float angleSpeed = 5f;
@@ -20,6 +20,7 @@ public class BallMove : StateBall
     public override void StartState()
     {
         base.StartState();
+        this.gameObject.SetActive(true);
         
         if(!isActiveInputMobile)
         {
@@ -89,6 +90,11 @@ public class BallMove : StateBall
         {
             owner.ChangeState(owner.m_ballGravity);
             owner.m_ballGravity.SetTarget(other.transform);
+        }
+
+        if(other.tag.Contains("Enemy"))
+        {
+            
         }
     }
 

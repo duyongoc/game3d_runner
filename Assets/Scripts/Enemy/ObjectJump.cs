@@ -11,32 +11,40 @@ public class ObjectJump : MonoBehaviour
     private Vector3 pos1;
     private Vector3 pos2;
 
+    private Enemy1 ene;
+
     void Start()
     {
+        ene = GetComponentInParent<Enemy1>();
+
         pos1 = transform.position;
         pos2 = new Vector3(transform.position.x, high, transform.position.z);
     }
 
     void Update()
     {
-        // if (dirUp)
-        //     transform.Translate(Vector2.up * speed * Time.deltaTime);
-        // else
-        //     transform.Translate(-Vector2.up * speed * Time.deltaTime);
+        switch(ene.currentState)
+        {
+            case Enemy1.EnemyState.Moving:
+            {   
+                JumpObject();
 
-        // if (transform.position.y >= 3.5f)
-        // {
-        //     dirUp = false;
-        // }
+                break;
+            }
+            case Enemy1.EnemyState.Attraction:
+            {
+                transform.localPosition = new Vector3(0f, 0f, 0f);
 
-        // if (transform.position.y <= 0)
-        // {
-        //     dirUp = true;
-        // }
+                break;
+            }
+            
+        }
+    }
 
+    private void JumpObject()
+    {
         if(dirUp)
         {
-
             transform.position = new Vector3(
                 transform.position.x,
                 Mathf.Lerp(0, high , Mathf.PingPong(Time.time*speed, 1.0f)),
@@ -45,7 +53,6 @@ public class ObjectJump : MonoBehaviour
         }
         else
         {
-             Debug.Log("b");
             transform.position = new Vector3(
                 transform.position.x,
                 Mathf.Lerp(high, 0 , Mathf.PingPong(Time.time*speed, 1.0f)),
@@ -53,7 +60,7 @@ public class ObjectJump : MonoBehaviour
             );
         }
 
-        if (transform.position.y >= 3.5f)
+        if (transform.position.y >= high)
         {
             dirUp = false;
         }
@@ -63,6 +70,6 @@ public class ObjectJump : MonoBehaviour
             dirUp = true;
         }
         
-        transform.Rotate(Vector3.right * 30f * Time.deltaTime);
+        transform.LookAt(ene.target.position);
     }
 }

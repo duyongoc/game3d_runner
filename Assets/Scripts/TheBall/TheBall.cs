@@ -8,6 +8,9 @@ public class TheBall : MonoBehaviour
     [Header("Data of the ball")]
     public Rigidbody m_rigidbody = default;
     public InputMobile m_inputMobile;
+
+    [Header("Explosion of the ball when dead")]
+    public GameObject ballExplosion;
     
     //
     [Header("State of the ball")]
@@ -51,5 +54,12 @@ public class TheBall : MonoBehaviour
             currentState.Owner = this;
             currentState.StartState();
         }
+    }
+
+    public void Reset()
+    {
+        transform.position = Vector3.zero;
+        transform.rotation = Quaternion.Euler(Vector3.zero);
+        ChangeState(m_ballMove);
     }
 }
