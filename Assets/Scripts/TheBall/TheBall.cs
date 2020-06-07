@@ -11,7 +11,12 @@ public class TheBall : MonoBehaviour
 
     [Header("Explosion of the ball when dead")]
     public GameObject ballExplosion;
-    
+
+    [Header("Get data the ball from Scriptable object")]
+    public ScriptTheBall scriptTheBall; 
+    public float moveSpeed = 0f; 
+    public float angleSpeed = 0f;
+
     //
     [Header("State of the ball")]
     public BallMove m_ballMove;
@@ -27,6 +32,7 @@ public class TheBall : MonoBehaviour
         if(m_rigidbody == null)
             m_rigidbody = this.GetComponent<Rigidbody>();
 
+        LoadData();
         ChangeState(m_ballMove);
     }
 
@@ -38,6 +44,12 @@ public class TheBall : MonoBehaviour
         }
     }
     #endregion
+
+    private void LoadData()
+    {
+        this.moveSpeed = scriptTheBall.moveSpeed;
+        this.angleSpeed = scriptTheBall.angleSpeed;
+    }
 
 
     public void ChangeState(StateBall newState)
@@ -56,6 +68,7 @@ public class TheBall : MonoBehaviour
         }
     }
 
+    
     public void Reset()
     {
         transform.position = Vector3.zero;

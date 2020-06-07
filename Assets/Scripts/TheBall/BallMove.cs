@@ -9,9 +9,6 @@ public class BallMove : StateBall
     public GameObject marTurnAround;
 
     private Vector3 m_vectorMovement;
-
-    public float m_speed = 5f;
-    public float angleSpeed = 5f;
     public bool isActiveInputMobile = true;
 
     
@@ -60,10 +57,10 @@ public class BallMove : StateBall
                     float moveTurn = owner.m_inputMobile.InputDirection.x;
 
                     if(moveTurn < -0.5f  && moveTurn > -1)
-                        transform.Rotate(-Vector3.up, angleSpeed * Time.deltaTime);
+                        transform.Rotate(-Vector3.up, owner.angleSpeed * Time.deltaTime);
 
                     if(moveTurn > 0.5f && moveTurn < 1)
-                        transform.Rotate(Vector3.up, angleSpeed * Time.deltaTime);
+                        transform.Rotate(Vector3.up, owner.angleSpeed * Time.deltaTime);
 
                     break;
                 }
@@ -73,17 +70,17 @@ public class BallMove : StateBall
                     float moveTurn = Input.mousePosition.x;
 
                     if(moveTurn < Screen.width / 2 && moveTurn > 0)
-                        transform.Rotate(-Vector3.up, angleSpeed * Time.deltaTime);
+                        transform.Rotate(-Vector3.up, owner.angleSpeed * Time.deltaTime);
 
                     if(moveTurn > Screen.width / 2 && moveTurn < Screen.width)
-                        transform.Rotate(Vector3.up, angleSpeed * Time.deltaTime);
+                        transform.Rotate(Vector3.up, owner.angleSpeed * Time.deltaTime);
 
                     break;
                 }
             }
         }
 
-        transform.Translate(Vector3.forward * m_speed * Time.deltaTime); 
+        transform.Translate(Vector3.forward * owner.moveSpeed * Time.deltaTime); 
  
     }
 

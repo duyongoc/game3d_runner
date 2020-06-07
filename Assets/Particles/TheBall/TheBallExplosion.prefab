@@ -14555,7 +14555,6 @@ GameObject:
   - component: {fileID: 7169910123369614852}
   - component: {fileID: 7012824067664288416}
   - component: {fileID: 7013697177250481578}
-  - component: {fileID: 7063507091434815944}
   m_Layer: 0
   m_Name: TheBallExplosion
   m_TagString: Untagged
@@ -19373,23 +19372,6 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
---- !u!114 &7063507091434815944
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7175506089496654918}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5aa5c1e37409a9344a344c0468db383d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  prefabSound: {fileID: 1297775994297274, guid: b3c605644a3980b4aa760e7cb1da201b,
-    type: 3}
-  destroyWhenDone: 1
-  soundPrefabIsChild: 0
-  pitchRandomMultiplier: 1
 --- !u!1 &7175648483647488540
 GameObject:
   m_ObjectHideFlags: 0
