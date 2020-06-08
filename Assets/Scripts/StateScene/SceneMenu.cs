@@ -36,7 +36,7 @@ public class SceneMenu : StateScene
     #region Handler events of button
     public void OnPressButtonPlay()
     {
-        Owner.ChangeState(Owner.m_sceneInGame);
+        Owner.ChangeState(Owner.m_sceneTutorial);
         
         //ingame
         owner.m_sceneMenu.GetComponent<RectTransform>().DOAnchorPos(new Vector2(m_originX, m_originY), m_speedDuration);

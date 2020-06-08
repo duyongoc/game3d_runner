@@ -9,7 +9,7 @@ public class BallMove : StateBall
     public GameObject marTurnAround;
 
     private Vector3 m_vectorMovement;
-    public bool isActiveInputMobile = true;
+    public bool isActiveInputMobile = false;
 
     
 
@@ -31,7 +31,7 @@ public class BallMove : StateBall
 
         //Player moving
         //UpdatePlayerMovement();
-        if (SceneMgr.GetInstance().IsInGame())
+        if (SceneMgr.GetInstance().IsStateInGame())
         {
             Move();
         }

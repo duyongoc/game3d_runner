@@ -30,7 +30,7 @@ public class Enemy1 : MonoBehaviour
 
     private void Update()
     {
-        if (SceneMgr.GetInstance().IsInGame())
+        if (SceneMgr.GetInstance().IsStateInGame())
         {
             switch (currentState)
             {

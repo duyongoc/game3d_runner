@@ -25,13 +25,16 @@ public class SpawnEnemy : MonoBehaviour
 	
 	private void Update () 
 	{
-		timerProcess += Time.deltaTime;
-		if (timerProcess >= timeToSpawn) 
-		{
-			SpawEnemy();
-			
-			timerProcess = 0;
-		}	
+		if (SceneMgr.GetInstance().IsStateInGame())
+        {
+			timerProcess += Time.deltaTime;
+			if (timerProcess >= timeToSpawn) 
+			{
+				SpawEnemy();
+				timerProcess = 0;
+			}	
+		}
+		
 	}
 
 	private void SpawEnemy()
