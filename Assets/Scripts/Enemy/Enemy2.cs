@@ -80,6 +80,12 @@ public class Enemy2 : MonoBehaviour
             Instantiate(enemyExplosion, transform.position, Quaternion.identity);
             Destroy(this.gameObject);
         }
+        else if(other.gameObject.tag.Contains("Armor"))
+        {
+            Instantiate(enemyExplosion, transform.position, Quaternion.identity);
+            Destroy(this.gameObject);
+        }
+        
     }
     
 }

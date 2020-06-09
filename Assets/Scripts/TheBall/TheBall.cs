@@ -73,6 +73,10 @@ public class TheBall : MonoBehaviour
     {
         transform.position = Vector3.zero;
         transform.rotation = Quaternion.Euler(Vector3.zero);
+
+        this.GetComponentInChildren<BallPower>().Reset();
+        
+        //
         ChangeState(m_ballMove);
     }
 }

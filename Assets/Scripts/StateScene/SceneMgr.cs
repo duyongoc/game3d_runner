@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class SceneMgr : MonoBehaviour
 {
-    public Material skybox;
-
     [Header("All of scene in game")]
     public SceneMenu m_sceneMenu;
     public SceneTutorial m_sceneTutorial;
@@ -38,7 +36,7 @@ public class SceneMgr : MonoBehaviour
         m_sceneShop.gameObject.SetActive(true);
         m_sceneGameOver.gameObject.SetActive(true);
 
-        ChangeState(m_sceneMenu);
+        ChangeState(m_sceneInGame);
     }
 
     private void Update()

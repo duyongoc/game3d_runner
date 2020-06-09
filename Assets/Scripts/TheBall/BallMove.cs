@@ -10,7 +10,6 @@ public class BallMove : StateBall
 
     private Vector3 m_vectorMovement;
     public bool isActiveInputMobile = false;
-
     
 
     #region STATE OF PLAYER
@@ -52,36 +51,46 @@ public class BallMove : StateBall
             switch(isActiveInputMobile)
             {
                 // moving the ball with joystick
-                case true:
-                {
-                    float moveTurn = owner.m_inputMobile.InputDirection.x;
+                // case true:
+                // {
+                //     float moveTurn = owner.m_inputMobile.InputDirection.x;
 
-                    if(moveTurn < -0.5f  && moveTurn > -1)
-                        transform.Rotate(-Vector3.up, owner.angleSpeed * Time.deltaTime);
+                //     if(moveTurn < -0.5f  && moveTurn > -1)
+                //         transform.Rotate(-Vector3.up, owner.angleSpeed * Time.deltaTime);
 
-                    if(moveTurn > 0.5f && moveTurn < 1)
-                        transform.Rotate(Vector3.up, owner.angleSpeed * Time.deltaTime);
+                //     if(moveTurn > 0.5f && moveTurn < 1)
+                //         transform.Rotate(Vector3.up, owner.angleSpeed * Time.deltaTime);
 
-                    break;
-                }
+                //     break;
+                // }
                 // moving the ball with touch the scene
                 case false:
                 {
                     float moveTurn = Input.mousePosition.x;
 
                     if(moveTurn < Screen.width / 2 && moveTurn > 0)
-                        transform.Rotate(-Vector3.up, owner.angleSpeed * Time.deltaTime);
+                    {
+                        //Quaternion target = Quaternion.Euler (0, 0, 4f);
+			            //transform.localRotation = Quaternion.Lerp(transform.localRotation,target,owner.angleSpeed * Time.deltaTime);
 
+                        transform.Rotate(-Vector3.up, owner.angleSpeed * Time.deltaTime, Space.World);
+                    }
                     if(moveTurn > Screen.width / 2 && moveTurn < Screen.width)
-                        transform.Rotate(Vector3.up, owner.angleSpeed * Time.deltaTime);
+                    {
+                        //Quaternion target = Quaternion.Euler (0, 0, -4f);
+			            //transform.localRotation = Quaternion.Lerp(transform.localRotation,target,owner.angleSpeed * Time.deltaTime);
 
+                        transform.Rotate(Vector3.up, owner.angleSpeed * Time.deltaTime, Space.World);
+                    }
+                        
+                    
                     break;
                 }
             }
         }
 
         transform.Translate(Vector3.forward * owner.moveSpeed * Time.deltaTime); 
- 
+
     }
 
     void OnTriggerEnter(Collider other)

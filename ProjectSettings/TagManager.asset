@@ -9,6 +9,8 @@ TagManager:
   - TheBall
   - Hole
   - Ground
+  - Power
+  - Armor
   layers:
   - Default
   - TransparentFX
