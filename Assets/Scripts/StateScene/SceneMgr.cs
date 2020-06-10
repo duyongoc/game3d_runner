@@ -36,7 +36,7 @@ public class SceneMgr : MonoBehaviour
         m_sceneShop.gameObject.SetActive(true);
         m_sceneGameOver.gameObject.SetActive(true);
 
-        ChangeState(m_sceneInGame);
+        ChangeState(m_sceneMenu);
     }
 
     private void Update()
@@ -67,6 +67,7 @@ public class SceneMgr : MonoBehaviour
     public void SetActivePanelScene(string panelName)
     {
         m_sceneInGame.gameObject.SetActive(panelName.Contains(m_sceneInGame.name));
+        m_sceneTutorial.gameObject.SetActive(panelName.Contains(m_sceneTutorial.name));
         //m_sceneGameOver.gameObject.SetActive(panelName.Contains(m_sceneGameOver.name));
         //m_sceneMenu.gameObject.SetActive(panelName.Contains(m_sceneMenu.name));
         //m_sceneMission.gameObject.SetActive(panelName.Contains(m_sceneMission.name));

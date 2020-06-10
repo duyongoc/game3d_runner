@@ -8,12 +8,19 @@ public class SceneInGame : StateScene
     public GameObject textTapToPlay;
     public bool isPlaying = false;
 
+    [Header("Sound background in menu game")]
+    public AudioClip m_audioBackground;
+
+    [Header("Sound when the ball get power")]
+    public AudioClip m_audioPower;
+
     public override void StartState()
     {
         base.EndState();
         Owner.SetActivePanelScene(this.name);
         
         textTapToPlay.SetActive(true);
+
     }
 
     public override void UpdateState()
@@ -25,6 +32,7 @@ public class SceneInGame : StateScene
             if(Input.GetMouseButtonDown(0))
             {
                 textTapToPlay.SetActive(false);
+                SoundMgr.GetInstance().PlaySound(m_audioBackground);
                 isPlaying = true;
             }
         }

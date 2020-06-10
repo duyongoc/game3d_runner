@@ -17,6 +17,9 @@ public class SceneGameOver : StateScene
     public Text scoreText;
     public Text highScoreText;
 
+    [Header("Sound when player dead")]
+    public AudioClip m_audioEnd;
+
     [Header("Reset game")]
     public TheBall theBall;
     public SpawnEnemy spawnEnemy;
@@ -28,8 +31,11 @@ public class SceneGameOver : StateScene
 
         // scoreText.text = "Score: " +  Score.score;
         // highScoreText.text = "HighScore: " + Score.highscore;
-
         this.GetComponent<RectTransform>().DOAnchorPos(Vector3.zero, m_speedDuration);
+
+        //sound
+        SoundMgr.GetInstance().StopSound();
+        SoundMgr.GetInstance().PlaySoundOneShot(m_audioEnd);
     }
 
     public override void UpdateState()

@@ -11,7 +11,13 @@ public class SceneMenu : StateScene
 
     [Tooltip("Speed time duration when change scene")]
     [SerializeField] private float m_speedDuration = 0.5f;
-    
+
+    [Header("Sound background in menu game")]
+    public AudioClip m_audio;
+
+    [Header("Sound when touch the scene")]
+    public AudioClip touchSource;
+
 
     public override void StartState()
     {
@@ -20,6 +26,11 @@ public class SceneMenu : StateScene
         //Set up when game start
         owner.SetActivePanelScene(this.name);
         owner.m_sceneMenu.GetComponent<RectTransform>().DOAnchorPos(Vector3.zero, 0);
+
+        if(!SoundMgr.GetInstance().IsPlaying(m_audio))
+        {
+            SoundMgr.GetInstance().PlaySound(m_audio);
+        }
     }
 
     public override void UpdateState()
@@ -41,6 +52,8 @@ public class SceneMenu : StateScene
         //ingame
         owner.m_sceneMenu.GetComponent<RectTransform>().DOAnchorPos(new Vector2(m_originX, m_originY), m_speedDuration);
 
+        // sound
+        SoundMgr.GetInstance().PlaySoundOneShot(touchSource);
     }
 
     public void OnPressButtonShop()
@@ -50,6 +63,9 @@ public class SceneMenu : StateScene
         //shop
         //owner.m_sceneMenu.GetComponent<RectTransform>().DOAnchorPos(new Vector2(m_originX, m_originY), m_speedDuration * 2);
         owner.m_sceneShop.GetComponent<RectTransform>().DOAnchorPos(Vector3.zero, m_speedDuration);
+    
+        // sound
+        SoundMgr.GetInstance().PlaySoundOneShot(touchSource);
     }
 
     public void OnPressButtonMission()
@@ -59,6 +75,9 @@ public class SceneMenu : StateScene
         //mission
         owner.m_sceneMenu.GetComponent<RectTransform>().DOAnchorPos(new Vector2(m_originX, m_originY), m_speedDuration * 2);
         owner.m_sceneMission.GetComponent<RectTransform>().DOAnchorPos(Vector3.zero, m_speedDuration);
+    
+        // sound
+        SoundMgr.GetInstance().PlaySoundOneShot(touchSource);
     }
 
     public void OnPressButtonExit()
