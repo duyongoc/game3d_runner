@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class BallMove : StateBall
 {
-    
-    [Header("Material's the ball when turn around")]
-    public GameObject marTurnAround;
 
     private Vector3 m_vectorMovement;
     public bool isActiveInputMobile = false;
@@ -110,7 +107,11 @@ public class BallMove : StateBall
             Instantiate(owner.ballExplosion, transform.position, Quaternion.identity);
             gameObject.SetActive(false);
         }
-        else if(other.tag.Contains("Ground"))
+    }
+
+    void OnCollisionEnter(Collision other)
+    {
+        if(other.gameObject.tag == "Ground")
         {
             // loading gameover scene;
             var mgr = SceneMgr.GetInstance();

@@ -9,7 +9,10 @@ public class BallPower : MonoBehaviour
 
     [Header("The time power")]
     public float timerPower = 15f;
-    public float timer = 0;
+    public float timerPowerProcess = 0f;
+    public float timerFinish = 12f;
+    public float timerFinishProcess = 0f;
+
     private TheBall theBall;
 
     [Header("Sound plus power")]
@@ -17,7 +20,7 @@ public class BallPower : MonoBehaviour
 
     //
     public List<GameObject> listPower;
-    private int currentLevel = 0;
+    public int currentLevel = 0;
 
     private void Start()
     {
@@ -35,30 +38,37 @@ public class BallPower : MonoBehaviour
             }
                 
 
-            timer += Time.deltaTime;
-            if(timer >= timerPower)
+            timerPowerProcess += Time.deltaTime;
+            timerFinishProcess += Time.deltaTime;
+
+            if(timerFinishProcess >= timerFinish)
+            {
+                GameObject obj = Instantiate(prefabsPower[3], transform.position, Quaternion.identity);
+                obj.transform.SetParent(transform); 
+
+                //prefabsPower[2].SetActive(false);
+                listPower.Add(obj);
+
+                timerFinishProcess = 0;
+            }
+
+            if(timerPowerProcess >= timerPower)
             {
                 SoundMgr.GetInstance().PlaySound(SceneMgr.GetInstance().m_sceneInGame.m_audioBackground);
-
                 Reset();
-                timer = 0;
+
+                timerPowerProcess = 0;
             }
         }
-
-    }
-
-
-    public void Reset()
-    {
-        foreach(GameObject obj in listPower)
-            Destroy(obj.gameObject);
-            
-        currentLevel = 0;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag.Contains("Power"))
+        if(currentLevel == 3)
+            return;
+
+        //Debug.Log(other.name);
+        if(other.gameObject.tag == "Power" )
         {
             switch(currentLevel)
             {
@@ -94,6 +104,17 @@ public class BallPower : MonoBehaviour
             SoundMgr.GetInstance().PlaySoundOneShot(m_audioPower);
             Destroy(other.gameObject);
         }
+    }
+
+    public void Reset()
+    {
+        foreach(GameObject obj in listPower)
+            Destroy(obj.gameObject);
+        listPower.Clear();
+            
+        currentLevel = 0;
+        timerPowerProcess = 0;
+        timerFinishProcess = 0;
     }
 
 }

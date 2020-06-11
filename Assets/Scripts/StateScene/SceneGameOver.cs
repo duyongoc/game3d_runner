@@ -23,6 +23,7 @@ public class SceneGameOver : StateScene
     [Header("Reset game")]
     public TheBall theBall;
     public SpawnEnemy spawnEnemy;
+    public SpawnPower spawnPower;
 
     public override void StartState()
     {
@@ -74,7 +75,9 @@ public class SceneGameOver : StateScene
 
     private void Reset()
     {   
-        theBall.Reset();
         spawnEnemy.Reset();
+        spawnPower.Reset();
+
+        theBall.Reset();
     }
 }
