@@ -24,14 +24,18 @@ public class SceneGameOver : StateScene
     public TheBall theBall;
     public SpawnEnemy spawnEnemy;
     public SpawnPower spawnPower;
+    public SpawnTheHole spawnTheHole;
+
+    [Header("Make score game")]
+    public ScoreMgr scoreMgr;
 
     public override void StartState()
     {
         base.EndState();
         Owner.SetActivePanelScene(this.name);
 
-        // scoreText.text = "Score: " +  Score.score;
-        // highScoreText.text = "HighScore: " + Score.highscore;
+        scoreText.text = "Score: " +  scoreMgr.score;
+        highScoreText.text = "HighScore: " + scoreMgr.highscore;
         this.GetComponent<RectTransform>().DOAnchorPos(Vector3.zero, m_speedDuration);
 
         //sound
@@ -77,7 +81,9 @@ public class SceneGameOver : StateScene
     {   
         spawnEnemy.Reset();
         spawnPower.Reset();
-
+        spawnTheHole.Reset();
+        scoreMgr.Reset();
+        
         theBall.Reset();
     }
 }

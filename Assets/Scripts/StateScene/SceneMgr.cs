@@ -36,7 +36,7 @@ public class SceneMgr : MonoBehaviour
         m_sceneShop.gameObject.SetActive(true);
         m_sceneGameOver.gameObject.SetActive(true);
 
-        ChangeState(m_sceneInGame);
+        ChangeState(m_sceneMenu);
     }
 
     private void Update()

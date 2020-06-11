@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SceneInGame : StateScene
 {
@@ -14,13 +15,18 @@ public class SceneInGame : StateScene
     [Header("Sound when the ball get power")]
     public AudioClip m_audioPower;
 
+    [Header("Make score game")]
+    public Text textScore;
+    public ScoreMgr scoreMgr;
+    private float countTime = 0;
+
     public override void StartState()
     {
         base.EndState();
         Owner.SetActivePanelScene(this.name);
         
         textTapToPlay.SetActive(true);
-
+        textScore.gameObject.SetActive(false);
     }
 
     public override void UpdateState()
@@ -32,9 +38,24 @@ public class SceneInGame : StateScene
             if(Input.GetMouseButtonDown(0))
             {
                 textTapToPlay.SetActive(false);
+                textScore.gameObject.SetActive(true);
                 SoundMgr.GetInstance().PlaySound(m_audioBackground);
+
                 isPlaying = true;
             }
+        }
+
+        if(isPlaying)
+        {
+            countTime += Time.deltaTime;
+            scoreMgr.score = (int)countTime;
+            textScore.text = scoreMgr.score.ToString("00.##");
+
+
+            if (scoreMgr.score > scoreMgr.highscore)
+                scoreMgr.highscore = scoreMgr.score;
+
+            PlayerPrefs.GetInt("highscore", scoreMgr.highscore);
         }
     }
 
@@ -43,6 +64,7 @@ public class SceneInGame : StateScene
         base.EndState();
 
         isPlaying = false;
+        countTime = 0;
     }
 
     #region Handler event of button

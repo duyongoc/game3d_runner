@@ -7,8 +7,6 @@ public class SpawnTheHole : MonoBehaviour
 
     [Header("Spawn the hole")]
     [SerializeField]private GameObject prefabsTheHole = default;
-    //[SerializeField]private float timeSpawn = 3f;
-    //private float timer = 0f;
     
     [Header("Transform to create the hole")]
     [SerializeField]private Transform[] transArr = default;
@@ -41,7 +39,6 @@ public class SpawnTheHole : MonoBehaviour
         for(int i = 0 ; i < transArr.Length; i++ )
         {
             GameObject obj = Instantiate(prefabsTheHole, transArr[i].position, Quaternion.identity);
-            
             listTheHoleWasCreated.Add(obj);
         }
     }
