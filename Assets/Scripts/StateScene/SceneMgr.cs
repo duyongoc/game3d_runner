@@ -11,6 +11,10 @@ public class SceneMgr : MonoBehaviour
     public SceneMission m_sceneMission;
     public SceneShop m_sceneShop;
     public SceneGameOver m_sceneGameOver;
+    public ScenePauseGame m_scenePauseGame;
+
+    [Header("Set ingame or menu to fast test")]
+    public bool isInGame = true;
 
     //current state scene
     private StateScene currentState; 
@@ -36,7 +40,10 @@ public class SceneMgr : MonoBehaviour
         m_sceneShop.gameObject.SetActive(true);
         m_sceneGameOver.gameObject.SetActive(true);
 
-        ChangeState(m_sceneMenu);
+        if(isInGame)
+            ChangeState(m_sceneInGame);
+        else
+            ChangeState(m_sceneMenu);
     }
 
     private void Update()

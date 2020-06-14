@@ -17,6 +17,10 @@ public class Enemy1 : MonoBehaviour
     //enemy's target
     public Transform target;
 
+    [Header("Warning the player")]
+    public GameObject warningIcon;
+    public bool isWarning = false;
+
     //enmey state
     public enum EnemyState { Moving, Attraction, None }
     public EnemyState currentState = EnemyState.Moving;
@@ -24,6 +28,7 @@ public class Enemy1 : MonoBehaviour
 
     private void Start()
     {
+        warningIcon.SetActive(false);
         m_rigidbody2D = GetComponent<Rigidbody2D>();
         target = TransformTheBall.GetInstance().GetTransform();
     }
@@ -46,6 +51,7 @@ public class Enemy1 : MonoBehaviour
                 }
                 case EnemyState.None:
                 {
+
                     break;
                 }
             }
@@ -54,6 +60,19 @@ public class Enemy1 : MonoBehaviour
 
     private void EnemyMoving()
     {
+
+        if(!isWarning)
+        {
+            if(Vector3.Distance(transform.position, target.position) <= 4f)
+            {
+                warningIcon.SetActive(true);
+                SceneMgr.GetInstance().ChangeState(SceneMgr.GetInstance().m_scenePauseGame);
+                StartCoroutine("MakeWarningEnemy1");
+
+                isWarning = true;
+            }
+        }
+
         transform.position = Vector3.MoveTowards(transform.position, target.position, Time.deltaTime * moveSpeed);
         //agent.SetDestination(target.position);
     }
@@ -67,6 +86,17 @@ public class Enemy1 : MonoBehaviour
             Instantiate(enemyExplosion, transform.position, Quaternion.identity);
             Destroy(this.gameObject);
         }
+    }
+
+    IEnumerator MakeWarningEnemy1()
+    {
+        yield return new WaitForSeconds(2f);
+        SceneMgr.GetInstance().ChangeState(SceneMgr.GetInstance().m_sceneInGame);
+    }
+
+    public void OnCreate(bool warning)
+    {
+        isWarning = warning;
     }
 
     void OnTriggerEnter(Collider other)
