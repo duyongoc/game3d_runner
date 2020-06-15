@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObjectJump : MonoBehaviour
+public class EnemyShape1 : MonoBehaviour
 {
     private bool dirUp = true;
     public float speed = 2.0f;
@@ -72,4 +72,5 @@ public class ObjectJump : MonoBehaviour
         
         transform.LookAt(ene.target.position);
     }
+
 }

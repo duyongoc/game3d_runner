@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class SpawnEnemy : MonoBehaviour
 {
@@ -11,8 +12,12 @@ public class SpawnEnemy : MonoBehaviour
 	public Transform[] transformPrefab;
 
 	[Header("Spawn enemy")]
+	public float minRangeSpawn = 7f;
+	public float maxRangeSpawn = 14f;
 	private float timerProcess = 0;
 	public float timeToSpawn = 3.0f;
+	
+	public bool isWarningFromEnemy = false;
 	
 
 	public List<GameObject> enemyWasCreated;
@@ -43,8 +48,14 @@ public class SpawnEnemy : MonoBehaviour
 		int randTran = Random.Range(0, transformPrefab.Length);
 
 		GameObject obj = Instantiate(enemyPrefab[randEne], transformPrefab[randTran].position, Quaternion.identity);
+		
+		if(isWarningFromEnemy)
+			obj.GetComponent<Enemy1>().OnSetWarning(true);
+
 		enemyWasCreated.Add(obj);
 	}
+
+	
 
 	public void Reset()
 	{

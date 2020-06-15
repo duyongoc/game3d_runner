@@ -7,6 +7,8 @@ public class BallMove : StateBall
 
     private Vector3 m_vectorMovement;
     public bool isActiveInputMobile = false;
+
+    private float timer = 0;
     
 
     #region STATE OF PLAYER
@@ -87,6 +89,13 @@ public class BallMove : StateBall
         }
 
         transform.Translate(Vector3.forward * owner.moveSpeed * Time.deltaTime); 
+        
+        timer += Time.deltaTime;
+        if(timer > owner.timeParMoving)
+        {
+            Instantiate(owner.particleMoving, transform.position, Quaternion.identity);
+            timer = 0;
+        }
 
     }
 

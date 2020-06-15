@@ -24,4 +24,10 @@ public class CameraFollow : MonoBehaviour
         transform.position = Vector3.SmoothDamp(transform.position, newPostion, ref velocity, smoothFactor * Time.deltaTime);
         //Debug.Log(newPostion);
     }
+
+    public void ChangeTarget(Transform tar, float smoother )
+    {
+        smoothFactor = smoother;
+        m_target = tar;
+    }
 }

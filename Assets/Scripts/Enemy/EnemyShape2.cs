@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObjectRunAround : MonoBehaviour
+public class EnemyShape2 : MonoBehaviour
 {
-
     public float moveSpeed = 2.0f;
     private Enemy2 ene;
 
@@ -39,5 +38,4 @@ public class ObjectRunAround : MonoBehaviour
         //     nextPos = nextPos != pos1.position ? pos1.position : pos2.position;
         // }
     }
-
 }

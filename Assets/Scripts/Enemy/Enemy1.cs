@@ -19,6 +19,7 @@ public class Enemy1 : MonoBehaviour
 
     [Header("Warning the player")]
     public GameObject warningIcon;
+    public float distanceWarning = 5;
     public bool isWarning = false;
 
     //enmey state
@@ -60,14 +61,16 @@ public class Enemy1 : MonoBehaviour
 
     private void EnemyMoving()
     {
-
         if(!isWarning)
         {
-            if(Vector3.Distance(transform.position, target.position) <= 4f)
+            if(Vector3.SqrMagnitude(transform.position - target.position) <= distanceWarning * distanceWarning)
             {
                 warningIcon.SetActive(true);
+                Camera.main.GetComponent<CameraFollow>().ChangeTarget(transform, 100);
+
+                SceneMgr.GetInstance().GetComponentInChildren<SpawnEnemy1>().ChangeSpawnStateWarning();
                 SceneMgr.GetInstance().ChangeState(SceneMgr.GetInstance().m_scenePauseGame);
-                StartCoroutine("MakeWarningEnemy1");
+                StartCoroutine("FinishWarningEnemy1");
 
                 isWarning = true;
             }
@@ -88,17 +91,22 @@ public class Enemy1 : MonoBehaviour
         }
     }
 
-    IEnumerator MakeWarningEnemy1()
+    IEnumerator FinishWarningEnemy1()
     {
         yield return new WaitForSeconds(2f);
+
+        warningIcon.SetActive(false);
+        Camera.main.GetComponent<CameraFollow>().ChangeTarget(target, 10);
         SceneMgr.GetInstance().ChangeState(SceneMgr.GetInstance().m_sceneInGame);
     }
 
-    public void OnCreate(bool warning)
+    public void OnSetWarning(bool warning)
     {
         isWarning = warning;
     }
 
+
+    //Collision
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag.Contains("Enemy"))

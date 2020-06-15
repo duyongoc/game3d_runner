@@ -12,6 +12,10 @@ public class TheBall : MonoBehaviour
     [Header("Explosion of the ball when dead")]
     public GameObject ballExplosion;
 
+    [Header("Particle when the ball moving")]
+    public GameObject particleMoving;
+    public float timeParMoving = 0.5f;
+
     [Header("Get data the ball from Scriptable object")]
     public ScriptTheBall scriptTheBall; 
     public float moveSpeed = 0f; 
