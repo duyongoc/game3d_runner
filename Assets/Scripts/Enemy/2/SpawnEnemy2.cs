@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class SpawnEnemy1 : MonoBehaviour
+public class SpawnEnemy2 : MonoBehaviour
 {
     [Header("Enemies will be create")]
     public GameObject enemyPrefab;
@@ -12,12 +12,12 @@ public class SpawnEnemy1 : MonoBehaviour
     public float minRangeSpawn = 15f;
     public float maxRangeSpawn = 30f;
     private float timerProcess = 0;
-    public float timeToSpawn = 3.0f;
+    public float timeToSpawn = 4.0f;
 
     //enemy's target
     private Transform target;
 
-    public bool isWarningEnemy = false;
+    public bool isWarning = false;
     public List<GameObject> enemyWasCreated;
 
     public enum SpawState { Warning, Spawn, None };
@@ -60,7 +60,7 @@ public class SpawnEnemy1 : MonoBehaviour
         {
             Vector3 vec = GetRandomPoint();
             GameObject obj = Instantiate(enemyPrefab, vec, Quaternion.identity);
-            obj.GetComponent<Enemy1>().OnSetWarning(false);
+            obj.GetComponent<Enemy2>().OnSetWarning(false);
 
             enemyWasCreated.Add(obj);
             timerProcess = 0;
@@ -69,17 +69,17 @@ public class SpawnEnemy1 : MonoBehaviour
 
     private void StateSpawn()
     {
-        if(!isWarningEnemy)
+        if(!isWarning)
         {
             foreach (GameObject obj in enemyWasCreated)
             {
                 if (obj != null)
                 {
-                    obj.GetComponent<Enemy1>().OnSetWarning(true);
+                    obj.GetComponent<Enemy2>().OnSetWarning(true);
                 }
                    
             }
-            isWarningEnemy = true;
+            isWarning = true;
         }
 
         timerProcess += Time.deltaTime;
@@ -87,14 +87,14 @@ public class SpawnEnemy1 : MonoBehaviour
         {
             Vector3 vec = GetRandomPoint();
             GameObject obj = Instantiate(enemyPrefab, vec, Quaternion.identity);
-            obj.GetComponent<Enemy1>().OnSetWarning(true);
+            obj.GetComponent<Enemy2>().OnSetWarning(true);
 
             enemyWasCreated.Add(obj);
             timerProcess = 0;
         }
     }
 
-    public void ChangeSpawnStateWarning()
+    public void FinishWarningAlert()
     {
         timerProcess = 0;
         currentState = SpawState.Spawn;
@@ -135,4 +135,5 @@ public class SpawnEnemy1 : MonoBehaviour
 
         timerProcess = 0;
     }
+
 }

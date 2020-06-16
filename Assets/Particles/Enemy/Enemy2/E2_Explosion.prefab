@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2142434823436818310}
   - component: {fileID: 2142434823438754296}
   m_Layer: 0
-  m_Name: Enemy2Explosion
+  m_Name: E2_Explosion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -40,7 +40,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2142434823418736912}
   serializedVersion: 6
-  lengthInSec: 2.5
+  lengthInSec: 2
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 3

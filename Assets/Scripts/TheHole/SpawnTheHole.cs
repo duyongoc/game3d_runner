@@ -11,18 +11,13 @@ public class SpawnTheHole : MonoBehaviour
     [Header("Transform to create the hole")]
     [SerializeField]private Transform[] transArr = default;
 
-    public List<GameObject> listTheHoleWasCreated;
-
+    //
     private bool isCreated = false;
-
-    
-    private void Start()
-    {
-        
-    }
+    public List<GameObject> holeWasCreated;
 
     private void Update()
     {
+
         if(!isCreated)
         {
             if(SceneMgr.GetInstance().IsStateInGame())
@@ -39,17 +34,29 @@ public class SpawnTheHole : MonoBehaviour
         for(int i = 0 ; i < transArr.Length; i++ )
         {
             GameObject obj = Instantiate(prefabsTheHole, transArr[i].position, Quaternion.identity);
-            listTheHoleWasCreated.Add(obj);
+            holeWasCreated.Add(obj);
+        }
+    }
+
+    public void FinishWarningAlert()
+    {
+        foreach (GameObject obj in holeWasCreated)
+        {
+            if (obj != null)
+            {
+                obj.GetComponent<TheHole>().OnSetWarning(true);
+            }
+                
         }
     }
 
     public void Reset()
     {
-        foreach(GameObject obj in listTheHoleWasCreated)
+        foreach(GameObject obj in holeWasCreated)
         {
             Destroy(obj);
         }
-        listTheHoleWasCreated.Clear();
+        holeWasCreated.Clear();
 
         isCreated = false;
     }

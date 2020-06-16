@@ -5,33 +5,97 @@ using UnityEngine.AI;
 
 public class TheHole : MonoBehaviour
 {
+    [Header("Load data")]
     public ScriptTheHole scriptTheHole;
 
+    [Header("Warning the player")]
+    public GameObject warningIcon;
+    public float distanceWarning = 8f;
+    public bool isWarning = false;
+    private Transform target;
+
+    // create random point
     private float moveSpeed;
     private float distanceRadius;
-    private Vector3 target;
+    private Vector3 pointRandom;
+
+    private enum HoleState { Moving, None }
+    private HoleState currentState = HoleState.Moving;
+
+    public void OnSetWarning(bool warning)
+    {
+        isWarning = warning;
+    }
 
     void Start()
     {
+        warningIcon.SetActive(false);
         moveSpeed = scriptTheHole.moveSpeed;
         distanceRadius = scriptTheHole.distanceRadius;
 
-        target = GetRandomPoint();
+        target = TransformTheBall.GetInstance().GetTransform();
+        pointRandom = GetRandomPoint();
     }
 
     // Update is called once per frame
     void Update()
     {
-        transform.position = Vector3.MoveTowards(transform.position, target, moveSpeed * Time.deltaTime);
-
-        float distance = Vector3.Distance(transform.position, target);
-        if(distance <= 0.1f)
+        
+        if (SceneMgr.GetInstance().IsStateInGame())
         {
-            target = GetRandomPoint();
+            switch (currentState)
+            {
+                case HoleState.Moving:
+                {
+                    HoleMoving();
+                    break;
+                }
+                case HoleState.None:
+                {
+
+                    break;
+                }
+            }
+        }
+        
+    }
+
+    private void HoleMoving()
+    {
+        if(!isWarning)
+        {
+            if(Vector3.SqrMagnitude(transform.position - target.position) <= distanceWarning * distanceWarning)
+            {
+                warningIcon.SetActive(true);
+                Camera.main.GetComponent<CameraFollow>().ChangeTarget(transform, 100);
+
+                SceneMgr.GetInstance().GetComponentInChildren<SpawnTheHole>().FinishWarningAlert();
+                SceneMgr.GetInstance().ChangeState(SceneMgr.GetInstance().m_scenePauseGame);
+                StartCoroutine("FinishWarningTheHole");
+
+                isWarning = true;
+            }
         }
 
 
+        float distance = Vector3.Distance(transform.position, pointRandom);
+        if(distance <= 0.1f)
+        {
+            pointRandom = GetRandomPoint();
+        }
+        transform.position = Vector3.MoveTowards(transform.position, pointRandom, moveSpeed * Time.deltaTime);
+
     }
+
+    IEnumerator FinishWarningTheHole()
+    {
+        yield return new WaitForSeconds(2f);
+
+        warningIcon.SetActive(false);
+        Camera.main.GetComponent<CameraFollow>().ChangeTarget(target, 10);
+        SceneMgr.GetInstance().ChangeState(SceneMgr.GetInstance().m_sceneInGame);
+    }
+
 
     private Vector3 GetRandomPoint()
     {

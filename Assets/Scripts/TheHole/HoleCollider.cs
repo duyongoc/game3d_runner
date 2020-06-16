@@ -9,7 +9,7 @@ public class HoleCollider : MonoBehaviour
     {
         if(other.gameObject.CompareTag("Enemy1"))
         {
-            var obj = other.gameObject.GetComponent<Enemy1>();
+            var obj = other.gameObject.GetComponentInParent<Enemy1>();
             obj.target = transform;
             obj.currentState = Enemy1.EnemyState.Attraction;
         }
