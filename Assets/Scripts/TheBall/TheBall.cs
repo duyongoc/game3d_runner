@@ -9,19 +9,20 @@ public class TheBall : MonoBehaviour
     public Rigidbody m_rigidbody = default;
     public InputMobile m_inputMobile;
 
-    [Header("Explosion of the ball when dead")]
+    [Header("All of Data for the ball need to change")]
+    public Renderer ballRenderer;
+    public Renderer shapeRenderer;
     public GameObject ballExplosion;
-
-    [Header("Particle when the ball moving")]
     public GameObject particleMoving;
-    public float timeParMoving = 0.5f;
+
+    [Header("Set time particle when player moving")]
+    public float timeParMoving = 0.5f; 
 
     [Header("Get data the ball from Scriptable object")]
     public ScriptTheBall scriptTheBall; 
     public float moveSpeed = 0f; 
     public float angleSpeed = 0f;
 
-    //
     [Header("State of the ball")]
     public BallMove m_ballMove;
     public BallNone m_ballNone;

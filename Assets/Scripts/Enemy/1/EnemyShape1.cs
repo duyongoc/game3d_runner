@@ -4,24 +4,37 @@ using UnityEngine;
 
 public class EnemyShape1 : MonoBehaviour
 {
-    private bool dirUp = true;
-    public float speed = 2.0f;
+    [Header("Load data Enemy 1")]
+    public ScriptEnemy1 scriptEnemy1;
 
-    public float high = 3.5f;
+    private bool directionUp = true;
+
+    //
+    private float jumpSpeed = 0f;
+    private float jumpHigh = 0f;
+
+    //
     private Vector3 pos1;
     private Vector3 pos2;
 
     private Enemy1 ene;
 
-    void Start()
+    private void LoadData()
     {
-        ene = GetComponentInParent<Enemy1>();
-
-        pos1 = transform.position;
-        pos2 = new Vector3(transform.position.x, high, transform.position.z);
+        jumpSpeed = scriptEnemy1.jumpSpeed;
+        jumpHigh = scriptEnemy1.jumpHigh;
     }
 
-    void Update()
+    private void Start()
+    {
+        LoadData();
+
+        ene = GetComponentInParent<Enemy1>();
+        pos1 = transform.position;
+        pos2 = new Vector3(transform.position.x, jumpHigh, transform.position.z);
+    }
+
+    private void Update()
     {
         switch(ene.currentState)
         {
@@ -43,11 +56,11 @@ public class EnemyShape1 : MonoBehaviour
 
     private void JumpObject()
     {
-        if(dirUp)
+        if(directionUp)
         {
             transform.position = new Vector3(
                 transform.position.x,
-                Mathf.Lerp(0, high , Mathf.PingPong(Time.time*speed, 1.0f)),
+                Mathf.Lerp( 0, jumpHigh , Mathf.PingPong(Time.time * jumpSpeed, 1.0f)),
                 transform.position.z
             );
         }
@@ -55,19 +68,19 @@ public class EnemyShape1 : MonoBehaviour
         {
             transform.position = new Vector3(
                 transform.position.x,
-                Mathf.Lerp(high, 0 , Mathf.PingPong(Time.time*speed, 1.0f)),
+                Mathf.Lerp( jumpHigh, 0 , Mathf.PingPong(Time.time * jumpSpeed, 1.0f)),
                 transform.position.z
             );
         }
 
-        if (transform.position.y >= high)
+        if (transform.position.y >= jumpHigh)
         {
-            dirUp = false;
+            directionUp = false;
         }
 
         if (transform.position.y <= 0)
         {
-            dirUp = true;
+            directionUp = true;
         }
         
         transform.LookAt(ene.target.position);

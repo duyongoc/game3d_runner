@@ -5,6 +5,9 @@ using UnityEngine.AI;
 
 public class SpawnEnemy2 : MonoBehaviour
 {
+    [Header("Config data Script Enemy2")]
+    public ScriptEnemy2 scriptEnemy2;
+    
     [Header("Enemies will be create")]
     public GameObject enemyPrefab;
 
@@ -22,6 +25,11 @@ public class SpawnEnemy2 : MonoBehaviour
 
     public enum SpawState { Warning, Spawn, None };
     private SpawState currentState;
+
+    private void LoadData()
+    {
+        
+    }
 
     private void Start()
     {

@@ -97,6 +97,15 @@ public class BallMove : StateBall
             timer = 0;
         }
 
+        //change material
+        if(Input.GetKey(KeyCode.Space))
+        {
+            // owner.GetComponent<Renderer>().material = owner.materialData.arrayMaterials[0].ballMaterials;
+            // owner.particleMoving = owner.materialData.arrayMaterials[0].particleMoving;
+            // owner.directShape.GetComponent<Renderer>().material = owner.materialData.arrayMaterials[0].directShape;
+        }
+
+
     }
 
     void OnTriggerEnter(Collider other)
@@ -108,13 +117,12 @@ public class BallMove : StateBall
         }
         else if(other.tag.Contains("Enemy"))
         {
+            Instantiate(owner.ballExplosion, transform.position, Quaternion.identity);
+            gameObject.SetActive(false);
+
             // loading gameover scene;
             var mgr = SceneMgr.GetInstance();
             mgr.ChangeState(mgr.m_sceneGameOver);
-
-
-            Instantiate(owner.ballExplosion, transform.position, Quaternion.identity);
-            gameObject.SetActive(false);
         }
     }
 

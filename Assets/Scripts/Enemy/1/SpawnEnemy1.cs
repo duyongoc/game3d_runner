@@ -5,6 +5,9 @@ using UnityEngine.AI;
 
 public class SpawnEnemy1 : MonoBehaviour
 {
+    [Header("Load data Enemy 1")]
+    public ScriptEnemy1 scriptEnemy1;
+
     [Header("Enemies will be create")]
     public GameObject enemyPrefab;
 
@@ -12,7 +15,7 @@ public class SpawnEnemy1 : MonoBehaviour
     public float minRangeSpawn = 15f;
     public float maxRangeSpawn = 30f;
     private float timerProcess = 0;
-    public float timeToSpawn = 3.0f;
+    public float timeToSpawn = 0f;
 
     //enemy's target
     private Transform target;
@@ -23,8 +26,15 @@ public class SpawnEnemy1 : MonoBehaviour
     public enum SpawState { Warning, Spawn, None };
     private SpawState currentState;
 
+    private void LoadData()
+    {
+        timeToSpawn = scriptEnemy1.timeSpawn;
+    }
+
     private void Start()
     {
+        LoadData();
+
         target = TransformTheBall.GetInstance().GetTransform();
     }
 

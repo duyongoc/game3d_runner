@@ -29,6 +29,9 @@ public class SceneGameOver : StateScene
     public SpawnPower spawnPower;
     public SpawnTheHole spawnTheHole;
 
+    [Header(" Ball change color reset")]
+    public BallChangeColor ballChangeColor;
+
     [Header("Make score game")]
     public ScoreMgr scoreMgr;
 
@@ -88,6 +91,7 @@ public class SceneGameOver : StateScene
         spawnTheHole.Reset();
         scoreMgr.Reset();
         
+        ballChangeColor.Reset();
         theBall.Reset();
     }
 }

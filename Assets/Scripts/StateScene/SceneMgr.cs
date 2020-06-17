@@ -46,7 +46,7 @@ public class SceneMgr : MonoBehaviour
             ChangeState(m_sceneMenu);
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if(CurrentState != null)
         {

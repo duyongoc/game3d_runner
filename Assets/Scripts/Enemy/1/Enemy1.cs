@@ -5,11 +5,15 @@ using UnityEngine.AI;
 
 public class Enemy1 : MonoBehaviour
 {
+    [Header("Load data Enemy 1")]
+    public ScriptEnemy1 scriptEnemy1;
+    
+    [Header("NavMesh Agent")]
     public NavMeshAgent agent;
     Rigidbody2D m_rigidbody2D;
 
     [Header("Move speed")]
-    public float moveSpeed = 5f;
+    public float moveSpeed = 0f;
 
     [Header("Enemy dead explosion")]
     public GameObject explosion;
@@ -33,8 +37,15 @@ public class Enemy1 : MonoBehaviour
         isWarning = warning;
     }
 
+    private void LoadData()
+    {
+        moveSpeed = scriptEnemy1.moveSpeed;
+    }
+
     private void Start()
     {
+        LoadData();
+
         warningIcon.SetActive(false);
         m_rigidbody2D = GetComponent<Rigidbody2D>();
         target = TransformTheBall.GetInstance().GetTransform();
