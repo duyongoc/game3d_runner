@@ -26,6 +26,7 @@ public class SceneGameOver : StateScene
     [Header("Spawn gameobject")]
     public SpawnEnemy1 spawnEnemy1;
     public SpawnEnemy2 spawnEnemy2;
+    public SpawnEnemy3 spawnEnemy3;
     public SpawnPower spawnPower;
     public SpawnTheHole spawnTheHole;
 
@@ -85,12 +86,13 @@ public class SceneGameOver : StateScene
 
     private void Reset()
     {   
+        scoreMgr.Reset();
         spawnEnemy1.Reset();
         spawnEnemy2.Reset();
+        spawnEnemy3.Reset();
         spawnPower.Reset();
         spawnTheHole.Reset();
-        scoreMgr.Reset();
-        
+
         ballChangeColor.Reset();
         theBall.Reset();
     }

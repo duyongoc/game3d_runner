@@ -1,17 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 
-public class SpawnEnemy2 : MonoBehaviour
+public class SpawnEnemy3 : MonoBehaviour
 {
-    [Header("Data for Enemy 2")]
-    public ScriptEnemy2 scriptEnemy2;
+    [Header("Data for Enemy 3")]
+    public ScriptEnemy3 scriptEnemy;
     
-    [Header("Enemies will be create")]
+    [Header("Enemies prefab")]
     public GameObject enemyPrefab;
 
-    [Header("Data to spawn enemy")]
     private float minRangeSpawn;
     private float maxRangeSpawn ;
     
@@ -29,18 +27,17 @@ public class SpawnEnemy2 : MonoBehaviour
 
     private void LoadData()
     {
-        timeSpawn = scriptEnemy2.timeSpawn;
-        timerProcessSpawn = scriptEnemy2.timeProcessSpawn;
+        timeSpawn = scriptEnemy.timeSpawn;
+        timerProcessSpawn = scriptEnemy.timeProcessSpawn;
 
-        minRangeSpawn = scriptEnemy2.minRangeSpawn;
-        maxRangeSpawn = scriptEnemy2.maxRangeSpawn;
+        minRangeSpawn = scriptEnemy.minRangeSpawn;
+        maxRangeSpawn = scriptEnemy.maxRangeSpawn;
     }
 
 
     private void Start()
     {
         LoadData();
-
         target = TransformTheBall.GetInstance().GetTransform();
     }
 
@@ -76,7 +73,7 @@ public class SpawnEnemy2 : MonoBehaviour
         {
             Vector3 vec = GetRandomPoint();
             GameObject obj = Instantiate(enemyPrefab, vec, Quaternion.identity);
-            obj.GetComponent<Enemy2>().OnSetWarning(false);
+            obj.GetComponent<Enemy3>().OnSetWarning(false);
 
             enemyWasCreated.Add(obj);
             timerProcessSpawn = 0;
@@ -91,7 +88,7 @@ public class SpawnEnemy2 : MonoBehaviour
             {
                 if (obj != null)
                 {
-                    obj.GetComponent<Enemy2>().OnSetWarning(true);
+                    obj.GetComponent<Enemy3>().OnSetWarning(true);
                 }
                    
             }
@@ -103,7 +100,7 @@ public class SpawnEnemy2 : MonoBehaviour
         {
             Vector3 vec = GetRandomPoint();
             GameObject obj = Instantiate(enemyPrefab, vec, Quaternion.identity);
-            obj.GetComponent<Enemy2>().OnSetWarning(true);
+            obj.GetComponent<Enemy3>().OnSetWarning(true);
 
             enemyWasCreated.Add(obj);
             timerProcessSpawn = 0;
@@ -123,12 +120,12 @@ public class SpawnEnemy2 : MonoBehaviour
 
     private Vector3 GetRandomPoint()
     {
-        NavMeshHit hit;
+        UnityEngine.AI.NavMeshHit hit;
         do
         {
             Vector3 randomDirection = Random.insideUnitSphere * maxRangeSpawn;
             randomDirection += target.position;
-            NavMesh.SamplePosition(randomDirection, out hit, maxRangeSpawn, 1);
+            UnityEngine.AI.NavMesh.SamplePosition(randomDirection, out hit, maxRangeSpawn, 1);
 
         }
         // check the point was created isn't near player which range minRangeSpawn
@@ -151,5 +148,4 @@ public class SpawnEnemy2 : MonoBehaviour
 
         timerProcessSpawn = 0;
     }
-
 }

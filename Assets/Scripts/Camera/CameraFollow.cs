@@ -18,14 +18,19 @@ public class CameraFollow : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Vector3 newPostion = new Vector3(m_target.position.x , transform.position.y, m_target.position.z);
+        if (m_target == null)
+        {
+            m_target = TransformTheBall.GetInstance().GetTransform();
+        }
+
+        Vector3 newPostion = new Vector3(m_target.position.x, transform.position.y, m_target.position.z);
         newPostion.z += offset;
 
         transform.position = Vector3.SmoothDamp(transform.position, newPostion, ref velocity, smoothFactor * Time.deltaTime);
         //Debug.Log(newPostion);
     }
 
-    public void ChangeTarget(Transform tar, float smoother )
+    public void ChangeTarget(Transform tar, float smoother)
     {
         smoothFactor = smoother;
         m_target = tar;

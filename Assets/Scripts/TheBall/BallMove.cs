@@ -5,12 +5,11 @@ using UnityEngine;
 public class BallMove : StateBall
 {
 
-    private Vector3 m_vectorMovement;
     public bool isActiveInputMobile = false;
 
+    private Vector3 m_vectorMovement;
     private float timer = 0;
     
-
     #region STATE OF PLAYER
     public override void StartState()
     {
@@ -27,7 +26,6 @@ public class BallMove : StateBall
     {
         base.UpdateState();
 
-        //Player moving
         //UpdatePlayerMovement();
         if (SceneMgr.GetInstance().IsStateInGame())
         {
@@ -53,36 +51,28 @@ public class BallMove : StateBall
                 // case true:
                 // {
                 //     float moveTurn = owner.m_inputMobile.InputDirection.x;
-
                 //     if(moveTurn < -0.5f  && moveTurn > -1)
                 //         transform.Rotate(-Vector3.up, owner.angleSpeed * Time.deltaTime);
-
                 //     if(moveTurn > 0.5f && moveTurn < 1)
                 //         transform.Rotate(Vector3.up, owner.angleSpeed * Time.deltaTime);
-
                 //     break;
                 // }
                 // moving the ball with touch the scene
                 case false:
                 {
                     float moveTurn = Input.mousePosition.x;
-
                     if(moveTurn < Screen.width / 2 && moveTurn > 0)
                     {
                         //Quaternion target = Quaternion.Euler (0, 0, 4f);
 			            //transform.localRotation = Quaternion.Lerp(transform.localRotation,target,owner.angleSpeed * Time.deltaTime);
-
                         transform.Rotate(-Vector3.up, owner.angleSpeed * Time.deltaTime, Space.World);
                     }
                     if(moveTurn > Screen.width / 2 && moveTurn < Screen.width)
                     {
                         //Quaternion target = Quaternion.Euler (0, 0, -4f);
 			            //transform.localRotation = Quaternion.Lerp(transform.localRotation,target,owner.angleSpeed * Time.deltaTime);
-
                         transform.Rotate(Vector3.up, owner.angleSpeed * Time.deltaTime, Space.World);
                     }
-                        
-                    
                     break;
                 }
             }
@@ -96,16 +86,6 @@ public class BallMove : StateBall
             Instantiate(owner.particleMoving, transform.position, Quaternion.identity);
             timer = 0;
         }
-
-        //change material
-        if(Input.GetKey(KeyCode.Space))
-        {
-            // owner.GetComponent<Renderer>().material = owner.materialData.arrayMaterials[0].ballMaterials;
-            // owner.particleMoving = owner.materialData.arrayMaterials[0].particleMoving;
-            // owner.directShape.GetComponent<Renderer>().material = owner.materialData.arrayMaterials[0].directShape;
-        }
-
-
     }
 
     void OnTriggerEnter(Collider other)
@@ -121,6 +101,7 @@ public class BallMove : StateBall
             gameObject.SetActive(false);
 
             // loading gameover scene;
+            owner.ChangeState(owner.m_ballNone);
             var mgr = SceneMgr.GetInstance();
             mgr.ChangeState(mgr.m_sceneGameOver);
         }

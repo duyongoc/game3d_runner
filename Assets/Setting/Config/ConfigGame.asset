@@ -9,14 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bcdef0b7b4e3d144d8a501f554a6d647, type: 3}
-  m_Name: Enemy1
+  m_Script: {fileID: 11500000, guid: b490e433d1f14e2458a21061f0fdd165, type: 3}
+  m_Name: ConfigGame
   m_EditorClassIdentifier: 
-  jumpSpeed: 1
-  jumpHigh: 3.5
-  moveSpeed: 3.5
-  timeSpawn: 3
-  timeProcessSpawn: 0
-  minRangeSpawn: 15
-  maxRangeSpawn: 30
-  distanceWarning: 7
+  isSkipTutotial: 0

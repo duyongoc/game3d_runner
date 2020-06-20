@@ -14,11 +14,17 @@ public class SceneInGame : StateScene
 
     [Header("Sound when the ball get power")]
     public AudioClip m_audioPower;
+    
+    [Header("Create first enemy")]
+    public GameObject enemyFirst;
 
     [Header("Make score game")]
     public Text textScore;
     public ScoreMgr scoreMgr;
     private float countTime = 0;
+
+    [Header("Slider process")]
+    public GameObject sliderProcess;
 
     public override void StartState()
     {
@@ -27,6 +33,11 @@ public class SceneInGame : StateScene
         
         textTapToPlay.SetActive(true);
         textScore.gameObject.SetActive(false);
+
+        if(!sliderProcess.activeSelf)
+        {
+            sliderProcess.SetActive(true);
+        }
     }
 
     public override void UpdateState()
@@ -64,7 +75,9 @@ public class SceneInGame : StateScene
         base.EndState();
 
         isPlaying = false;
-        countTime = 0;
+
+        if(!owner.m_sceneGameOver.theBall.isStateBallMove())
+            countTime = 0;
     }
 
     #region Handler event of button

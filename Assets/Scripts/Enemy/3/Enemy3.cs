@@ -1,16 +1,20 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Enemy1 : MonoBehaviour
+public class Enemy3 : MonoBehaviour
 {
-    [Header("Load data Enemy 1")]
-    public ScriptEnemy1 scriptEnemy;
+    [Header("Load data Enemy 3")]
+    public ScriptEnemy3 scriptEnemy;
 
     [Header("Enemy dead explosion")]
     public GameObject explosion;
     public GameObject explosionSpecial;
+    
+    [Header("Particle armor")]
+    public GameObject particleArmor;
 
     [Header("Warning the player")]
     public GameObject warningIcon;
@@ -18,21 +22,13 @@ public class Enemy1 : MonoBehaviour
 
     //enemy's target
     public Transform target;
-    
-    //
-    private float moveSpeed = 0f;
     private Rigidbody2D m_rigidbody2D;
-    private float distanceWarning = 0;
+    private float moveSpeed = 0;
+    private float distanceWarning;
 
     //enmey state
-    public enum EnemyState { Moving, Attraction, None }
+    public enum EnemyState{ Moving, Attraction, None }
     public EnemyState currentState = EnemyState.Moving;
-    
-
-    public void OnSetWarning(bool warning)
-    {
-        isWarning = warning;
-    }
 
     private void LoadData()
     {
@@ -44,16 +40,15 @@ public class Enemy1 : MonoBehaviour
     {
         LoadData();
 
-        warningIcon.SetActive(false);
         m_rigidbody2D = GetComponent<Rigidbody2D>();
         target = TransformTheBall.GetInstance().GetTransform();
     }
-
-    private void Update()
+    
+    void Update()
     {
         if (SceneMgr.GetInstance().IsStateInGame())
         {
-            switch (currentState)
+            switch(currentState)
             {
                 case EnemyState.Moving:
                 {
@@ -62,7 +57,7 @@ public class Enemy1 : MonoBehaviour
                 }
                 case EnemyState.Attraction:
                 {
-                    EnenmyAttraction();
+                    //EnenmyAttraction();
                     break;
                 }
                 case EnemyState.None:
@@ -81,54 +76,44 @@ public class Enemy1 : MonoBehaviour
             if(Vector3.SqrMagnitude(transform.position - target.position) <= distanceWarning * distanceWarning)
             {
                 warningIcon.SetActive(true);
-                SceneMgr.GetInstance().GetComponentInChildren<SpawnEnemy1>().FinishWarningAlert();
-
-                Camera.main.GetComponent<CameraFollow>().ChangeTarget(transform, 100);
-                SceneMgr.GetInstance().ChangeState(SceneMgr.GetInstance().m_scenePauseGame);
-                StartCoroutine("FinishWarningEnemy1");
+                SceneMgr.GetInstance().GetComponentInChildren<SpawnEnemy3>().FinishWarningAlert();
+                StartCoroutine("FinishWarningEnemy3");
 
                 isWarning = true;
             }
         }
 
-        transform.position = Vector3.MoveTowards(transform.position, target.position, Time.deltaTime * moveSpeed);
-        //agent.SetDestination(target.position);
+        transform.position = Vector3.MoveTowards(transform.position,target.position, Time.deltaTime * moveSpeed);
     }
 
-    private void EnenmyAttraction()
-    {
-        transform.position = Vector3.MoveTowards(transform.position, target.position, Time.deltaTime * moveSpeed);
-
-        if (Vector3.Distance(transform.position, target.position) <= 0.1f)
-        {
-            Instantiate(explosion, transform.position, Quaternion.identity);
-            Destroy(this.gameObject);
-        }
-    }
-
-    IEnumerator FinishWarningEnemy1()
+    IEnumerator FinishWarningEnemy3()
     {
         yield return new WaitForSeconds(2f);
 
         warningIcon.SetActive(false);
-        Camera.main.GetComponent<CameraFollow>().ChangeTarget(target, 10);
-        SceneMgr.GetInstance().ChangeState(SceneMgr.GetInstance().m_sceneInGame);
     }
 
-    //Collision
+    public void OnSetWarning(bool warning)
+    {
+        isWarning = warning;
+    }
+
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag.Contains("Enemy"))
+        if(other.tag == "Enemy1" || other.tag == "Enemy2")
         {
             Instantiate(explosion, transform.position, Quaternion.identity);
-            Destroy(this.gameObject);
         }
         else if(other.gameObject.tag.Contains("Armor"))
         {
             Instantiate(explosionSpecial, transform.position, Quaternion.identity);
             Destroy(this.gameObject);
         }
-
+        else if(other.tag.Contains("BoomSpecial"))
+        {
+            GameObject obj = Instantiate(particleArmor, transform.position, Quaternion.identity);
+            obj.transform.parent = transform;
+        }
     }
 
 }

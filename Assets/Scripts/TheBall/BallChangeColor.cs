@@ -7,6 +7,8 @@ public class BallChangeColor : MonoBehaviour
 {
     [Header("The Ball")]
     public TheBall theBall;
+    public GameObject boomSpecial;
+    public GameObject boomEffect;
 
     [Header("Slider process")]
     public Slider sliderProcess;
@@ -20,6 +22,9 @@ public class BallChangeColor : MonoBehaviour
     
     [Header("2D Array Marterial")]
     public MaterialData materialData;
+
+    [Header("Radius distance to destroy enemy when the ball change color")]
+    public float distanceRadius = 10f;
 
     private int currentIndex = 0;
 
@@ -42,10 +47,30 @@ public class BallChangeColor : MonoBehaviour
                 currentIndex = currentIndex >= 3 ? 0 : currentIndex += 1;
                 ChangeDataTheBall(currentIndex);
 
+                // destroy all of enemy with certain radius
+                DestroyEnemyWithCertainRadius(distanceRadius);
+
                 timeProcessFinish += timerPlusPerProcessFinish;
                 currentTimeProcess = 0;
             }
         }
+    }
+
+    private void DestroyEnemyWithCertainRadius(float radius)
+    {
+        Collider[] nearObjects = Physics.OverlapSphere(theBall.transform.position , radius);
+
+        foreach(Collider obj in nearObjects)
+        {
+            if(obj.tag != "Enemy3" && obj.tag.Contains("Enemy"))
+            {
+                var temp = obj.GetComponentInParent<DestroyEnemy>();
+                temp.DestroyWithExplosion();
+            }
+        }
+
+        Instantiate(boomSpecial, theBall.transform.position, Quaternion.Euler(-90, 0 , 0));
+        Instantiate(boomEffect, theBall.transform.position, Quaternion.Euler(-90, 0 , 0));
     }
 
     private void ChangeDataTheBall(int index)

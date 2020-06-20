@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class SceneMgr : MonoBehaviour
 {
+    [Header("Script config game")]
+    public ScriptConfigGame configGame;
+
     [Header("All of scene in game")]
     public SceneMenu m_sceneMenu;
     public SceneTutorial m_sceneTutorial;
@@ -12,9 +15,6 @@ public class SceneMgr : MonoBehaviour
     public SceneShop m_sceneShop;
     public SceneGameOver m_sceneGameOver;
     public ScenePauseGame m_scenePauseGame;
-
-    [Header("Set ingame or menu to fast test")]
-    public bool isInGame = true;
 
     //current state scene
     private StateScene currentState; 
@@ -40,7 +40,7 @@ public class SceneMgr : MonoBehaviour
         m_sceneShop.gameObject.SetActive(true);
         m_sceneGameOver.gameObject.SetActive(true);
 
-        if(isInGame)
+        if(configGame.isSkipTutotial)
             ChangeState(m_sceneInGame);
         else
             ChangeState(m_sceneMenu);

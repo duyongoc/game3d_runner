@@ -84,4 +84,9 @@ public class TheBall : MonoBehaviour
         //
         ChangeState(m_ballMove);
     }
+
+    public bool isStateBallMove()
+    {
+        return currentState == m_ballMove;
+    }
 }

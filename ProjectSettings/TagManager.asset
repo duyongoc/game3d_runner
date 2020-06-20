@@ -12,6 +12,9 @@ TagManager:
   - Power
   - Armor
   - Wall
+  - Enemy
+  - BoomSpecial
+  - Enemy3
   layers:
   - Default
   - TransparentFX

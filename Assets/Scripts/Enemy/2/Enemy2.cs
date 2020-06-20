@@ -6,37 +6,38 @@ using UnityEngine.AI;
 
 public class Enemy2 : MonoBehaviour
 {
-    public NavMeshAgent agent;
-    Rigidbody2D m_rigidbody2D;
-
-    [Header("Move speed")]
-    public float moveSpeed = 1f;
+    [Header("Load data Enemy 2")]
+    public ScriptEnemy2 scriptEnemy;
 
     [Header("Enemy dead explosion")]
     public GameObject explosion;
     public GameObject explosionSpecial;
-    
-    //enemy's target
-    public Transform target;
 
     [Header("Warning the player")]
     public GameObject warningIcon;
-    public float distanceWarning = 7f;
     public bool isWarning = false;
 
+    //enemy's target
+    public Transform target;
+    private Rigidbody2D m_rigidbody2D;
+    private float distanceWarning;
+    private float moveSpeed;
+    
     //enmey state
     public enum EnemyState{ Moving, Attraction, None }
     public EnemyState currentState = EnemyState.Moving;
 
-    public void OnSetWarning(bool warning)
+    private void LoadData()
     {
-        isWarning = warning;
+        moveSpeed = scriptEnemy.moveSpeed;
+        distanceWarning = scriptEnemy.distanceWarning;
     }
 
     private void Start()
     {
+        LoadData();
+        
         m_rigidbody2D = GetComponent<Rigidbody2D>();
-
         target = TransformTheBall.GetInstance().GetTransform();
     }
     
@@ -107,6 +108,11 @@ public class Enemy2 : MonoBehaviour
         warningIcon.SetActive(false);
         Camera.main.GetComponent<CameraFollow>().ChangeTarget(target, 10);
         SceneMgr.GetInstance().ChangeState(SceneMgr.GetInstance().m_sceneInGame);
+    }
+
+    public void OnSetWarning(bool warning)
+    {
+        isWarning = warning;
     }
 
     void OnTriggerEnter(Collider other)
