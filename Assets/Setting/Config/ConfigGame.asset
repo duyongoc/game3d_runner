@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: ConfigGame
   m_EditorClassIdentifier: 
   isSkipTutotial: 0
+  isMovingCamera: 0

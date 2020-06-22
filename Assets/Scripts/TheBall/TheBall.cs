@@ -25,8 +25,9 @@ public class TheBall : MonoBehaviour
 
     [Header("State of the ball")]
     public BallMove m_ballMove;
-    public BallNone m_ballNone;
+    public BallPower m_ballPower;
     public BallGravity m_ballGravity;
+    public BallNone m_ballNone;
 
     private StateBall currentState;
     public StateBall CurrentState { get => currentState; set => currentState = value; }
@@ -61,7 +62,7 @@ public class TheBall : MonoBehaviour
     {
         if(currentState != null)
         {
-            newState.EndState();
+            currentState.EndState();
         }
 
         currentState = newState;
@@ -75,13 +76,13 @@ public class TheBall : MonoBehaviour
 
     
     public void Reset()
-    {
+    {//
+        
         transform.position = Vector3.zero;
         transform.rotation = Quaternion.Euler(Vector3.zero);
 
-        this.GetComponentInChildren<BallPower>().Reset();
+        //this.GetComponentInChildren<BallPower>().Reset();
         
-        //
         ChangeState(m_ballMove);
     }
 

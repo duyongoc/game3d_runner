@@ -18,6 +18,9 @@ public class SceneInGame : StateScene
     [Header("Create first enemy")]
     public GameObject enemyFirst;
 
+    [Header("Text Intro")]
+    public GameObject textSurvival;
+    
     [Header("Make score game")]
     public Text textScore;
     public ScoreMgr scoreMgr;
@@ -52,6 +55,9 @@ public class SceneInGame : StateScene
                 textScore.gameObject.SetActive(true);
                 SoundMgr.GetInstance().PlaySound(m_audioBackground);
 
+                textSurvival.SetActive(true);
+                Invoke("SetFalseTextSurvival", 2.5f);
+                
                 isPlaying = true;
             }
         }
@@ -86,5 +92,11 @@ public class SceneInGame : StateScene
         //Owner.ChangeState(Owner.m_pauseGameScene);
     }
     #endregion
+
+
+    private void SetFalseTextSurvival()
+    {
+        textSurvival.SetActive(false);
+    }
     
 }

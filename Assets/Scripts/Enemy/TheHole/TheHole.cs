@@ -67,12 +67,12 @@ public class TheHole : MonoBehaviour
             if(Vector3.SqrMagnitude(transform.position - target.position) <= distanceWarning * distanceWarning)
             {
                 warningIcon.SetActive(true);
-                Camera.main.GetComponent<CameraFollow>().ChangeTarget(transform, 100);
-
                 SceneMgr.GetInstance().GetComponentInChildren<SpawnTheHole>().FinishWarningAlert();
-                SceneMgr.GetInstance().ChangeState(SceneMgr.GetInstance().m_scenePauseGame);
-                StartCoroutine("FinishWarningTheHole");
 
+                // Camera.main.GetComponent<CameraFollow>().ChangeTarget(transform, 100);
+                // SceneMgr.GetInstance().ChangeState(SceneMgr.GetInstance().m_scenePauseGame);
+                
+                StartCoroutine("FinishWarningTheHole");
                 isWarning = true;
             }
         }
@@ -92,8 +92,8 @@ public class TheHole : MonoBehaviour
         yield return new WaitForSeconds(2f);
 
         warningIcon.SetActive(false);
-        Camera.main.GetComponent<CameraFollow>().ChangeTarget(target, 10);
-        SceneMgr.GetInstance().ChangeState(SceneMgr.GetInstance().m_sceneInGame);
+        // Camera.main.GetComponent<CameraFollow>().ChangeTarget(target, 10);
+        // SceneMgr.GetInstance().ChangeState(SceneMgr.GetInstance().m_sceneInGame);
     }
 
 

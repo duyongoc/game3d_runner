@@ -73,12 +73,13 @@ public class Enemy2 : MonoBehaviour
             if(Vector3.SqrMagnitude(transform.position - target.position) <= distanceWarning * distanceWarning)
             {
                 warningIcon.SetActive(true);
-                Camera.main.GetComponent<CameraFollow>().ChangeTarget(transform, 100);
-
                 SceneMgr.GetInstance().GetComponentInChildren<SpawnEnemy2>().FinishWarningAlert();
-                SceneMgr.GetInstance().ChangeState(SceneMgr.GetInstance().m_scenePauseGame);
-                StartCoroutine("FinishWarningEnemy2");
 
+
+                // Camera.main.GetComponent<CameraFollow>().ChangeTarget(transform, 100);
+                // SceneMgr.GetInstance().ChangeState(SceneMgr.GetInstance().m_scenePauseGame);
+                
+                StartCoroutine("FinishWarningEnemy2");
                 isWarning = true;
             }
         }
@@ -106,8 +107,8 @@ public class Enemy2 : MonoBehaviour
         yield return new WaitForSeconds(2f);
 
         warningIcon.SetActive(false);
-        Camera.main.GetComponent<CameraFollow>().ChangeTarget(target, 10);
-        SceneMgr.GetInstance().ChangeState(SceneMgr.GetInstance().m_sceneInGame);
+        // Camera.main.GetComponent<CameraFollow>().ChangeTarget(target, 10);
+        // SceneMgr.GetInstance().ChangeState(SceneMgr.GetInstance().m_sceneInGame);
     }
 
     public void OnSetWarning(bool warning)

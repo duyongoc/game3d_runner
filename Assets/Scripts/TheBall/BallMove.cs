@@ -95,7 +95,7 @@ public class BallMove : StateBall
             owner.ChangeState(owner.m_ballGravity);
             owner.m_ballGravity.SetTarget(other.transform);
         }
-        else if(other.tag.Contains("Enemy"))
+        else if(other.tag.Contains("Enemy") && this.gameObject.tag != "Armor")
         {
             Instantiate(owner.ballExplosion, transform.position, Quaternion.identity);
             gameObject.SetActive(false);

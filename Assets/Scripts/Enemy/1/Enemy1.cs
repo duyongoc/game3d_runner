@@ -83,10 +83,10 @@ public class Enemy1 : MonoBehaviour
                 warningIcon.SetActive(true);
                 SceneMgr.GetInstance().GetComponentInChildren<SpawnEnemy1>().FinishWarningAlert();
 
-                Camera.main.GetComponent<CameraFollow>().ChangeTarget(transform, 100);
-                SceneMgr.GetInstance().ChangeState(SceneMgr.GetInstance().m_scenePauseGame);
+                //Camera.main.GetComponent<CameraFollow>().ChangeTarget(transform, 100);
+                //SceneMgr.GetInstance().ChangeState(SceneMgr.GetInstance().m_scenePauseGame);
+                
                 StartCoroutine("FinishWarningEnemy1");
-
                 isWarning = true;
             }
         }
@@ -111,8 +111,9 @@ public class Enemy1 : MonoBehaviour
         yield return new WaitForSeconds(2f);
 
         warningIcon.SetActive(false);
-        Camera.main.GetComponent<CameraFollow>().ChangeTarget(target, 10);
-        SceneMgr.GetInstance().ChangeState(SceneMgr.GetInstance().m_sceneInGame);
+        
+        //Camera.main.GetComponent<CameraFollow>().ChangeTarget(target, 10);
+        //SceneMgr.GetInstance().ChangeState(SceneMgr.GetInstance().m_sceneInGame);
     }
 
     //Collision

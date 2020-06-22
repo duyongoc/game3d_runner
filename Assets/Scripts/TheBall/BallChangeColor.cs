@@ -13,9 +13,11 @@ public class BallChangeColor : MonoBehaviour
     [Header("Slider process")]
     public Slider sliderProcess;
     public Image sliderImage;
-    public float timerPlusPerProcessFinish = 10f;
     public float timeProcessFinish = 10f;
     public float currentTimeProcess = 0;
+
+    public float timerPlusPerProcessFinish = 10f;
+    private float totalProcessFinish;
 
     [Header("Color of Slider")]
     public Color[] colors;
@@ -35,22 +37,31 @@ public class BallChangeColor : MonoBehaviour
         
     }
 
+    private void Start()
+    {
+        totalProcessFinish = timeProcessFinish;
+    }
+
     private void Update()
     {
         if (SceneMgr.GetInstance().IsStateInGame())
         {
-            currentTimeProcess += Time.deltaTime;
-            sliderProcess.value = (float)currentTimeProcess/ timeProcessFinish;
+            if(theBall.CurrentState == theBall.m_ballMove)
+            {
+                currentTimeProcess += Time.deltaTime;
+                sliderProcess.value = (float)currentTimeProcess/ timeProcessFinish;
+            }   
             
-            if(currentTimeProcess >= timeProcessFinish )
+            if(currentTimeProcess >= totalProcessFinish )
             {
                 currentIndex = currentIndex >= 3 ? 0 : currentIndex += 1;
                 ChangeDataTheBall(currentIndex);
 
                 // destroy all of enemy with certain radius
-                DestroyEnemyWithCertainRadius(distanceRadius);
+                //DestroyEnemyWithCertainRadius(distanceRadius);
+                theBall.ChangeState(theBall.m_ballPower);
 
-                timeProcessFinish += timerPlusPerProcessFinish;
+                totalProcessFinish += timerPlusPerProcessFinish;
                 currentTimeProcess = 0;
             }
         }
@@ -84,7 +95,7 @@ public class BallChangeColor : MonoBehaviour
 
     public void Reset()
     {
-        timeProcessFinish = timerPlusPerProcessFinish;
+        totalProcessFinish = timeProcessFinish;
         currentTimeProcess = 0;
         sliderProcess.value = 0;
 
