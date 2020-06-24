@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class BallMove : StateBall
 {
+    [Header("Set Speed up")]
+    public GameObject speedUpEffect;
+    public float speedIncrease = 4f;
+    public float timerSpeedUp = 7f;
 
     public bool isActiveInputMobile = false;
 
@@ -15,6 +19,7 @@ public class BallMove : StateBall
     {
         base.StartState();
         this.gameObject.SetActive(true);
+        speedUpEffect.SetActive(false);
         
         if(!isActiveInputMobile)
         {
@@ -105,6 +110,14 @@ public class BallMove : StateBall
             var mgr = SceneMgr.GetInstance();
             mgr.ChangeState(mgr.m_sceneGameOver);
         }
+        else if(other.tag == "IconSpeedUp")
+        {
+            speedUpEffect.SetActive(true);
+            owner.moveSpeed += speedIncrease;
+
+            other.gameObject.GetComponent<IConSpeedUp>().MakeEffect();
+            Invoke("ResetSpeed", timerSpeedUp);
+        }
     }
 
     void OnCollisionEnter(Collision other)
@@ -119,6 +132,12 @@ public class BallMove : StateBall
             Instantiate(owner.ballExplosion, transform.position, Quaternion.identity);
             gameObject.SetActive(false);
         }
+    }
+
+    public void ResetSpeed()
+    {
+        speedUpEffect.SetActive(false);
+        owner.moveSpeed = owner.scriptTheBall.moveSpeed;
     }
 
     // private void UpdatePlayerMovement()

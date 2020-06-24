@@ -12,29 +12,31 @@ public class BallPower : StateBall
 
     [Header("Particle change")]
     public Material changeMaterial;
+    public GameObject powerEffect;
+    public GameObject shield;
 
     private Material currentMaterial;
     private float timer = 0;
+
+    private bool isFirst = false;
 
     public override void StartState()
     {
         base.StartState();
 
-        if(!SoundMgr.GetInstance().IsPlaying(SceneMgr.GetInstance().m_sceneInGame.m_audioPower))
-        {
-            SoundMgr.GetInstance().PlaySound(SceneMgr.GetInstance().m_sceneInGame.m_audioPower);  
-        }
-
         currentMaterial = this.GetComponent<Renderer>().material;
-        transform.position = new Vector3(transform.position.x ,1 , transform.position.z);
-        transform.localScale = new Vector3(3,3,3);
-        this.gameObject.tag = "Armor";
+        if(!SoundMgr.GetInstance().IsPlaying(SceneMgr.GetInstance().m_sceneInGame.m_audioPower))
+            SoundMgr.GetInstance().PlaySound(SceneMgr.GetInstance().m_sceneInGame.m_audioPower);  
+
+        SetUpBallPower(1f, "Armor", true, true, false);
+        StartCoroutine("ScaleTheBall");
+        Invoke("SetMovingBallPower", 3f);
     }
 
     public override void UpdateState()
     {
         base.UpdateState();
-        
+
         timerPowerProcess += Time.deltaTime;
         timerFinishProcess += Time.deltaTime;
 
@@ -53,21 +55,25 @@ public class BallPower : StateBall
             timerFinishProcess = 0;
         }
         //UpdatePlayerMovement();
-        if (SceneMgr.GetInstance().IsStateInGame())
+        if (SceneMgr.GetInstance().IsStateInGame()
+            && owner.isFirstTriggerPower)
         {
             Move();
         }
+        
     }
 
     public override void EndState()
     {
         base.EndState();
-        
-        this.GetComponent<Renderer>().material = currentMaterial;
+
+        StopAllCoroutines();
         SoundMgr.GetInstance().PlaySound(SceneMgr.GetInstance().m_sceneInGame.m_audioBackground);
-        transform.position = new Vector3(transform.position.x , 0, transform.position.z);
+
+        SetUpBallPower(0f,"TheBall", false, false, true);
         transform.localScale = Vector3.one;
-        this.gameObject.tag = "TheBall";
+
+        this.GetComponent<Renderer>().material = currentMaterial;
     }
 
     private void Move()
@@ -99,6 +105,15 @@ public class BallPower : StateBall
         }
     }
 
+    IEnumerator ScaleTheBall()
+    {
+        while(transform.localScale.x < 3f)
+        {
+            transform.localScale = Vector3.Lerp(transform.localScale, new Vector3(3,3,3) , 1f * Time.deltaTime);
+            yield return new WaitForSeconds(0.05f);
+        }
+    }
+
     IEnumerator PowerProcessFinish(float timer)
     {
         while(timer >= 0)
@@ -111,8 +126,32 @@ public class BallPower : StateBall
 
             timer -= 0.25f;
         }
+       
     }
-    
 
+    //
+    private void SetUpBallPower(float y, string tagName, bool visibleEffect, bool visibleShield, bool useGravity)
+    {
+        transform.position = new Vector3(transform.position.x, y, transform.position.z);
+        this.gameObject.tag = tagName;
+        powerEffect.SetActive(visibleEffect);
+        shield.SetActive(visibleShield);
+        owner.m_rigidbody.useGravity = useGravity;
+    }
+
+    //
+    private void SetMovingBallPower()
+    {
+        if(!isFirst)
+        {
+            owner.isFirstTriggerPower = true;
+            isFirst = true;
+        }
+    }
+
+    public void Reset()
+    {
+        isFirst = false;
+    }
 
 }

@@ -27,7 +27,7 @@ public class SceneGameOver : StateScene
     public SpawnEnemy1 spawnEnemy1;
     public SpawnEnemy2 spawnEnemy2;
     public SpawnEnemy3 spawnEnemy3;
-    public SpawnPower spawnPower;
+    public SpawnIcon spawnIcon;
     public SpawnTheHole spawnTheHole;
 
     [Header(" Ball change color reset")]
@@ -90,7 +90,7 @@ public class SceneGameOver : StateScene
         spawnEnemy1.Reset();
         spawnEnemy2.Reset();
         spawnEnemy3.Reset();
-        spawnPower.Reset();
+        spawnIcon.Reset();
         spawnTheHole.Reset();
 
         ballChangeColor.Reset();

@@ -24,7 +24,6 @@ public class SceneInGame : StateScene
     [Header("Make score game")]
     public Text textScore;
     public ScoreMgr scoreMgr;
-    private float countTime = 0;
 
     [Header("Slider process")]
     public GameObject sliderProcess;
@@ -64,13 +63,12 @@ public class SceneInGame : StateScene
 
         if(isPlaying)
         {
-            countTime += Time.deltaTime;
-            scoreMgr.score = (int)countTime;
-            textScore.text = scoreMgr.score.ToString("00.##");
+            scoreMgr.score += Time.deltaTime;
+            textScore.text = scoreMgr.score.ToString("00");
 
 
             if (scoreMgr.score > scoreMgr.highscore)
-                scoreMgr.highscore = scoreMgr.score;
+                scoreMgr.highscore = (int)scoreMgr.score;
 
             PlayerPrefs.GetInt("highscore", scoreMgr.highscore);
         }
@@ -83,7 +81,7 @@ public class SceneInGame : StateScene
         isPlaying = false;
 
         if(!owner.m_sceneGameOver.theBall.isStateBallMove())
-            countTime = 0;
+            scoreMgr.score = 0;
     }
 
     #region Handler event of button

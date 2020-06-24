@@ -5,17 +5,26 @@ using UnityEngine;
 public class ScoreMgr : MonoBehaviour
 {
     [Header("Score")]
-    public int score;
+    public float score;
     public int highscore;
+
+    public static ScoreMgr s_instance;
     
-    private void Start()
+    private void Awake()
     {
-        //highscore = PlayerPrefs.GetFloat("highscore", highscore);
+        if(s_instance != null)
+            return;
+        s_instance = this;
     }
 
-    private void Update()
+    public static ScoreMgr GetInstance()
     {
-       
+        return s_instance;
+    }
+
+    public void PlusScore(int score)
+    {
+        this.score += score;   
     }
 
     public void Reset()

@@ -29,6 +29,9 @@ public class TheBall : MonoBehaviour
     public BallGravity m_ballGravity;
     public BallNone m_ballNone;
 
+    //
+    public bool isFirstTriggerPower = false;
+
     private StateBall currentState;
     public StateBall CurrentState { get => currentState; set => currentState = value; }
 
@@ -77,14 +80,19 @@ public class TheBall : MonoBehaviour
     
     public void Reset()
     {//
-        
+        //
+        m_ballPower.Reset();
+
+        isFirstTriggerPower = false;
         transform.position = Vector3.zero;
         transform.rotation = Quaternion.Euler(Vector3.zero);
+        transform.localScale = Vector3.one;
 
         //this.GetComponentInChildren<BallPower>().Reset();
         
         ChangeState(m_ballMove);
     }
+
 
     public bool isStateBallMove()
     {
