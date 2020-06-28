@@ -80,8 +80,8 @@ public class SceneInGame : StateScene
 
         isPlaying = false;
 
-        if(!owner.m_sceneGameOver.theBall.isStateBallMove())
-            scoreMgr.score = 0;
+        // if(!owner.m_sceneGameOver.theBall.isStateBallMove())
+        //     scoreMgr.score = 0;
     }
 
     #region Handler event of button

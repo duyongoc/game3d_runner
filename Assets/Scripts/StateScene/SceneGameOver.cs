@@ -27,8 +27,10 @@ public class SceneGameOver : StateScene
     public SpawnEnemy1 spawnEnemy1;
     public SpawnEnemy2 spawnEnemy2;
     public SpawnEnemy3 spawnEnemy3;
-    public SpawnIcon spawnIcon;
     public SpawnTheHole spawnTheHole;
+    //
+    public SpawnCoin spawnCoin;
+    public SpawnSpeedUp spawnSpeedUp;
 
     [Header(" Ball change color reset")]
     public BallChangeColor ballChangeColor;
@@ -41,7 +43,8 @@ public class SceneGameOver : StateScene
         base.EndState();
         Owner.SetActivePanelScene(this.name);
 
-        scoreText.text = "Score: " +  scoreMgr.score;
+        Debug.Log(scoreMgr.score);
+        scoreText.text = "Score: " +  scoreMgr.score.ToString("00");
         highScoreText.text = "HighScore: " + scoreMgr.highscore;
         this.GetComponent<RectTransform>().DOAnchorPos(Vector3.zero, m_speedDuration);
 
@@ -90,8 +93,9 @@ public class SceneGameOver : StateScene
         spawnEnemy1.Reset();
         spawnEnemy2.Reset();
         spawnEnemy3.Reset();
-        spawnIcon.Reset();
         spawnTheHole.Reset();
+        spawnCoin.Reset();
+        spawnSpeedUp.Reset();
 
         ballChangeColor.Reset();
         theBall.Reset();

@@ -10,7 +10,10 @@ public class SceneTutorial : StateScene
 
     // [Tooltip("Speed time duration when change scene")]
     // [SerializeField] private float m_speedDuration = 0.5f;
-
+    [Header("Slider process")]
+    public GameObject textScore;
+    public GameObject sliderProcess;
+    
     public GameObject[] handLeftTutorial;
     public GameObject[] handRightTutorial;
     public GameObject buttonOK;
@@ -29,6 +32,9 @@ public class SceneTutorial : StateScene
     {
         base.EndState();
         Owner.SetActivePanelScene(this.name);
+
+        textScore.SetActive(false);
+        sliderProcess.SetActive(false);
         
         // set false all gameobject when load tutorial scene
         SetActiveObjectTutorial(false, false, false);
@@ -98,6 +104,8 @@ public class SceneTutorial : StateScene
     {
         base.EndState();
 
+        textScore.SetActive(true);
+        sliderProcess.SetActive(true);
     }
 
     #region Events of button

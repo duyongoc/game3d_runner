@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: TheHole
   m_EditorClassIdentifier: 
   moveSpeed: 1
-  distanceRadius: 15
+  distanceRadius: 10

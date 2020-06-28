@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpawnIcon : MonoBehaviour
+public class SpawnCoin : MonoBehaviour
 {
     [Header("Spawn the power ")]
-    [SerializeField]private GameObject[] prefabIcon = default;
+    [SerializeField]private GameObject prefabIcon = default;
     //[SerializeField]private float timeSpawn = 3f;
     //private float timer = 0f;
 
@@ -36,10 +36,7 @@ public class SpawnIcon : MonoBehaviour
             {
                 float posX = Random.Range(-40f, 40f);
                 float posZ = Random.Range( -30f, 50f);
-                
-                int rand = Random.Range(0, prefabIcon.Length);
-
-                GameObject obj = Instantiate(prefabIcon[rand], new Vector3(posX, 0f, posZ), Quaternion.identity);
+                GameObject obj = Instantiate(prefabIcon, new Vector3(posX, 0f, posZ), Quaternion.identity);
                 thePowerWasCreated.Add(obj);
 
                 timer = 0;
@@ -54,10 +51,7 @@ public class SpawnIcon : MonoBehaviour
         {
             float posX = Random.Range(-40f, 40f);
             float posZ = Random.Range( -30f, 50f);
-
-            int rand = Random.Range(0, prefabIcon.Length);
-
-            GameObject obj = Instantiate(prefabIcon[rand], new Vector3(posX, 0f, posZ), Quaternion.identity);
+            GameObject obj = Instantiate(prefabIcon, new Vector3(posX, 0f, posZ), Quaternion.identity);
             thePowerWasCreated.Add(obj);
         }
     }
@@ -72,4 +66,5 @@ public class SpawnIcon : MonoBehaviour
 
         isCreated = false;
     }
+    
 }

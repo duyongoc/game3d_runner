@@ -19,6 +19,9 @@ public class TheHole : MonoBehaviour
     private float distanceRadius;
     private Vector3 pointRandom;
 
+    //the ball
+    private TheBall theBall;
+
     private enum HoleState { Moving, None }
     private HoleState currentState = HoleState.Moving;
 
@@ -34,6 +37,7 @@ public class TheHole : MonoBehaviour
         distanceRadius = scriptTheHole.distanceRadius;
 
         target = TransformTheBall.GetInstance().GetTransform();
+        theBall = TransformTheBall.GetInstance().GetComponent<TheBall>();
         pointRandom = GetRandomPoint();
     }
 
@@ -47,6 +51,12 @@ public class TheHole : MonoBehaviour
             {
                 case HoleState.Moving:
                 {
+                    if(theBall.CurrentState == theBall.m_ballPower
+                        && !theBall.isFirstTriggerPower)
+                    {
+                        return;
+                    }
+
                     HoleMoving();
                     break;
                 }
@@ -67,8 +77,7 @@ public class TheHole : MonoBehaviour
             if(Vector3.SqrMagnitude(transform.position - target.position) <= distanceWarning * distanceWarning)
             {
                 warningIcon.SetActive(true);
-                SceneMgr.GetInstance().GetComponentInChildren<SpawnTheHole>().FinishWarningAlert();
-
+                //SceneMgr.GetInstance().GetComponentInChildren<SpawnTheHole>().FinishWarningAlert();
                 // Camera.main.GetComponent<CameraFollow>().ChangeTarget(transform, 100);
                 // SceneMgr.GetInstance().ChangeState(SceneMgr.GetInstance().m_scenePauseGame);
                 
