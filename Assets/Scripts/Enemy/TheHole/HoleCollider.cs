@@ -7,7 +7,13 @@ public class HoleCollider : MonoBehaviour
     
     void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.CompareTag("Enemy1"))
+        if(other.gameObject.CompareTag("Enemy0"))
+        {
+            var obj = other.gameObject.GetComponentInParent<Enemy0>();
+            obj.target = transform;
+            obj.currentState = Enemy0.EnemyState.Attraction;
+        }
+        else if(other.gameObject.CompareTag("Enemy1"))
         {
             var obj = other.gameObject.GetComponentInParent<Enemy1>();
             obj.target = transform;

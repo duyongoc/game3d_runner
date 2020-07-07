@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class SpawnEnemy1 : MonoBehaviour
+public class SpawnEnemy0 : MonoBehaviour
 {
-    [Header("Load data Enemy 1")]
-    public ScriptEnemy1 scriptEnemy1;
+    [Header("Load data Enemy 0")]
+    public ScriptEnemy0 scriptEnemy0;
 
     [Header("Enemies will be create")]
     public GameObject enemyPrefab;
@@ -16,11 +16,6 @@ public class SpawnEnemy1 : MonoBehaviour
     
     private float timeToSpawn;
     private float timerProcessSpawn;
-
-    //
-    private float timeProcessDelay = 0f;
-    private float timeDelay = 0f;
-    private bool isStart = false;
 
     //enemy's target
     private Transform target;
@@ -32,16 +27,11 @@ public class SpawnEnemy1 : MonoBehaviour
 
     private void LoadData()
     {
-        //
-        timeToSpawn = scriptEnemy1.timeSpawn;
-        timerProcessSpawn = scriptEnemy1.timeProcessSpawn;
+        timeToSpawn = scriptEnemy0.timeSpawn;
+        timerProcessSpawn = scriptEnemy0.timeProcessSpawn;
 
-        //
-        timeDelay = scriptEnemy1.timeDelay;
-
-        //
-        minRangeSpawn = scriptEnemy1.minRangeSpawn;
-        maxRangeSpawn = scriptEnemy1.maxRangeSpawn;
+        minRangeSpawn = scriptEnemy0.minRangeSpawn;
+        maxRangeSpawn = scriptEnemy0.maxRangeSpawn;
     }
 
     private void Start()
@@ -53,22 +43,8 @@ public class SpawnEnemy1 : MonoBehaviour
 
     private void Update()
     {
-        if(!isStart)
+        if (SceneMgr.GetInstance().IsStateInGame())
         {
-            timeProcessDelay += Time.deltaTime;
-            if(timeProcessDelay >= timeDelay)
-            {
-                isStart = true;
-                timeProcessDelay = 0;
-            }
-        }
-        
-
-
-        if (isStart && SceneMgr.GetInstance().IsStateInGame())
-        {
-            
-
             switch (currentState)
             {
                 case SpawnState.First:
@@ -96,7 +72,7 @@ public class SpawnEnemy1 : MonoBehaviour
                         foreach (GameObject obj in enemyWasCreated)
                         {
                             if (obj != null)
-                                obj.GetComponent<Enemy1>().OnSetWarning(true);
+                                obj.GetComponent<Enemy0>().OnSetWarning(true);
                         }
                         isWarning = true;
                     }
@@ -117,13 +93,13 @@ public class SpawnEnemy1 : MonoBehaviour
         if(isWarning)
         {
             GameObject obj = Instantiate(enemyPrefab, new Vector3(0,0,40), Quaternion.identity);
-            obj.GetComponent<Enemy1>().OnSetWarning(isWarning);
+            obj.GetComponent<Enemy0>().OnSetWarning(isWarning);
             enemyWasCreated.Add(obj);
         }
         else
         {
             GameObject obj = Instantiate(enemyPrefab, new Vector3(0,0,40), Quaternion.identity);
-            obj.GetComponent<Enemy1>().OnSetWarning(isWarning);
+            obj.GetComponent<Enemy0>().OnSetWarning(isWarning);
             enemyWasCreated.Add(obj);
         }
     }
@@ -140,7 +116,7 @@ public class SpawnEnemy1 : MonoBehaviour
         if (timerProcessSpawn >= timeToSpawn)
         {
             GameObject obj = Instantiate(enemyPrefab, vec, Quaternion.identity);
-            obj.GetComponent<Enemy1>().OnSetWarning(warning);
+            obj.GetComponent<Enemy0>().OnSetWarning(warning);
 
             enemyWasCreated.Add(obj);
             timerProcessSpawn = 0;
@@ -175,9 +151,7 @@ public class SpawnEnemy1 : MonoBehaviour
                 Destroy(obj);
         }
 
-        timerProcessSpawn = scriptEnemy1.timeProcessSpawn;
+        timerProcessSpawn = 2.5f;
         currentState = SpawnState.First;
-
-        isStart = false;
     }
 }

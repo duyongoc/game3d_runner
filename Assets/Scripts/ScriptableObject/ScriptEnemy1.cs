@@ -18,6 +18,9 @@ public class ScriptEnemy1 : ScriptableObject
     public float timeSpawn = 3f;
     public float timeProcessSpawn = 2.5f;
 
+    [Header("Time delay spawn when game start")]
+    public float timeDelay = 10f;
+
     [Header("Range to create enemy 1")]
     public float minRangeSpawn = 15f;
     public float maxRangeSpawn = 30f;

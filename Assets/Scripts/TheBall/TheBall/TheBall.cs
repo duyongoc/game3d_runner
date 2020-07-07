@@ -24,7 +24,7 @@ public class TheBall : MonoBehaviour
     public float angleSpeed = 0f;
 
     [Header("State of the ball")]
-    public BallMove m_ballMove;
+    public BallMove2 m_ballMove;
     public BallPower m_ballPower;
     public BallGravity m_ballGravity;
     public BallNone m_ballNone;
@@ -81,6 +81,7 @@ public class TheBall : MonoBehaviour
     public void Reset()
     {//
         //
+        m_ballMove.Reset();
         m_ballPower.Reset();
 
         isFirstTriggerPower = false;

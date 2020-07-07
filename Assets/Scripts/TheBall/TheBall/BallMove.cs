@@ -95,43 +95,43 @@ public class BallMove : StateBall
 
     void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.CompareTag("Hole"))
-        {
-            owner.ChangeState(owner.m_ballGravity);
-            owner.m_ballGravity.SetTarget(other.transform);
-        }
-        else if(other.tag.Contains("Enemy") && this.gameObject.tag != "Armor")
-        {
-            Instantiate(owner.ballExplosion, transform.position, Quaternion.identity);
-            gameObject.SetActive(false);
+        // if(other.gameObject.CompareTag("Hole"))
+        // {
+        //     owner.ChangeState(owner.m_ballGravity);
+        //     owner.m_ballGravity.SetTarget(other.transform);
+        // }
+        // else if(other.tag.Contains("Enemy") && this.gameObject.tag != "Armor")
+        // {
+        //     Instantiate(owner.ballExplosion, transform.position, Quaternion.identity);
+        //     gameObject.SetActive(false);
 
-            // loading gameover scene;
-            owner.ChangeState(owner.m_ballNone);
-            var mgr = SceneMgr.GetInstance();
-            mgr.ChangeState(mgr.m_sceneGameOver);
-        }
-        else if(other.tag == "IconSpeedUp")
-        {
-            speedUpEffect.SetActive(true);
-            owner.moveSpeed += speedIncrease;
+        //     // loading gameover scene;
+        //     owner.ChangeState(owner.m_ballNone);
+        //     var mgr = SceneMgr.GetInstance();
+        //     mgr.ChangeState(mgr.m_sceneGameOver);
+        // }
+        // else if(other.tag == "IconSpeedUp")
+        // {
+        //     speedUpEffect.SetActive(true);
+        //     owner.moveSpeed += speedIncrease;
 
-            other.gameObject.GetComponent<IConSpeedUp>().MakeEffect();
-            Invoke("ResetSpeed", timerSpeedUp);
-        }
+        //     other.gameObject.GetComponent<IConSpeedUp>().MakeEffect();
+        //     Invoke("ResetSpeed", timerSpeedUp);
+        // }
     }
 
     void OnCollisionEnter(Collision other)
     {
-        if(other.gameObject.tag == "Ground")
-        {
-            // loading gameover scene;
-            var mgr = SceneMgr.GetInstance();
-            mgr.ChangeState(mgr.m_sceneGameOver);
+        // if(other.gameObject.tag == "Ground")
+        // {
+        //     // loading gameover scene;
+        //     var mgr = SceneMgr.GetInstance();
+        //     mgr.ChangeState(mgr.m_sceneGameOver);
 
 
-            Instantiate(owner.ballExplosion, transform.position, Quaternion.identity);
-            gameObject.SetActive(false);
-        }
+        //     Instantiate(owner.ballExplosion, transform.position, Quaternion.identity);
+        //     gameObject.SetActive(false);
+        // }
     }
 
     public void ResetSpeed()

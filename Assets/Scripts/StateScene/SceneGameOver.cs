@@ -20,10 +20,14 @@ public class SceneGameOver : StateScene
     [Header("Sound when player dead")]
     public AudioClip m_audioEnd;
 
-    [Header("Reset game")]
+    [Header("Camera Follow")]
+    public CameraFollow cameraFollow;
+
+    [Header("Reset the ball")]
     public TheBall theBall;
 
     [Header("Spawn gameobject")]
+    public SpawnEnemy0 spawnEnemy0;
     public SpawnEnemy1 spawnEnemy1;
     public SpawnEnemy2 spawnEnemy2;
     public SpawnEnemy3 spawnEnemy3;
@@ -43,7 +47,6 @@ public class SceneGameOver : StateScene
         base.EndState();
         Owner.SetActivePanelScene(this.name);
 
-        Debug.Log(scoreMgr.score);
         scoreText.text = "Score: " +  scoreMgr.score.ToString("00");
         highScoreText.text = "HighScore: " + scoreMgr.highscore;
         this.GetComponent<RectTransform>().DOAnchorPos(Vector3.zero, m_speedDuration);
@@ -89,7 +92,14 @@ public class SceneGameOver : StateScene
 
     private void Reset()
     {   
+        // reset score Mgr
         scoreMgr.Reset();
+
+        //camera
+        cameraFollow.Reset();
+
+        // spawn enemy
+        spawnEnemy0.Reset();
         spawnEnemy1.Reset();
         spawnEnemy2.Reset();
         spawnEnemy3.Reset();
@@ -97,6 +107,7 @@ public class SceneGameOver : StateScene
         spawnCoin.Reset();
         spawnSpeedUp.Reset();
 
+        //the ball
         ballChangeColor.Reset();
         theBall.Reset();
     }

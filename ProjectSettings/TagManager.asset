@@ -16,6 +16,7 @@ TagManager:
   - BoomSpecial
   - Enemy3
   - IconSpeedUp
+  - Enemy0
   layers:
   - Default
   - TransparentFX

@@ -9,7 +9,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: ParticlesBase
   m_Shader: {fileID: 4800000, guid: 4eba7030ed126ba489bcbcfe309d4fe4, type: 3}
-  m_ShaderKeywords: _ALPHAPREMULTIPLY_ON _FADING_ON
+  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA _ALPHAPREMULTIPLY_ON _FADING_ON
   m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0

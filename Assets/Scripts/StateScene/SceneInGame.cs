@@ -8,6 +8,7 @@ public class SceneInGame : StateScene
     [Header("Tap to play in scene in game")]
     public GameObject textTapToPlay;
     public bool isPlaying = false;
+    public CameraFollow cameraFollow;
 
     [Header("Sound background in menu game")]
     public AudioClip m_audioBackground;
@@ -56,7 +57,13 @@ public class SceneInGame : StateScene
 
                 textSurvival.SetActive(true);
                 Invoke("SetFalseTextSurvival", 2.5f);
-                
+
+                //setup camera
+                cameraFollow.isStart = true;
+            }
+            //
+            if(cameraFollow.IsSetUpCamera())
+            {
                 isPlaying = true;
             }
         }
