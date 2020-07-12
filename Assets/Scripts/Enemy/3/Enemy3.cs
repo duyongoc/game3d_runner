@@ -77,6 +77,9 @@ public class Enemy3 : MonoBehaviour
             {
                 warningIcon.SetActive(true);
                 SceneMgr.GetInstance().GetComponentInChildren<SpawnEnemy3>().FinishWarningAlert();
+                
+                //
+                Camera.main.GetComponent<CameraFollow>().isFlowCamera = true;
                 StartCoroutine("FinishWarningEnemy3");
 
                 isWarning = true;
@@ -91,6 +94,7 @@ public class Enemy3 : MonoBehaviour
         yield return new WaitForSeconds(2f);
 
         warningIcon.SetActive(false);
+
     }
 
     public void OnSetWarning(bool warning)

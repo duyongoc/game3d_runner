@@ -26,13 +26,18 @@ public class SceneGameOver : StateScene
     [Header("Reset the ball")]
     public TheBall theBall;
 
+    [Header("Reset Obstacle")]
+    public ObstacleController obstacleController;
+
     [Header("Spawn gameobject")]
     public SpawnEnemy0 spawnEnemy0;
     public SpawnEnemy1 spawnEnemy1;
     public SpawnEnemy2 spawnEnemy2;
     public SpawnEnemy3 spawnEnemy3;
+    public SpawnEnemy4 spawnEnemy4;
     public SpawnTheHole spawnTheHole;
-    //
+    
+    [Header("Spawn other object")]
     public SpawnCoin spawnCoin;
     public SpawnSpeedUp spawnSpeedUp;
 
@@ -98,11 +103,15 @@ public class SceneGameOver : StateScene
         //camera
         cameraFollow.Reset();
 
+        //obstacle
+        obstacleController.Reset();
+
         // spawn enemy
         spawnEnemy0.Reset();
         spawnEnemy1.Reset();
         spawnEnemy2.Reset();
         spawnEnemy3.Reset();
+        spawnEnemy4.Reset();
         spawnTheHole.Reset();
         spawnCoin.Reset();
         spawnSpeedUp.Reset();

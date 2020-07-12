@@ -17,4 +17,4 @@ MonoBehaviour:
   timeProcessSpawn: 2.5
   minRangeSpawn: 15
   maxRangeSpawn: 30
-  distanceWarning: 8
+  distanceWarning: 10

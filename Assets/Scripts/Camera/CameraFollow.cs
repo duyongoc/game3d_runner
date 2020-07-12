@@ -19,6 +19,8 @@ public class CameraFollow : MonoBehaviour
     public float currentY = 0f;
     public float currentZ = 0f;
 
+    public bool isFlowCamera = false;
+
     private void OnLoad()
     {
         currentY = originY; 
@@ -41,6 +43,15 @@ public class CameraFollow : MonoBehaviour
         Vector3 newPostion = new Vector3(m_target.position.x, transform.position.y, m_target.position.z);
         newPostion.z += currentZ;
         transform.position = Vector3.SmoothDamp(transform.position, newPostion, ref velocity, smoothFactor * Time.deltaTime);
+    
+        if(isFlowCamera)
+        {
+            Camera.main.fieldOfView = Mathf.Lerp(Camera.main.fieldOfView, 75, Time.deltaTime * (moveSpeed/2));
+
+            if(Camera.main.fieldOfView >= 74f)
+                isFlowCamera = false;
+        }
+
     }
 
     public void ChangeTarget(Transform tar, float smoother)
@@ -77,6 +88,8 @@ public class CameraFollow : MonoBehaviour
     {
         isStart = false;
         this.OnLoad();
+
+        Camera.main.fieldOfView = 60f;
         transform.position = new Vector3(transform.position.x, currentY, currentZ);
     }
 }

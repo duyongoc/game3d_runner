@@ -26,7 +26,7 @@ public class ScriptEnemy1 : ScriptableObject
     public float maxRangeSpawn = 30f;
 
     [Header("Distance trigger warning from enemy 1")]
-    public float distanceWarning = 7f;
+    public float distanceWarning = 10f;
 
 
 }

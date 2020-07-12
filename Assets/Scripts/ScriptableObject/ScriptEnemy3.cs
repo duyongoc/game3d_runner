@@ -19,5 +19,8 @@ public class ScriptEnemy3 : ScriptableObject
     [Header("Distance trigger warning from enemy 3")]
     public float distanceWarning = 5f;
 
+    [Header("Time delay spawn when game start")]
+    public float timeDelay = 30f;
+
 
 }

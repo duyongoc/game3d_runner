@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: Enemy3
   m_EditorClassIdentifier: 
   moveSpeed: 3
-  timeSpawn: 15
-  timeProcessSpawn: 0
+  timeSpawn: 10
+  timeProcessSpawn: 5
   minRangeSpawn: 15
   maxRangeSpawn: 30
-  distanceWarning: 6
+  distanceWarning: 8
+  timeDelay: 25

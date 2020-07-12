@@ -122,6 +122,12 @@ public class Enemy1 : MonoBehaviour
         if (other.gameObject.tag.Contains("Enemy"))
         {
             Instantiate(explosion, transform.position, Quaternion.identity);
+
+            var temp = other.GetComponentInParent<Enemy1>();
+            if(temp)
+                Destroy(temp.gameObject);
+            Destroy(other.gameObject);
+
             Destroy(this.gameObject);
         }
         else if(other.gameObject.tag.Contains("Armor"))

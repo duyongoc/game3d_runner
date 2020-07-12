@@ -17,6 +17,9 @@ TagManager:
   - Enemy3
   - IconSpeedUp
   - Enemy0
+  - Enemy4
+  - Obstacle
+  - Tornado
   layers:
   - Default
   - TransparentFX

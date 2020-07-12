@@ -27,7 +27,7 @@ public class BallChangeColor : MonoBehaviour
 
     [Header("Radius distance to destroy enemy when the ball change color")]
     public float distanceRadius = 10f;
-    private int currentIndex = 0;
+    private int currentIndex = 2;
 
     private void Awake()
     {
@@ -41,7 +41,7 @@ public class BallChangeColor : MonoBehaviour
         totalProcessFinish = timeProcessFinish;
     }
 
-    private void Update()
+    private void Updateee()
     {
         if (SceneMgr.GetInstance().IsStateInGame())
         {
@@ -103,7 +103,7 @@ public class BallChangeColor : MonoBehaviour
         sliderProcess.value = 0;
 
         //
-        currentIndex = 0;
+        currentIndex = 2;
         ChangeDataTheBall(currentIndex);
     }
 

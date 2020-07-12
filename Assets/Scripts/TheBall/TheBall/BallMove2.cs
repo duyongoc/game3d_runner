@@ -16,11 +16,6 @@ public class BallMove2 : StateBall
 
     public float engineForce;
 
-    [SerializeField]
-	float speedForce = 10f;
-	float torqueForce = 5f;
-	float driftFactor = 0.9f;
-
     [Header("Test")]
     public float turnSpeed = 5;
 
@@ -133,7 +128,8 @@ public class BallMove2 : StateBall
                 timer += Time.deltaTime;
                 if(timer > owner.timeParMoving )
                 {
-                    Instantiate(owner.particleMoving, transform.position, Quaternion.identity);
+                    int rand = Random.Range(0, 180);
+                    Instantiate(owner.particleMoving, transform.position,Quaternion.Euler(0,0,rand));
                     timer = 0;
                 }
             }
@@ -206,8 +202,7 @@ public class BallMove2 : StateBall
 
             // loading gameover scene;
             owner.ChangeState(owner.m_ballNone);
-            var mgr = SceneMgr.GetInstance();
-            mgr.ChangeState(mgr.m_sceneGameOver);
+            SceneMgr.GetInstance().ChangeState(SceneMgr.GetInstance().m_sceneGameOver);
         }
         else if(other.tag == "IconSpeedUp")
         {
@@ -216,6 +211,14 @@ public class BallMove2 : StateBall
 
             other.gameObject.GetComponent<IConSpeedUp>().MakeEffect();
             Invoke("ResetSpeed", timerSpeedUp);
+        }
+        else if(other.tag == "Tornado")
+        {
+            Instantiate(owner.ballExplosion, transform.position, Quaternion.identity);
+
+            // loading gameover scene;
+            owner.ChangeState(owner.m_ballNone);
+            SceneMgr.GetInstance().ChangeState(SceneMgr.GetInstance().m_sceneGameOver);
         }
     }
 

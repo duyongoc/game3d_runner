@@ -63,8 +63,6 @@ public class SpawnEnemy1 : MonoBehaviour
             }
         }
         
-
-
         if (isStart && SceneMgr.GetInstance().IsStateInGame())
         {
             
@@ -177,6 +175,7 @@ public class SpawnEnemy1 : MonoBehaviour
 
         timerProcessSpawn = scriptEnemy1.timeProcessSpawn;
         currentState = SpawnState.First;
+        timeProcessDelay = 0;
 
         isStart = false;
     }

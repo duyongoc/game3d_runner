@@ -16,19 +16,22 @@ public class Enemy0 : MonoBehaviour
     public GameObject warningIcon;
     public bool isWarning = false;
 
-    //enemy's target
-    public Transform target;
-    public NavMeshAgent agent;
-    
-    //
+    // [Header("Particle when enemy moving")]
+    // public GameObject parMoving;
+    // public float timeParMoving = 0f;
+    // public bool isParMoving = true;
+
+    // private variable
     private float moveSpeed = 0f;
     private Rigidbody2D m_rigidbody2D;
     private float distanceWarning = 0;
 
-    //enmey state
-    public enum EnemyState { Moving, Attraction, None }
+    [Header("Enmey state")]
     public EnemyState currentState = EnemyState.Moving;
+    public enum EnemyState { Moving, Attraction, None }
     
+    //enemy's target
+    public Transform target;
 
     public void OnSetWarning(bool warning)
     {
@@ -40,7 +43,6 @@ public class Enemy0 : MonoBehaviour
         //agent.speed = scriptEnemy.moveSpeed;
         moveSpeed = scriptEnemy.moveSpeed;
         distanceWarning = scriptEnemy.distanceWarning;
-
     }
 
     private void Start()
@@ -50,6 +52,8 @@ public class Enemy0 : MonoBehaviour
         warningIcon.SetActive(false);
         m_rigidbody2D = GetComponent<Rigidbody2D>();
         target = TransformTheBall.GetInstance().GetTransform();
+
+       // StartCoroutine("ParticleMoving", timeParMoving);
     }
 
     private void Update()
@@ -70,7 +74,6 @@ public class Enemy0 : MonoBehaviour
                 }
                 case EnemyState.None:
                 {
-
                     break;
                 }
             }
@@ -86,25 +89,20 @@ public class Enemy0 : MonoBehaviour
                 warningIcon.SetActive(true);
                 SceneMgr.GetInstance().GetComponentInChildren<SpawnEnemy0>().FinishWarningAlert();
 
-                //Camera.main.GetComponent<CameraFollow>().ChangeTarget(transform, 100);
-                //SceneMgr.GetInstance().ChangeState(SceneMgr.GetInstance().m_scenePauseGame);
-                
                 StartCoroutine("FinishWarningEnemy0");
                 isWarning = true;
             }
         }
 
-        
         transform.LookAt(target.position);
         transform.position = Vector3.MoveTowards(transform.position, target.position, Time.deltaTime * moveSpeed);
-        //agent.SetDestination(target.position);
     }
 
     private void EnenmyAttraction()
     {
         transform.position = Vector3.MoveTowards(transform.position, target.position, Time.deltaTime * moveSpeed);
 
-        if (Vector3.Distance(transform.position, target.position) <= 0.1f)
+        if (Vector3.Distance(transform.position, target.position) <= 1f)
         {
             Instantiate(explosion, transform.position, Quaternion.identity);
             Destroy(this.gameObject);
@@ -114,11 +112,7 @@ public class Enemy0 : MonoBehaviour
     IEnumerator FinishWarningEnemy0()
     {
         yield return new WaitForSeconds(2f);
-
         warningIcon.SetActive(false);
-        
-        //Camera.main.GetComponent<CameraFollow>().ChangeTarget(target, 10);
-        //SceneMgr.GetInstance().ChangeState(SceneMgr.GetInstance().m_sceneInGame);
     }
 
     //Collision
@@ -127,6 +121,12 @@ public class Enemy0 : MonoBehaviour
         if (other.gameObject.tag.Contains("Enemy"))
         {
             Instantiate(explosion, transform.localPosition, Quaternion.identity);
+            
+            var temp = other.GetComponentInParent<Enemy1>();
+            if(temp)
+                Destroy(temp.gameObject);
+            Destroy(other.gameObject);
+            
             Destroy(this.gameObject);
         }
         else if(other.gameObject.tag.Contains("Armor"))
@@ -134,6 +134,19 @@ public class Enemy0 : MonoBehaviour
             Instantiate(explosionSpecial, transform.localPosition, Quaternion.identity);
             Destroy(this.gameObject);
         }
-
+        else if(other.gameObject.tag == "Obstacle")
+        {
+            Destroy(this.gameObject);
+        }
     }
+
+    // IEnumerator ParticleMoving(float time)
+    // {
+    //     while(isParMoving)
+    //     {
+    //         yield return new WaitForSeconds(time);
+    //         Instantiate(parMoving, transform.position, Quaternion.identity);
+    //     }
+    // }
+
 }

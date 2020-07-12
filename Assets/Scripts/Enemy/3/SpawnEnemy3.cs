@@ -5,7 +5,7 @@ using UnityEngine;
 public class SpawnEnemy3 : MonoBehaviour
 {
     [Header("Data for Enemy 3")]
-    public ScriptEnemy3 scriptEnemy;
+    public ScriptEnemy3 scriptEnemy3;
     
     [Header("Enemies prefab")]
     public GameObject enemyPrefab;
@@ -14,7 +14,12 @@ public class SpawnEnemy3 : MonoBehaviour
     private float maxRangeSpawn ;
     
     private float timeSpawn ;
-    private float timerProcessSpawn ;
+    private float timerProcessSpawn;
+
+    //
+    public float timeProcessDelay = 0f;
+    public float timeDelay = 0f;
+    private bool isStart = false;
 
     //enemy's target
     private Transform target;
@@ -22,16 +27,19 @@ public class SpawnEnemy3 : MonoBehaviour
     public bool isWarning = false;
     public List<GameObject> enemyWasCreated;
 
-    public enum SpawState { Warning, Spawn, None };
-    private SpawState currentState;
+    public enum SpawnState { Warning, Spawn, None };
+    private SpawnState currentState = SpawnState.Warning;
 
     private void LoadData()
     {
-        timeSpawn = scriptEnemy.timeSpawn;
-        timerProcessSpawn = scriptEnemy.timeProcessSpawn;
+        timeSpawn = scriptEnemy3.timeSpawn;
+        timerProcessSpawn = scriptEnemy3.timeProcessSpawn;
 
-        minRangeSpawn = scriptEnemy.minRangeSpawn;
-        maxRangeSpawn = scriptEnemy.maxRangeSpawn;
+        //
+        timeDelay = scriptEnemy3.timeDelay;
+
+        minRangeSpawn = scriptEnemy3.minRangeSpawn;
+        maxRangeSpawn = scriptEnemy3.maxRangeSpawn;
     }
 
 
@@ -43,21 +51,31 @@ public class SpawnEnemy3 : MonoBehaviour
 
     private void Update()
     {
-        if (SceneMgr.GetInstance().IsStateInGame())
+        if(!isStart && SceneMgr.GetInstance().IsStateInGame())
+        {
+            timeProcessDelay += Time.deltaTime;
+            if(timeProcessDelay >= timeDelay)
+            {
+                isStart = true;
+                timeProcessDelay = 0;
+            }
+        }
+
+        if (isStart && SceneMgr.GetInstance().IsStateInGame())
         {
             switch (currentState)
             {
-                case SpawState.Warning:
+                case SpawnState.Warning:
                 {
                     StateSpawnWarning();
                     break;
                 }
-                case SpawState.Spawn:
+                case SpawnState.Spawn:
                 {    
                     StateSpawn();
                     break;
                 }
-                case SpawState.None:
+                case SpawnState.None:
                 {
 
                     break;
@@ -77,6 +95,7 @@ public class SpawnEnemy3 : MonoBehaviour
 
             enemyWasCreated.Add(obj);
             timerProcessSpawn = 0;
+
         }
     }
 
@@ -110,12 +129,7 @@ public class SpawnEnemy3 : MonoBehaviour
     public void FinishWarningAlert()
     {
         timerProcessSpawn = 0;
-        currentState = SpawState.Spawn;
-    }
-
-    private void SpawEnemy()
-    {
-        
+        currentState = SpawnState.Spawn;
     }
 
     private Vector3 GetRandomPoint()
@@ -147,5 +161,9 @@ public class SpawnEnemy3 : MonoBehaviour
         }
 
         timerProcessSpawn = 0;
+        timerProcessSpawn = scriptEnemy3.timeProcessSpawn;
+        currentState = SpawnState.Warning;
+        timeProcessDelay = 0;
+        isStart = false;
     }
 }
