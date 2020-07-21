@@ -11,7 +11,7 @@ public class BallChangeColor : MonoBehaviour
     public GameObject boomEffect;
 
     [Header("Slider process")]
-    public Slider sliderProcess;
+    // public Slider sliderProcess;
     public Image sliderImage;
     public float timeProcessFinish = 10f;
     public float currentTimeProcess = 0;
@@ -31,7 +31,7 @@ public class BallChangeColor : MonoBehaviour
 
     private void Awake()
     {
-        sliderProcess.value = 0;
+        //sliderProcess.value = 0;
         ChangeDataTheBall(currentIndex);
         
     }
@@ -45,14 +45,14 @@ public class BallChangeColor : MonoBehaviour
     {
         if (SceneMgr.GetInstance().IsStateInGame())
         {
-            if(theBall.CurrentState == theBall.m_ballMove)
-            {
-                if(!sliderProcess.gameObject.activeSelf)
-                    sliderProcess.gameObject.SetActive(true);
+            // if(theBall.CurrentState == theBall.m_ballMove)
+            // {
+            //     if(!sliderProcess.gameObject.activeSelf)
+            //         sliderProcess.gameObject.SetActive(true);
                     
-                currentTimeProcess += Time.deltaTime;
-                sliderProcess.value = (float)currentTimeProcess/ totalProcessFinish;
-            }   
+            //     currentTimeProcess += Time.deltaTime;
+            //     sliderProcess.value = (float)currentTimeProcess/ totalProcessFinish;
+            // }   
             
             if(currentTimeProcess >= totalProcessFinish )
             {
@@ -61,7 +61,7 @@ public class BallChangeColor : MonoBehaviour
 
                 // destroy all of enemy with certain radius
                 //DestroyEnemyWithCertainRadius(distanceRadius);
-                sliderProcess.gameObject.SetActive(false);
+                //sliderProcess.gameObject.SetActive(false);
                 theBall.ChangeState(theBall.m_ballPower);
 
                 totalProcessFinish += timerPlusPerProcessFinish;
@@ -100,7 +100,7 @@ public class BallChangeColor : MonoBehaviour
     {
         totalProcessFinish = timeProcessFinish;
         currentTimeProcess = 0;
-        sliderProcess.value = 0;
+        //sliderProcess.value = 0;
 
         //
         currentIndex = 2;

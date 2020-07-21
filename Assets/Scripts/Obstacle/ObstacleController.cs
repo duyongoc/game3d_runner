@@ -6,10 +6,16 @@ public class ObstacleController : MonoBehaviour
 {
     public Obstacle[] listObstacle;
 
+    public bool isStart = false;
+
     private void Start()
     {
         listObstacle = this.GetComponentsInChildren<Obstacle>();
-        OnSetup();
+
+        foreach(Obstacle ob in listObstacle)
+        {
+            ob.gameObject.SetActive(false);
+        }
     }
     
     private void OnSetup()
@@ -25,6 +31,15 @@ public class ObstacleController : MonoBehaviour
             {
                 ob.gameObject.SetActive(true);
             }
+        }
+    }
+
+    private void Update()
+    {
+        if(isStart)
+        {
+            OnSetup();
+            isStart = false;
         }
     }
 

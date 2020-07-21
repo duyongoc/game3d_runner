@@ -72,18 +72,25 @@ public class Enemy4 : MonoBehaviour
             Instantiate(explosion, transform.localPosition, Quaternion.identity);
             Destroy(this.gameObject);
         }
-        else if(other.tag == "Obstacle")
+        else if(other.gameObject.tag == "Obstacle")
         {
-            other.gameObject.SetActive(false);
             Instantiate(explosion, transform.localPosition, Quaternion.identity);
+            other.gameObject.SetActive(false);
+            
         }
-        else if(other.tag == "TheBall")
+        else if(other.gameObject.tag == "TheBall")
         {
+            Instantiate(explosion, transform.localPosition, Quaternion.identity);
             other.gameObject.SetActive(false);
             SceneMgr.GetInstance().ChangeState(SceneMgr.GetInstance().m_sceneGameOver);
         }
-        else
+        else if (other.tag.Contains("Enemy"))
         {
+            Instantiate(explosion, transform.localPosition, Quaternion.identity);
+            
+            var temp = other.GetComponentInParent<Enemy1>();
+            if(temp)
+                Destroy(temp.gameObject);
             Destroy(other.gameObject);
         }
 

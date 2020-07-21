@@ -130,6 +130,11 @@ public class Enemy1 : MonoBehaviour
 
             Destroy(this.gameObject);
         }
+        else if(other.gameObject.tag == "Ene5")
+        {
+            Instantiate(explosion, transform.localPosition, Quaternion.identity);
+            Destroy(this.gameObject);
+        }
         else if(other.gameObject.tag.Contains("Armor"))
         {
             Instantiate(explosionSpecial, transform.position, Quaternion.identity);

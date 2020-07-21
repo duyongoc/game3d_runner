@@ -65,6 +65,11 @@ public class BallMove2 : StateBall
     {
         base.EndState();
 
+        if(temp != null)
+        {
+            temp.transform.parent = null;
+            Destroy(temp, 2f);
+        }
     }
     #endregion
 
@@ -140,8 +145,6 @@ public class BallMove2 : StateBall
         
         transform.Translate(Vector3.forward * owner.moveSpeed * Time.deltaTime);
 
-        
-        
     }
 
     private void Move()

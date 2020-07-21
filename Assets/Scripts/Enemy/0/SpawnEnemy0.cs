@@ -95,12 +95,28 @@ public class SpawnEnemy0 : MonoBehaviour
             GameObject obj = Instantiate(enemyPrefab, new Vector3(0,0,40), Quaternion.identity);
             obj.GetComponent<Enemy0>().OnSetWarning(isWarning);
             enemyWasCreated.Add(obj);
+
+            GameObject obj2 = Instantiate(enemyPrefab, new Vector3(20,0,10), Quaternion.identity);
+            obj2.GetComponent<Enemy0>().OnSetWarning(isWarning);
+            enemyWasCreated.Add(obj2);
+
+            GameObject obj3 = Instantiate(enemyPrefab, new Vector3(-20,0,10), Quaternion.identity);
+            obj3.GetComponent<Enemy0>().OnSetWarning(isWarning);
+            enemyWasCreated.Add(obj3);
         }
         else
         {
             GameObject obj = Instantiate(enemyPrefab, new Vector3(0,0,40), Quaternion.identity);
             obj.GetComponent<Enemy0>().OnSetWarning(isWarning);
             enemyWasCreated.Add(obj);
+
+            GameObject obj2 = Instantiate(enemyPrefab, new Vector3(20,0,10), Quaternion.identity);
+            obj2.GetComponent<Enemy0>().OnSetWarning(isWarning);
+            enemyWasCreated.Add(obj2);
+
+            GameObject obj3 = Instantiate(enemyPrefab, new Vector3(-20,0,10), Quaternion.identity);
+            obj3.GetComponent<Enemy0>().OnSetWarning(isWarning);
+            enemyWasCreated.Add(obj3);
         }
     }
 

@@ -15,21 +15,21 @@ public class SpawnSpeedUp : MonoBehaviour
     private float timer = 0;
 
     public List<GameObject> thePowerWasCreated;
-    private bool isCreated = false;
+    // private bool isCreated = false;
 
     private void Update()
     {
-        if(!isCreated)
-        {
-            if(SceneMgr.GetInstance().IsStateInGame())
-            {
-                SpawnPowerWhenGameStart();
-                isCreated = true;
-            }
-        }
+        // if(!isCreated)
+        // {
+        //     if(SceneMgr.GetInstance().IsStateInGame())
+        //     {
+        //         SpawnPowerWhenGameStart();
+        //         isCreated = true;
+        //     }
+        // }
         
         // create power per timeSpawn second
-        if(SceneMgr.GetInstance().IsStateInGame())     
+        if(SceneMgr.GetInstance().IsStateInGame() && iSValid())     
         {
             timer += Time.deltaTime;
             if(timer > timeSpawn)
@@ -43,6 +43,14 @@ public class SpawnSpeedUp : MonoBehaviour
             }
         }
         
+    }
+
+    private bool iSValid()
+    {
+        if(thePowerWasCreated.Count < 2)
+            return true;
+
+        return false;
     }
 
     private void SpawnPowerWhenGameStart()
@@ -62,8 +70,8 @@ public class SpawnSpeedUp : MonoBehaviour
         {
             Destroy(obj);
         }
-        thePowerWasCreated.Clear();
 
-        isCreated = false;
+        thePowerWasCreated.Clear();
+        // isCreated = false;
     }
 }

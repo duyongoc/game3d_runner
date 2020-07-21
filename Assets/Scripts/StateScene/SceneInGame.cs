@@ -15,9 +15,9 @@ public class SceneInGame : StateScene
 
     [Header("Sound when the ball get power")]
     public AudioClip m_audioPower;
-    
-    [Header("Create first enemy")]
-    public GameObject enemyFirst;
+
+    [Header("Obstacle")]
+    public ObstacleController obstacleController;
 
     [Header("Text Intro")]
     public GameObject textSurvival;
@@ -25,9 +25,6 @@ public class SceneInGame : StateScene
     [Header("Make score game")]
     public Text textScore;
     public ScoreMgr scoreMgr;
-
-    [Header("Slider process")]
-    public GameObject sliderProcess;
 
     public override void StartState()
     {
@@ -37,10 +34,8 @@ public class SceneInGame : StateScene
         textTapToPlay.SetActive(true);
         textScore.gameObject.SetActive(false);
 
-        if(!sliderProcess.activeSelf)
-        {
-            sliderProcess.SetActive(true);
-        }
+        //
+        obstacleController.isStart = true;
     }
 
     public override void UpdateState()
@@ -56,7 +51,7 @@ public class SceneInGame : StateScene
                 SoundMgr.GetInstance().PlaySound(m_audioBackground);
 
                 textSurvival.SetActive(true);
-                Invoke("SetFalseTextSurvival", 2.5f);
+                Invoke("SetFalseTextSurvival", 3.5f);
 
                 //setup camera
                 cameraFollow.isStart = true;

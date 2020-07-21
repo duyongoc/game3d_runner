@@ -35,11 +35,15 @@ public class SceneGameOver : StateScene
     public SpawnEnemy2 spawnEnemy2;
     public SpawnEnemy3 spawnEnemy3;
     public SpawnEnemy4 spawnEnemy4;
+    public SpawnEnemy5 spawnEnemy5;
+
+    [Header("Spawn other Enemy")]
     public SpawnTheHole spawnTheHole;
     
     [Header("Spawn other object")]
     public SpawnCoin spawnCoin;
     public SpawnSpeedUp spawnSpeedUp;
+    public SpawnIconShield spawnIconShield;
 
     [Header(" Ball change color reset")]
     public BallChangeColor ballChangeColor;
@@ -112,9 +116,13 @@ public class SceneGameOver : StateScene
         spawnEnemy2.Reset();
         spawnEnemy3.Reset();
         spawnEnemy4.Reset();
+        spawnEnemy5.Reset();
         spawnTheHole.Reset();
+
+        //
         spawnCoin.Reset();
         spawnSpeedUp.Reset();
+        spawnIconShield.Reset();
 
         //the ball
         ballChangeColor.Reset();

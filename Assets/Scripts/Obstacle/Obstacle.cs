@@ -14,8 +14,11 @@ public class Obstacle : MonoBehaviour
             other.gameObject.SetActive(false);
             SceneMgr.GetInstance().ChangeState(SceneMgr.GetInstance().m_sceneGameOver);
         }
-        else
+        else if (other.tag.Contains("Enemy"))
         {
+            var temp = other.GetComponentInParent<Enemy1>();
+            if(temp)
+                Destroy(temp.gameObject);
             Destroy(other.gameObject);
         }
     }

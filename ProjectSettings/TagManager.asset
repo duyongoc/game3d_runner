@@ -20,6 +20,7 @@ TagManager:
   - Enemy4
   - Obstacle
   - Tornado
+  - Ene5
   layers:
   - Default
   - TransparentFX

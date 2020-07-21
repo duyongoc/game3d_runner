@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TheBall : MonoBehaviour
 {
@@ -28,6 +29,12 @@ public class TheBall : MonoBehaviour
     public BallPower m_ballPower;
     public BallGravity m_ballGravity;
     public BallNone m_ballNone;
+
+    [Header("Slider process")]
+    public Slider sliderProcess;
+    public Image sliderImage;
+    public float timeProcessFinish = 0f;
+    public float currentTimeProcess = 0;
 
     //
     public bool isFirstTriggerPower = false;
@@ -58,6 +65,8 @@ public class TheBall : MonoBehaviour
     {
         this.moveSpeed = scriptTheBall.moveSpeed;
         this.angleSpeed = scriptTheBall.angleSpeed;
+
+        sliderProcess.gameObject.SetActive(false);
     }
 
 

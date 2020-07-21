@@ -1,13 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BallPower : StateBall
 {
     [Header("The time power")]
     public float timerPower = 15f;
-    public float timerPowerProcess = 0f;
     public float timerFinish = 12f;
+    public float timerPowerProcess = 0f;
     public float timerFinishProcess = 0f;
 
     [Header("Particle change")]
@@ -16,13 +17,43 @@ public class BallPower : StateBall
     public GameObject shield;
 
     private Material currentMaterial;
-    private float timer = 0;
+    // private float timer = 0;
 
     private bool isFirst = false;
+
+    //
+    [Header("Test")]
+    public float engineForce;
+    public float turnSpeed = 5;
+
+    public Transform centerPos1;
+    public Transform centerPos2;
+
+    public Transform shape;
+
+    public GameObject ParticleTurning;
+    public float timeParTurning = 0.2f;
+    private float timerTurning = 0f;
+
+    public GameObject trail;
+    GameObject temp = null;
+    bool isCreate = false;
+    private float timerMoving = 0;
+
+
 
     public override void StartState()
     {
         base.StartState();
+
+        timerPowerProcess = timerPower;
+        timerFinishProcess = timerFinish;
+
+        //
+        owner.timeProcessFinish = timerPowerProcess;
+        owner.currentTimeProcess = timerPowerProcess;
+        owner.sliderProcess.gameObject.SetActive(true);
+        owner.sliderProcess.value = 1;
 
         currentMaterial = this.GetComponent<Renderer>().material;
         if(!SoundMgr.GetInstance().IsPlaying(SceneMgr.GetInstance().m_sceneInGame.m_audioPower))
@@ -37,28 +68,32 @@ public class BallPower : StateBall
     {
         base.UpdateState();
 
-        timerPowerProcess += Time.deltaTime;
-        timerFinishProcess += Time.deltaTime;
+        timerPowerProcess -= Time.deltaTime;
+        timerFinishProcess -= Time.deltaTime;
 
-        if(timerPowerProcess >= timerPower)
+        //load slider 
+        owner.currentTimeProcess -= Time.deltaTime;
+        owner.sliderProcess.value = (float)owner.currentTimeProcess/ timerFinish;
+
+        if(timerPowerProcess <= 0)
         {
             owner.ChangeState(owner.m_ballMove);
 
             //Reset();
-            timerPowerProcess = 0;
-            timerFinishProcess = 0;
+            timerPowerProcess = timerPower;
+            timerFinishProcess = timerFinish;
         }
 
-        if(timerFinishProcess >= timerFinish)
+        if(timerFinishProcess <= 0f)
         {
-            StartCoroutine("PowerProcessFinish", 2.5f);
-            timerFinishProcess = 0;
+            StartCoroutine("PowerProcessFinish", 2.4f);
+            timerFinishProcess = timerFinish;
         }
         //UpdatePlayerMovement();
         if (SceneMgr.GetInstance().IsStateInGame()
             && owner.isFirstTriggerPower)
         {
-            Move();
+            Move2();
         }
         
     }
@@ -74,35 +109,91 @@ public class BallPower : StateBall
         transform.localScale = Vector3.one;
 
         this.GetComponent<Renderer>().material = currentMaterial;
+        
+        if(temp != null)
+        {
+            temp.transform.parent = null;
+            Destroy(temp, 2f);
+        }
+
+        //
+        owner.sliderProcess.gameObject.SetActive(false);
+        owner.sliderProcess.value = 1;
+        owner.currentTimeProcess = 0;
     }
 
-    private void Move()
+    private void Move2()
     {
+       
         if(Input.GetMouseButton(0))
         {
+            if(!isCreate)
+            {
+                temp = Instantiate(trail, transform.position, Quaternion.identity);
+                temp.transform.parent = transform;
+                isCreate = true;
+            }
+           
+            
             float moveTurn = Input.mousePosition.x;
             if(moveTurn < Screen.width / 2 && moveTurn > 0)
             {
-                //Quaternion target = Quaternion.Euler (0, 0, 4f);
-                //transform.localRotation = Quaternion.Lerp(transform.localRotation,target,owner.angleSpeed * Time.deltaTime);
-                transform.Rotate(-Vector3.up, owner.angleSpeed * Time.deltaTime, Space.World);
+                transform.Rotate(-Vector3.up, turnSpeed * Time.deltaTime, Space.World);
+                
+                Vector3 vec = centerPos1.position - transform.position;
+                //vec =  new Vector3(vec.x, 0f, vec.z);
+                owner.m_rigidbody.AddForce(vec.normalized * engineForce , ForceMode.Impulse);
+                owner.m_rigidbody.AddTorque(vec.normalized * engineForce *2 , ForceMode.Impulse);
+                
+                shape.localRotation = Quaternion.Lerp(shape.localRotation, Quaternion.Euler(0f, 0f, 100f), Time.deltaTime * 5);
+            
             }
-            if(moveTurn > Screen.width / 2 && moveTurn < Screen.width)
+            else if(moveTurn > Screen.width / 2 && moveTurn < Screen.width)
             {
-                //Quaternion target = Quaternion.Euler (0, 0, -4f);
-                //transform.localRotation = Quaternion.Lerp(transform.localRotation,target,owner.angleSpeed * Time.deltaTime);
-                transform.Rotate(Vector3.up, owner.angleSpeed * Time.deltaTime, Space.World);
+                transform.Rotate(Vector3.up, turnSpeed * Time.deltaTime, Space.World);
+                
+                Vector3 vec = centerPos2.position - transform.position ;
+                //vec =  new Vector3(vec.x, 0f, vec.z);
+                owner.m_rigidbody.AddForce(-vec.normalized  * engineForce , ForceMode.Impulse);
+                owner.m_rigidbody.AddTorque(-vec.normalized* engineForce *2, ForceMode.Impulse);
+
+               shape.localRotation = Quaternion.Lerp(shape.localRotation, Quaternion.Euler(0f, 0f, -100f), Time.deltaTime * 5);
+            }
+            timerTurning += Time.deltaTime;
+            if(timerTurning > timeParTurning)
+            {
+                Instantiate(ParticleTurning, transform.position, Quaternion.identity);
+                timerTurning = 0;
+            }
+
+        }
+        else{
+            if(isCreate)
+            {
+                if(temp != null)
+                {
+                    temp.transform.parent = null;
+                    Destroy(temp, 2f);
+                }
+                    
+                isCreate = false;
+            }
+            else{
+                timerMoving += Time.deltaTime;
+                if(timerMoving > owner.timeParMoving )
+                {
+                    int rand = Random.Range(0, 180);
+                    Instantiate(owner.particleMoving, transform.position,Quaternion.Euler(0,0,rand));
+                    timerMoving = 0;
+                }
             }
         }
 
-        transform.Translate(Vector3.forward * owner.moveSpeed * Time.deltaTime); 
+        if(shape.rotation.z != 0f)
+            shape.localRotation = Quaternion.Lerp(shape.localRotation,Quaternion.Euler(0f, 0f, 0f), Time.deltaTime * 5);
         
-        timer += Time.deltaTime;
-        if(timer > owner.timeParMoving)
-        {
-            Instantiate(owner.particleMoving, transform.position, Quaternion.identity);
-            timer = 0;
-        }
+        transform.Translate(Vector3.forward * owner.moveSpeed * Time.deltaTime);
+
     }
 
     IEnumerator ScaleTheBall()

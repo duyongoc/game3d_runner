@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 1511483488241034613}
   - component: {fileID: 1477964942255898603}
   - component: {fileID: 1603964234629281968}
-  - component: {fileID: 200516800}
   m_Layer: 0
   m_Name: Power3
   m_TagString: Armor
@@ -4836,15 +4835,3 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.22
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &200516800
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1603964234629281969}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7052268075186ee42997025116dd7df0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

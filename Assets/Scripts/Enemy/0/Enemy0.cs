@@ -93,8 +93,9 @@ public class Enemy0 : MonoBehaviour
                 isWarning = true;
             }
         }
-
-        transform.LookAt(target.position);
+    
+        Vector3 vec = new Vector3(target.position.x, 0, target.position.z);
+        transform.LookAt(vec);
         transform.position = Vector3.MoveTowards(transform.position, target.position, Time.deltaTime * moveSpeed);
     }
 
@@ -127,6 +128,11 @@ public class Enemy0 : MonoBehaviour
                 Destroy(temp.gameObject);
             Destroy(other.gameObject);
             
+            Destroy(this.gameObject);
+        }
+        else if(other.gameObject.tag == "Ene5")
+        {
+            Instantiate(explosion, transform.localPosition, Quaternion.identity);
             Destroy(this.gameObject);
         }
         else if(other.gameObject.tag.Contains("Armor"))

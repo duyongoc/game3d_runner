@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 4
   timeSpawn: 3
-  timeProcessSpawn: 2.5
+  timeProcessSpawn: 0
   minRangeSpawn: 15
   maxRangeSpawn: 30
   distanceWarning: 10
