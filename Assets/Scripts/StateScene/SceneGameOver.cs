@@ -44,6 +44,7 @@ public class SceneGameOver : StateScene
     public SpawnCoin spawnCoin;
     public SpawnSpeedUp spawnSpeedUp;
     public SpawnIconShield spawnIconShield;
+    public SpawnMeteorite spawnMeteorite;
 
     [Header(" Ball change color reset")]
     public BallChangeColor ballChangeColor;
@@ -119,10 +120,11 @@ public class SceneGameOver : StateScene
         spawnEnemy5.Reset();
         spawnTheHole.Reset();
 
-        //
+        //other object
         spawnCoin.Reset();
         spawnSpeedUp.Reset();
         spawnIconShield.Reset();
+        spawnMeteorite.Reset();
 
         //the ball
         ballChangeColor.Reset();

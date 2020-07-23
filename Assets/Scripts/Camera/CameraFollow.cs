@@ -21,6 +21,9 @@ public class CameraFollow : MonoBehaviour
 
     public bool isFlowCamera = false;
 
+    //private variable
+    private Animator m_animator;
+
     private void OnLoad()
     {
         currentY = originY; 
@@ -30,6 +33,7 @@ public class CameraFollow : MonoBehaviour
     #region UNITY
     private void Start()
     {
+        m_animator = GetComponent<Animator>();
         this.OnLoad();
     }
 
@@ -82,6 +86,31 @@ public class CameraFollow : MonoBehaviour
             return true;
         
         return false;
+    }
+
+    public void MakeCameraShake(float duration, float magnitude)
+    {
+        //m_animator.SetTrigger("Shake");
+        StartCoroutine(Shake(duration,magnitude));
+    }
+
+    IEnumerator Shake(float duration, float magnitude)
+    {
+        Vector3 originalPos = transform.position;
+        float elapsed = 0.0f;
+
+        while(elapsed < duration)
+        {
+            float x = Random.Range(-1f, 1f) * magnitude;
+            float z = Random.Range(-1f, 1f) * magnitude;
+
+            transform.localPosition = new Vector3
+                        (transform.position.x + x, originalPos.y, transform.position.z + z);
+            
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+        //transform.localPosition = originalPos;
     }
 
     public void Reset()

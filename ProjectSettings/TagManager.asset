@@ -21,6 +21,9 @@ TagManager:
   - Obstacle
   - Tornado
   - Ene5
+  - GunItem
+  - Meteorite
+  - Plane
   layers:
   - Default
   - TransparentFX

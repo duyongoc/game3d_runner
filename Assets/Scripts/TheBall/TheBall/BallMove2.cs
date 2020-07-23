@@ -215,7 +215,7 @@ public class BallMove2 : StateBall
             other.gameObject.GetComponent<IConSpeedUp>().MakeEffect();
             Invoke("ResetSpeed", timerSpeedUp);
         }
-        else if(other.tag == "Tornado")
+        else if(other.tag == "Tornado" || other.tag == "Meteorite")
         {
             Instantiate(owner.ballExplosion, transform.position, Quaternion.identity);
 
@@ -238,7 +238,7 @@ public class BallMove2 : StateBall
             gameObject.SetActive(false);
         }
     }
-
+    
     public void ResetSpeed()
     {
         speedUpEffect.SetActive(false);

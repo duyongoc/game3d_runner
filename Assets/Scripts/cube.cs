@@ -5,17 +5,26 @@ using UnityEngine;
 public class cube : MonoBehaviour
 {
     public Rigidbody body;
+    public Vector2 vectorDir = new Vector2(0.5f, 1);
+
+    public GameObject effect; 
+
     public float speed = 100;
 
     // Start is called before the first frame update
     void Start()
     {
-        body.AddForce(new Vector3(0.5f,1,0) * speed);
+        body.AddForce(vectorDir * speed);
     }
 
-    // Update is called once per frame
-    void Update()
+    void OnTriggerEnter(Collider other)
     {
-        
+        if(other.tag == "Plane")
+        {
+            Instantiate(effect, transform.position, Quaternion.identity);
+            Destroy(this.gameObject);
+        }
+
     }
+
 }
