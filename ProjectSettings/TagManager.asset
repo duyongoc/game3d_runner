@@ -4,26 +4,29 @@
 TagManager:
   serializedVersion: 2
   tags:
+  - Enemy0
   - Enemy1
   - Enemy2
-  - TheBall
-  - Hole
-  - Ground
-  - Power
-  - Armor
-  - Wall
-  - Enemy
-  - BoomSpecial
   - Enemy3
-  - IconSpeedUp
-  - Enemy0
   - Enemy4
+  - Enemy5
+  - Enemy6
+  - BallPower
   - Obstacle
-  - Tornado
-  - Ene5
-  - GunItem
+  - Tonardo
   - Meteorite
-  - Plane
+  - TheHole
+  - TheGround
+  - ThePlane
+  - ItemFire
+  - ItemShield
+  - ItemSpeed
+  - ItemCoin
+  - Enemy
+  - Tornado
+  - Elastic
+  - CrazyPlace
+  - CrazyBoom
   layers:
   - Default
   - TransparentFX

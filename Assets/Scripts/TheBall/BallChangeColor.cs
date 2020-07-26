@@ -78,8 +78,8 @@ public class BallChangeColor : MonoBehaviour
         {
             if(obj.tag != "Enemy3" && obj.tag.Contains("Enemy"))
             {
-                var temp = obj.GetComponentInParent<DestroyEnemy>();
-                temp.DestroyWithExplosion();
+                //var temp = obj.GetComponentInParent<DestroyEnemy>();
+                //temp.DestroyWithExplosion();
             }
         }
 

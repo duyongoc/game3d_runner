@@ -14706,7 +14706,6 @@ GameObject:
   - component: {fileID: 1274570499100598749}
   - component: {fileID: 1274570499100598748}
   - component: {fileID: 1274570499100598750}
-  - component: {fileID: 107562717}
   m_Layer: 0
   m_Name: Enemy1
   m_TagString: Untagged
@@ -14799,24 +14798,11 @@ MonoBehaviour:
     type: 3}
   explosionSpecial: {fileID: 2080798593184762722, guid: d91343bc0d4b7d94291815014ad92673,
     type: 3}
+  shape: {fileID: 1274570499607102217}
   warningIcon: {fileID: 154460164}
   isWarning: 0
-  target: {fileID: 0}
   currentState: 0
---- !u!114 &107562717
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1274570499100598736}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f078608e5cc3498498299fa7feb05a50, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  explosionSpecial: {fileID: 2080798593184762722, guid: d91343bc0d4b7d94291815014ad92673,
-    type: 3}
+  target: {fileID: 0}
 --- !u!1 &1274570499607102217
 GameObject:
   m_ObjectHideFlags: 0

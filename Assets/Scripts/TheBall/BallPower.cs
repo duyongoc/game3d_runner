@@ -59,7 +59,7 @@ public class BallPower : StateBall
         if(!SoundMgr.GetInstance().IsPlaying(SceneMgr.GetInstance().m_sceneInGame.m_audioPower))
             SoundMgr.GetInstance().PlaySound(SceneMgr.GetInstance().m_sceneInGame.m_audioPower);  
 
-        SetUpBallPower(1f, "Armor", true, true, false);
+        SetUpBallPower(1f, "BallPower", true, true, false);
         StartCoroutine("ScaleTheBall");
         Invoke("SetMovingBallPower", 3f);
     }
@@ -105,7 +105,7 @@ public class BallPower : StateBall
         StopAllCoroutines();
         SoundMgr.GetInstance().PlaySound(SceneMgr.GetInstance().m_sceneInGame.m_audioBackground);
 
-        SetUpBallPower(0f,"TheBall", false, false, true);
+        SetUpBallPower(0f,"Player", false, false, true);
         transform.localScale = Vector3.one;
 
         this.GetComponent<Renderer>().material = currentMaterial;

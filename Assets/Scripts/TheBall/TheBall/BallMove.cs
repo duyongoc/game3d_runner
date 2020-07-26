@@ -6,13 +6,23 @@ public class BallMove : StateBall
 {
     [Header("Set Speed up")]
     public GameObject speedUpEffect;
-    public float speedIncrease = 4f;
-    public float timerSpeedUp = 7f;
-
-    public bool isActiveInputMobile = false;
-
     private Vector3 m_vectorMovement;
     private float timer = 0;
+
+    [Header("Test")]
+    public Transform shape;
+    public Transform centerPos1;
+    public Transform centerPos2;
+    
+    //
+    public GameObject ParticleTurning;
+    public float timeParTurning = 0.2f;
+    private float timerTurning = 0f;
+
+    public GameObject trail;
+    GameObject temp = null;
+    bool isCreate = false;
+    
     
     #region STATE OF PLAYER
     public override void StartState()
@@ -20,11 +30,7 @@ public class BallMove : StateBall
         base.StartState();
         this.gameObject.SetActive(true);
         speedUpEffect.SetActive(false);
-        
-        if(!isActiveInputMobile)
-        {
-            owner.m_inputMobile.gameObject.SetActive(false);
-        }
+
     }
 
     public override void UpdateState()
@@ -34,7 +40,7 @@ public class BallMove : StateBall
         //UpdatePlayerMovement();
         if (SceneMgr.GetInstance().IsStateInGame())
         {
-            Move();
+            Moving();
         }
 
     }
@@ -43,101 +49,177 @@ public class BallMove : StateBall
     {
         base.EndState();
 
+        if(temp != null)
+        {
+            temp.transform.parent = null;
+            Destroy(temp, 2f);
+        }
     }
     #endregion
+
+    private void Moving()
+    {
+       
+        if(Input.GetMouseButton(0))
+        {
+            if(!isCreate)
+            {
+                temp = Instantiate(trail, transform.position, Quaternion.identity);
+                temp.transform.parent = transform;
+                isCreate = true;
+            }
+           
+            
+            float moveTurn = Input.mousePosition.x;
+            if(moveTurn < Screen.width / 2 && moveTurn > 0)
+            {
+                transform.Rotate(-Vector3.up, owner.turnSpeed * Time.deltaTime, Space.World);
+                
+                Vector3 vec = centerPos1.position - transform.position;
+                //vec =  new Vector3(vec.x, 0f, vec.z);
+                owner.m_rigidbody.AddForce(vec.normalized * owner.engineForce , ForceMode.Impulse);
+                owner.m_rigidbody.AddTorque(vec.normalized * owner.engineForce *2 , ForceMode.Impulse);
+                
+                shape.localRotation = Quaternion.Lerp(shape.localRotation, Quaternion.Euler(0f, 0f, 100f), Time.deltaTime * 5);
+            
+            }
+            else if(moveTurn > Screen.width / 2 && moveTurn < Screen.width)
+            {
+                transform.Rotate(Vector3.up, owner.turnSpeed * Time.deltaTime, Space.World);
+                
+                Vector3 vec = centerPos2.position - transform.position ;
+                //vec =  new Vector3(vec.x, 0f, vec.z);
+                owner.m_rigidbody.AddForce(-vec.normalized  * owner.engineForce , ForceMode.Impulse);
+                owner.m_rigidbody.AddTorque(-vec.normalized* owner.engineForce *2, ForceMode.Impulse);
+
+               shape.localRotation = Quaternion.Lerp(shape.localRotation, Quaternion.Euler(0f, 0f, -100f), Time.deltaTime * 5);
+            }
+            timerTurning += Time.deltaTime;
+            if(timerTurning > timeParTurning)
+            {
+                Instantiate(ParticleTurning, transform.position, Quaternion.identity);
+                timerTurning = 0;
+            }
+
+        }
+        else{
+            if(isCreate)
+            {
+                if(temp != null)
+                {
+                    temp.transform.parent = null;
+                    Destroy(temp, 2f);
+                }
+                    
+                isCreate = false;
+            }
+            else{
+                timer += Time.deltaTime;
+                if(timer > owner.timeParMoving )
+                {
+                    int rand = Random.Range(0, 180);
+                    Instantiate(owner.particleMoving, transform.position,Quaternion.Euler(0,0,rand));
+                    timer = 0;
+                }
+            }
+        }
+
+        if(shape.rotation.z != 0f)
+            shape.localRotation = Quaternion.Lerp(shape.localRotation,Quaternion.Euler(0f, 0f, 0f), Time.deltaTime * 5);
+        
+        transform.Translate(Vector3.forward * owner.moveSpeed * Time.deltaTime);
+
+    }
 
     private void Move()
     {
         if(Input.GetMouseButton(0))
         {
-            switch(isActiveInputMobile)
+            float moveTurn = Input.mousePosition.x;
+            if(moveTurn < Screen.width / 2 && moveTurn > 0)
             {
-                // moving the ball with joystick
-                // case true:
-                // {
-                //     float moveTurn = owner.m_inputMobile.InputDirection.x;
-                //     if(moveTurn < -0.5f  && moveTurn > -1)
-                //         transform.Rotate(-Vector3.up, owner.angleSpeed * Time.deltaTime);
-                //     if(moveTurn > 0.5f && moveTurn < 1)
-                //         transform.Rotate(Vector3.up, owner.angleSpeed * Time.deltaTime);
-                //     break;
-                // }
-                // moving the ball with touch the scene
-                case false:
-                {
-                    float moveTurn = Input.mousePosition.x;
-                    if(moveTurn < Screen.width / 2 && moveTurn > 0)
-                    {
-                        //Quaternion target = Quaternion.Euler (0, 0, 4f);
-			            //transform.localRotation = Quaternion.Lerp(transform.localRotation,target,owner.angleSpeed * Time.deltaTime);
-                        transform.Rotate(-Vector3.up, owner.angleSpeed * Time.deltaTime, Space.World);
-                    }
-                    if(moveTurn > Screen.width / 2 && moveTurn < Screen.width)
-                    {
-                        //Quaternion target = Quaternion.Euler (0, 0, -4f);
-			            //transform.localRotation = Quaternion.Lerp(transform.localRotation,target,owner.angleSpeed * Time.deltaTime);
-                        transform.Rotate(Vector3.up, owner.angleSpeed * Time.deltaTime, Space.World);
-                    }
-                    break;
-                }
+                Quaternion target = Quaternion.Euler (0, transform.localRotation.y + (-45f), 0);
+			    transform.localRotation = Quaternion.Lerp(transform.localRotation,target,Time.deltaTime * 2);
+                owner.m_rigidbody.AddForce(new Vector3(0,0,1) * owner.engineForce , ForceMode.Impulse);
+                owner.m_rigidbody.AddTorque(new Vector3(0,0,1) * owner.engineForce , ForceMode.Impulse);
+            }
+            else if(moveTurn > Screen.width / 2 && moveTurn < Screen.width)
+            {
+                Quaternion target = Quaternion.Euler (0,transform.localRotation.y + 45f, 0);
+			    transform.localRotation = Quaternion.Lerp(transform.localRotation,target,Time.deltaTime * 2);
+                owner.m_rigidbody.AddForce(new Vector3(0,0,1) * owner.engineForce , ForceMode.Impulse);
+                owner.m_rigidbody.AddTorque(new Vector3(0,0,-1) * owner.engineForce , ForceMode.Impulse);
+               // owner.m_rigidbody. = new Vector3 (0f, -torqueForce, 0f);
+
+            }
+            else 
+            {
+                Quaternion target = Quaternion.Euler (0, 0, 0);
+			    transform.localRotation = Quaternion.Lerp(transform.localRotation,target,Time.deltaTime * 5);
+
             }
         }
-
+       
         transform.Translate(Vector3.forward * owner.moveSpeed * Time.deltaTime); 
-        
-        timer += Time.deltaTime;
-        if(timer > owner.timeParMoving)
-        {
-            Instantiate(owner.particleMoving, transform.position, Quaternion.identity);
-            timer = 0;
-        }
+    }
+
+    Vector3 Forward()
+    {
+        return Vector3.forward * Vector3.Dot(owner.m_rigidbody.velocity, transform.up);
     }
 
     void OnTriggerEnter(Collider other)
     {
-        // if(other.gameObject.CompareTag("Hole"))
-        // {
-        //     owner.ChangeState(owner.m_ballGravity);
-        //     owner.m_ballGravity.SetTarget(other.transform);
-        // }
-        // else if(other.tag.Contains("Enemy") && this.gameObject.tag != "Armor")
-        // {
-        //     Instantiate(owner.ballExplosion, transform.position, Quaternion.identity);
-        //     gameObject.SetActive(false);
+        if(other.tag == "TheHole")
+        {
+            owner.ChangeState(owner.m_ballGravity);
+            owner.m_ballGravity.SetTarget(other.transform);
+        }
+        else if(other.tag.Contains("Enemy") && this.gameObject.tag != "BallPower")
+        {
+            Instantiate(owner.ballExplosion, transform.position, Quaternion.identity);
+            gameObject.SetActive(false);
 
-        //     // loading gameover scene;
-        //     owner.ChangeState(owner.m_ballNone);
-        //     var mgr = SceneMgr.GetInstance();
-        //     mgr.ChangeState(mgr.m_sceneGameOver);
-        // }
-        // else if(other.tag == "IconSpeedUp")
-        // {
-        //     speedUpEffect.SetActive(true);
-        //     owner.moveSpeed += speedIncrease;
+            // loading gameover scene;
+            owner.ChangeState(owner.m_ballNone);
+            SceneMgr.GetInstance().ChangeState(SceneMgr.GetInstance().m_sceneGameOver);
+        }
+        else if(other.tag == "ItemSpeed")
+        {
+            speedUpEffect.SetActive(true);
+            owner.moveSpeed += owner.speedIncrease;
 
-        //     other.gameObject.GetComponent<IConSpeedUp>().MakeEffect();
-        //     Invoke("ResetSpeed", timerSpeedUp);
-        // }
+            other.gameObject.GetComponent<ItemSpeed>().MakeEffect();
+            Invoke("ResetSpeed", owner.timerSpeedUp);
+        }
+
     }
 
     void OnCollisionEnter(Collision other)
     {
-        // if(other.gameObject.tag == "Ground")
-        // {
-        //     // loading gameover scene;
-        //     var mgr = SceneMgr.GetInstance();
-        //     mgr.ChangeState(mgr.m_sceneGameOver);
+        if(other.gameObject.tag == "Ground")
+        {
+            // loading gameover scene;
+            var mgr = SceneMgr.GetInstance();
+            mgr.ChangeState(mgr.m_sceneGameOver);
 
-
-        //     Instantiate(owner.ballExplosion, transform.position, Quaternion.identity);
-        //     gameObject.SetActive(false);
-        // }
+            Instantiate(owner.ballExplosion, transform.position, Quaternion.identity);
+            gameObject.SetActive(false);
+        }
     }
-
+    
     public void ResetSpeed()
     {
         speedUpEffect.SetActive(false);
         owner.moveSpeed = owner.scriptTheBall.moveSpeed;
+    }
+
+    public void Reset()
+    {
+        if(temp != null)
+            Destroy(temp);
+        
+        shape.localRotation = Quaternion.Euler(0f, 0f, 0f);
     }
 
     // private void UpdatePlayerMovement()
@@ -149,7 +231,6 @@ public class BallMove : StateBall
 
     //     owner.m_rigidbody.MovePosition(transform.position + m_vectorMovement);
     // }
-
 
 
 }

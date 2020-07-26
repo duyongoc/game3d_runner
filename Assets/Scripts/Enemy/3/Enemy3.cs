@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Enemy3 : MonoBehaviour
+public class Enemy3 : MonoBehaviour, IOnDestroy
 {
     [Header("Load data Enemy 3")]
     public ScriptEnemy3 scriptEnemy;
@@ -12,6 +12,7 @@ public class Enemy3 : MonoBehaviour
     [Header("Enemy dead explosion")]
     public GameObject explosion;
     public GameObject explosionSpecial;
+    public int heath = 100;
     
     [Header("Particle armor")]
     public GameObject particleArmor;
@@ -92,9 +93,7 @@ public class Enemy3 : MonoBehaviour
     IEnumerator FinishWarningEnemy3()
     {
         yield return new WaitForSeconds(2f);
-
         warningIcon.SetActive(false);
-
     }
 
     public void OnSetWarning(bool warning)
@@ -102,21 +101,32 @@ public class Enemy3 : MonoBehaviour
         isWarning = warning;
     }
 
-    void OnTriggerEnter(Collider other)
+    //Collider
+    public void TakeDestroy()
     {
-        if(other.tag == "Enemy1" || other.tag == "Enemy2")
-        {
-            Instantiate(explosion, transform.position, Quaternion.identity);
-        }
-        else if(other.gameObject.tag.Contains("Armor"))
+        heath -= 50;
+        if(heath <= 0)
         {
             Instantiate(explosionSpecial, transform.position, Quaternion.identity);
             Destroy(this.gameObject);
         }
-        else if(other.tag.Contains("BoomSpecial"))
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if(other.tag.Contains("Enemy"))
         {
-            GameObject obj = Instantiate(particleArmor, transform.position, Quaternion.identity);
-            obj.transform.parent = transform;
+            var temp = other.GetComponent<IOnDestroy>();
+            if(temp != null)
+                temp.TakeDestroy();
+
+            Instantiate(explosion, transform.localPosition, Quaternion.identity);
+            Destroy(this.gameObject);
+        }
+        else if(other.gameObject.tag.Contains("BallPower"))
+        {
+            Instantiate(explosionSpecial, transform.position, Quaternion.identity);
+            Destroy(this.gameObject);
         }
     }
 

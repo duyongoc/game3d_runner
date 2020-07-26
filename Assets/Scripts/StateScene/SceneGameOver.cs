@@ -34,17 +34,21 @@ public class SceneGameOver : StateScene
     public SpawnEnemy1 spawnEnemy1;
     public SpawnEnemy2 spawnEnemy2;
     public SpawnEnemy3 spawnEnemy3;
-    public SpawnEnemy4 spawnEnemy4;
-    public SpawnEnemy5 spawnEnemy5;
+
+    public SpawnTornado spawnTornado;
+    public SpawnElastic spawnElastic;
+    public SpawnCrazyPlace crazyPlace;
 
     [Header("Spawn other Enemy")]
     public SpawnTheHole spawnTheHole;
+    public SpawnMeteorite spawnMeteorite;
     
     [Header("Spawn other object")]
-    public SpawnCoin spawnCoin;
-    public SpawnSpeedUp spawnSpeedUp;
-    public SpawnIconShield spawnIconShield;
-    public SpawnMeteorite spawnMeteorite;
+    public SpawnItemCoin spawnItemCoin;
+    public SpawnItemSpeed spawnItemSpeed;
+    public SpawnItemShield spawnItemShield;
+    public SpawnItemFire spawnItemFire;
+    
 
     [Header(" Ball change color reset")]
     public BallChangeColor ballChangeColor;
@@ -116,15 +120,19 @@ public class SceneGameOver : StateScene
         spawnEnemy1.Reset();
         spawnEnemy2.Reset();
         spawnEnemy3.Reset();
-        spawnEnemy4.Reset();
-        spawnEnemy5.Reset();
-        spawnTheHole.Reset();
+        spawnTornado.Reset();
+        spawnElastic.Reset();
+        crazyPlace.Reset();
+        
+        //item
+        spawnItemCoin.Reset();
+        spawnItemSpeed.Reset();
+        spawnItemShield.Reset();
+        spawnItemFire.Reset();
 
         //other object
-        spawnCoin.Reset();
-        spawnSpeedUp.Reset();
-        spawnIconShield.Reset();
         spawnMeteorite.Reset();
+        spawnTheHole.Reset();
 
         //the ball
         ballChangeColor.Reset();

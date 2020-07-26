@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Enemy0 : MonoBehaviour
+public class Enemy0 : MonoBehaviour, IOnDestroy
 {
     [Header("Load data Enemy 0")]
     public ScriptEnemy0 scriptEnemy;
@@ -16,11 +16,6 @@ public class Enemy0 : MonoBehaviour
     public GameObject warningIcon;
     public bool isWarning = false;
 
-    // [Header("Particle when enemy moving")]
-    // public GameObject parMoving;
-    // public float timeParMoving = 0f;
-    // public bool isParMoving = true;
-
     // private variable
     private float moveSpeed = 0f;
     private Rigidbody2D m_rigidbody2D;
@@ -29,7 +24,7 @@ public class Enemy0 : MonoBehaviour
     [Header("Enmey state")]
     public EnemyState currentState = EnemyState.Moving;
     public enum EnemyState { Moving, Attraction, None }
-    
+
     //enemy's target
     public Transform target;
 
@@ -53,7 +48,7 @@ public class Enemy0 : MonoBehaviour
         m_rigidbody2D = GetComponent<Rigidbody2D>();
         target = TransformTheBall.GetInstance().GetTransform();
 
-       // StartCoroutine("ParticleMoving", timeParMoving);
+        // StartCoroutine("ParticleMoving", timeParMoving);
     }
 
     private void Update()
@@ -63,28 +58,28 @@ public class Enemy0 : MonoBehaviour
             switch (currentState)
             {
                 case EnemyState.Moving:
-                {
-                    EnemyMoving();
-                    break;
-                }
+                    {
+                        EnemyMoving();
+                        break;
+                    }
                 case EnemyState.Attraction:
-                {
-                    EnenmyAttraction();
-                    break;
-                }
+                    {
+                        EnenmyAttraction();
+                        break;
+                    }
                 case EnemyState.None:
-                {
-                    break;
-                }
+                    {
+                        break;
+                    }
             }
         }
     }
 
     private void EnemyMoving()
     {
-        if(!isWarning)
+        if (!isWarning)
         {
-            if(Vector3.SqrMagnitude(transform.position - target.position) <= distanceWarning * distanceWarning)
+            if (Vector3.SqrMagnitude(transform.position - target.position) <= distanceWarning * distanceWarning)
             {
                 warningIcon.SetActive(true);
                 SceneMgr.GetInstance().GetComponentInChildren<SpawnEnemy0>().FinishWarningAlert();
@@ -93,7 +88,7 @@ public class Enemy0 : MonoBehaviour
                 isWarning = true;
             }
         }
-    
+
         Vector3 vec = new Vector3(target.position.x, 0, target.position.z);
         transform.LookAt(vec);
         transform.position = Vector3.MoveTowards(transform.position, target.position, Time.deltaTime * moveSpeed);
@@ -117,42 +112,28 @@ public class Enemy0 : MonoBehaviour
     }
 
     //Collision
+
+    public void TakeDestroy()
+    {
+        Instantiate(explosion, transform.localPosition, Quaternion.identity);
+        Destroy(this.gameObject);
+    }
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag.Contains("Enemy"))
+        if(other.tag.Contains("Enemy"))
         {
-            Instantiate(explosion, transform.localPosition, Quaternion.identity);
-            
-            var temp = other.GetComponentInParent<Enemy1>();
-            if(temp)
-                Destroy(temp.gameObject);
-            Destroy(other.gameObject);
-            
-            Destroy(this.gameObject);
-        }
-        else if(other.gameObject.tag == "Ene5")
-        {
+            var temp = other.GetComponent<IOnDestroy>();
+            if(temp != null)
+                temp.TakeDestroy();
+
             Instantiate(explosion, transform.localPosition, Quaternion.identity);
             Destroy(this.gameObject);
         }
-        else if(other.gameObject.tag.Contains("Armor"))
+        else if(other.tag == "BallPower")
         {
             Instantiate(explosionSpecial, transform.localPosition, Quaternion.identity);
             Destroy(this.gameObject);
         }
-        else if(other.gameObject.tag == "Obstacle")
-        {
-            Destroy(this.gameObject);
-        }
     }
-
-    // IEnumerator ParticleMoving(float time)
-    // {
-    //     while(isParMoving)
-    //     {
-    //         yield return new WaitForSeconds(time);
-    //         Instantiate(parMoving, transform.position, Quaternion.identity);
-    //     }
-    // }
 
 }

@@ -23,9 +23,14 @@ public class TheBall : MonoBehaviour
     public ScriptTheBall scriptTheBall; 
     public float moveSpeed = 0f; 
     public float angleSpeed = 0f;
+    //
+    public float speedIncrease = 0f;
+    public float timerSpeedUp = 0f;
+    public float engineForce = 0f;
+    public float turnSpeed = 0f;
 
     [Header("State of the ball")]
-    public BallMove2 m_ballMove;
+    public BallMove m_ballMove;
     public BallPower m_ballPower;
     public BallGravity m_ballGravity;
     public BallNone m_ballNone;
@@ -65,6 +70,11 @@ public class TheBall : MonoBehaviour
     {
         this.moveSpeed = scriptTheBall.moveSpeed;
         this.angleSpeed = scriptTheBall.angleSpeed;
+        //
+        this.speedIncrease = scriptTheBall.speedIncrease;
+        this.timerSpeedUp = scriptTheBall.timerSpeedUp;
+        this.engineForce = scriptTheBall.engineForce;
+        this.turnSpeed = scriptTheBall.turnSpeed;
 
         sliderProcess.gameObject.SetActive(false);
     }

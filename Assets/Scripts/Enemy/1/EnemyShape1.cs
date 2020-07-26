@@ -8,8 +8,6 @@ public class EnemyShape1 : MonoBehaviour
     public ScriptEnemy1 scriptEnemy1;
 
     private bool directionUp = true;
-
-    //
     private float jumpSpeed = 0f;
     private float jumpHigh = 0f;
 
