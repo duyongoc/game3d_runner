@@ -26,8 +26,7 @@ public class CrazyPlace : MonoBehaviour
     {
         if(isTrigger)
         {
-            m_animator.SetBool("Attack", false);
-            StartCoroutine("CrazyTimeFinish", timeTriggerFinish);
+            Invoke("CrazyTimeFinish", timeTriggerFinish);
             isTrigger = false;
         }
     }
@@ -44,23 +43,18 @@ public class CrazyPlace : MonoBehaviour
         }
     }
 
-    IEnumerator CrazyTimeFinish(float time)
+    private void CrazyTimeFinish()
     {
-        yield return new WaitForSeconds(time);
+        m_animator.SetBool("Attack", false);
         isTrigger = false;
     }
 
     private void CrazyTimeStart()
     {
-        Instantiate(crazyBoom, transform.position, Quaternion.identity);
-        isTrigger = true;
-    }
-
-    IEnumerator CrazyTimeStart(float time)
-    {
-        yield return new WaitForSeconds(time);
-
+        GameObject tmp = Instantiate(crazyBoom, transform.position, Quaternion.identity);
+        SpawnCrazyPlace.s_instance.crazyPlaceWasCreated.Add(tmp);
         
+        isTrigger = true;
     }
 
 }

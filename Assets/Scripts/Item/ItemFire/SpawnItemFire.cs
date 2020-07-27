@@ -13,18 +13,18 @@ public class SpawnItemFire : MonoBehaviour
     private float timer = 0;
 
     public List<GameObject> thePowerWasCreated;
-    // private bool isCreated = false;
+    private bool isCreated = false;
 
     private void Update()
     {
-        // if(!isCreated)
-        // {
-        //     if(SceneMgr.GetInstance().IsStateInGame())
-        //     {
-        //         SpawnPowerWhenGameStart();
-        //         isCreated = true;
-        //     }
-        // }
+        if(!isCreated)
+        {
+            if(SceneMgr.GetInstance().IsStateInGame())
+            {
+                SpawnPowerWhenGameStart();
+                isCreated = true;
+            }
+        }
         
         // create power per timeSpawn second
         if(SceneMgr.GetInstance().IsStateInGame() && iSValid())     
@@ -45,7 +45,7 @@ public class SpawnItemFire : MonoBehaviour
 
     private bool iSValid()
     {
-        if(thePowerWasCreated.Count < 2)
+        if(thePowerWasCreated.Count < 3)
             return true;
 
         return false;
@@ -70,6 +70,6 @@ public class SpawnItemFire : MonoBehaviour
         }
 
         thePowerWasCreated.Clear();
-        // isCreated = false;
+        isCreated = false;
     }
 }

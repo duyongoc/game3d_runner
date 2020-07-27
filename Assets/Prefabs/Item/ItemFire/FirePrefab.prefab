@@ -123,6 +123,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22534cae27365c8409f2f21c47e73394, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effect: {fileID: 2749598811289195367, guid: baff8909a7e553f4fba281dc3b8c6c53, type: 3}
+  effect: {fileID: 1489927433358186544, guid: 95e9f2e02f22c5d42879f478e3310cd4, type: 3}
   moveSpeed: 400
   vectorDir: {x: -0.1, y: 1, z: 0}

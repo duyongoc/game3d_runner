@@ -14,6 +14,16 @@ public class SpawnCrazyPlace : MonoBehaviour
     private bool isCreated = false;
     public List<GameObject> crazyPlaceWasCreated;
 
+    #region Init
+    public static SpawnCrazyPlace s_instance;
+    private void Awake()
+    {
+        if(s_instance != null)
+            return;
+        s_instance = this;
+    }
+    #endregion
+
     private void Update()
     {
 

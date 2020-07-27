@@ -83,6 +83,12 @@ public class Elastic : MonoBehaviour
                     arrow.SetActive(false);
 
                     transform.position += vecMove * Time.deltaTime * moveSpeed * 2;
+
+                    if(transform.position.y >= 0)
+                    {
+                        transform.position = new Vector3( transform.position.x, 0,  transform.position.z);
+                    }
+                    
                     break;
                 }
                 case EnemyState.None:

@@ -6,8 +6,8 @@ using UnityEngine;
 public class ScriptMeteorite : ScriptableObject
 {
     [Header("Time to spawn enemy 5")]
-    public float timeSpawn = 3f;
     public float timeProcessSpawn = 2.5f;
+    public float timeSpawn = 3f;
 
     [Header("Range to create enemy 5")]
     public float minRangeSpawn = 15f;

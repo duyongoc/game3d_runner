@@ -132,6 +132,6 @@ public class SpawnMeteorite : MonoBehaviour
         }
 
         theMeteoriteCreated.Clear();
-        // isCreated = false;
+        timerProcessSpawn = 0;
     }
 }

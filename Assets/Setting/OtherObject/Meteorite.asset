@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1eddae0551d88704ea7349f6a7fd69e9, type: 3}
   m_Name: Meteorite
   m_EditorClassIdentifier: 
-  timeSpawn: 5
-  timeProcessSpawn: 3
-  minRangeSpawn: 7
-  maxRangeSpawn: 10
-  timeDelay: 2
+  timeProcessSpawn: 0
+  timeSpawn: 20
+  minRangeSpawn: 5
+  maxRangeSpawn: 8
+  timeDelay: 10
