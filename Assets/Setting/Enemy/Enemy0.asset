@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cba15c15ca3d4464d8da7ae35ba7fdeb, type: 3}
   m_Name: Enemy0
   m_EditorClassIdentifier: 
-  moveSpeed: 4
-  timeSpawn: 3
+  moveSpeed: 3.5
   timeProcessSpawn: 0
+  timeSpawn: 3
   minRangeSpawn: 15
   maxRangeSpawn: 30
   distanceWarning: 10

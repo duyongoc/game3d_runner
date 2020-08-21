@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcdef0b7b4e3d144d8a501f554a6d647, type: 3}
   m_Name: Enemy1
   m_EditorClassIdentifier: 
-  jumpSpeed: 1
+  jumpSpeed: 0.7
   jumpHigh: 3.5
-  moveSpeed: 4.2
+  moveSpeed: 4
   timeProcessSpawn: 0
   timeSpawn: 3
   timeDelay: 20
