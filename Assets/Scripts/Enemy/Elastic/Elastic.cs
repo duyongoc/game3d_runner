@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using DG.Tweening;
+
 public class Elastic : MonoBehaviour
 {
     [Header("Load data Enemy 5")]
@@ -26,11 +28,18 @@ public class Elastic : MonoBehaviour
     bool check =false;
 
     //enmey state
-    public enum EnemyState { Moving, Preparing, Attack, None }
+    public enum EnemyState { Moving, Preparing, Attack, Stop, None }
     public EnemyState currentState = EnemyState.Moving;
-    
+
+    // Elastic Enemy
+    float timeCharge = 0.7f;
+    float timeAttack = 0.7f;
+
     [Header("Target of enemy")]
     public Transform target;
+
+    private Vector3 attackPosition;
+    private bool isAttacked = false;
 
 
     private void LoadData()
@@ -47,30 +56,34 @@ public class Elastic : MonoBehaviour
         m_rigidbody = GetComponent<Rigidbody>();
         m_animator = GetComponent<Animator>();
         target = TransformTheBall.GetInstance().GetTransform();
+        isAttacked = false;
     }
 
     private void Update()
     {
         if (SceneMgr.GetInstance().IsStateInGame())
         {
+            if (currentState == EnemyState.Stop) return;
+            if (isAttacked) return;
             switch (currentState)
             {
                 case EnemyState.Moving:
-                {
+                    Debug.Log("state move");
                     EnemyMoving();
                     break;
-                }
+                
                 case EnemyState.Preparing:
-                {
+                
+                    Debug.Log("state prepare");
                     arrow.SetActive(true);
                     transform.LookAt(target.position);
 
                     m_animator.SetTrigger("Prepare");
-                    Invoke("ChangeStateAttack", 2f);
+                    Invoke("ChangeStateAttack", timeCharge);
                     break;
-                }
+                
                 case EnemyState.Attack:
-                {
+                
                     if(!check)
                     {
                         m_animator.SetTrigger("Attack");
@@ -79,22 +92,41 @@ public class Elastic : MonoBehaviour
                         check = true;
                     }
 
-                    Invoke("ChangeStatePreparing", 2f);
+                    //Invoke("ChangeStatePreparing", timeAttack);
                     arrow.SetActive(false);
 
-                    transform.position += vecMove * Time.deltaTime * moveSpeed * 2;
+                    //transform.position += vecMove * Time.deltaTime * moveSpeed * 2;
+
 
                     if(transform.position.y >= 0)
                     {
                         transform.position = new Vector3( transform.position.x, 0,  transform.position.z);
                     }
-                    
+
+                    // Attacking
+                    DOVirtual.DelayedCall(0.3f, () =>
+                    {
+                        currentState = (EnemyState.Preparing);
+                        isAttacked = true;
+                        attackPosition = transform.position + (transform.forward * 5f);
+                        Debug.Log("go to " + attackPosition);
+                        transform.DOMove(attackPosition, timeAttack, false).SetEase(Ease.OutCubic);
+
+                    });
                     break;
-                }
+                
                 case EnemyState.None:
-                {
-                    break;
-                }
+                    
+                        Debug.Log("state none");
+
+                        break;
+                    
+                case EnemyState.Stop:
+                    
+                        Debug.Log("state stop");
+
+                        break;
+                    
             }
         }
     }
