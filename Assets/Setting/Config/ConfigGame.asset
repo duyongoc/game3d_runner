@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b490e433d1f14e2458a21061f0fdd165, type: 3}
   m_Name: ConfigGame
   m_EditorClassIdentifier: 
-  isSkipTutotial: 0
+  isSkipTutotial: 1
   isMovingCamera: 0

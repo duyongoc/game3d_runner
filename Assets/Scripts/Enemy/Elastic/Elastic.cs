@@ -32,14 +32,14 @@ public class Elastic : MonoBehaviour
     public EnemyState currentState = EnemyState.Moving;
 
     // Elastic Enemy
-    float timeCharge = 0.7f;
+    public float timeCharge = 0.7f;
     float timeAttack = 0.7f;
 
     [Header("Target of enemy")]
     public Transform target;
 
     private Vector3 attackPosition;
-    private bool isAttacked = false;
+    public bool isAttacked = false;
 
 
     private void LoadData()
@@ -63,22 +63,24 @@ public class Elastic : MonoBehaviour
     {
         if (SceneMgr.GetInstance().IsStateInGame())
         {
-            if (currentState == EnemyState.Stop) return;
-            if (isAttacked) return;
+            // if (currentState == EnemyState.Stop) return;
+            // if (isAttacked) return;
             switch (currentState)
             {
                 case EnemyState.Moving:
-                    Debug.Log("state move");
+                    // Debug.Log("state move");
                     EnemyMoving();
                     break;
                 
                 case EnemyState.Preparing:
                 
-                    Debug.Log("state prepare");
+                    // Debug.Log("state prepare");
                     arrow.SetActive(true);
                     transform.LookAt(target.position);
 
                     m_animator.SetTrigger("Prepare");
+
+
                     Invoke("ChangeStateAttack", timeCharge);
                     break;
                 
@@ -86,17 +88,15 @@ public class Elastic : MonoBehaviour
                 
                     if(!check)
                     {
-                        m_animator.SetTrigger("Attack");
+                        // m_animator.SetTrigger("Attack");
                         vecMove =  ( target.position - transform.position).normalized;
                         vecMove = new Vector3(vecMove.x, 0, vecMove.z);
                         check = true;
                     }
 
                     //Invoke("ChangeStatePreparing", timeAttack);
-                    arrow.SetActive(false);
-
                     //transform.position += vecMove * Time.deltaTime * moveSpeed * 2;
-
+                    arrow.SetActive(false);
 
                     if(transform.position.y >= 0)
                     {
@@ -109,21 +109,20 @@ public class Elastic : MonoBehaviour
                         currentState = (EnemyState.Preparing);
                         isAttacked = true;
                         attackPosition = transform.position + (transform.forward * 5f);
-                        Debug.Log("go to " + attackPosition);
+                        // Debug.Log("go to " + attackPosition);
                         transform.DOMove(attackPosition, timeAttack, false).SetEase(Ease.OutCubic);
-
                     });
                     break;
                 
                 case EnemyState.None:
                     
-                        Debug.Log("state none");
+                        // Debug.Log("state none");
 
                         break;
                     
                 case EnemyState.Stop:
                     
-                        Debug.Log("state stop");
+                        // Debug.Log("state stop");
 
                         break;
                     
