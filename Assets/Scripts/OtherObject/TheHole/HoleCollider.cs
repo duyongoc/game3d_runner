@@ -13,11 +13,11 @@ public class HoleCollider : MonoBehaviour
             obj.target = transform;
             obj.currentState = Enemy0.EnemyState.Attraction;
         }
-        else if(other.tag == "Enemy1")
+        else if(other.tag == "EnemyJump")
         {
-            var obj = other.gameObject.GetComponentInParent<Enemy1>();
+            var obj = other.gameObject.GetComponentInParent<EnemyJump>();
             obj.target = transform;
-            obj.currentState = Enemy1.EnemyState.Attraction;
+            obj.currentState = EnemyJump.EnemyState.Holding;
         }
         else if(other.tag == "Enemy3")
         {

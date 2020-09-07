@@ -10,7 +10,6 @@ TagManager:
   - Enemy3
   - Enemy4
   - Enemy5
-  - Enemy6
   - BallPower
   - Obstacle
   - Tonardo
@@ -27,6 +26,10 @@ TagManager:
   - Elastic
   - CrazyPlace
   - CrazyBoom
+  - Armor
+  - BoomSpecial
+  - EnemyJump
+  - AlertShape
   layers:
   - Default
   - TransparentFX

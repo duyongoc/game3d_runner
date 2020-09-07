@@ -31,9 +31,9 @@ public class SceneGameOver : StateScene
 
     [Header("Spawn gameobject")]
     public SpawnEnemy0 spawnEnemy0;
-    public SpawnEnemy1 spawnEnemy1;
     public SpawnEnemy2 spawnEnemy2;
     public SpawnEnemy3 spawnEnemy3;
+    public SpawnEnemyJump spawnEnemyJump;
     public SpawnEnemySeek spawnEnemySeek;
 
     public SpawnTornado spawnTornado;
@@ -118,9 +118,9 @@ public class SceneGameOver : StateScene
 
         // spawn enemy
         spawnEnemy0.Reset();
-        spawnEnemy1.Reset();
         spawnEnemy2.Reset();
         spawnEnemy3.Reset();
+        spawnEnemyJump.Reset();
         spawnEnemySeek.Reset();
         spawnTornado.Reset();
         spawnElastic.Reset();

@@ -15,6 +15,11 @@ public class EnemySeek : MonoBehaviour
     public GameObject warningIcon;
     public bool isWarning = false;
 
+    [Header("Set effect up when enemy turning")]
+    public GameObject prefabsParTurning;
+    public float timeTurning = 0.2f;
+    private float processTurning = 0f;
+
     // private variable
     private Rigidbody2D m_rigidbody2D;
     private float moveSpeed = 0f;
@@ -52,7 +57,7 @@ public class EnemySeek : MonoBehaviour
         // StartCoroutine("ParticleMoving", timeParMoving);
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (SceneMgr.GetInstance().IsStateInGame())
         {
@@ -93,13 +98,29 @@ public class EnemySeek : MonoBehaviour
         Vector3 vec = new Vector3(target.position.x, 0, target.position.z);
         transform.LookAt(vec);
 
+        //seeking the target - MC
         Vector3 distance = (target.position - transform.position);
         Vector3 desired = distance.normalized * moveSpeed;
         Vector3 steering = desired - veclocity;
-
         veclocity += steering * Time.deltaTime;
         transform.position += veclocity * Time.deltaTime;
-        
+
+        // trail effect
+        float dot = transform.eulerAngles.y - target.eulerAngles.y;
+        //Debug.Log(transform.eulerAngles.y + " - " + target.eulerAngles.y + " =  " + dot);
+
+        //check spawn trail temporary, need to research other way better
+        bool hasTrail = Mathf.Abs(dot) > 40f && Mathf.Abs(dot) < 100f;
+        if ( hasTrail) 
+        {
+            processTurning += Time.deltaTime;
+            if(processTurning > timeTurning)
+            {
+                Instantiate(prefabsParTurning, transform.position, Quaternion.identity);
+                processTurning = 0;
+            }
+        }
+
     }
 
     private void EnenmyAttractive()
@@ -128,16 +149,16 @@ public class EnemySeek : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if(other.tag.Contains("Enemy"))
+        if (other.tag.Contains("Enemy"))
         {
             var temp = other.GetComponent<IOnDestroy>();
-            if(temp != null)
+            if (temp != null)
                 temp.TakeDestroy();
 
             Instantiate(explosion, transform.localPosition, Quaternion.identity);
             Destroy(this.gameObject);
         }
-        else if(other.tag == "BallPower")
+        else if (other.tag == "BallPower")
         {
             Instantiate(explosionSpecial, transform.localPosition, Quaternion.identity);
             Destroy(this.gameObject);

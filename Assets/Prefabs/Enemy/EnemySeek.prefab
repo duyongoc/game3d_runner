@@ -232,5 +232,8 @@ MonoBehaviour:
     type: 3}
   warningIcon: {fileID: 2793283791687214297}
   isWarning: 0
+  prefabsParTurning: {fileID: 4745901120304445359, guid: 4d8bac08eb963a0429be17722847c850,
+    type: 3}
+  timeTurning: 0.1
   currentState: 0
   target: {fileID: 0}
