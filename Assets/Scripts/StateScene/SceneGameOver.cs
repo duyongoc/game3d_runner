@@ -30,9 +30,8 @@ public class SceneGameOver : StateScene
     public ObstacleController obstacleController;
 
     [Header("Spawn gameobject")]
-    public SpawnEnemy0 spawnEnemy0;
-    public SpawnEnemy2 spawnEnemy2;
-    public SpawnEnemy3 spawnEnemy3;
+    public SpawnEnemyDefault spawnEnemyDefault;
+    public SpawnEnemyGlobe spawnEnemyGlobe;
     public SpawnEnemyJump spawnEnemyJump;
     public SpawnEnemySeek spawnEnemySeek;
 
@@ -117,9 +116,8 @@ public class SceneGameOver : StateScene
         obstacleController.Reset();
 
         // spawn enemy
-        spawnEnemy0.Reset();
-        spawnEnemy2.Reset();
-        spawnEnemy3.Reset();
+        spawnEnemyDefault.Reset();
+        spawnEnemyGlobe.Reset();
         spawnEnemyJump.Reset();
         spawnEnemySeek.Reset();
         spawnTornado.Reset();

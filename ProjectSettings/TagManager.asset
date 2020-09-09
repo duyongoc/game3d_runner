@@ -4,9 +4,6 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Enemy0
-  - Enemy1
-  - Enemy2
   - Enemy3
   - Enemy4
   - Enemy5
@@ -30,6 +27,7 @@ TagManager:
   - BoomSpecial
   - EnemyJump
   - AlertShape
+  - EnemyDefault
   layers:
   - Default
   - TransparentFX

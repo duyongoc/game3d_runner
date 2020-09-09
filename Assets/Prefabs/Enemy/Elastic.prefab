@@ -19606,7 +19606,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5060696398741657477
 Transform:
   m_ObjectHideFlags: 0
@@ -19693,7 +19693,9 @@ MonoBehaviour:
   arrow: {fileID: 5060696398133957149}
   distanceAttack: 5
   currentState: 0
+  timeCharge: 2
   target: {fileID: 0}
+  isAttacked: 0
 --- !u!1001 &8820948443231890932
 PrefabInstance:
   m_ObjectHideFlags: 0

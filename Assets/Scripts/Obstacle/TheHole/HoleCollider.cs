@@ -1,0 +1,30 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class HoleCollider : MonoBehaviour
+{
+    
+    void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "EnemyDefault")
+        {
+            var obj = other.gameObject.GetComponent<EnemyDefault>();
+            obj.target = transform;
+            obj.currentState = EnemyDefault.EnemyState.Holding;
+        }
+        else if(other.tag == "EnemyJump")
+        {
+            var obj = other.gameObject.GetComponentInParent<EnemyJump>();
+            obj.target = transform;
+            obj.currentState = EnemyJump.EnemyState.Holding;
+        }
+        else if(other.tag == "EnemyDefault")
+        {
+            var obj = other.gameObject.GetComponent<EnemyDefault>();
+            obj.target = transform;
+            obj.currentState = EnemyDefault.EnemyState.Holding;
+        }
+
+    }
+}
