@@ -12,10 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e01c10e1081d0a942979b4e7d59ce0ba, type: 3}
   m_Name: EnemySeek
   m_EditorClassIdentifier: 
+  timeDelay: 10
+  setWarning: 1
+  numberOfWarning: 3
   moveSpeed: 6.5
   slowdownTurning: 0.1
-  timeProcessSpawn: 2.5
-  timeSpawn: 3
+  timeProcessSpawn: 0
+  timeSpawn: 4
   minRangeSpawn: 15
   maxRangeSpawn: 30
   distanceWarning: 8
