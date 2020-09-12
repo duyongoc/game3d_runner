@@ -54,19 +54,16 @@ public class SpawnEnemyDefault : MonoBehaviour
             switch (currentState)
             {
                 case SpawnState.Init:
-                {
                     InitSpawnWarningEnemy();
+
                     break;
-                }
-                case SpawnState.Spawn:
-                {   
+                case SpawnState.Spawn:  
                     SpawnEnemy();
+
                     break;
-                }
                 case SpawnState.None:
-                {
                     break;
-                }
+                
             }
         }
     }
@@ -91,15 +88,6 @@ public class SpawnEnemyDefault : MonoBehaviour
         currentState = SpawnState.Spawn;
     }
 
-    #endregion
-
-    private void CreateEnemyWarning( bool warn, Vector3 vec)
-    {
-        GameObject obj = Instantiate(enemyPrefab, vec, Quaternion.identity);
-        obj.GetComponent<EnemyDefault>().SetWarning(warn);
-        enemyWasCreated.Add(obj);
-    }
-
     private void SpawnEnemy()
     {
         timerProcessSpawn += Time.deltaTime;
@@ -110,6 +98,14 @@ public class SpawnEnemyDefault : MonoBehaviour
             
             timerProcessSpawn = 0;
         }
+    }
+    #endregion
+
+    private void CreateEnemyWarning( bool warn, Vector3 vec)
+    {
+        GameObject obj = Instantiate(enemyPrefab, vec, Quaternion.identity);
+        obj.GetComponent<EnemyDefault>().SetWarning(warn);
+        enemyWasCreated.Add(obj);
     }
 
     private Vector3 GetRandomPoint()

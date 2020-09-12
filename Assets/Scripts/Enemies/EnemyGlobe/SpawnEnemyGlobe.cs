@@ -71,25 +71,20 @@ public class SpawnEnemyGlobe : MonoBehaviour
             switch (currentState)
             {
                 case SpawnState.Warning:
-                {
-                    StateSpawnWarning();
-                    break;
-                }
-                case SpawnState.Spawn:
-                {    
-                    StateSpawn();
-                    break;
-                }
-                case SpawnState.None:
-                {
+                    SpawnEnemyWarning();
 
                     break;
-                }
+                case SpawnState.Spawn:
+                    SpawnEnemy();
+
+                    break;
+                case SpawnState.None:
+                    break;
             }
         }
     }
 
-    private void StateSpawnWarning()
+    private void SpawnEnemyWarning()
     {
         if( !isWarning)
         {
@@ -114,7 +109,7 @@ public class SpawnEnemyGlobe : MonoBehaviour
         }
     }
 
-    private void StateSpawn()
+    private void SpawnEnemy()
     {
         timerProcessSpawn += Time.deltaTime;
         if (timerProcessSpawn >= timeSpawn)

@@ -19,7 +19,7 @@ public class SceneTutorial : StateScene
     public GameObject buttonOK;
 
     [Header("The Ball")]
-    [SerializeField] private TheBall theBall = default;
+    [SerializeField] private MainCharacter mainCharacter = default;
 
     private float timer = 1.5f;
     private float timerProcess = 0f;
@@ -49,7 +49,7 @@ public class SceneTutorial : StateScene
         { 
             case Touch.Move:
             {
-                theBall.transform.Translate(Vector3.forward * theBall.moveSpeed * Time.deltaTime); 
+                mainCharacter.transform.Translate(Vector3.forward * mainCharacter.moveSpeed * Time.deltaTime); 
 
                 break;
             }
@@ -58,8 +58,8 @@ public class SceneTutorial : StateScene
                 float moveTurn = Input.mousePosition.x;
                 if(Input.GetMouseButton(0) && (moveTurn < Screen.width / 2 && moveTurn > 0))
                 {
-                    theBall.transform.Translate(Vector3.forward * theBall.moveSpeed * Time.deltaTime); 
-                    theBall.transform.Rotate(-Vector3.up, theBall.angleSpeed * Time.deltaTime);
+                    mainCharacter.transform.Translate(Vector3.forward * mainCharacter.moveSpeed * Time.deltaTime); 
+                    mainCharacter.transform.Rotate(-Vector3.up, mainCharacter.angleSpeed * Time.deltaTime);
 
                     timerProcess += Time.deltaTime;
                     if(timerProcess > timer)
@@ -77,8 +77,8 @@ public class SceneTutorial : StateScene
                 float moveTurn = Input.mousePosition.x;
                 if(Input.GetMouseButton(0) && (moveTurn > Screen.width / 2 && moveTurn < Screen.width))
                 {
-                    theBall.transform.Translate(Vector3.forward * theBall.moveSpeed * Time.deltaTime); 
-                    theBall.transform.Rotate(Vector3.up, theBall.angleSpeed * Time.deltaTime);
+                    mainCharacter.transform.Translate(Vector3.forward * mainCharacter.moveSpeed * Time.deltaTime); 
+                    mainCharacter.transform.Rotate(Vector3.up, mainCharacter.angleSpeed * Time.deltaTime);
 
                     timerProcess += Time.deltaTime;
                     if(timerProcess > timer)
@@ -111,7 +111,7 @@ public class SceneTutorial : StateScene
     #region Events of button
     public void OnPressButtonOK()
     {
-        theBall.Reset();
+        mainCharacter.Reset();
         Owner.ChangeState(Owner.m_sceneInGame);
 
         buttonOK.SetActive(false);

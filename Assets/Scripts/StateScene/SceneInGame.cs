@@ -10,6 +10,9 @@ public class SceneInGame : StateScene
     public bool isPlaying = false;
     public CameraFollow cameraFollow;
 
+    [Header("Main Character")]
+    public MainCharacter mainCharacter;
+
     [Header("Sound background in menu game")]
     public AudioClip m_audioBackground;
 
@@ -17,7 +20,7 @@ public class SceneInGame : StateScene
     public AudioClip m_audioPower;
 
     [Header("Obstacle")]
-    public ObstacleController obstacleController;
+    public StaticObstacle staticObstacle;
 
     [Header("Text Intro")]
     public GameObject textSurvival;
@@ -35,7 +38,7 @@ public class SceneInGame : StateScene
         textScore.gameObject.SetActive(false);
 
         //
-        obstacleController.isStart = true;
+        staticObstacle.isStart = true;
     }
 
     public override void UpdateState()
@@ -55,6 +58,7 @@ public class SceneInGame : StateScene
 
                 //setup camera
                 cameraFollow.isStart = true;
+                mainCharacter.animator.SetBool("Moving", true);
             }
             //
             if(cameraFollow.IsSetUpCamera())
@@ -67,7 +71,6 @@ public class SceneInGame : StateScene
         {
             scoreMgr.score += Time.deltaTime;
             textScore.text = scoreMgr.score.ToString("00");
-
 
             if (scoreMgr.score > scoreMgr.highscore)
                 scoreMgr.highscore = (int)scoreMgr.score;

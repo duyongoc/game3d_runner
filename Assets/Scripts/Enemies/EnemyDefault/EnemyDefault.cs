@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyDefault : MonoBehaviour
+public class EnemyDefault : MonoBehaviour, IOnDestroy
 {
     [Header("Load data Enemy 0")]
     public ScriptEnemyDefault scriptEnemy;
@@ -10,6 +10,9 @@ public class EnemyDefault : MonoBehaviour
     [Header("Enemy dead explosion")]
     public GameObject explosion;
     public GameObject explosionSpecial;
+
+    [Header("Animation")]
+    public Animator animator;
 
     [Header("Warning the player")]
     public GameObject warningIcon;
@@ -44,6 +47,7 @@ public class EnemyDefault : MonoBehaviour
         target = TransformTheBall.GetInstance().GetTransform();
 
         // StartCoroutine("ParticleMoving", timeParMoving);
+        transform.position = new Vector3(transform.position.x, 0, transform.position.z);
     }
 
     private void Update()
@@ -53,19 +57,15 @@ public class EnemyDefault : MonoBehaviour
             switch (currentState)
             {
                 case EnemyState.Moving:
-                    {
-                        EnemyMoving();
-                        break;
-                    }
+                    EnemyMoving();
+
+                    break;
                 case EnemyState.Holding:
-                    {
-                        EnenmyHolding();
-                        break;
-                    }
+                    EnenmyHolding();
+
+                    break;
                 case EnemyState.None:
-                    {
-                        break;
-                    }
+                    break;
             }
         }
     }
@@ -82,7 +82,6 @@ public class EnemyDefault : MonoBehaviour
         Vector3 vec = new Vector3(target.position.x, 0, target.position.z);
         transform.LookAt(vec);
         transform.position = Vector3.MoveTowards(transform.position, target.position, Time.deltaTime * moveSpeed);
-        
     }
 
     private void EnenmyHolding()
@@ -96,6 +95,11 @@ public class EnemyDefault : MonoBehaviour
         }
     }
     #endregion
+
+    public void ChangeState(EnemyState newState)
+    {
+        currentState = newState;
+    }
 
     private void GetWarningFromEnemy()
     {
@@ -121,26 +125,29 @@ public class EnemyDefault : MonoBehaviour
     //Collision
     public void TakeDestroy()
     {
+        animator.SetBool("Dead", true);
         Instantiate(explosion, transform.localPosition, Quaternion.identity);
-        Destroy(this.gameObject);
+        GetComponent<Collider>().enabled = false;
+        
+        ChangeState(EnemyState.None);
+        Invoke("DestroyObject", 3);
     }
 
     void OnTriggerEnter(Collider other)
     {
-        if(other.tag.Contains("Enemy"))
+        if (other.tag == "EnemyDefault")
         {
             var temp = other.GetComponent<IOnDestroy>();
-            if(temp != null)
+            if (temp != null)
                 temp.TakeDestroy();
-
-            Instantiate(explosion, transform.localPosition, Quaternion.identity);
-            Destroy(this.gameObject);
-            Destroy(other.gameObject);
+            this.TakeDestroy();
         }
-        else if(other.tag == "BallPower")
-        {
-            Instantiate(explosionSpecial, transform.localPosition, Quaternion.identity);
-            Destroy(this.gameObject);
-        }
+        
     }
+
+    public void DestroyObject()
+    {
+        Destroy(this.gameObject);
+    }
+
 }

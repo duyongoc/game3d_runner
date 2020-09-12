@@ -24,19 +24,19 @@ public class SceneGameOver : StateScene
     public CameraFollow cameraFollow;
 
     [Header("Reset the ball")]
-    public TheBall theBall;
+    public MainCharacter mainCharacter;
 
     [Header("Reset Obstacle")]
-    public ObstacleController obstacleController;
+    public StaticObstacle staticObstacle;
 
     [Header("Spawn gameobject")]
     public SpawnEnemyDefault spawnEnemyDefault;
+    public SpawnEnemyElastic spawnEnemyElastic;
     public SpawnEnemyGlobe spawnEnemyGlobe;
     public SpawnEnemyJump spawnEnemyJump;
     public SpawnEnemySeek spawnEnemySeek;
 
     public SpawnTornado spawnTornado;
-    public SpawnElastic spawnElastic;
     public SpawnCrazyPlace crazyPlace;
 
     [Header("Spawn other Enemy")]
@@ -113,15 +113,15 @@ public class SceneGameOver : StateScene
         cameraFollow.Reset();
 
         //obstacle
-        obstacleController.Reset();
+        staticObstacle.Reset();
 
         // spawn enemy
         spawnEnemyDefault.Reset();
+        spawnEnemyElastic.Reset();
         spawnEnemyGlobe.Reset();
         spawnEnemyJump.Reset();
         spawnEnemySeek.Reset();
         spawnTornado.Reset();
-        spawnElastic.Reset();
         crazyPlace.Reset();
         
         //item
@@ -136,6 +136,6 @@ public class SceneGameOver : StateScene
 
         //the ball
         ballChangeColor.Reset();
-        theBall.Reset();
+        mainCharacter.Reset();
     }
 }
