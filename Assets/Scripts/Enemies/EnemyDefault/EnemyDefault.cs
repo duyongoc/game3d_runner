@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyDefault : MonoBehaviour, IOnDestroy
+public class EnemyDefault : MonoBehaviour
 {
     [Header("Load data Enemy 0")]
     public ScriptEnemyDefault scriptEnemy;
@@ -53,15 +53,19 @@ public class EnemyDefault : MonoBehaviour, IOnDestroy
             switch (currentState)
             {
                 case EnemyState.Moving:
-                    EnemyMoving();
-
-                    break;
+                    {
+                        EnemyMoving();
+                        break;
+                    }
                 case EnemyState.Holding:
-                    EnenmyHolding();
-
-                    break;
+                    {
+                        EnenmyHolding();
+                        break;
+                    }
                 case EnemyState.None:
-                    break;
+                    {
+                        break;
+                    }
             }
         }
     }
@@ -78,7 +82,7 @@ public class EnemyDefault : MonoBehaviour, IOnDestroy
         Vector3 vec = new Vector3(target.position.x, 0, target.position.z);
         transform.LookAt(vec);
         transform.position = Vector3.MoveTowards(transform.position, target.position, Time.deltaTime * moveSpeed);
-
+        
     }
 
     private void EnenmyHolding()
@@ -123,23 +127,17 @@ public class EnemyDefault : MonoBehaviour, IOnDestroy
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.tag.Contains("Enemy"))
+        if(other.tag.Contains("Enemy"))
         {
-            if(other.tag == "EnemySeek")
-            {
-                Instantiate(explosion, transform.localPosition, Quaternion.identity);
-                Destroy(this.gameObject);
-                return;
-            }
-
             var temp = other.GetComponent<IOnDestroy>();
-            if (temp != null)
+            if(temp != null)
                 temp.TakeDestroy();
 
-            TakeDestroy();
+            Instantiate(explosion, transform.localPosition, Quaternion.identity);
+            Destroy(this.gameObject);
             Destroy(other.gameObject);
         }
-        else if (other.tag == "BallPower")
+        else if(other.tag == "BallPower")
         {
             Instantiate(explosionSpecial, transform.localPosition, Quaternion.identity);
             Destroy(this.gameObject);

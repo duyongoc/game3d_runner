@@ -5,15 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "EnemySeek", menuName = "Config/EnemySeek")]
 public class ScriptEnemySeek : ScriptableObject
 {
-    [Header("Time delay spawn when game start")]
-    public float timeDelay = 30f;
     
-    [Header("Do we have set up warning for this enemy")]
-    public SetUp.Warning setWarning = SetUp.Warning.Disabe;
-
-    [Header("Number of enemy have warning when spawn")]
-    public int numberOfWarning = 3;
-
     [Header("Move speed of the enemy seek")]
     public float moveSpeed = 7f;
 
