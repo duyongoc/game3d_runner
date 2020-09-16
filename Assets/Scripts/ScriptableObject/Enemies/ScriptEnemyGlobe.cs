@@ -3,9 +3,6 @@
 [CreateAssetMenu(fileName = "EnemyGlobe", menuName = "Config/EnemyGlobe")]
 public class ScriptEnemyGlobe : ScriptableObject
 {
-    [Header("Time delay spawn when game start")]
-    public float timeDelay = 30f;
-
     [Header("Do we have set up warning for this enemy")]
     public SetUp.Warning setWarning = SetUp.Warning.Disabe;
 
@@ -26,4 +23,6 @@ public class ScriptEnemyGlobe : ScriptableObject
     [Header("Distance trigger warning from enemy globe")]
     public float distanceWarning = 5f;
 
+    [Header("Time delay spawn when game start")]
+    public float timeDelay = 30f;
 }

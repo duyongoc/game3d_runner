@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemySeek : MonoBehaviour, IOnDestroy
+public class EnemySeek : MonoBehaviour
 {
     [Header("Load data Enemy Seek")]
     public ScriptEnemySeek scriptEnemy;
@@ -29,7 +29,7 @@ public class EnemySeek : MonoBehaviour, IOnDestroy
 
     [Header("Enmey state")]
     public EnemyState currentState = EnemyState.Moving;
-    public enum EnemyState { Moving, Holding, None }
+    public enum EnemyState { Moving, Attractive, None }
 
     //enemy's target
     public Transform target;
@@ -46,7 +46,6 @@ public class EnemySeek : MonoBehaviour, IOnDestroy
         distanceWarning = scriptEnemy.distanceWarning;
     }
 
-    #region UNITY
     private void Start()
     {
         LoadData();
@@ -54,6 +53,8 @@ public class EnemySeek : MonoBehaviour, IOnDestroy
         warningIcon.SetActive(false);
         m_rigidbody2D = GetComponent<Rigidbody2D>();
         target = TransformTheBall.GetInstance().GetTransform();
+
+        // StartCoroutine("ParticleMoving", timeParMoving);
     }
 
     private void FixedUpdate()
@@ -63,26 +64,35 @@ public class EnemySeek : MonoBehaviour, IOnDestroy
             switch (currentState)
             {
                 case EnemyState.Moving:
-                    EnemyMoving();
-
-                    break;
-                case EnemyState.Holding:
-                    EnenmyHolding();
-
-                    break;
+                    {
+                        EnemyMoving();
+                        break;
+                    }
+                case EnemyState.Attractive:
+                    {
+                        EnenmyAttractive();
+                        break;
+                    }
                 case EnemyState.None:
-                    break;
+                    {
+                        break;
+                    }
             }
         }
     }
-    #endregion
 
-    #region Function of State
     private void EnemyMoving()
     {
-        if (isWarning)
+        if (!isWarning)
         {
-            GetWarningFromEnemy();
+            if (Vector3.SqrMagnitude(transform.position - target.position) <= distanceWarning * distanceWarning)
+            {
+                warningIcon.SetActive(true);
+                SceneMgr.GetInstance().GetComponentInChildren<SpawnEnemySeek>().FinishWarningAlert();
+
+                StartCoroutine("FinishWarningEnemySeek");
+                isWarning = true;
+            }
         }
 
         Vector3 vec = new Vector3(target.position.x, 0, target.position.z);
@@ -101,18 +111,19 @@ public class EnemySeek : MonoBehaviour, IOnDestroy
 
         //check spawn trail temporary, need to research other way better
         bool hasTrail = Mathf.Abs(dot) > 40f && Mathf.Abs(dot) < 100f;
-        if (hasTrail)
+        if ( hasTrail) 
         {
             processTurning += Time.deltaTime;
-            if (processTurning > timeTurning)
+            if(processTurning > timeTurning)
             {
                 Instantiate(prefabsParTurning, transform.position, Quaternion.identity);
                 processTurning = 0;
             }
         }
+
     }
 
-    private void EnenmyHolding()
+    private void EnenmyAttractive()
     {
         transform.position = Vector3.MoveTowards(transform.position, target.position, Time.deltaTime * moveSpeed);
 
@@ -122,22 +133,11 @@ public class EnemySeek : MonoBehaviour, IOnDestroy
             Destroy(this.gameObject);
         }
     }
-    #endregion
-
-    private void GetWarningFromEnemy()
-    {
-        if (Vector3.SqrMagnitude(transform.position - target.position) <= distanceWarning * distanceWarning)
-        {
-            warningIcon.SetActive(true);
-            StartCoroutine("FinishWarningEnemySeek");
-        }
-    }
 
     IEnumerator FinishWarningEnemySeek()
     {
         yield return new WaitForSeconds(2f);
         warningIcon.SetActive(false);
-        isWarning = false;
     }
 
     //Collision
@@ -151,9 +151,6 @@ public class EnemySeek : MonoBehaviour, IOnDestroy
     {
         if (other.tag.Contains("Enemy"))
         {
-            if(other.tag == "EnemyDefault")
-                return;
-
             var temp = other.GetComponent<IOnDestroy>();
             if (temp != null)
                 temp.TakeDestroy();
@@ -161,16 +158,7 @@ public class EnemySeek : MonoBehaviour, IOnDestroy
             Instantiate(explosion, transform.localPosition, Quaternion.identity);
             Destroy(this.gameObject);
         }
-        if (other.tag =="EnemySeek")
-        {
-            var temp = other.GetComponent<IOnDestroy>();
-            if (temp != null)
-                temp.TakeDestroy();
-
-            Instantiate(explosion, transform.localPosition, Quaternion.identity);
-            Destroy(this.gameObject);
-        }
-        if (other.tag == "BallPower")
+        else if (other.tag == "BallPower")
         {
             Instantiate(explosionSpecial, transform.localPosition, Quaternion.identity);
             Destroy(this.gameObject);

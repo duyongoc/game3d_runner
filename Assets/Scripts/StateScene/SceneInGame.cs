@@ -17,7 +17,7 @@ public class SceneInGame : StateScene
     public AudioClip m_audioPower;
 
     [Header("Obstacle")]
-    public StaticObstacle staticObstacle;
+    public ObstacleController obstacleController;
 
     [Header("Text Intro")]
     public GameObject textSurvival;
@@ -35,7 +35,7 @@ public class SceneInGame : StateScene
         textScore.gameObject.SetActive(false);
 
         //
-        staticObstacle.isStart = true;
+        obstacleController.isStart = true;
     }
 
     public override void UpdateState()

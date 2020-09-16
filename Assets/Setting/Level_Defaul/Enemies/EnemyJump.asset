@@ -19,7 +19,7 @@ MonoBehaviour:
   moveSpeed: 6
   timeProcessSpawn: 5
   timeSpawn: 10
-  timeDelay: 30
+  timeDelay: 20
   minRangeSpawn: 15
   maxRangeSpawn: 30
   distanceWarning: 10

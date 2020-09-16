@@ -20,6 +20,7 @@ TagManager:
   - ItemCoin
   - Enemy
   - Tornado
+  - Elastic
   - CrazyPlace
   - CrazyBoom
   - Armor
@@ -27,8 +28,6 @@ TagManager:
   - EnemyJump
   - AlertShape
   - EnemyDefault
-  - EnemySeek
-  - EnemyElastic
   layers:
   - Default
   - TransparentFX
