@@ -7,6 +7,9 @@ public class EnemySeek : MonoBehaviour, IOnDestroy
     [Header("Load data Enemy Seek")]
     public ScriptEnemySeek scriptEnemy;
 
+    [Header("Animator")]
+    public Animator animator;
+
     [Header("Enemy dead Explosion")]
     public GameObject explosion;
     public GameObject explosionSpecial;
@@ -124,6 +127,11 @@ public class EnemySeek : MonoBehaviour, IOnDestroy
     }
     #endregion
 
+    public void ChangeState(EnemyState newState)
+    {
+        currentState = newState;
+    }
+
     private void GetWarningFromEnemy()
     {
         if (Vector3.SqrMagnitude(transform.position - target.position) <= distanceWarning * distanceWarning)
@@ -143,32 +151,27 @@ public class EnemySeek : MonoBehaviour, IOnDestroy
     //Collision
     public void TakeDestroy()
     {
+        animator.SetBool("Dead", true);
         Instantiate(explosion, transform.localPosition, Quaternion.identity);
+        GetComponent<Collider>().enabled = false;
+        
+        ChangeState(EnemyState.None);
+        Invoke("DestroyObject", 3);
+    }
+
+    public void DestroyObject()
+    {
         Destroy(this.gameObject);
     }
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.tag.Contains("Enemy"))
-        {
-            if(other.tag == "EnemyDefault")
-                return;
-
-            var temp = other.GetComponent<IOnDestroy>();
-            if (temp != null)
-                temp.TakeDestroy();
-
-            Instantiate(explosion, transform.localPosition, Quaternion.identity);
-            Destroy(this.gameObject);
-        }
-        if (other.tag =="EnemySeek")
+        if ( other.tag == "EnemySeek")
         {
             var temp = other.GetComponent<IOnDestroy>();
             if (temp != null)
                 temp.TakeDestroy();
-
-            Instantiate(explosion, transform.localPosition, Quaternion.identity);
-            Destroy(this.gameObject);
+            this.TakeDestroy();
         }
         if (other.tag == "BallPower")
         {

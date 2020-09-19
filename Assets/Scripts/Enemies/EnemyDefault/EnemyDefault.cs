@@ -133,6 +133,11 @@ public class EnemyDefault : MonoBehaviour, IOnDestroy
         Invoke("DestroyObject", 3);
     }
 
+    public void DestroyObject()
+    {
+        Destroy(this.gameObject);
+    }
+
     void OnTriggerEnter(Collider other)
     {
         if (other.tag == "EnemyDefault")
@@ -142,12 +147,13 @@ public class EnemyDefault : MonoBehaviour, IOnDestroy
                 temp.TakeDestroy();
             this.TakeDestroy();
         }
+        else if(other.tag == "EnemySeek")
+        {
+            this.TakeDestroy();
+        }
         
     }
 
-    public void DestroyObject()
-    {
-        Destroy(this.gameObject);
-    }
+    
 
 }

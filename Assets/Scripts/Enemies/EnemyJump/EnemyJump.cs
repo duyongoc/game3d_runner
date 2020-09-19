@@ -9,6 +9,9 @@ public class EnemyJump : MonoBehaviour
     [Header("Load data Enemy Jump")]
     public ScriptEnemyJump scriptEnemy;
 
+    [Header("Animator")]
+    public Animator animator;
+
     [Header("Enemy dead explosion")]
     public GameObject explosion;
     public GameObject jumpExplosion;
@@ -92,7 +95,7 @@ public class EnemyJump : MonoBehaviour
                         break;
                     }
             }
-            // Debug.Log(currentState);
+            Debug.Log(currentState);
         }
     }
     #endregion
@@ -100,6 +103,9 @@ public class EnemyJump : MonoBehaviour
     #region State FUNCTION
     private void EnemyMoving()
     {
+        if(!animator.GetCurrentAnimatorStateInfo(0).IsName("Moving"))
+            animator.SetBool("Jump", false);
+
         if (isWarning)
         {
             GetWarningFromEnemy();
@@ -114,13 +120,16 @@ public class EnemyJump : MonoBehaviour
             currentTarget = target.position + vec * 3f;
             SetAlertPlacement(currentTarget, true);
 
+            
             ChangeState(EnemyState.Jumping);
         }
     }
 
     private void EnemyStop()
     {
-        transform.Rotate(Vector3.up * moveSpeed);
+        //animator.SetBool("Moving", false);
+
+        transform.LookAt(target.position);
         processWaiting += Time.deltaTime;
 
         if (processWaiting > timeWaiting)
@@ -134,8 +143,12 @@ public class EnemyJump : MonoBehaviour
 
     private void EnemyJumping()
     {
+        if(!animator.GetCurrentAnimatorStateInfo(0).IsName("Jump"))
+            animator.SetBool("Jump", true);
+
         if (gameObject != null)
             transform.DOJump(currentTarget, 5f, 1, 1.2f, false);
+
         ChangeState(EnemyState.Stop);
     }
 
