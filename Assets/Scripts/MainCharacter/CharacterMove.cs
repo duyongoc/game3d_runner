@@ -175,7 +175,7 @@ public class CharacterMove : StateCharacter
             // owner.ChangeState(owner.m_ballGravity);
             // owner.m_ballGravity.SetTarget(other.transform);
         }
-        else if(other.tag.Contains("Enemy") && this.gameObject.tag != "BallPower")
+        else if(other.tag.Contains("Enemy") && this.gameObject.tag != "PlayerAbility")
         {
             //Instantiate(owner.ballExplosion, transform.position, Quaternion.identity);
             // gameObject.SetActive(false);

@@ -8,10 +8,10 @@ public class MainCharacter : MonoBehaviour
     // Info of player
     [Header("Data of the ball")]
     public Rigidbody m_rigidbody = default;
-    public InputMobile m_inputMobile;
+    //public InputMobile m_inputMobile;  //don't use input from user anymore
 
     [Header("All of Data for the ball need to change")]
-    public Renderer ballRenderer;
+    //public Renderer ballRenderer;
     public Renderer shapeRenderer;
     public GameObject ballExplosion;
     public GameObject particleMoving;
@@ -29,8 +29,7 @@ public class MainCharacter : MonoBehaviour
     
     [Header("State of the ball")]
     public CharacterMove m_characterMove;
-    // public BallPower m_ballPower;
-    // public BallGravity m_ballGravity;
+    public CharacterAbility m_characterAbility;
     public CharacterNone m_characterNone;
 
     [Header("Slider process")]
@@ -105,9 +104,9 @@ public class MainCharacter : MonoBehaviour
     {//
         //
         m_characterMove.Reset();
-        // m_ballPower.Reset();
 
         isFirstTriggerPower = false;
+        animator.SetBool("Dead", false);
         transform.position = Vector3.zero;
         transform.rotation = Quaternion.Euler(Vector3.zero);
         transform.localScale = Vector3.one;

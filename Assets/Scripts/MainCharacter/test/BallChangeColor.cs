@@ -89,11 +89,11 @@ public class BallChangeColor : MonoBehaviour
 
     private void ChangeDataTheBall(int index)
     {
-        mainCharacter.ballRenderer.material = materialData.arrayMaterials[index].ballMaterial;
-        mainCharacter.shapeRenderer.material = materialData.arrayMaterials[index].directShape;
-        mainCharacter.ballExplosion = materialData.arrayMaterials[index].ballExplosion;
-        mainCharacter.particleMoving = materialData.arrayMaterials[index].particleMoving;
-        sliderImage.color = colors[index];
+        // mainCharacter.ballRenderer.material = materialData.arrayMaterials[index].ballMaterial;
+        // mainCharacter.shapeRenderer.material = materialData.arrayMaterials[index].directShape;
+        // mainCharacter.ballExplosion = materialData.arrayMaterials[index].ballExplosion;
+        // mainCharacter.particleMoving = materialData.arrayMaterials[index].particleMoving;
+        // sliderImage.color = colors[index];
     }   
 
     public void Reset()

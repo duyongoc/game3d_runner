@@ -7,7 +7,6 @@ TagManager:
   - Enemy3
   - Enemy4
   - Enemy5
-  - BallPower
   - Obstacle
   - Tonardo
   - Meteorite
@@ -29,6 +28,7 @@ TagManager:
   - EnemyDefault
   - EnemySeek
   - EnemyElastic
+  - PlayerAbility
   layers:
   - Default
   - TransparentFX

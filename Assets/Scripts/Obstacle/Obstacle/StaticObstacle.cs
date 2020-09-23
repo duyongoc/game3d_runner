@@ -23,10 +23,13 @@ public class StaticObstacle : MonoBehaviour
     {
         foreach(Obstacle ob in listObstacle)
         {
-            int randX = Random.Range(0, 360);
-            int randY = Random.Range(0, 360);
+            float randX = Random.Range(-5f, 5f);
+            float randZ = Random.Range(-5f, 5f);
 
-            ob.gameObject.transform.rotation = Quaternion.Euler(randX, randY, 0);
+            ob.gameObject.transform.position = new Vector3(
+                ob.gameObject.transform.position.x + randX,
+                0f, 
+                ob.gameObject.transform.position.z + randZ);
 
             if(!ob.gameObject.activeSelf)
             {

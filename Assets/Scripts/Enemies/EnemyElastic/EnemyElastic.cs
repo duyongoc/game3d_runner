@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-public class EnemyElastic : MonoBehaviour
+public class EnemyElastic : MonoBehaviour, IOnDestroy
 {
     [Header("Load data Enemy Elastic")]
     public ScriptEnemyElastic scriptEnemy;
+
+    [Header("Animation")]
+    public Animator animator;
 
     [Header("Enemy dead explosion")]
     public GameObject explosion;
@@ -27,7 +30,6 @@ public class EnemyElastic : MonoBehaviour
     //
     private float moveSpeed = 0f;
     private Rigidbody m_rigidbody;
-    private Animator m_animator;
     public GameObject arrow;
     // private float distanceWarning = 0;
 
@@ -54,7 +56,6 @@ public class EnemyElastic : MonoBehaviour
         LoadData();
 
         m_rigidbody = GetComponent<Rigidbody>();
-        m_animator = GetComponent<Animator>();
         target = TransformTheBall.GetInstance().GetTransform();
     }
 
@@ -79,7 +80,7 @@ public class EnemyElastic : MonoBehaviour
                 case EnemyState.None:
                     break;
             }
-            // Debug.Log(currentState);
+            //Debug.Log(currentState);
         }
     }
     #endregion
@@ -87,7 +88,7 @@ public class EnemyElastic : MonoBehaviour
     #region Function of state
     private void EnemyMoving()
     {
-        m_animator.SetTrigger("Move");
+        animator.SetTrigger("Move");
         transform.LookAt(target.position);
         transform.position = Vector3.MoveTowards(transform.position, target.position, Time.deltaTime * moveSpeed);
         if (Vector3.Distance(this.transform.position, target.position) < distanceAttack)
@@ -101,7 +102,7 @@ public class EnemyElastic : MonoBehaviour
         if (!isPrepare)
         {
             arrow.SetActive(true);
-            m_animator.SetTrigger("Prepare");
+            animator.SetTrigger("Attack");
             Invoke("ChangeStateAttack", timeCharge);
             isAttack = false;
             isPrepare = true;
@@ -117,7 +118,7 @@ public class EnemyElastic : MonoBehaviour
         
         arrow.SetActive(false);
         affectAttack.SetActive(true);
-        m_animator.SetTrigger("Attack");
+        // animator.SetTrigger("Attack");
         attackPosition = transform.position + (transform.forward * 15f);
         transform.DOMove(attackPosition, timeAttack, false).SetEase(Ease.OutCubic);
 
@@ -154,6 +155,22 @@ public class EnemyElastic : MonoBehaviour
         Instantiate(parPrepare, transform.position, Quaternion.identity);
     }
 
+    //Collision
+    public void TakeDestroy()
+    {
+        animator.SetBool("Dead", true);
+        Instantiate(explosion, transform.localPosition, Quaternion.identity);
+        GetComponent<Collider>().enabled = false;
+        
+        ChangeState(EnemyState.None);
+        Invoke("DestroyObject", 3);
+    }
+
+    public void DestroyObject()
+    {
+        Destroy(this.gameObject);
+    }
+
     void OnTriggerEnter(Collider other)
     {
         if (other.tag.Contains("Enemy"))
@@ -161,33 +178,23 @@ public class EnemyElastic : MonoBehaviour
             var temp = other.GetComponent<IOnDestroy>();
             if (temp != null)
                 temp.TakeDestroy();
-            var temp2 = other.GetComponentInParent<IOnDestroy>();
-            if (temp2 != null)
-                temp2.TakeDestroy();
 
             Instantiate(explosion, transform.localPosition, Quaternion.identity);
         }
-        else if (other.tag == "Tornado")
+        else if (other.tag == "Tornado" || other.gameObject.tag == "Obstacle")
         {
             Instantiate(explosion, transform.localPosition, Quaternion.identity);
             Destroy(other.gameObject);
-        }
-        else if (other.tag == "Elastic")
-        {
-            Instantiate(explosion, transform.localPosition, Quaternion.identity);
-            Destroy(other.gameObject);
-            Destroy(this.gameObject);
-        }
-        else if (other.gameObject.tag == "Obstacle")
-        {
-            Instantiate(explosion, transform.localPosition, Quaternion.identity);
-            other.gameObject.SetActive(false);
         }
         else if (other.gameObject.tag == "Player")
         {
             Instantiate(explosion, transform.localPosition, Quaternion.identity);
             other.gameObject.SetActive(false);
             SceneMgr.GetInstance().ChangeState(SceneMgr.GetInstance().m_sceneGameOver);
+        }
+        else if(other.tag == "PlayerAbility")
+        {
+            this.TakeDestroy();
         }
     }
 }

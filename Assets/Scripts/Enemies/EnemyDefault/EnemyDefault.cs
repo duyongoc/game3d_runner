@@ -151,6 +151,10 @@ public class EnemyDefault : MonoBehaviour, IOnDestroy
         {
             this.TakeDestroy();
         }
+        else if(other.tag == "PlayerAbility")
+        {
+            this.TakeDestroy();
+        }
         
     }
 

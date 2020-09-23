@@ -11,7 +11,7 @@ public class ItemShield : MonoBehaviour
         if(other.tag == "Player")
         {
             var temp = other.gameObject.GetComponent<MainCharacter>();
-            // temp.ChangeState(temp.m_ballPower);
+            temp.ChangeState(temp.m_characterAbility);
 
             Instantiate(particle, transform.position, Quaternion.identity);
             Destroy(this.gameObject);

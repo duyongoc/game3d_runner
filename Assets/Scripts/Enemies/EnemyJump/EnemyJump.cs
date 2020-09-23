@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-public class EnemyJump : MonoBehaviour
+public class EnemyJump : MonoBehaviour, IOnDestroy
 {
 
     [Header("Load data Enemy Jump")]
@@ -95,7 +95,7 @@ public class EnemyJump : MonoBehaviour
                         break;
                     }
             }
-            Debug.Log(currentState);
+            // Debug.Log(currentState);
         }
     }
     #endregion
@@ -118,7 +118,7 @@ public class EnemyJump : MonoBehaviour
         {
             Vector3 vec = (target.position - transform.position).normalized;
             currentTarget = target.position + vec * 3f;
-            SetAlertPlacement(currentTarget, true);
+            SetAlertPlacement(new Vector3(currentTarget.x, 0.5f, currentTarget.z), true);
 
             
             ChangeState(EnemyState.Jumping);
@@ -200,10 +200,27 @@ public class EnemyJump : MonoBehaviour
         warningIcon.SetActive(false);
     }
 
+    //Collision
+    public void TakeDestroy()
+    {
+        animator.SetBool("Dead", true);
+        Instantiate(explosion, transform.localPosition, Quaternion.identity);
+        GetComponent<Collider>().enabled = false;
+        Destroy(alertShape.gameObject);
+        
+        ChangeState(EnemyState.None);
+        Invoke("DestroyObject", 3);
+    }
+
+    public void DestroyObject()
+    {
+        Destroy(this.gameObject);
+    }
+
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag.Contains("Enemy"))
+        if (other.tag == "EnemyJump" || other.tag == "EnemySeek")
         {
             var temp = other.GetComponent<IOnDestroy>();
             if (temp != null)
@@ -211,28 +228,15 @@ public class EnemyJump : MonoBehaviour
 
             TakeDestroy();
         }
-        else if (other.tag == "BallPower")
-        {
-            Instantiate(jumpExplosion, transform.localPosition, Quaternion.identity);
-            TakeDestroy();
-        }
         else if (other.tag == "AlertShape")
         {
             Instantiate(jumpExplosion, transform.localPosition, Quaternion.identity);
         }
+        else if(other.tag == "PlayerAbility")
+        {
+            Instantiate(jumpExplosion, transform.localPosition, Quaternion.identity);
+            this.TakeDestroy();
+        }
 
-    }
-
-    private void OnDestroy()
-    {
-        Destroy(alertShape);
-    }
-
-    //Collision
-    public void TakeDestroy()
-    {
-        Instantiate(explosion, transform.position, Quaternion.identity);
-        Destroy(alertShape.gameObject);
-        Destroy(this.gameObject);
     }
 }

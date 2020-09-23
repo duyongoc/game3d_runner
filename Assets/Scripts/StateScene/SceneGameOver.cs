@@ -134,8 +134,7 @@ public class SceneGameOver : StateScene
         spawnMeteorite.Reset();
         spawnTheHole.Reset();
 
-        //the ball
-        ballChangeColor.Reset();
+        //MC
         mainCharacter.Reset();
     }
 }

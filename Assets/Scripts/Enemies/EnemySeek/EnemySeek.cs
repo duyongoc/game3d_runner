@@ -173,7 +173,7 @@ public class EnemySeek : MonoBehaviour, IOnDestroy
                 temp.TakeDestroy();
             this.TakeDestroy();
         }
-        if (other.tag == "BallPower")
+        if (other.tag == "PlayerAbility")
         {
             Instantiate(explosionSpecial, transform.localPosition, Quaternion.identity);
             Destroy(this.gameObject);
