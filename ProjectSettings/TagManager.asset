@@ -7,7 +7,6 @@ TagManager:
   - Enemy3
   - Enemy4
   - Enemy5
-  - BallPower
   - Obstacle
   - Tonardo
   - Meteorite
@@ -20,7 +19,6 @@ TagManager:
   - ItemCoin
   - Enemy
   - Tornado
-  - Elastic
   - CrazyPlace
   - CrazyBoom
   - Armor
@@ -28,6 +26,9 @@ TagManager:
   - EnemyJump
   - AlertShape
   - EnemyDefault
+  - EnemySeek
+  - EnemyElastic
+  - PlayerAbility
   layers:
   - Default
   - TransparentFX

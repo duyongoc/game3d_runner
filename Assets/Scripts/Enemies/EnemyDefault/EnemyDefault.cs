@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyDefault : MonoBehaviour
+public class EnemyDefault : MonoBehaviour, IOnDestroy
 {
     [Header("Load data Enemy 0")]
     public ScriptEnemyDefault scriptEnemy;
@@ -10,6 +10,9 @@ public class EnemyDefault : MonoBehaviour
     [Header("Enemy dead explosion")]
     public GameObject explosion;
     public GameObject explosionSpecial;
+
+    [Header("Animation")]
+    public Animator animator;
 
     [Header("Warning the player")]
     public GameObject warningIcon;
@@ -24,7 +27,7 @@ public class EnemyDefault : MonoBehaviour
 
     // private variable
     private float moveSpeed = 0f;
-    private Rigidbody2D m_rigidbody2D;
+    private Rigidbody m_rigidbody;
     private float distanceWarning = 0;
 
     #region UNITY
@@ -40,10 +43,11 @@ public class EnemyDefault : MonoBehaviour
         LoadData();
 
         warningIcon.SetActive(false);
-        m_rigidbody2D = GetComponent<Rigidbody2D>();
+        m_rigidbody = GetComponent<Rigidbody>();
         target = TransformTheBall.GetInstance().GetTransform();
 
         // StartCoroutine("ParticleMoving", timeParMoving);
+        transform.position = new Vector3(transform.position.x, 0, transform.position.z);
     }
 
     private void Update()
@@ -53,19 +57,15 @@ public class EnemyDefault : MonoBehaviour
             switch (currentState)
             {
                 case EnemyState.Moving:
-                    {
-                        EnemyMoving();
-                        break;
-                    }
+                    EnemyMoving();
+
+                    break;
                 case EnemyState.Holding:
-                    {
-                        EnenmyHolding();
-                        break;
-                    }
+                    EnenmyHolding();
+
+                    break;
                 case EnemyState.None:
-                    {
-                        break;
-                    }
+                    break;
             }
         }
     }
@@ -82,7 +82,6 @@ public class EnemyDefault : MonoBehaviour
         Vector3 vec = new Vector3(target.position.x, 0, target.position.z);
         transform.LookAt(vec);
         transform.position = Vector3.MoveTowards(transform.position, target.position, Time.deltaTime * moveSpeed);
-        
     }
 
     private void EnenmyHolding()
@@ -96,6 +95,11 @@ public class EnemyDefault : MonoBehaviour
         }
     }
     #endregion
+
+    public void ChangeState(EnemyState newState)
+    {
+        currentState = newState;
+    }
 
     private void GetWarningFromEnemy()
     {
@@ -121,26 +125,46 @@ public class EnemyDefault : MonoBehaviour
     //Collision
     public void TakeDestroy()
     {
+        animator.SetBool("Dead", true);
         Instantiate(explosion, transform.localPosition, Quaternion.identity);
+        GetComponent<Collider>().enabled = false;
+        
+        ChangeState(EnemyState.None);
+        Invoke("DestroyObject", 3);
+    }
+
+    public void TakeForce()
+    {
+        var vecDir = transform.position - target.position;
+        m_rigidbody.AddForce(vecDir * 10);
+    }
+
+    public void DestroyObject()
+    {
         Destroy(this.gameObject);
     }
 
     void OnTriggerEnter(Collider other)
     {
-        if(other.tag.Contains("Enemy"))
+        if (other.tag == "EnemyDefault")
         {
             var temp = other.GetComponent<IOnDestroy>();
-            if(temp != null)
+            if (temp != null)
                 temp.TakeDestroy();
-
-            Instantiate(explosion, transform.localPosition, Quaternion.identity);
-            Destroy(this.gameObject);
-            Destroy(other.gameObject);
+            this.TakeDestroy();
         }
-        else if(other.tag == "BallPower")
+        else if(other.tag == "EnemySeek")
         {
-            Instantiate(explosionSpecial, transform.localPosition, Quaternion.identity);
-            Destroy(this.gameObject);
+            this.TakeDestroy();
         }
+        else if(other.tag == "PlayerAbility")
+        {
+            this.TakeDestroy();
+            // this.TakeForce();
+        }
+        
     }
+
+    
+
 }

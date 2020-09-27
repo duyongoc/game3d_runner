@@ -25,8 +25,8 @@ public class SpawnTornado : MonoBehaviour
     private Transform target;
     public List<GameObject> enemyWasCreated;
 
-    public enum SpawnState { Spawn, None };
-    private SpawnState currentState = SpawnState.Spawn;
+    public enum SpawnState { SpawnInit, Spawn, None };
+    private SpawnState currentState = SpawnState.SpawnInit;
 
     private void LoadData()
     {
@@ -39,7 +39,7 @@ public class SpawnTornado : MonoBehaviour
         maxRangeSpawn = scriptTornado.maxRangeSpawn;
     }
 
-
+    #region UNITY
     private void Start()
     {
         LoadData();
@@ -62,33 +62,41 @@ public class SpawnTornado : MonoBehaviour
         {
             switch (currentState)
             {
-                case SpawnState.Spawn:
-                {    
-                    StateSpawn();
+                case SpawnState.SpawnInit:
+                    SpawnEnemyInit();
+                    
                     break;
-                }
-                case SpawnState.None:
-                {
+                case SpawnState.Spawn: 
+                    SpawnEnemy();
 
                     break;
-                }
+                case SpawnState.None:
+                    break;
             }
         }
     }
+    #endregion
 
-    private void StateSpawn()
+    #region Function of state
+    private void SpawnEnemyInit()
+    {
+        Camera.main.GetComponent<CameraFollow>().isFlowCamera = true;
+        currentState = SpawnState.Spawn;
+    }
+
+    private void SpawnEnemy()
     {
         timerProcessSpawn += Time.deltaTime;
         if (timerProcessSpawn >= timeSpawn)
         {
             Vector3 vec = GetRandomPoint();
             GameObject obj = Instantiate(enemyPrefab, vec, Quaternion.identity);
-            //obj.GetComponent<Enemy4>().OnSetWarning(true);
 
             enemyWasCreated.Add(obj);
             timerProcessSpawn = 0;
         }
     }
+    #endregion
 
     public void FinishWarningAlert()
     {
@@ -127,5 +135,7 @@ public class SpawnTornado : MonoBehaviour
         timerProcessSpawn = 0;
         timeProcessDelay = 0;
         isStart = false;
+
+        currentState = SpawnState.SpawnInit;
     }
 }

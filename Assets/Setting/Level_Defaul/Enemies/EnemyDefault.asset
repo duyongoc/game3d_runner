@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: EnemyDefault
   m_EditorClassIdentifier: 
   setWarning: 0
-  moveSpeed: 4
+  moveSpeed: 3.5
   timeProcessSpawn: 0
   timeSpawn: 5
   minRangeSpawn: 15

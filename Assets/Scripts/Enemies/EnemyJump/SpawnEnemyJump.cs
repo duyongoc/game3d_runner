@@ -25,7 +25,7 @@ public class SpawnEnemyJump : MonoBehaviour
     private float timeToSpawn;
     private float timerProcessSpawn;
 
-    //
+    // create enemy after time
     private float timeProcessDelay = 0f;
     private float timeDelay = 0f;
     private bool isStart = false;

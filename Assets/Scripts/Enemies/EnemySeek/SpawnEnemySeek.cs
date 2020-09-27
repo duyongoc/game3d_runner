@@ -5,36 +5,49 @@ using UnityEngine.AI;
 
 public class SpawnEnemySeek : MonoBehaviour
 {
-    
     [Header("Load data Enemy Seek")]
-    public ScriptEnemySeek scriptEnemySeek;
+    public ScriptEnemySeek scriptEnemy;
 
     [Header("Enemies will be create")]
     public GameObject enemyPrefab;
 
-    private float minRangeSpawn;
-    private float maxRangeSpawn;
-    
-    private float timeToSpawn;
-    private float timerProcessSpawn;
-
-    //enemy's target
+    [Header("Enemy's target")]
     private Transform target;
-    public bool isWarning = false;
+
+    [Header("State of Enemy")]
+    public SpawnState currentState;
+    public enum SpawnState { Warning, Spawn, None };
+
     public List<GameObject> enemyWasCreated;
 
-    public enum SpawnState { First, Warning, Spawn, None };
-    private SpawnState currentState;
+    // create enemy after time
+    private float timeProcessDelay = 0f;
+    private float timeDelay = 0f;
+
+    private bool isStart = false;
+    private bool isWarning = false;
+    private int numberOfWarning = 0;
+
+    private float minRangeSpawn;
+    private float maxRangeSpawn ;
+    private float timeSpawn ;
+    private float timerProcessSpawn;
 
     private void LoadData()
     {
-        timeToSpawn = scriptEnemySeek.timeSpawn;
-        timerProcessSpawn = scriptEnemySeek.timeProcessSpawn;
+        //set up warning from enemy
+        isWarning = scriptEnemy.setWarning == SetUp.Warning.Enable ? true : false;
+        numberOfWarning = scriptEnemy.numberOfWarning;
 
-        minRangeSpawn = scriptEnemySeek.minRangeSpawn;
-        maxRangeSpawn = scriptEnemySeek.maxRangeSpawn;
+        timeSpawn = scriptEnemy.timeSpawn;
+        timeDelay = scriptEnemy.timeDelay;
+        timerProcessSpawn = scriptEnemy.timeProcessSpawn;
+        
+        minRangeSpawn = scriptEnemy.minRangeSpawn;
+        maxRangeSpawn = scriptEnemy.maxRangeSpawn;
     }
 
+    #region UNITY
     private void Start()
     {
         LoadData();
@@ -46,99 +59,79 @@ public class SpawnEnemySeek : MonoBehaviour
     {
         if (SceneMgr.GetInstance().IsStateInGame())
         {
-            switch (currentState)
+            // spawn enemy after time delay
+            if (!isStart) 
             {
-                case SpawnState.First:
+                timeProcessDelay += Time.deltaTime;
+                if (timeProcessDelay >= timeDelay)
                 {
-                    CreateFirstEnemy();
-                    currentState = SpawnState.Warning;
-                    break;
-                }
-                case SpawnState.Warning:
-                {
-                    if(isWarning)
-                    {
-                        currentState = SpawnState.Spawn;
-                        break;
-                    }
-                    // spawn enemy don't warning yet
-                    SpawnEnemy(false, GetRandomPoint());
-                    break;
-                }
-                case SpawnState.Spawn:
-                {   
-                    // warning will not show up  
-                    if(!isWarning)
-                    {
-                        foreach (GameObject obj in enemyWasCreated)
-                        {
-                            if (obj != null)
-                                obj.GetComponent<EnemySeek>().OnSetWarning(true);
-                        }
-                        isWarning = true;
-                    }
-
-                    SpawnEnemy(true, GetRandomPoint());
-                    break;
-                }
-                case SpawnState.None:
-                {
-                    break;
+                    isStart = true;
+                    timeProcessDelay = 0;
                 }
             }
+
+            // spawning enemy with state 
+            if (isStart)
+            {
+                switch (currentState)
+                {
+                    case SpawnState.Warning:
+                        SpawnEnemyWarning();
+
+                        break;
+                    case SpawnState.Spawn:
+                        SpawnEnemy();
+
+                        break;
+                    case SpawnState.None:
+
+                        break;
+                }
+            }
+
         }
     }
+    #endregion
 
-    private void CreateFirstEnemy()
+    #region Function of State
+    private void SpawnEnemyWarning()
     {
-        if(isWarning)
+        if( !isWarning)
         {
-            GameObject obj = Instantiate(enemyPrefab, new Vector3(0,0,40), Quaternion.identity);
-            obj.GetComponent<EnemySeek>().OnSetWarning(isWarning);
-            enemyWasCreated.Add(obj);
-
-            GameObject obj2 = Instantiate(enemyPrefab, new Vector3(20,0,10), Quaternion.identity);
-            obj2.GetComponent<EnemySeek>().OnSetWarning(isWarning);
-            enemyWasCreated.Add(obj2);
-
-            GameObject obj3 = Instantiate(enemyPrefab, new Vector3(-20,0,10), Quaternion.identity);
-            obj3.GetComponent<EnemySeek>().OnSetWarning(isWarning);
-            enemyWasCreated.Add(obj3);
+            currentState = SpawnState.Spawn;
+            return;
         }
-        else
-        {
-            GameObject obj = Instantiate(enemyPrefab, new Vector3(0,0,40), Quaternion.identity);
-            obj.GetComponent<EnemySeek>().OnSetWarning(isWarning);
-            enemyWasCreated.Add(obj);
 
-            GameObject obj2 = Instantiate(enemyPrefab, new Vector3(20,0,10), Quaternion.identity);
-            obj2.GetComponent<EnemySeek>().OnSetWarning(isWarning);
-            enemyWasCreated.Add(obj2);
-
-            GameObject obj3 = Instantiate(enemyPrefab, new Vector3(-20,0,10), Quaternion.identity);
-            obj3.GetComponent<EnemySeek>().OnSetWarning(isWarning);
-            enemyWasCreated.Add(obj3);
-        }
-    }
-
-    public void FinishWarningAlert()
-    {
-        timerProcessSpawn = 0;
-        currentState = SpawnState.Spawn;
-    }
-
-    private void SpawnEnemy(bool warning, Vector3 vec)
-    {
         timerProcessSpawn += Time.deltaTime;
-        if (timerProcessSpawn >= timeToSpawn)
+        if (numberOfWarning >= 0 && timerProcessSpawn >= timeSpawn)
         {
-            GameObject obj = Instantiate(enemyPrefab, vec, Quaternion.identity);
-            obj.GetComponent<EnemySeek>().OnSetWarning(warning);
-
+            GameObject obj = Instantiate(enemyPrefab, GetRandomPoint(), Quaternion.identity);
+            obj.GetComponent<EnemyGlobe>().SetWarning(true);
             enemyWasCreated.Add(obj);
+
+            numberOfWarning--;
+            if(numberOfWarning == 0)
+            {
+                isWarning = false;
+            }
+            
             timerProcessSpawn = 0;
         }
     }
+
+
+    private void SpawnEnemy()
+    {
+        timerProcessSpawn += Time.deltaTime;
+        if (timerProcessSpawn >= timeSpawn)
+        {
+            GameObject obj = Instantiate(enemyPrefab, GetRandomPoint(), Quaternion.identity);
+            enemyWasCreated.Add(obj);
+            
+            timerProcessSpawn = 0;
+        }
+    }
+    #endregion
 
     private Vector3 GetRandomPoint()
     {
@@ -167,8 +160,10 @@ public class SpawnEnemySeek : MonoBehaviour
             if (obj != null)
                 Destroy(obj);
         }
-
-        timerProcessSpawn = 2.5f;
-        currentState = SpawnState.First;
+        
+        timeProcessDelay = 0f;
+        timerProcessSpawn = scriptEnemy.timeProcessSpawn;
+        
+        currentState = SpawnState.Spawn;
     }
 }

@@ -20,7 +20,7 @@ public class TheHole : MonoBehaviour
     private Vector3 pointRandom;
 
     //the ball
-    private TheBall theBall;
+    private MainCharacter mainCharacter;
 
     private enum HoleState { Moving, None }
     private HoleState currentState = HoleState.Moving;
@@ -37,7 +37,7 @@ public class TheHole : MonoBehaviour
         distanceRadius = scriptTheHole.distanceRadius;
 
         target = TransformTheBall.GetInstance().GetTransform();
-        theBall = TransformTheBall.GetInstance().GetComponent<TheBall>();
+        mainCharacter = TransformTheBall.GetInstance().GetComponent<MainCharacter>();
         pointRandom = GetRandomPoint();
     }
 
@@ -51,11 +51,11 @@ public class TheHole : MonoBehaviour
             {
                 case HoleState.Moving:
                 {
-                    if(theBall.CurrentState == theBall.m_ballPower
-                        && !theBall.isFirstTriggerPower)
-                    {
-                        return;
-                    }
+                    // if(mainCharacter.CurrentState == mainCharacter.m_ballPower
+                    //     && !mainCharacter.isFirstTriggerPower)
+                    // {
+                    //     return;
+                    // }
 
                     HoleMoving();
                     break;

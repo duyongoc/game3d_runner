@@ -24,9 +24,9 @@ public class SpawnCrazyPlace : MonoBehaviour
     }
     #endregion
 
+    #region UNITY
     private void Update()
     {
-
         if(!isCreated)
         {
             if(SceneMgr.GetInstance().IsStateInGame())
@@ -35,8 +35,8 @@ public class SpawnCrazyPlace : MonoBehaviour
                 isCreated = true;
             }
         }
-
     }
+    #endregion
 
     private void SpawCrazyPlace()
     {

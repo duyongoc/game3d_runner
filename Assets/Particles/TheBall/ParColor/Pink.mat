@@ -35,6 +35,6 @@ Material:
     - _Shininess: 1
     m_Colors:
     - _InnerColor: {r: 0.1764706, g: 0, b: 0.12976052, a: 1}
-    - _RimColor: {r: 0.99215686, g: 0, b: 0.7987727, a: 1}
+    - _RimColor: {r: 1, g: 1, b: 1, a: 1}
     - _SpecColor: {r: 1, g: 1, b: 1, a: 1}
     - _TintColor: {r: 0.5, g: 0.5, b: 0.5, a: 0.5}

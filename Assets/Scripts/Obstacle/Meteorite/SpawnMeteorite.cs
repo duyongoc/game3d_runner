@@ -113,7 +113,7 @@ public class SpawnMeteorite : MonoBehaviour
         );
 
         //Debug.Log(Vector3.Distance(hit.position,target.position) + " / " + minRangeSpawn);
-        Vector3 vec = new Vector3(hit.position.x, 0, hit.position.z);
+        Vector3 vec = new Vector3(hit.position.x, 0.5f, hit.position.z);
         return vec;
     }
 

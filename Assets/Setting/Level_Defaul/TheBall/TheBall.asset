@@ -14,4 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 5
   angleSpeed: 100
-  isActiveMobileInput: 0
+  speedIncrease: 1.5
+  timerSpeedUp: 3.5
+  engineForce: 1.7
+  turnSpeed: 170

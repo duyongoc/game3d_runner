@@ -10,17 +10,18 @@ public class Tornado : MonoBehaviour
     [Header("Enemy dead explosion")]
     public GameObject explosion;
 
+    [Header("State of Enemy")]
+    public EnemyState currentState = EnemyState.Moving;
+    public enum EnemyState { Moving, None }
+    
+    [Header("Enemy's target")]
+    public Transform target;
+
     //
     private float moveSpeed = 0f;
     private Rigidbody2D m_rigidbody2D;
-    // private float distanceWarning = 0;
 
-    //enmey state
-    public enum EnemyState { Moving, None }
-    public EnemyState currentState = EnemyState.Moving;
-
-    [Header("Enemy's target")]
-    public Transform target;
+    
     
     private void LoadData()
     {
@@ -29,6 +30,7 @@ public class Tornado : MonoBehaviour
 
     }
 
+    #region UNITY
     private void Start()
     {
         LoadData();
@@ -56,14 +58,16 @@ public class Tornado : MonoBehaviour
             }
         }
     }
+    #endregion
 
+    #region State of enemy
     private void EnemyMoving()
     {
-        
         transform.LookAt(target.position);
         transform.position = Vector3.MoveTowards(transform.position, target.position, Time.deltaTime * moveSpeed);
         //agent.SetDestination(target.position);
     }
+    #endregion
 
     void OnTriggerEnter(Collider other)
     {

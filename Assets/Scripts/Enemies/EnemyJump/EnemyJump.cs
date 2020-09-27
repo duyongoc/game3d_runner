@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-public class EnemyJump : MonoBehaviour
+public class EnemyJump : MonoBehaviour, IOnDestroy
 {
 
     [Header("Load data Enemy Jump")]
     public ScriptEnemyJump scriptEnemy;
+
+    [Header("Animator")]
+    public Animator animator;
 
     [Header("Enemy dead explosion")]
     public GameObject explosion;
@@ -100,6 +103,9 @@ public class EnemyJump : MonoBehaviour
     #region State FUNCTION
     private void EnemyMoving()
     {
+        if(!animator.GetCurrentAnimatorStateInfo(0).IsName("Moving"))
+            animator.SetBool("Jump", false);
+
         if (isWarning)
         {
             GetWarningFromEnemy();
@@ -112,15 +118,18 @@ public class EnemyJump : MonoBehaviour
         {
             Vector3 vec = (target.position - transform.position).normalized;
             currentTarget = target.position + vec * 3f;
-            SetAlertPlacement(currentTarget, true);
+            SetAlertPlacement(new Vector3(currentTarget.x, 0.5f, currentTarget.z), true);
 
+            
             ChangeState(EnemyState.Jumping);
         }
     }
 
     private void EnemyStop()
     {
-        transform.Rotate(Vector3.up * moveSpeed);
+        //animator.SetBool("Moving", false);
+
+        transform.LookAt(target.position);
         processWaiting += Time.deltaTime;
 
         if (processWaiting > timeWaiting)
@@ -134,8 +143,12 @@ public class EnemyJump : MonoBehaviour
 
     private void EnemyJumping()
     {
+        if(!animator.GetCurrentAnimatorStateInfo(0).IsName("Jump"))
+            animator.SetBool("Jump", true);
+
         if (gameObject != null)
             transform.DOJump(currentTarget, 5f, 1, 1.2f, false);
+
         ChangeState(EnemyState.Stop);
     }
 
@@ -187,10 +200,27 @@ public class EnemyJump : MonoBehaviour
         warningIcon.SetActive(false);
     }
 
+    //Collision
+    public void TakeDestroy()
+    {
+        animator.SetBool("Dead", true);
+        Instantiate(explosion, transform.localPosition, Quaternion.identity);
+        GetComponent<Collider>().enabled = false;
+        Destroy(alertShape.gameObject);
+        
+        ChangeState(EnemyState.None);
+        Invoke("DestroyObject", 3);
+    }
+
+    public void DestroyObject()
+    {
+        Destroy(this.gameObject);
+    }
+
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag.Contains("Enemy"))
+        if (other.tag == "EnemyJump" || other.tag == "EnemySeek")
         {
             var temp = other.GetComponent<IOnDestroy>();
             if (temp != null)
@@ -198,28 +228,15 @@ public class EnemyJump : MonoBehaviour
 
             TakeDestroy();
         }
-        else if (other.tag == "BallPower")
-        {
-            Instantiate(jumpExplosion, transform.localPosition, Quaternion.identity);
-            TakeDestroy();
-        }
         else if (other.tag == "AlertShape")
         {
             Instantiate(jumpExplosion, transform.localPosition, Quaternion.identity);
         }
+        else if(other.tag == "PlayerAbility")
+        {
+            Instantiate(jumpExplosion, transform.localPosition, Quaternion.identity);
+            this.TakeDestroy();
+        }
 
-    }
-
-    private void OnDestroy()
-    {
-        Destroy(alertShape);
-    }
-
-    //Collision
-    public void TakeDestroy()
-    {
-        Instantiate(explosion, transform.position, Quaternion.identity);
-        Destroy(alertShape.gameObject);
-        Destroy(this.gameObject);
     }
 }
