@@ -29,6 +29,7 @@ public class MainCharacter : MonoBehaviour
     
     [Header("State of the ball")]
     public CharacterMove m_characterMove;
+    public CharacterHolding m_characterHolding;
     public CharacterAbility m_characterAbility;
     public CharacterNone m_characterNone;
 

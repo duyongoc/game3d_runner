@@ -27,7 +27,7 @@ public class EnemyDefault : MonoBehaviour, IOnDestroy
 
     // private variable
     private float moveSpeed = 0f;
-    private Rigidbody2D m_rigidbody2D;
+    private Rigidbody m_rigidbody;
     private float distanceWarning = 0;
 
     #region UNITY
@@ -43,7 +43,7 @@ public class EnemyDefault : MonoBehaviour, IOnDestroy
         LoadData();
 
         warningIcon.SetActive(false);
-        m_rigidbody2D = GetComponent<Rigidbody2D>();
+        m_rigidbody = GetComponent<Rigidbody>();
         target = TransformTheBall.GetInstance().GetTransform();
 
         // StartCoroutine("ParticleMoving", timeParMoving);
@@ -133,6 +133,12 @@ public class EnemyDefault : MonoBehaviour, IOnDestroy
         Invoke("DestroyObject", 3);
     }
 
+    public void TakeForce()
+    {
+        var vecDir = transform.position - target.position;
+        m_rigidbody.AddForce(vecDir * 10);
+    }
+
     public void DestroyObject()
     {
         Destroy(this.gameObject);
@@ -154,6 +160,7 @@ public class EnemyDefault : MonoBehaviour, IOnDestroy
         else if(other.tag == "PlayerAbility")
         {
             this.TakeDestroy();
+            // this.TakeForce();
         }
         
     }

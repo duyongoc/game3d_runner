@@ -118,7 +118,7 @@ public class CharacterMove : StateCharacter
                 if(timer > owner.timeParMoving )
                 {
                     int rand = Random.Range(0, 180);
-                    Instantiate(owner.particleMoving, transform.position,Quaternion.Euler(0,0,rand));
+                    Instantiate(owner.particleMoving, transform.position,Quaternion.Euler(-90,0,rand));
                     timer = 0;
                 }
             }
@@ -172,8 +172,8 @@ public class CharacterMove : StateCharacter
     {
         if(other.tag == "TheHole")
         {
-            // owner.ChangeState(owner.m_ballGravity);
-            // owner.m_ballGravity.SetTarget(other.transform);
+            owner.ChangeState(owner.m_characterHolding);
+            owner.m_characterHolding.SetTarget(other.transform);
         }
         else if(other.tag.Contains("Enemy") && this.gameObject.tag != "PlayerAbility")
         {

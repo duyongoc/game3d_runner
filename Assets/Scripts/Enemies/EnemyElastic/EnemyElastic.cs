@@ -158,7 +158,9 @@ public class EnemyElastic : MonoBehaviour, IOnDestroy
     //Collision
     public void TakeDestroy()
     {
+        DOTween.Kill(transform); 
         animator.SetBool("Dead", true);
+        
         Instantiate(explosion, transform.localPosition, Quaternion.identity);
         GetComponent<Collider>().enabled = false;
         
@@ -181,7 +183,7 @@ public class EnemyElastic : MonoBehaviour, IOnDestroy
 
             Instantiate(explosion, transform.localPosition, Quaternion.identity);
         }
-        else if (other.tag == "Tornado" || other.gameObject.tag == "Obstacle")
+        else if (other.tag == "Tornado")
         {
             Instantiate(explosion, transform.localPosition, Quaternion.identity);
             Destroy(other.gameObject);
@@ -191,6 +193,11 @@ public class EnemyElastic : MonoBehaviour, IOnDestroy
             Instantiate(explosion, transform.localPosition, Quaternion.identity);
             other.gameObject.SetActive(false);
             SceneMgr.GetInstance().ChangeState(SceneMgr.GetInstance().m_sceneGameOver);
+        }
+        else if (other.tag == "Obstacle")
+        {
+            other.gameObject.SetActive(false);
+            Instantiate(explosion, transform.localPosition, Quaternion.identity);
         }
         else if(other.tag == "PlayerAbility")
         {

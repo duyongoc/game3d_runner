@@ -12,9 +12,7 @@ public class CharacterAbility : StateCharacter
 
     [Header("Particle change")]
     public GameObject shieldEffect;
-    public GameObject shield;
 
-    private Material currentMaterial;
     private bool isFirst = false;
 
     //
@@ -48,7 +46,6 @@ public class CharacterAbility : StateCharacter
         owner.sliderProcess.gameObject.SetActive(true);
         owner.sliderProcess.value = 1;
 
-        // currentMaterial = this.GetComponent<Renderer>().material;
         if(!SoundMgr.GetInstance().IsPlaying(SceneMgr.GetInstance().m_sceneInGame.m_audioPower))
             SoundMgr.GetInstance().PlaySound(SceneMgr.GetInstance().m_sceneInGame.m_audioPower);  
 
@@ -100,7 +97,6 @@ public class CharacterAbility : StateCharacter
         SetUpBallPower(0f,"Player", false, false, true);
         transform.localScale = Vector3.one;
 
-        //this.GetComponent<Renderer>().material = currentMaterial;
         
         if(temp != null)
         {
@@ -189,9 +185,17 @@ public class CharacterAbility : StateCharacter
 
     IEnumerator ScaleTheBall()
     {
+        float marValue = 0;
         while(transform.localScale.x < 2f)
         {
+            // scale of the MC
             transform.localScale = Vector3.Lerp(transform.localScale, new Vector3(1.25f, 1.25f, 1.25f) , 1f * Time.deltaTime);
+            
+            //set up material
+            marValue = marValue >= 1 ? 1 : (marValue + 0.05f);
+            var mar = shieldEffect.GetComponent<Renderer>().material;
+            mar.SetFloat("shieldEffectAlpha", marValue);
+
             yield return new WaitForSeconds(0.05f);
         }
     }
@@ -201,10 +205,6 @@ public class CharacterAbility : StateCharacter
         while(timer >= 0)
         {
             yield return new WaitForSeconds(0.25f);
-            // if(this.GetComponent<Renderer>().material == currentMaterial)
-            //     this.GetComponent<Renderer>().material = changeMaterial;
-            // else
-            //     this.GetComponent<Renderer>().material = currentMaterial;
 
             timer -= 0.25f;
         }
@@ -216,7 +216,6 @@ public class CharacterAbility : StateCharacter
     {
         transform.position = new Vector3(transform.position.x, y, transform.position.z);
         this.gameObject.tag = tagName;
-        shield.SetActive(visibleShield);
         shieldEffect.SetActive(visibleShield);
         owner.m_rigidbody.useGravity = useGravity;
     }

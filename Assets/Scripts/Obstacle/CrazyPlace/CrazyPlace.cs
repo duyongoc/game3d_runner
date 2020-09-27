@@ -16,10 +16,12 @@ public class CrazyPlace : MonoBehaviour
     private Animator m_animator;
     private Collider m_collider;
 
+    #region UNITY
     private void Start()
     {
         m_animator = this.GetComponent<Animator>();
         m_collider = this.GetComponent<Collider>();
+
     }
 
     private void Update()
@@ -27,9 +29,10 @@ public class CrazyPlace : MonoBehaviour
         if(isTrigger)
         {
             Invoke("CrazyTimeFinish", timeTriggerFinish);
-            isTrigger = false;
+            isTrigger = false; 
         }
     }
+    #endregion
     
     void OnTriggerEnter(Collider other)
     {

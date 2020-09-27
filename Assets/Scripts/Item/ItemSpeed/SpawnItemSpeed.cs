@@ -36,7 +36,7 @@ public class SpawnItemSpeed : MonoBehaviour
             {
                 float posX = Random.Range(-40f, 40f);
                 float posZ = Random.Range( -30f, 50f);
-                GameObject obj = Instantiate(prefabIcon, new Vector3(posX, 0f, posZ), Quaternion.identity);
+                GameObject obj = Instantiate(prefabIcon, new Vector3(posX, 0.5f, posZ), Quaternion.identity);
                 thePowerWasCreated.Add(obj);
 
                 timer = 0;
@@ -59,7 +59,7 @@ public class SpawnItemSpeed : MonoBehaviour
         {
             float posX = Random.Range(-40f, 40f);
             float posZ = Random.Range( -30f, 50f);
-            GameObject obj = Instantiate(prefabIcon, new Vector3(posX, 0f, posZ), Quaternion.identity);
+            GameObject obj = Instantiate(prefabIcon, new Vector3(posX, 0.5f, posZ), Quaternion.identity);
             thePowerWasCreated.Add(obj);
         }
     }

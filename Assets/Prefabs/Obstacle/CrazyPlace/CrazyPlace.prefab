@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1402146443827637139}
   - component: {fileID: 1402146443827637133}
   - component: {fileID: 1402146443827637138}
+  - component: {fileID: 956685767}
   m_Layer: 0
   m_Name: CrazyPlace
   m_TagString: CrazyPlace
@@ -101,6 +102,20 @@ MonoBehaviour:
   isTrigger: 0
   crazyBoom: {fileID: 3847253781623646483, guid: 9de47daa1b3e4a746a541b52857092c5,
     type: 3}
+--- !u!114 &956685767
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1402146443827637135}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed76d248b57f6c04aba9b36c3ccc7cf3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 0.5
+  vector: {x: 0, y: 1, z: 0}
 --- !u!1 &1402146444017085488
 GameObject:
   m_ObjectHideFlags: 0
@@ -172,7 +187,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: d560562c59bcd214b93319607e4aab9f, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.7294118}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
