@@ -15,18 +15,18 @@ public class SpawnItemShield : MonoBehaviour
     private float timer = 0;
 
     public List<GameObject> thePowerWasCreated;
-    // private bool isCreated = false;
+    private bool isCreated = false;
 
     private void Update()
     {
-        // if(!isCreated)
-        // {
-        //     if(SceneMgr.GetInstance().IsStateInGame())
-        //     {
-        //         SpawnPowerWhenGameStart();
-        //         isCreated = true;
-        //     }
-        // }
+        if(!isCreated)
+        {
+            if(SceneMgr.GetInstance().IsStateInGame())
+            {
+                SpawnPowerWhenGameStart();
+                isCreated = true;
+            }
+        }
         
         // create power per timeSpawn second
         if(SceneMgr.GetInstance().IsStateInGame() && iSValid() )     

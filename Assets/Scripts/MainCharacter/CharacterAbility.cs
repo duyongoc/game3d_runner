@@ -51,7 +51,7 @@ public class CharacterAbility : StateCharacter
 
         SetUpBallPower(1f, "PlayerAbility", true, true, false);
         StartCoroutine("ScaleTheBall");
-        Invoke("SetMovingBallPower", 3f);
+        Invoke("SetMovingPlayerAbility", 2f);
     }
 
     public override void UpdateState()
@@ -69,7 +69,7 @@ public class CharacterAbility : StateCharacter
         {
             owner.ChangeState(owner.m_characterMove);
 
-            //Reset();
+            Reset();
             timerPowerProcess = timerPower;
             timerFinishProcess = timerFinish;
         }
@@ -80,6 +80,7 @@ public class CharacterAbility : StateCharacter
             timerFinishProcess = timerFinish;
         }
         //UpdatePlayerMovement();
+
         if (SceneMgr.GetInstance().IsStateInGame() && owner.isFirstTriggerPower)
         {
             Moving();
@@ -205,7 +206,6 @@ public class CharacterAbility : StateCharacter
         while(timer >= 0)
         {
             yield return new WaitForSeconds(0.25f);
-
             timer -= 0.25f;
         }
        
@@ -221,7 +221,7 @@ public class CharacterAbility : StateCharacter
     }
 
     //
-    private void SetMovingBallPower()
+    private void SetMovingPlayerAbility()
     {
         if(!isFirst)
         {

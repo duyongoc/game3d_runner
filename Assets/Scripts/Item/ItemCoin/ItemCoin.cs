@@ -9,7 +9,7 @@ public class ItemCoin : MonoBehaviour
     
     void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag == "Player" || other.gameObject.tag == "BallPower")
+        if(other.gameObject.tag == "Player" || other.gameObject.tag == "PlayerAbility")
         {
             ScoreMgr.GetInstance().PlusScore(score);
             Instantiate(prefabsTextCoin, transform.position, Quaternion.identity);

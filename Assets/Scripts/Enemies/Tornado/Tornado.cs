@@ -71,34 +71,32 @@ public class Tornado : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Enemy1" || other.tag.Contains("Enemy"))
+        if( other.tag.Contains("Enemy"))
         {
             var temp = other.GetComponent<IOnDestroy>();
             if(temp != null)
                 temp.TakeDestroy();
-            var temp2 = other.GetComponentInParent<IOnDestroy>();
-            if(temp2 != null)
-                temp2.TakeDestroy();
 
-            Instantiate(explosion, transform.localPosition, Quaternion.identity);
+            Instantiate(explosion, transform.localPosition, Quaternion.Euler(-90,0,0));
         }
-        else if (other.tag == "Tornado")
+        else if (other.tag == "Tornado" || other.tag == "PlayerAbility")
         {
-            Instantiate(explosion, transform.localPosition, Quaternion.identity);
+            Instantiate(explosion, transform.localPosition, Quaternion.Euler(-90,0,0));
             Destroy(this.gameObject);
         }
         else if(other.gameObject.tag == "Obstacle")
         {
-            Instantiate(explosion, transform.localPosition, Quaternion.identity);
+            Instantiate(explosion, transform.localPosition, Quaternion.Euler(-90,0,0));
             other.gameObject.SetActive(false);
         }
         else if(other.gameObject.tag == "Player")
         {
-            Instantiate(explosion, transform.localPosition, Quaternion.identity);
+            Instantiate(explosion, transform.localPosition, Quaternion.Euler(-90,0,0));
 
             other.gameObject.SetActive(false);
             SceneMgr.GetInstance().ChangeState(SceneMgr.GetInstance().m_sceneGameOver);
         }
+
     }
 
 }

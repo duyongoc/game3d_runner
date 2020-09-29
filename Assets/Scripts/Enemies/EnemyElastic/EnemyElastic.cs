@@ -158,13 +158,15 @@ public class EnemyElastic : MonoBehaviour, IOnDestroy
     //Collision
     public void TakeDestroy()
     {
+        CancelInvoke();
+        arrow.SetActive(false);
         DOTween.Kill(transform); 
-        animator.SetBool("Dead", true);
-        
-        Instantiate(explosion, transform.localPosition, Quaternion.identity);
-        GetComponent<Collider>().enabled = false;
-        
         ChangeState(EnemyState.None);
+
+        animator.SetBool("Dead", true);
+        Instantiate(explosion, transform.localPosition, Quaternion.identity);
+
+        GetComponent<Collider>().enabled = false;
         Invoke("DestroyObject", 3);
     }
 
@@ -182,11 +184,6 @@ public class EnemyElastic : MonoBehaviour, IOnDestroy
                 temp.TakeDestroy();
 
             Instantiate(explosion, transform.localPosition, Quaternion.identity);
-        }
-        else if (other.tag == "Tornado")
-        {
-            Instantiate(explosion, transform.localPosition, Quaternion.identity);
-            Destroy(other.gameObject);
         }
         else if (other.gameObject.tag == "Player")
         {
