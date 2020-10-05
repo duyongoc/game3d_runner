@@ -5,7 +5,7 @@ using UnityEngine;
 public class CheatMgr : MonoBehaviour
 {
     [Header("Config the game")]
-    public ScriptConfigGame scriptConfigGame;
+    public ConfigGame scriptConfigGame;
 
     public static CheatMgr s_instane; 
 

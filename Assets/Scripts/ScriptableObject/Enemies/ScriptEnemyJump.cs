@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "EnemyJump", menuName = "Config/EnemyJump")]
+[CreateAssetMenu(fileName = "EnemyJump", menuName = "CONFIG/Enemy/EnemyJump")]
 public class ScriptEnemyJump : ScriptableObject
 {
 

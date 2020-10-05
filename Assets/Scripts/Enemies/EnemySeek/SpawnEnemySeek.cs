@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class SpawnEnemySeek : MonoBehaviour
+public class SpawnEnemySeek : MonoBehaviour, ISpawnObject
 {
+    [Header("Active object")]
+    public bool isActive = false;
+    
     [Header("Load data Enemy Seek")]
     public ScriptEnemySeek scriptEnemy;
 
@@ -30,7 +33,10 @@ public class SpawnEnemySeek : MonoBehaviour
 
     private float minRangeSpawn;
     private float maxRangeSpawn ;
-    private float timeSpawn ;
+
+    [Header("Game's param change in phase")]
+    public float moveSpeed;
+    public float timeToSpawn;
     private float timerProcessSpawn;
 
     private void LoadData()
@@ -38,13 +44,12 @@ public class SpawnEnemySeek : MonoBehaviour
         //set up warning from enemy
         isWarning = scriptEnemy.setWarning == SetUp.Warning.Enable ? true : false;
         numberOfWarning = scriptEnemy.numberOfWarning;
-
-        timeSpawn = scriptEnemy.timeSpawn;
         timeDelay = scriptEnemy.timeDelay;
-        timerProcessSpawn = scriptEnemy.timeProcessSpawn;
-        
         minRangeSpawn = scriptEnemy.minRangeSpawn;
         maxRangeSpawn = scriptEnemy.maxRangeSpawn;
+
+        timeToSpawn = scriptEnemy.timeSpawn;
+        timerProcessSpawn = scriptEnemy.timeProcessSpawn;
     }
 
     #region UNITY
@@ -103,7 +108,7 @@ public class SpawnEnemySeek : MonoBehaviour
         }
 
         timerProcessSpawn += Time.deltaTime;
-        if (numberOfWarning >= 0 && timerProcessSpawn >= timeSpawn)
+        if (numberOfWarning >= 0 && timerProcessSpawn >= timeToSpawn)
         {
             GameObject obj = Instantiate(enemyPrefab, GetRandomPoint(), Quaternion.identity);
             obj.GetComponent<EnemyGlobe>().SetWarning(true);
@@ -123,9 +128,10 @@ public class SpawnEnemySeek : MonoBehaviour
     private void SpawnEnemy()
     {
         timerProcessSpawn += Time.deltaTime;
-        if (timerProcessSpawn >= timeSpawn)
+        if (timerProcessSpawn >= timeToSpawn)
         {
             GameObject obj = Instantiate(enemyPrefab, GetRandomPoint(), Quaternion.identity);
+
             enemyWasCreated.Add(obj);
             
             timerProcessSpawn = 0;
@@ -162,8 +168,19 @@ public class SpawnEnemySeek : MonoBehaviour
         }
         
         timeProcessDelay = 0f;
-        timerProcessSpawn = scriptEnemy.timeProcessSpawn;
+        timerProcessSpawn = 0f;
+
+        //Game's param change in phase
+        moveSpeed = 0;
+        timeToSpawn = scriptEnemy.timeSpawn;
         
         currentState = SpawnState.Spawn;
+    }
+
+    public void SetInPhaseObject(bool active, float speed = 0, float spawn = 0)
+    {
+        this.gameObject.SetActive(active);
+        moveSpeed += speed;
+        timeToSpawn = spawn;
     }
 }

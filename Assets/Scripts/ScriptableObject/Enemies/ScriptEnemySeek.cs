@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "EnemySeek", menuName = "Config/EnemySeek")]
+[CreateAssetMenu(fileName = "EnemySeek", menuName = "CONFIG/Enemy/EnemySeek")]
 public class ScriptEnemySeek : ScriptableObject
 {
     [Header("Time delay spawn when game start")]

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "EnemyElastic", menuName = "Config/EnemyElastic")]
+[CreateAssetMenu(fileName = "EnemyElastic", menuName = "CONFIG/Enemy/EnemyElastic")]
 public class ScriptEnemyElastic : ScriptableObject
 {
     [Header("Do we have set up warning for this enemy")]

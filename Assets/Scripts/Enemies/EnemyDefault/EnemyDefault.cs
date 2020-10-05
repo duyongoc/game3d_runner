@@ -30,11 +30,16 @@ public class EnemyDefault : MonoBehaviour, IOnDestroy
     private Rigidbody m_rigidbody;
     private float distanceWarning = 0;
 
+    //
+    // property
+    //
+    public float MoveSpeed { get => moveSpeed; set => moveSpeed = value; }
+
     #region UNITY
     private void LoadData()
     {
         //agent.speed = scriptEnemy.moveSpeed;
-        moveSpeed = scriptEnemy.moveSpeed;
+        MoveSpeed = scriptEnemy.moveSpeed;
         distanceWarning = scriptEnemy.distanceWarning;
     }
 
@@ -81,12 +86,12 @@ public class EnemyDefault : MonoBehaviour, IOnDestroy
 
         Vector3 vec = new Vector3(target.position.x, 0, target.position.z);
         transform.LookAt(vec);
-        transform.position = Vector3.MoveTowards(transform.position, target.position, Time.deltaTime * moveSpeed);
+        transform.position = Vector3.MoveTowards(transform.position, target.position, Time.deltaTime * MoveSpeed);
     }
 
     private void EnenmyHolding()
     {
-        transform.position = Vector3.MoveTowards(transform.position, target.position, Time.deltaTime * moveSpeed);
+        transform.position = Vector3.MoveTowards(transform.position, target.position, Time.deltaTime * MoveSpeed);
 
         if (Vector3.Distance(transform.position, target.position) <= 1f)
         {
@@ -165,6 +170,6 @@ public class EnemyDefault : MonoBehaviour, IOnDestroy
         
     }
 
-    
+
 
 }

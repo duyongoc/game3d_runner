@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class SpawnEnemyDefault : MonoBehaviour
+public class SpawnEnemyDefault : MonoBehaviour, ISpawnObject
 {
+    [Header("Active object")]
+    public bool isActive = false;
+
     [Header("Load data of Enemy Default")]
     public ScriptEnemyDefault scriptEnemy;
 
@@ -22,22 +25,24 @@ public class SpawnEnemyDefault : MonoBehaviour
     // private variable data
     private float minRangeSpawn;
     private float maxRangeSpawn;
-    private float timeToSpawn;
-    private float timerProcessSpawn;
-
     private bool isWarning = false;
 
+    [Header("Game's param change in phase")]
+    public float moveSpeed;
+    public float timeToSpawn;
+    private float timerProcessSpawn;
 
     private void LoadData()
     {
         //set up warning from enemy
         isWarning = scriptEnemy.setWarning == SetUp.Warning.Enable ? true : false;
 
-        timeToSpawn = scriptEnemy.timeSpawn;
-        timerProcessSpawn = scriptEnemy.timeProcessSpawn;
-
         minRangeSpawn = scriptEnemy.minRangeSpawn;
         maxRangeSpawn = scriptEnemy.maxRangeSpawn;
+
+        moveSpeed = scriptEnemy.moveSpeed;
+        timeToSpawn = scriptEnemy.timeSpawn;
+        timerProcessSpawn = scriptEnemy.timeProcessSpawn;
     }
 
     #region UNITY
@@ -49,6 +54,8 @@ public class SpawnEnemyDefault : MonoBehaviour
 
     private void Update()
     {
+
+
         if (SceneMgr.GetInstance().IsStateInGame())
         {
             switch (currentState)
@@ -94,8 +101,9 @@ public class SpawnEnemyDefault : MonoBehaviour
         if (timerProcessSpawn >= timeToSpawn)
         {
             GameObject obj = Instantiate(enemyPrefab, GetRandomPoint(), Quaternion.identity);
+            obj.GetComponent<EnemyDefault>().MoveSpeed = moveSpeed;
+
             enemyWasCreated.Add(obj);
-            
             timerProcessSpawn = 0;
         }
     }
@@ -136,7 +144,19 @@ public class SpawnEnemyDefault : MonoBehaviour
                 Destroy(obj);
         }
 
-        timerProcessSpawn = 2.5f;
+        timerProcessSpawn = 0f;
+        
+        //Game's param change in phase
+        moveSpeed = 0;
+        timeToSpawn = scriptEnemy.timeSpawn;
+
         currentState = SpawnState.Init;
+    }
+
+    public void SetInPhaseObject(bool active, float speed = 0, float spawn = 0)
+    {
+        this.gameObject.SetActive(active);
+        moveSpeed += speed;
+        timeToSpawn = spawn;
     }
 }

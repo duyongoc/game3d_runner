@@ -5,7 +5,7 @@ using UnityEngine;
 public class SceneMgr : MonoBehaviour
 {
     [Header("Script config game")]
-    public ScriptConfigGame configGame;
+    public ConfigGame configGame;
 
     [Header("All of scene in game")]
     public SceneMenu m_sceneMenu;

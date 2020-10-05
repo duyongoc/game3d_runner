@@ -213,7 +213,7 @@ public class CharacterMove : StateCharacter
     public void ResetSpeed()
     {
         speedUpEffect.SetActive(false);
-        owner.moveSpeed = owner.scriptTheBall.moveSpeed;
+        owner.moveSpeed = owner.scriptPlayer.moveSpeed;
     }
 
     public void Reset()

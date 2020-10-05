@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(fileName = "EnemyDefault", menuName = "Config/EnemyDefault")]
+[CreateAssetMenu(fileName = "EnemyDefault", menuName = "CONFIG/Enemy/EnemyDefault")]
 public class ScriptEnemyDefault : ScriptableObject
 {
     [Header("Do we have set up warning for this enemy")]

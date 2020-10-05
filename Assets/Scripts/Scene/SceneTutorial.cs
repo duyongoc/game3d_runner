@@ -31,6 +31,7 @@ public class SceneTutorial : StateScene
     public override void StartState()
     {
         base.EndState();
+
         Owner.SetActivePanelScene(this.name);
 
         textScore.SetActive(false);
@@ -49,21 +50,25 @@ public class SceneTutorial : StateScene
         { 
             case Touch.Move:
             {
+                mainCharacter.animator.SetBool("Moving", true);
                 mainCharacter.transform.Translate(Vector3.forward * mainCharacter.moveSpeed * Time.deltaTime); 
 
                 break;
             }
             case Touch.Left:
             {
+                mainCharacter.animator.SetBool("Moving", false);
                 float moveTurn = Input.mousePosition.x;
                 if(Input.GetMouseButton(0) && (moveTurn < Screen.width / 2 && moveTurn > 0))
                 {
+                    mainCharacter.animator.SetBool("Moving", true);
                     mainCharacter.transform.Translate(Vector3.forward * mainCharacter.moveSpeed * Time.deltaTime); 
                     mainCharacter.transform.Rotate(-Vector3.up, mainCharacter.angleSpeed * Time.deltaTime);
 
                     timerProcess += Time.deltaTime;
                     if(timerProcess > timer)
                     {
+                        mainCharacter.animator.SetBool("Moving", false);
                         SetActiveObjectTutorial(false, true, false);
                         touchScene = Touch.Right;
 
@@ -74,15 +79,18 @@ public class SceneTutorial : StateScene
             }
             case Touch.Right: 
             {
+                mainCharacter.animator.SetBool("Moving", false);
                 float moveTurn = Input.mousePosition.x;
                 if(Input.GetMouseButton(0) && (moveTurn > Screen.width / 2 && moveTurn < Screen.width))
                 {
+                    mainCharacter.animator.SetBool("Moving", true);
                     mainCharacter.transform.Translate(Vector3.forward * mainCharacter.moveSpeed * Time.deltaTime); 
                     mainCharacter.transform.Rotate(Vector3.up, mainCharacter.angleSpeed * Time.deltaTime);
 
                     timerProcess += Time.deltaTime;
                     if(timerProcess > timer)
                     {
+                        mainCharacter.animator.SetBool("Moving", false);
                         // set active true button OK to load ingame scene
                         SetActiveObjectTutorial(false, false, true);
                         touchScene = Touch.None;
@@ -96,6 +104,9 @@ public class SceneTutorial : StateScene
             {
                 break;
             }
+            
+            // default:
+            //     mainCharacter.animator.SetBool("Moving", false);
         }
 
     }

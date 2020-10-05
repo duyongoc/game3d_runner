@@ -23,7 +23,7 @@ public class MainCharacter : MonoBehaviour
     public float timeParMoving = 0.5f; 
 
     [Header("Get data the ball from Scriptable object")]
-    public ScriptTheBall scriptTheBall; 
+    public ScriptPlayer scriptPlayer; 
     public float moveSpeed = 0f; 
     public float angleSpeed = 0f;
     
@@ -72,13 +72,13 @@ public class MainCharacter : MonoBehaviour
 
     private void LoadData()
     {
-        this.moveSpeed = scriptTheBall.moveSpeed;
-        this.angleSpeed = scriptTheBall.angleSpeed;
+        this.moveSpeed = scriptPlayer.moveSpeed;
+        this.angleSpeed = scriptPlayer.angleSpeed;
         //
-        this.speedIncrease = scriptTheBall.speedIncrease;
-        this.timerSpeedUp = scriptTheBall.timerSpeedUp;
-        this.engineForce = scriptTheBall.engineForce;
-        this.turnSpeed = scriptTheBall.turnSpeed;
+        this.speedIncrease = scriptPlayer.speedIncrease;
+        this.timerSpeedUp = scriptPlayer.timerSpeedUp;
+        this.engineForce = scriptPlayer.engineForce;
+        this.turnSpeed = scriptPlayer.turnSpeed;
 
         sliderProcess.gameObject.SetActive(false);
     }

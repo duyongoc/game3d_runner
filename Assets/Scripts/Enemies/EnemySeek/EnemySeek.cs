@@ -34,8 +34,13 @@ public class EnemySeek : MonoBehaviour, IOnDestroy
     public EnemyState currentState = EnemyState.Moving;
     public enum EnemyState { Moving, Holding, None }
 
-    //enemy's target
+    [Header("Enemy's target")]
     public Transform target;
+
+    //
+    // property
+    //
+    public float MoveSpeed { get => moveSpeed; set => moveSpeed = value; }
 
     public void OnSetWarning(bool warning)
     {
@@ -44,7 +49,7 @@ public class EnemySeek : MonoBehaviour, IOnDestroy
 
     private void LoadData()
     {
-        moveSpeed = scriptEnemy.moveSpeed;
+        MoveSpeed = scriptEnemy.moveSpeed;
         slowdownTurning = scriptEnemy.slowdownTurning;
         distanceWarning = scriptEnemy.distanceWarning;
     }
@@ -93,7 +98,7 @@ public class EnemySeek : MonoBehaviour, IOnDestroy
 
         //seeking the target - MC
         Vector3 distance = (target.position - transform.position);
-        Vector3 desired = distance.normalized * moveSpeed;
+        Vector3 desired = distance.normalized * MoveSpeed;
         Vector3 steering = desired - veclocity;
         veclocity += steering * Time.deltaTime;
         transform.position += veclocity * Time.deltaTime;
@@ -117,7 +122,7 @@ public class EnemySeek : MonoBehaviour, IOnDestroy
 
     private void EnenmyHolding()
     {
-        transform.position = Vector3.MoveTowards(transform.position, target.position, Time.deltaTime * moveSpeed);
+        transform.position = Vector3.MoveTowards(transform.position, target.position, Time.deltaTime * MoveSpeed);
 
         if (Vector3.Distance(transform.position, target.position) <= 1f)
         {

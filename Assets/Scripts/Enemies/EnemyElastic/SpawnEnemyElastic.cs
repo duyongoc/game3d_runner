@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpawnEnemyElastic : MonoBehaviour
+public class SpawnEnemyElastic : MonoBehaviour, ISpawnObject
 {
+    [Header("Active object")]
+    public bool isActive = false;
+
     [Header("Data for Elastic")]
     public ScriptEnemyElastic scriptEnemy;
     
@@ -20,25 +23,28 @@ public class SpawnEnemyElastic : MonoBehaviour
     public List<GameObject> enemyWasCreated;
 
     private float minRangeSpawn;
-    private float maxRangeSpawn ;
-    
-    private float timeSpawn ;
-    private float timerProcessSpawn;
+    private float maxRangeSpawn;
 
     private float timeProcessDelay = 0f;
     private float timeDelay = 0f;
     private bool isStart = false;
 
+    [Header("Game's param change in phase")]
+    public float moveSpeed;
+    public float timeToSpawn;
+    private float timerProcessSpawn;
+
     private void LoadData()
     {
-
-        timeSpawn = scriptEnemy.timeSpawn;
         timerProcessSpawn = scriptEnemy.timeProcessSpawn;
-
         timeDelay = scriptEnemy.timeDelay;
 
         minRangeSpawn = scriptEnemy.minRangeSpawn;
         maxRangeSpawn = scriptEnemy.maxRangeSpawn;
+
+        //Game's param change in phase
+        moveSpeed = scriptEnemy.moveSpeed;
+        timeToSpawn = scriptEnemy.timeSpawn;
     }
 
 
@@ -81,7 +87,7 @@ public class SpawnEnemyElastic : MonoBehaviour
     private void StateSpawn()
     {
         timerProcessSpawn += Time.deltaTime;
-        if (timerProcessSpawn >= timeSpawn)
+        if (timerProcessSpawn >= timeToSpawn)
         {
             Vector3 vec = GetRandomPoint();
             GameObject obj = Instantiate(enemyPrefab, vec, Quaternion.identity);
@@ -128,6 +134,19 @@ public class SpawnEnemyElastic : MonoBehaviour
 
         timerProcessSpawn = 0;
         timeProcessDelay = 0;
+
+        //Game's param change in phase
+        moveSpeed = 0;
+        timeToSpawn = scriptEnemy.timeSpawn;
+
         isStart = false;
     }
+
+    public void SetInPhaseObject(bool active, float speed = 0, float spawn = 0)
+    {
+        this.gameObject.SetActive(active);
+        moveSpeed += speed;
+        timeToSpawn = spawn;
+    }
+
 }

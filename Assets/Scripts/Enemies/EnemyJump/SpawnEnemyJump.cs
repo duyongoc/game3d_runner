@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class SpawnEnemyJump : MonoBehaviour
+public class SpawnEnemyJump : MonoBehaviour, ISpawnObject
 {
+    [Header("Active object")]
+    public bool isActive = false;
+    
     [Header("Load data Enemy Jump")]
     public ScriptEnemyJump scriptEnemy;
 
@@ -21,9 +24,6 @@ public class SpawnEnemyJump : MonoBehaviour
 
     private float minRangeSpawn;
     private float maxRangeSpawn;
-    
-    private float timeToSpawn;
-    private float timerProcessSpawn;
 
     // create enemy after time
     private float timeProcessDelay = 0f;
@@ -33,18 +33,24 @@ public class SpawnEnemyJump : MonoBehaviour
     private bool isWarning = false;
     private int numberOfWarning = 0;
 
+    [Header("Game's param change in phase")]
+    public float moveSpeed;
+    public float timeToSpawn;
+    private float timerProcessSpawn;
+
     private void LoadData()
     {
         //set up warning from enemy
         isWarning = scriptEnemy.setWarning == SetUp.Warning.Enable ? true : false;
         numberOfWarning = scriptEnemy.numberOfWarning;
 
-        timeToSpawn = scriptEnemy.timeSpawn;
-        timerProcessSpawn = scriptEnemy.timeProcessSpawn;
-
         timeDelay = scriptEnemy.timeDelay;
         minRangeSpawn = scriptEnemy.minRangeSpawn;
         maxRangeSpawn = scriptEnemy.maxRangeSpawn;
+
+        moveSpeed = scriptEnemy.moveSpeed;
+        timeToSpawn = scriptEnemy.timeSpawn;
+        timerProcessSpawn = scriptEnemy.timeProcessSpawn;
     }
 
     #region UNITY
@@ -173,9 +179,19 @@ public class SpawnEnemyJump : MonoBehaviour
 
         numberOfWarning = scriptEnemy.numberOfWarning;
         timerProcessSpawn = scriptEnemy.timeProcessSpawn;
-        currentState = SpawnState.SpawnWarning;
-
         timeProcessDelay = 0;
+
+        moveSpeed = 0;
+        timeToSpawn = scriptEnemy.timeSpawn;
+
+        currentState = SpawnState.SpawnWarning;
         isStart = false;
+    }
+
+    public void SetInPhaseObject(bool active, float speed = 0, float spawn = 0)
+    {
+        this.gameObject.SetActive(active);
+        moveSpeed += speed;
+        timeToSpawn -= spawn;
     }
 }

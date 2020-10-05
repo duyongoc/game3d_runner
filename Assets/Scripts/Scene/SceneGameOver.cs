@@ -17,6 +17,10 @@ public class SceneGameOver : StateScene
     public Text scoreText;
     public Text highScoreText;
 
+    [Header("Reset Mgr")]
+    public GameMgr gameMgr;
+    public ScoreMgr scoreMgr;
+
     [Header("Sound when player dead")]
     public AudioClip m_audioEnd;
 
@@ -49,8 +53,6 @@ public class SceneGameOver : StateScene
     public SpawnItemShield spawnItemShield;
     public SpawnItemFire spawnItemFire;
 
-    [Header("Make score game")]
-    public ScoreMgr scoreMgr;
 
     public override void StartState()
     {
@@ -102,8 +104,9 @@ public class SceneGameOver : StateScene
 
     private void Reset()
     {   
-        // reset score Mgr
+        // reset Mgr
         scoreMgr.Reset();
+        gameMgr.Reset();
 
         //camera
         cameraFollow.Reset();

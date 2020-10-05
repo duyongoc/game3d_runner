@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(fileName = "EnemyGlobe", menuName = "Config/EnemyGlobe")]
+[CreateAssetMenu(fileName = "EnemyGlobe", menuName = "CONFIG/Enemy/EnemyGlobe")]
 public class ScriptEnemyGlobe : ScriptableObject
 {
     [Header("Time delay spawn when game start")]
