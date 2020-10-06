@@ -63,11 +63,11 @@ public class GameMgr : MonoBehaviour
 
         if (SceneMgr.GetInstance().IsStateInGame())
         {
-            Debug.Log("Change phase:--- " );
+            // Debug.Log("Change phase:--- " );
             timeDt += Time.deltaTime;
             if(indexPhase + 1 < phases.Length && timeDt > phases[indexPhase].timePhase)
             {
-                Debug.Log("Change Phase index: " + indexPhase);
+                // Debug.Log("Change Phase index: " + indexPhase);
                 SpawnEnemyMgr.GetInstance().SetActiceInPhase(phases[++indexPhase]);
                 timeDt = 0;
 

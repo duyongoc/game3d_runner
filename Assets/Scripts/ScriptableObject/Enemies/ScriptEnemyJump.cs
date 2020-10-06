@@ -23,7 +23,7 @@ public class ScriptEnemyJump : ScriptableObject
 
     [Header("Time to spawn enemy jump")]
     public float timeProcessSpawn = 2.5f;
-    public float timeSpawn = 3f;
+    public float timeToSpawn = 3f;
 
     [Header("Time delay spawn when game start")]
     public float timeDelay = 10f;

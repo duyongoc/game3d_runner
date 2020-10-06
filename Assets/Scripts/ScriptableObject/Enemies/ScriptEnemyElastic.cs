@@ -16,7 +16,7 @@ public class ScriptEnemyElastic : ScriptableObject
 
     [Header("Time to spawn Enemy Elastic")]
     public float timeProcessSpawn = 2.5f;
-    public float timeSpawn = 3f;
+    public float timeToSpawn = 3f;
     
     [Header("Range to create Enemy Elastic")]
     public float minRangeSpawn = 15f;

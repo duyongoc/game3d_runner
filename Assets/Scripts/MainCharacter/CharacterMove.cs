@@ -23,6 +23,7 @@ public class CharacterMove : StateCharacter
     GameObject temp = null;
     bool isCreate = false;
     
+    private int indexFoot = 0;
     
     #region STATE OF PLAYER
     public override void StartState()
@@ -117,8 +118,10 @@ public class CharacterMove : StateCharacter
                 timer += Time.deltaTime;
                 if(timer > owner.timeParMoving )
                 {
-                    int rand = Random.Range(0, 180);
-                    Instantiate(owner.particleMoving, transform.position,Quaternion.Euler(-90,0,rand));
+                    //int rand = Random.Range(0, 180);
+                    indexFoot = indexFoot == 2 ? 0 : 1; 
+                    Instantiate(owner.particleMoving, owner.arrTransFoot[indexFoot++].position, Quaternion.Euler(-90,0,0));
+
                     timer = 0;
                 }
             }
@@ -177,9 +180,7 @@ public class CharacterMove : StateCharacter
         }
         else if(other.tag.Contains("Enemy") && this.gameObject.tag != "PlayerAbility")
         {
-            //Instantiate(owner.ballExplosion, transform.position, Quaternion.identity);
-            // gameObject.SetActive(false);
-
+            owner.GetComponent<Collider>().enabled = false;
             owner.animator.SetBool("Dead", true);
 
             // loading gameover scene;
@@ -221,6 +222,7 @@ public class CharacterMove : StateCharacter
         if(temp != null)
             Destroy(temp);
         
+        owner.GetComponent<Collider>().enabled = true;
         shape.localRotation = Quaternion.Euler(0f, 0f, 0f);
     }
 

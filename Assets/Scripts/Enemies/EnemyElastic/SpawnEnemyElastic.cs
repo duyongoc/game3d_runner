@@ -32,11 +32,10 @@ public class SpawnEnemyElastic : MonoBehaviour, ISpawnObject
     [Header("Game's param change in phase")]
     public float moveSpeed;
     public float timeToSpawn;
-    private float timerProcessSpawn;
+    private float timerProcessSpawn = 0;
 
     private void LoadData()
     {
-        timerProcessSpawn = scriptEnemy.timeProcessSpawn;
         timeDelay = scriptEnemy.timeDelay;
 
         minRangeSpawn = scriptEnemy.minRangeSpawn;
@@ -44,7 +43,7 @@ public class SpawnEnemyElastic : MonoBehaviour, ISpawnObject
 
         //Game's param change in phase
         moveSpeed = scriptEnemy.moveSpeed;
-        timeToSpawn = scriptEnemy.timeSpawn;
+        timeToSpawn = scriptEnemy.timeToSpawn;
     }
 
 
@@ -132,13 +131,12 @@ public class SpawnEnemyElastic : MonoBehaviour, ISpawnObject
                 Destroy(obj);
         }
 
-        timerProcessSpawn = 0;
-        timeProcessDelay = 0;
-
         //Game's param change in phase
         moveSpeed = 0;
-        timeToSpawn = scriptEnemy.timeSpawn;
+        timeToSpawn = scriptEnemy.timeToSpawn;
+        timerProcessSpawn = 0;
 
+        timeProcessDelay = 0;
         isStart = false;
     }
 

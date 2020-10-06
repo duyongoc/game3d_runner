@@ -26,9 +26,9 @@ public class SpawnEnemyJump : MonoBehaviour, ISpawnObject
     private float maxRangeSpawn;
 
     // create enemy after time
-    private float timeProcessDelay = 0f;
-    private float timeDelay = 0f;
-    private bool isStart = false;
+    // private float timeProcessDelay = 0f;
+    // private float timeDelay = 0f;
+    // private bool isStart = false;
 
     private bool isWarning = false;
     private int numberOfWarning = 0;
@@ -36,7 +36,7 @@ public class SpawnEnemyJump : MonoBehaviour, ISpawnObject
     [Header("Game's param change in phase")]
     public float moveSpeed;
     public float timeToSpawn;
-    private float timerProcessSpawn;
+    private float timerProcessSpawn = 0;
 
     private void LoadData()
     {
@@ -44,13 +44,12 @@ public class SpawnEnemyJump : MonoBehaviour, ISpawnObject
         isWarning = scriptEnemy.setWarning == SetUp.Warning.Enable ? true : false;
         numberOfWarning = scriptEnemy.numberOfWarning;
 
-        timeDelay = scriptEnemy.timeDelay;
+        // timeDelay = scriptEnemy.timeDelay;
         minRangeSpawn = scriptEnemy.minRangeSpawn;
         maxRangeSpawn = scriptEnemy.maxRangeSpawn;
 
         moveSpeed = scriptEnemy.moveSpeed;
-        timeToSpawn = scriptEnemy.timeSpawn;
-        timerProcessSpawn = scriptEnemy.timeProcessSpawn;
+        timeToSpawn = scriptEnemy.timeToSpawn;
     }
 
     #region UNITY
@@ -62,17 +61,18 @@ public class SpawnEnemyJump : MonoBehaviour, ISpawnObject
 
     private void Update()
     {
-        if(!isStart)
-        {
-            timeProcessDelay += Time.deltaTime;
-            if(timeProcessDelay >= timeDelay)
-            {
-                isStart = true;
-                timeProcessDelay = 0;
-            }
-        }
+        //spawn enemy with delay time
+        // if(!isStart)
+        // {
+        //     timeProcessDelay += Time.deltaTime;
+        //     if(timeProcessDelay >= timeDelay)
+        //     {
+        //         isStart = true;
+        //         timeProcessDelay = 0;
+        //     }
+        // }
         
-        if (isStart && SceneMgr.GetInstance().IsStateInGame())
+        if ( SceneMgr.GetInstance().IsStateInGame())
         {
             switch (currentState)
             {
@@ -178,20 +178,20 @@ public class SpawnEnemyJump : MonoBehaviour, ISpawnObject
         }
 
         numberOfWarning = scriptEnemy.numberOfWarning;
-        timerProcessSpawn = scriptEnemy.timeProcessSpawn;
-        timeProcessDelay = 0;
+        // timeProcessDelay = 0;
+        // isStart = false;
 
         moveSpeed = 0;
-        timeToSpawn = scriptEnemy.timeSpawn;
+        timeToSpawn = scriptEnemy.timeToSpawn;
+        timerProcessSpawn = 0;
 
         currentState = SpawnState.SpawnWarning;
-        isStart = false;
     }
 
     public void SetInPhaseObject(bool active, float speed = 0, float spawn = 0)
     {
         this.gameObject.SetActive(active);
         moveSpeed += speed;
-        timeToSpawn -= spawn;
+        timeToSpawn = spawn;
     }
 }

@@ -17,9 +17,9 @@ MonoBehaviour:
   jumpSpeed: 0.7
   jumpHigh: 3.5
   moveSpeed: 6
-  timeProcessSpawn: 5
-  timeSpawn: 10
-  timeDelay: 30
+  timeProcessSpawn: 0
+  timeToSpawn: 10
+  timeDelay: 0
   minRangeSpawn: 15
   maxRangeSpawn: 30
   distanceWarning: 10

@@ -14,13 +14,15 @@ public class MainCharacter : MonoBehaviour
     //public Renderer ballRenderer;
     public Renderer shapeRenderer;
     public GameObject ballExplosion;
-    public GameObject particleMoving;
+    
 
     [Header("Animator")]
     public Animator animator;
 
     [Header("Set time particle when player moving")]
+    public GameObject particleMoving;
     public float timeParMoving = 0.5f; 
+    public Transform[] arrTransFoot;
 
     [Header("Get data the ball from Scriptable object")]
     public ScriptPlayer scriptPlayer; 

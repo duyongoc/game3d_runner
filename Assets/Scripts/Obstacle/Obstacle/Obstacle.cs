@@ -8,6 +8,7 @@ public class Obstacle : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        
         Instantiate(particle, other.transform.position, Quaternion.identity);
         if (other.tag == "EnemyDefault" || other.tag == "EnemySeek")
         {

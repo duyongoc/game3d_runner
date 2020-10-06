@@ -17,7 +17,7 @@ MonoBehaviour:
     enemies:
     - enemyType: 0
       speedIncrease: 0
-      timeSpawn: 4
+      timeSpawn: 5
     - enemyType: 1
       speedIncrease: 0
       timeSpawn: 4
@@ -27,7 +27,7 @@ MonoBehaviour:
       speedIncrease: 1
       timeSpawn: 4
     - enemyType: 1
-      speedIncrease: 0.5
+      speedIncrease: 1
       timeSpawn: 6
     - enemyType: 2
       speedIncrease: 0

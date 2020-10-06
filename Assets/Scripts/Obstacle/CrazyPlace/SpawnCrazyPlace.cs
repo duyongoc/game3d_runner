@@ -10,6 +10,8 @@ public class SpawnCrazyPlace : MonoBehaviour
     [Header("Transform to create Crazy Place")]
     [SerializeField]private Transform[] transArr = default;
 
+    public int size = 3;
+
     //
     private bool isCreated = false;
     public List<GameObject> crazyPlaceWasCreated;
@@ -40,9 +42,10 @@ public class SpawnCrazyPlace : MonoBehaviour
 
     private void SpawCrazyPlace()
     {
-        for(int i = 0 ; i < transArr.Length; i++ )
+        for(int i = 0 ; i < size; i++ )
         {
-            GameObject obj = Instantiate(prefabsCrazyPlace, transArr[i].position, Quaternion.identity);
+            int rand = Random.Range(0, transArr.Length);
+            GameObject obj = Instantiate(prefabsCrazyPlace, transArr[rand].position, Quaternion.identity);
             crazyPlaceWasCreated.Add(obj);
         }
     }
