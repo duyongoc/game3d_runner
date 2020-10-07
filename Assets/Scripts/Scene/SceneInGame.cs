@@ -61,7 +61,6 @@ public class SceneInGame : StateScene
 
                 //setup camera
                 cameraFollow.isStart = true;
-                mainCharacter.animator.SetBool("Moving", true);
             }
             //
             if(cameraFollow.IsSetUpCamera())

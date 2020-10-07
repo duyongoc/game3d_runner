@@ -61,6 +61,9 @@ public class CharacterMove : StateCharacter
 
     private void Moving()
     {
+        if (!owner.animator.GetCurrentAnimatorStateInfo(0).IsName("FastRun"))
+            owner.animator.SetBool("Moving", true);
+
         if(Input.GetMouseButton(0))
         {
             if(!isCreate)
@@ -70,7 +73,6 @@ public class CharacterMove : StateCharacter
                 isCreate = true;
             }
            
-            
             float moveTurn = Input.mousePosition.x;
             if(moveTurn < Screen.width / 2 && moveTurn > 0)
             {

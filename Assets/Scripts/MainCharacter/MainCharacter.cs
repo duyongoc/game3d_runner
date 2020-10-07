@@ -109,6 +109,7 @@ public class MainCharacter : MonoBehaviour
         m_characterMove.Reset();
 
         isFirstTriggerPower = false;
+        animator.SetBool("Moving", false);
         animator.SetBool("Dead", false);
         transform.position = Vector3.zero;
         transform.rotation = Quaternion.Euler(Vector3.zero);
