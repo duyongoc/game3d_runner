@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SceneDefault
   m_EditorClassIdentifier: 
   phases:
-  - timePhase: 15
+  - timePhase: 12
     enemies:
     - enemyType: 0
       speedIncrease: 0

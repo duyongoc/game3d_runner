@@ -30,7 +30,7 @@ Transform:
   m_LocalScale: {x: 0.5, y: 0.6, z: 1}
   m_Children: []
   m_Father: {fileID: 5998175867199827493}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &4795737900601240405
 SpriteRenderer:
@@ -269,7 +269,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5174957760080401682
 Transform:
   m_ObjectHideFlags: 0
@@ -294,7 +294,7 @@ Transform:
   - {fileID: 5174365519078208622}
   - {fileID: 5174773799106208216}
   m_Father: {fileID: 5998175867199827493}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &5083297676350539350
 Animator:
@@ -7974,7 +7974,7 @@ Transform:
   - {fileID: 5998175867575744439}
   - {fileID: 5998175866405857991}
   m_Father: {fileID: 5998175867199827493}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!198 &5998175866593688746
 ParticleSystem:
@@ -17690,7 +17690,7 @@ GameObject:
   - component: {fileID: 5998175867199827496}
   - component: {fileID: 4795737901265670130}
   m_Layer: 0
-  m_Name: EnemyJump 1
+  m_Name: EnemyJump
   m_TagString: EnemyJump
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17707,6 +17707,7 @@ Transform:
   m_LocalPosition: {x: -4.76, y: 0, z: -0.02}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 8696307042227368982}
   - {fileID: 5174957760080401682}
   - {fileID: 5998175867371831192}
   - {fileID: 4795737900601240404}
@@ -17762,7 +17763,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.2, y: 2.5, z: 1.2}
+  m_Size: {x: 0.5, y: 2.5, z: 0.5}
   m_Center: {x: 0, y: 1, z: 0}
 --- !u!114 &4795737901265670130
 MonoBehaviour:
@@ -17777,7 +17778,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scriptEnemy: {fileID: 11400000, guid: 352492d93584983468f2aab8d05fd17d, type: 2}
-  animator: {fileID: 5083297676350539350}
+  animator: {fileID: 8785784755266056482}
   explosion: {fileID: 2994373425931151387, guid: 2da0e8749505ee04c8c70cc244091dd4,
     type: 3}
   jumpExplosion: {fileID: 1402148328917832637, guid: 0d290ecc95f3a9f4d9bd0839b6b4892d,
@@ -22645,3 +22646,89 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!1001 &8700879514847821016
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 5998175867199827493}
+    m_Modifications:
+    - target: {fileID: 1967492678687660, guid: 57fc8dbaad512514aa9683fd9261d4a2, type: 3}
+      propertyPath: m_Name
+      value: Character_Medical_Male_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 4722401473104078, guid: 57fc8dbaad512514aa9683fd9261d4a2, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4722401473104078, guid: 57fc8dbaad512514aa9683fd9261d4a2, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4722401473104078, guid: 57fc8dbaad512514aa9683fd9261d4a2, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4722401473104078, guid: 57fc8dbaad512514aa9683fd9261d4a2, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4722401473104078, guid: 57fc8dbaad512514aa9683fd9261d4a2, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4722401473104078, guid: 57fc8dbaad512514aa9683fd9261d4a2, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4722401473104078, guid: 57fc8dbaad512514aa9683fd9261d4a2, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4722401473104078, guid: 57fc8dbaad512514aa9683fd9261d4a2, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4722401473104078, guid: 57fc8dbaad512514aa9683fd9261d4a2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4722401473104078, guid: 57fc8dbaad512514aa9683fd9261d4a2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4722401473104078, guid: 57fc8dbaad512514aa9683fd9261d4a2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4722401473104078, guid: 57fc8dbaad512514aa9683fd9261d4a2, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4722401473104078, guid: 57fc8dbaad512514aa9683fd9261d4a2, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4722401473104078, guid: 57fc8dbaad512514aa9683fd9261d4a2, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 95379877839425018, guid: 57fc8dbaad512514aa9683fd9261d4a2,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: b4f96d867721e934dbb465aa9a935927, type: 2}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 57fc8dbaad512514aa9683fd9261d4a2, type: 3}
+--- !u!95 &8785784755266056482 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 95379877839425018, guid: 57fc8dbaad512514aa9683fd9261d4a2,
+    type: 3}
+  m_PrefabInstance: {fileID: 8700879514847821016}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &8696307042227368982 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4722401473104078, guid: 57fc8dbaad512514aa9683fd9261d4a2,
+    type: 3}
+  m_PrefabInstance: {fileID: 8700879514847821016}
+  m_PrefabAsset: {fileID: 0}

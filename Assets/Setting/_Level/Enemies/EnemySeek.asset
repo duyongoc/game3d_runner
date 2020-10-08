@@ -18,7 +18,7 @@ MonoBehaviour:
   moveSpeed: 6
   slowdownTurning: 0.1
   timeProcessSpawn: 0
-  timeSpawn: 4
+  timeSpawn: 3.5
   minRangeSpawn: 15
   maxRangeSpawn: 30
   distanceWarning: 8
