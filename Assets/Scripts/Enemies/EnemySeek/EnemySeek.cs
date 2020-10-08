@@ -171,11 +171,12 @@ public class EnemySeek : MonoBehaviour, IOnDestroy
 
     void OnTriggerEnter(Collider other)
     {
-        if ( other.tag == "EnemySeek")
+        if ( other.tag == "EnemySeek" || other.tag == "EnemyJump")
         {
             var temp = other.GetComponent<IOnDestroy>();
             if (temp != null)
                 temp.TakeDestroy();
+                
             this.TakeDestroy();
         }
         if (other.tag == "PlayerAbility")

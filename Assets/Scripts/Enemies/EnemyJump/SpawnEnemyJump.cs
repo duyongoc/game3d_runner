@@ -122,6 +122,7 @@ public class SpawnEnemyJump : MonoBehaviour, ISpawnObject
         {
             GameObject obj = Instantiate(enemyPrefab, GetRandomPoint(), Quaternion.identity);
             obj.GetComponent<EnemyJump>().SetWarning(true);
+
             enemyWasCreated.Add(obj);
             
             numberOfWarning--;

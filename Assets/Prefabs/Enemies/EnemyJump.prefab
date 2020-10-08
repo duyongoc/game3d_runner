@@ -22655,7 +22655,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1967492678687660, guid: 57fc8dbaad512514aa9683fd9261d4a2, type: 3}
       propertyPath: m_Name
-      value: Character_Medical_Male_01
+      value: Model
       objectReference: {fileID: 0}
     - target: {fileID: 4722401473104078, guid: 57fc8dbaad512514aa9683fd9261d4a2, type: 3}
       propertyPath: m_LocalPosition.x
@@ -22718,6 +22718,11 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: b4f96d867721e934dbb465aa9a935927, type: 2}
+    - target: {fileID: 95379877839425018, guid: 57fc8dbaad512514aa9683fd9261d4a2,
+        type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 57fc8dbaad512514aa9683fd9261d4a2, type: 3}
 --- !u!95 &8785784755266056482 stripped

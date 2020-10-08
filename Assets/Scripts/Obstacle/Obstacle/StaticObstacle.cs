@@ -40,8 +40,8 @@ public class StaticObstacle : MonoBehaviour
         }
         else if (other.tag == "PlayerAbility")
         {
+            DissolveObstacle();
             Instantiate(particle, this.transform.position, Quaternion.Euler(-90f, 0f, 0f));
-            this.gameObject.SetActive(false);
         }
     }
 

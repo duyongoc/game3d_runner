@@ -214,6 +214,7 @@ public class EnemyJump : MonoBehaviour, IOnDestroy
 
     public void DestroyObject()
     {
+        Destroy(alertShape.gameObject);
         Destroy(this.gameObject);
     }
 
@@ -221,12 +222,12 @@ public class EnemyJump : MonoBehaviour, IOnDestroy
     void OnTriggerEnter(Collider other)
     {
 
-        if (other.tag == "EnemySeek")
+        if (other.tag == "EnemyDefault" || other.tag == "EnemySeek" || other.tag == "EnemyJump")
         {
             var temp = other.GetComponent<IOnDestroy>();
             if (temp != null)
                 temp.TakeDestroy();
-            TakeDestroy();
+            this.TakeDestroy();
         }
         else if (other.tag == "AlertShape")
         {

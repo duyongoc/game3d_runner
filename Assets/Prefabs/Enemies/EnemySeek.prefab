@@ -3219,7 +3219,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1112095941276756, guid: 9173cd04cd0fa7d478bdcc707b3aab84, type: 3}
       propertyPath: m_Name
-      value: Character_CyborgNinja_01
+      value: Model
       objectReference: {fileID: 0}
     - target: {fileID: 4714218626450492, guid: 9173cd04cd0fa7d478bdcc707b3aab84, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3284,15 +3284,15 @@ PrefabInstance:
       objectReference: {fileID: 9100000, guid: 99f3761e117c52e4a905bdc7e31895d4, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9173cd04cd0fa7d478bdcc707b3aab84, type: 3}
---- !u!95 &4307878081395945969 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 95166769070684016, guid: 9173cd04cd0fa7d478bdcc707b3aab84,
-    type: 3}
-  m_PrefabInstance: {fileID: 4222883203652437633}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4218199844838523581 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4714218626450492, guid: 9173cd04cd0fa7d478bdcc707b3aab84,
+    type: 3}
+  m_PrefabInstance: {fileID: 4222883203652437633}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &4307878081395945969 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 95166769070684016, guid: 9173cd04cd0fa7d478bdcc707b3aab84,
     type: 3}
   m_PrefabInstance: {fileID: 4222883203652437633}
   m_PrefabAsset: {fileID: 0}

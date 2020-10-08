@@ -714,7 +714,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.5, y: 2, z: 0.5}
+  m_Size: {x: 0.7, y: 2, z: 0.7}
   m_Center: {x: 0, y: 1, z: 0}
 --- !u!195 &1016639134566027028
 NavMeshAgent:
@@ -723,9 +723,9 @@ NavMeshAgent:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1016639134566027024}
-  m_Enabled: 1
+  m_Enabled: 0
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 0.1
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
@@ -24798,7 +24798,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1298641209967538, guid: 80a5aa5d3c514d842841d031ae24d8e1, type: 3}
       propertyPath: m_Name
-      value: Character_Cop_01
+      value: Model
       objectReference: {fileID: 0}
     - target: {fileID: 4665669730091544, guid: 80a5aa5d3c514d842841d031ae24d8e1, type: 3}
       propertyPath: m_LocalPosition.x
@@ -24851,15 +24851,15 @@ PrefabInstance:
       objectReference: {fileID: 9100000, guid: 606c868be62887643942a6f5cc8cfb44, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 80a5aa5d3c514d842841d031ae24d8e1, type: 3}
---- !u!95 &2785487682028281732 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 95937466926201354, guid: 80a5aa5d3c514d842841d031ae24d8e1,
-    type: 3}
-  m_PrefabInstance: {fileID: 2881420680963614094}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2876761884343281558 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4665669730091544, guid: 80a5aa5d3c514d842841d031ae24d8e1,
+    type: 3}
+  m_PrefabInstance: {fileID: 2881420680963614094}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &2785487682028281732 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 95937466926201354, guid: 80a5aa5d3c514d842841d031ae24d8e1,
     type: 3}
   m_PrefabInstance: {fileID: 2881420680963614094}
   m_PrefabAsset: {fileID: 0}
