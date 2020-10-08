@@ -19,8 +19,9 @@ public class SceneInGame : StateScene
     [Header("Sound when the ball get power")]
     public AudioClip m_audioPower;
 
-    [Header("Obstacle")]
-    public StaticObstacle staticObstacle;
+    [Header(" Spawn Obstacle")]
+    public SpawnStaticObstacle spawnStaticObstacle;
+    public SpawnSoftObstacle spawnSoftObstacle;
 
     [Header("Text Intro")]
     public GameObject textSurvival;
@@ -38,7 +39,8 @@ public class SceneInGame : StateScene
         textScore.gameObject.SetActive(false);
 
         //
-        staticObstacle.isStart = true;
+        spawnStaticObstacle.isStart = true;
+        spawnSoftObstacle.isStart = true;
         isPlaying = false;
     }
 
@@ -58,6 +60,7 @@ public class SceneInGame : StateScene
 
                 textSurvival.SetActive(true);
                 Invoke("SetFalseTextSurvival", 3.5f);
+                textScore.text = scoreMgr.score.ToString("00");
 
                 //setup camera
                 cameraFollow.isStart = true;
@@ -87,8 +90,8 @@ public class SceneInGame : StateScene
 
         isPlaying = false;
 
-        // if(!owner.m_sceneGameOver.theBall.isStateBallMove())
-        //     scoreMgr.score = 0;
+        if(!owner.m_sceneGameOver.mainCharacter.isStateMove())
+            scoreMgr.score = 0;
     }
 
     #region Handler event of button

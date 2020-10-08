@@ -4,51 +4,73 @@ using UnityEngine;
 
 public class StaticObstacle : MonoBehaviour
 {
+    [Header("Make dissolve effect when destroy obstacle")]
+    public Material marDissolve;
+    private Material marDefault;
     
-    public Obstacle[] listObstacle;
+    [Header("Renderer obstacle")]
+    public GameObject render;
 
-    public bool isStart = false;
+    [Header("Particle ostacle")]
+    public GameObject particle;
 
+
+    #region UNITY
     private void Start()
     {
-        listObstacle = this.GetComponentsInChildren<Obstacle>();
+        marDefault = render.GetComponent<Renderer>().material;
+    }
+    #endregion
 
-        foreach(Obstacle ob in listObstacle)
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "EnemyDefault" || other.tag == "EnemySeek")
         {
-            ob.gameObject.SetActive(false);
+            Instantiate(particle, this.transform.position, Quaternion.Euler(-90f, 0f, 0f));
+            var temp = other.GetComponent<IOnDestroy>();
+            if(temp != null)
+                temp.TakeDestroy();
         }
+        else if(other.tag == "Player")
+        {
+            other.gameObject.GetComponent<MainCharacter>().SetPlayerDead();
+            Instantiate(particle, this.transform.position, Quaternion.Euler(-90f, 0f, 0f));
+            
+            SceneMgr.GetInstance().ChangeState(SceneMgr.GetInstance().m_sceneGameOver);
+        }
+        else if (other.tag == "PlayerAbility")
+        {
+            Instantiate(particle, this.transform.position, Quaternion.Euler(-90f, 0f, 0f));
+            this.gameObject.SetActive(false);
+        }
+    }
+
+    public void DissolveObstacle()
+    {
+        Instantiate(particle, this.transform.position, Quaternion.Euler(-90f, 0f, 0f));
+        render.GetComponent<Renderer>().material = marDissolve;
+        GetComponent<Collider>().enabled = false;
+        StartCoroutine("OnDissolve");
+    }
+
+    IEnumerator OnDissolve()
+    {
+        float timer = 1;
+        float process = 0;
+        
+        while(timer >= 0)
+        {
+            yield return new WaitForSeconds(0.01f);
+
+            timer -= 0.01f;
+            process += 0.01f;
+            marDissolve.SetFloat("_processDissolve", process);
+        };
+        
+        marDissolve.SetFloat("_processDissolve", 0);
+        render.GetComponent<Renderer>().material = marDefault;
+        GetComponent<Collider>().enabled = true;
+        gameObject.SetActive(false);
     }
     
-    private void OnSetup()
-    {
-        foreach(Obstacle ob in listObstacle)
-        {
-            float randX = Random.Range(-5f, 5f);
-            float randZ = Random.Range(-5f, 5f);
-
-            ob.gameObject.transform.position = new Vector3(
-                ob.gameObject.transform.position.x + randX,
-                0f, 
-                ob.gameObject.transform.position.z + randZ);
-
-            if(!ob.gameObject.activeSelf)
-            {
-                ob.gameObject.SetActive(true);
-            }
-        }
-    }
-
-    private void Update()
-    {
-        if(isStart)
-        {
-            OnSetup();
-            isStart = false;
-        }
-    }
-
-    public void Reset()
-    {
-        OnSetup();
-    }
 }

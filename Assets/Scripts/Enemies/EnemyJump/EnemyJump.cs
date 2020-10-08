@@ -203,10 +203,10 @@ public class EnemyJump : MonoBehaviour, IOnDestroy
     //Collision
     public void TakeDestroy()
     {
+        Destroy(alertShape.gameObject);
         animator.SetBool("Dead", true);
         Instantiate(explosion, transform.localPosition, Quaternion.identity);
         GetComponent<Collider>().enabled = false;
-        Destroy(alertShape.gameObject);
         
         ChangeState(EnemyState.None);
         Invoke("DestroyObject", 3);
@@ -220,12 +220,12 @@ public class EnemyJump : MonoBehaviour, IOnDestroy
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "EnemyJump" || other.tag == "EnemySeek")
+
+        if (other.tag == "EnemySeek")
         {
             var temp = other.GetComponent<IOnDestroy>();
             if (temp != null)
                 temp.TakeDestroy();
-
             TakeDestroy();
         }
         else if (other.tag == "AlertShape")

@@ -21,9 +21,6 @@ public class CrazyBoom : MonoBehaviour
             var temp = other.GetComponent<IOnDestroy>();
             if(temp != null)
                 temp.TakeDestroy();
-            var temp2 = other.GetComponentInParent<IOnDestroy>();
-            if(temp2 != null)
-                temp2.TakeDestroy();
 
             Instantiate(boomEffect, transform.localPosition, Quaternion.identity);
         }

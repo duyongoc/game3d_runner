@@ -179,11 +179,11 @@ public class EnemyElastic : MonoBehaviour, IOnDestroy
     {
         if (other.tag.Contains("Enemy"))
         {
+            Instantiate(explosion, transform.localPosition, Quaternion.identity);
+
             var temp = other.GetComponent<IOnDestroy>();
             if (temp != null)
                 temp.TakeDestroy();
-
-            Instantiate(explosion, transform.localPosition, Quaternion.identity);
         }
         else if (other.gameObject.tag == "Player")
         {
@@ -193,7 +193,7 @@ public class EnemyElastic : MonoBehaviour, IOnDestroy
         }
         else if (other.tag == "Obstacle")
         {
-            other.gameObject.SetActive(false);
+            other.gameObject.GetComponent<StaticObstacle>().DissolveObstacle();
             Instantiate(explosion, transform.localPosition, Quaternion.identity);
         }
         else if(other.tag == "PlayerAbility")

@@ -86,8 +86,8 @@ public class Tornado : MonoBehaviour
         }
         else if(other.gameObject.tag == "Obstacle")
         {
+            other.gameObject.GetComponent<StaticObstacle>().DissolveObstacle();
             Instantiate(explosion, transform.localPosition, Quaternion.Euler(-90,0,0));
-            other.gameObject.SetActive(false);
         }
         else if(other.gameObject.tag == "Player")
         {

@@ -31,7 +31,8 @@ public class SceneGameOver : StateScene
     public MainCharacter mainCharacter;
 
     [Header("Reset Obstacle")]
-    public StaticObstacle staticObstacle;
+    public SpawnStaticObstacle spawnStaticObstacle;
+    public SpawnSoftObstacle spawnSoftObstacle;
 
     [Header("Spawn gameobject")]
     public SpawnEnemyDefault spawnEnemyDefault;
@@ -112,7 +113,8 @@ public class SceneGameOver : StateScene
         cameraFollow.Reset();
 
         //obstacle
-        staticObstacle.Reset();
+        spawnStaticObstacle.Reset();
+        spawnSoftObstacle.Reset();
 
         // spawn enemy
         spawnEnemyDefault.Reset();

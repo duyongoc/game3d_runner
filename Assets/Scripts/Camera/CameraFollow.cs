@@ -82,7 +82,7 @@ public class CameraFollow : MonoBehaviour
         Vector3 vecTarget = new Vector3(transform.position.x, currentY,  currentZ);
         ZoomMainCamera(transform.position, vecTarget, moveSpeed);
 
-        if(Vector3.Distance(transform.position, vecTarget) <= 0.1f)
+        if(Vector3.Distance(transform.position, vecTarget) <= 0.2f)
             return true;
         
         return false;
