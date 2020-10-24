@@ -174,6 +174,7 @@ public class EnemyJump : MonoBehaviour, IOnDestroy
         if (alertShape == null)
         {
             alertShape = Instantiate(shape);
+            SpawnEnemyJump.GetInstance().AddEnemyWasCreated(alertShape);
         }
         alertShape.SetActive(active);
         alertShape.transform.position = pos;

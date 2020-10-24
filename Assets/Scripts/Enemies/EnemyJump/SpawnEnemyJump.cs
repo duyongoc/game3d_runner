@@ -52,6 +52,17 @@ public class SpawnEnemyJump : MonoBehaviour, ISpawnObject
         timeToSpawn = scriptEnemy.timeToSpawn;
     }
 
+    #region Singleton
+    public static SpawnEnemyJump s_instance;
+    private void Awake()
+    {
+        if(s_instance != null)
+            return;
+
+        s_instance = this;
+    }
+    #endregion
+
     #region UNITY
     private void Start()
     {
@@ -170,6 +181,23 @@ public class SpawnEnemyJump : MonoBehaviour, ISpawnObject
         return vec;
     }
 
+    public void SetInPhaseObject(bool active, float speed = 0, float spawn = 0)
+    {
+        this.gameObject.SetActive(active);
+        moveSpeed += speed;
+        timeToSpawn = spawn;
+    }
+
+    public void AddEnemyWasCreated(GameObject ene)
+    {
+        enemyWasCreated.Add(ene);
+    }
+
+    public static SpawnEnemyJump GetInstance() 
+    {
+        return s_instance;
+    }
+
     public void Reset()
     {
         foreach (GameObject obj in enemyWasCreated)
@@ -177,6 +205,7 @@ public class SpawnEnemyJump : MonoBehaviour, ISpawnObject
             if (obj != null)
                 Destroy(obj);
         }
+        enemyWasCreated.Clear();
 
         numberOfWarning = scriptEnemy.numberOfWarning;
         // timeProcessDelay = 0;
@@ -189,10 +218,4 @@ public class SpawnEnemyJump : MonoBehaviour, ISpawnObject
         currentState = SpawnState.SpawnWarning;
     }
 
-    public void SetInPhaseObject(bool active, float speed = 0, float spawn = 0)
-    {
-        this.gameObject.SetActive(active);
-        moveSpeed += speed;
-        timeToSpawn = spawn;
-    }
 }

@@ -143,6 +143,7 @@ public class SpawnEnemyDefault : MonoBehaviour, ISpawnObject
             if (obj != null)
                 Destroy(obj);
         }
+        enemyWasCreated.Clear();
 
         timerProcessSpawn = 0f;
         

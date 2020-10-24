@@ -12,7 +12,14 @@ public class CrazyPlace : MonoBehaviour
     [Header("Crazy Boom")]
     public GameObject crazyBoom;
 
+    public GameObject placement;
+    
+
+
     //
+    //private
+    //
+    private bool rotatePlacement = false;
     private Animator m_animator;
     private Collider m_collider;
 
@@ -28,9 +35,13 @@ public class CrazyPlace : MonoBehaviour
     {
         if(isTrigger)
         {
+
             Invoke("CrazyTimeFinish", timeTriggerFinish);
             isTrigger = false; 
         }
+
+        if(rotatePlacement)
+            placement.transform.Rotate(new Vector3(0, -1, 0) * 2);
     }
     #endregion
     
@@ -41,6 +52,7 @@ public class CrazyPlace : MonoBehaviour
             if(!isTrigger)
             {
                 m_animator.SetBool("Attack", true);
+                rotatePlacement = true;
                 Invoke("CrazyTimeStart", timeTrigger);
             }
         }
@@ -49,6 +61,7 @@ public class CrazyPlace : MonoBehaviour
     private void CrazyTimeFinish()
     {
         m_animator.SetBool("Attack", false);
+        rotatePlacement = false;
         isTrigger = false;
     }
 

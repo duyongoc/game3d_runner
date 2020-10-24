@@ -166,6 +166,7 @@ public class SpawnEnemySeek : MonoBehaviour, ISpawnObject
             if (obj != null)
                 Destroy(obj);
         }
+        enemyWasCreated.Clear();
         
         timeProcessDelay = 0f;
         timerProcessSpawn = 0f;

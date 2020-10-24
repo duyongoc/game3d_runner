@@ -130,6 +130,7 @@ public class SpawnEnemyElastic : MonoBehaviour, ISpawnObject
             if (obj != null)
                 Destroy(obj);
         }
+        enemyWasCreated.Clear();
 
         //Game's param change in phase
         moveSpeed = 0;
