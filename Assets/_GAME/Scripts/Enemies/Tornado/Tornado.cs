@@ -36,12 +36,12 @@ public class Tornado : MonoBehaviour
         LoadData();
 
         m_rigidbody2D = GetComponent<Rigidbody2D>();
-        target = TransformTheBall.GetInstance().GetTransform();
+        target = MainCharacter.Instance.GetTransform();
     }
 
     private void Update()
     {
-        if (SceneMgr.GetInstance().IsStateInGame())
+        if (GameMgr.Instance.IsStateInGame)
         {
             switch (currentState)
             {
@@ -94,7 +94,7 @@ public class Tornado : MonoBehaviour
             Instantiate(explosion, transform.localPosition, Quaternion.Euler(-90,0,0));
 
             other.gameObject.SetActive(false);
-            SceneMgr.GetInstance().ChangeState(SceneMgr.GetInstance().m_sceneGameOver);
+            // SceneMgr.GetInstance().ChangeState(SceneMgr.GetInstance().m_sceneGameOver);
         }
 
     }

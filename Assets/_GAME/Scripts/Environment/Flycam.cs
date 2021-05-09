@@ -20,13 +20,13 @@ public class Flycam : MonoBehaviour
 
     private void Start()
     {
-        mainCharacter = TransformTheBall.GetInstance().GetComponent<MainCharacter>();
+        mainCharacter = MainCharacter.Instance.GetComponent<MainCharacter>();
         pointRandom = GetRandomPoint();
     }
 
     void Update()
     {
-        //if (SceneMgr.GetInstance().IsStateInGame())
+        if (GameMgr.Instance.IsStateInGame)
         {
             switch (currentState)
             {

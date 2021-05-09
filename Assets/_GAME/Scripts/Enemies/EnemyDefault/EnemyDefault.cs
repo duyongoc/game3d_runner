@@ -49,7 +49,7 @@ public class EnemyDefault : MonoBehaviour, IOnDestroy
 
         warningIcon.SetActive(false);
         m_rigidbody = GetComponent<Rigidbody>();
-        target = TransformTheBall.GetInstance().GetTransform();
+        target = MainCharacter.Instance.GetTransform();
 
         // StartCoroutine("ParticleMoving", timeParMoving);
         transform.position = new Vector3(transform.position.x, 0, transform.position.z);
@@ -57,7 +57,7 @@ public class EnemyDefault : MonoBehaviour, IOnDestroy
 
     private void Update()
     {
-        if (SceneMgr.GetInstance().IsStateInGame())
+        if (GameMgr.Instance.IsStateInGame)
         {
             switch (currentState)
             {

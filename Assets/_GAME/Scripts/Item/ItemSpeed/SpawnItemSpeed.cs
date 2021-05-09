@@ -29,7 +29,7 @@ public class SpawnItemSpeed : MonoBehaviour
         // }
         
         // create power per timeSpawn second
-        if(SceneMgr.GetInstance().IsStateInGame() && iSValid())     
+        if(GameMgr.Instance.IsStateInGame && iSValid())     
         {
             timer += Time.deltaTime;
             if(timer > timeSpawn)

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    public Transform m_target;
+    public Transform mTarget;
 
     Vector3 velocity = Vector3.zero;
     public float smoothFactor = 0.15f;
@@ -39,12 +39,12 @@ public class CameraFollow : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (m_target == null)
+        if (mTarget == null)
         {
-            m_target = TransformTheBall.GetInstance().GetTransform();
+            mTarget = MainCharacter.Instance.GetTransform();
         }
 
-        Vector3 newPostion = new Vector3(m_target.position.x, transform.position.y, m_target.position.z);
+        Vector3 newPostion = new Vector3(mTarget.position.x, transform.position.y, mTarget.position.z);
         newPostion.z += currentZ;
         transform.position = Vector3.SmoothDamp(transform.position, newPostion, ref velocity, smoothFactor * Time.deltaTime);
     
@@ -61,7 +61,7 @@ public class CameraFollow : MonoBehaviour
     public void ChangeTarget(Transform tar, float smoother)
     {
         smoothFactor = smoother;
-        m_target = tar;
+        mTarget = tar;
     }
     #endregion
 
@@ -104,13 +104,11 @@ public class CameraFollow : MonoBehaviour
             float x = Random.Range(-1f, 1f) * magnitude;
             float z = Random.Range(-1f, 1f) * magnitude;
 
-            transform.localPosition = new Vector3
-                        (transform.position.x + x, originalPos.y, transform.position.z + z);
-            
+            transform.localPosition = new Vector3(transform.position.x + x, originalPos.y, transform.position.z + z);
             elapsed += Time.deltaTime;
+            
             yield return null;
         }
-        //transform.localPosition = originalPos;
     }
 
     public void Reset()

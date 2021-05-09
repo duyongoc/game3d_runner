@@ -49,14 +49,12 @@ public class SpawnEnemyDefault : MonoBehaviour, ISpawnObject
     private void Start()
     {
         LoadData();
-        target = TransformTheBall.GetInstance().GetTransform();
+        target = MainCharacter.Instance.GetTransform();
     }
 
     private void Update()
     {
-
-
-        if (SceneMgr.GetInstance().IsStateInGame())
+        if (GameMgr.Instance.IsStateInGame)
         {
             switch (currentState)
             {

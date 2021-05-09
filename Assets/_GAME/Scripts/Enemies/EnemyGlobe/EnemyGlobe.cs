@@ -40,12 +40,12 @@ public class EnemyGlobe : MonoBehaviour
         LoadData();
 
         m_rigidbody2D = GetComponent<Rigidbody2D>();
-        target = TransformTheBall.GetInstance().GetTransform();
+        target = MainCharacter.Instance.GetTransform();
     }
     
     void Update()
     {
-        if (SceneMgr.GetInstance().IsStateInGame())
+        if (GameMgr.Instance.IsStateInGame)
         {
             switch(currentState)
             {

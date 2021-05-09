@@ -57,12 +57,12 @@ public class SpawnEnemySeek : MonoBehaviour, ISpawnObject
     {
         LoadData();
 
-        target = TransformTheBall.GetInstance().GetTransform();
+        target = MainCharacter.Instance.GetTransform();
     }
 
     private void Update()
     {
-        if (SceneMgr.GetInstance().IsStateInGame())
+        if (GameMgr.Instance.IsStateInGame)
         {
             // spawn enemy after time delay
             if (!isStart) 

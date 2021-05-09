@@ -56,12 +56,12 @@ public class EnemyElastic : MonoBehaviour, IOnDestroy
         LoadData();
 
         m_rigidbody = GetComponent<Rigidbody>();
-        target = TransformTheBall.GetInstance().GetTransform();
+        target = MainCharacter.Instance.GetTransform();
     }
 
     private void Update()
     {
-        if (SceneMgr.GetInstance().IsStateInGame())
+        if (GameMgr.Instance.IsStateInGame)
         {
             switch (currentState)
             {
@@ -189,7 +189,7 @@ public class EnemyElastic : MonoBehaviour, IOnDestroy
         {
             Instantiate(explosion, transform.localPosition, Quaternion.identity);
             other.gameObject.SetActive(false);
-            SceneMgr.GetInstance().ChangeState(SceneMgr.GetInstance().m_sceneGameOver);
+            // SceneMgr.GetInstance().ChangeState(SceneMgr.GetInstance().m_sceneGameOver);
         }
         else if (other.tag == "Obstacle")
         {

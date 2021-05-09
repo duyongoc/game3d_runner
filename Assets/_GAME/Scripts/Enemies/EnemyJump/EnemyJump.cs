@@ -55,7 +55,7 @@ public class EnemyJump : MonoBehaviour, IOnDestroy
 
         warningIcon.SetActive(false);
         m_rigidbody2D = GetComponent<Rigidbody2D>();
-        target = TransformTheBall.GetInstance().GetTransform();
+        target = MainCharacter.Instance.GetTransform();
 
         // transform.DOJump( target.position, 5, 3, 3, false );
 
@@ -66,7 +66,7 @@ public class EnemyJump : MonoBehaviour, IOnDestroy
 
     private void FixedUpdate()
     {
-        if (SceneMgr.GetInstance().IsStateInGame())
+        if (GameMgr.Instance.IsStateInGame)
         {
             switch (currentState)
             {

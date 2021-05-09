@@ -61,12 +61,12 @@ public class EnemySeek : MonoBehaviour, IOnDestroy
 
         warningIcon.SetActive(false);
         m_rigidbody2D = GetComponent<Rigidbody2D>();
-        target = TransformTheBall.GetInstance().GetTransform();
+        target = MainCharacter.Instance.GetTransform();
     }
 
     private void FixedUpdate()
     {
-        if (SceneMgr.GetInstance().IsStateInGame())
+        if (GameMgr.Instance.IsStateInGame)
         {
             switch (currentState)
             {
