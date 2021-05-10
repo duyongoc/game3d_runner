@@ -5,99 +5,103 @@ using UnityEngine.UI;
 
 public class MainCharacter : Singleton<MainCharacter>
 {
-    // Info of player
-    [Header("Data of the ball")]
-    public Rigidbody m_rigidbody = default;
-    //public InputMobile m_inputMobile;  //don't use input from user anymore
-
-    [Header("All of Data for the ball need to change")]
-    //public Renderer ballRenderer;
-    public Renderer shapeRenderer;
-    public GameObject ballExplosion;
-    
-
-    [Header("Animator")]
-    public Animator animator;
-
-    [Header("Set time particle when player moving")]
-    public GameObject particleMoving;
-    public float timeParMoving = 0.5f; 
-    public Transform[] arrTransFoot;
-
-    [Header("Get data the ball from Scriptable object")]
-    public ScriptPlayer scriptPlayer; 
-    public float moveSpeed = 0f; 
-    public float angleSpeed = 0f;
-    
-    [Header("State of the ball")]
-    public CharacterMove m_characterMove;
-    public CharacterHolding m_characterHolding;
-    public CharacterAbility m_characterAbility;
-    public CharacterNone m_characterNone;
-
-    [Header("Slider process")]
-    public Slider sliderProcess;
-    public Image sliderImage;
-    public float timeProcessFinish = 0f;
-    public float currentTimeProcess = 0;
 
     //
-    public float speedIncrease = 0f;
-    public float timerSpeedUp = 0f;
-    public float engineForce = 0f;
-    public float turnSpeed = 0f;
+    //= public
+    [Header("CONFIG")]
+    public CharacterConfigSO CONFIG_CHARACTER;
+
 
     //
-    public bool isFirstTriggerPower = false;
+    //= inspector
+    [Header("Character's param")]
+    [SerializeField] private VirtualMovement virtualMovement;
+    [SerializeField] private Transform[] characterFeet;
+    [SerializeField] private Renderer shapeRenderer;
+    
+
+    //
+    //= private
+    private Rigidbody mRigidbody;
+    private Animator animator;
+    private CharacterMove mCharacterMove;
+    private CharacterHolding mCharacterHolding;
+    private CharacterAbility mCharacterAbility;
+    private CharacterNone mCharacterNone;
 
     private StateCharacter currentState;
+    private float moveSpeed = 0f;
+    private float angleSpeed = 0f;
+
+    private float timeParMoving = 0.5f;
+    private float timeProcessFinish = 0f;
+    private float currentTimeProcess = 0;
+    private float speedIncrease = 0f;
+    private float timerSpeedUp = 0f;
+    private float engineForce = 0f;
+    private float turnSpeed = 0f;
+
+    private bool firstTriggerPower = false;
+    private GameObject particleMoving;
+
+
+    //
+    //= properties
+    public Rigidbody GetRigidbody { get => mRigidbody; set => mRigidbody = value; }
+    public Animator GetAnimator { get => animator; }
     public StateCharacter CurrentState { get => currentState; set => currentState = value; }
+    public CharacterMove GetCharacterMove { get => mCharacterMove; }
+    public CharacterHolding GetCharacterHolding { get => mCharacterHolding; }
+    public CharacterAbility GetCharacterAbility { get => mCharacterAbility; }
+    public CharacterNone GetCharacterNone { get => mCharacterNone; }
+    public Transform[] GetCharacterFeet { get => characterFeet; }
+
+    public float GetMoveSpeed { get => moveSpeed; }
+    public float GetAngleSpeed { get => angleSpeed; }
+    public float GetTimeProcessFinish { get => timeProcessFinish; }
+    public float GetCurrentTimeProcess { get => currentTimeProcess; }
+    public float GetSpeedIncrease { get => speedIncrease; }
+    public float GetTimerSpeedUp { get => timerSpeedUp; }
+    public float GetEngineForce { get => engineForce; }
+    public float GetTurnSpeed { get => turnSpeed; }
+    public float GetTimeParMoving { get => timeParMoving; }
+
+    public VirtualMovement VirtualMovement { get => virtualMovement;}
+    public GameObject GetParticleMoving { get => particleMoving; }
+    public bool FirstTriggerPower { get => firstTriggerPower; set => firstTriggerPower = value; }
+
+
 
     #region UNITY
     private void Start()
     {
-        if(m_rigidbody == null)
-            m_rigidbody = this.GetComponent<Rigidbody>();
+        CacheComponent();
+        CacheDefine();
 
-        LoadData();
-        ChangeState(m_characterMove);
+        ChangeState(mCharacterMove);
     }
 
     private void FixedUpdate()
     {
-        if(currentState != null && GameMgr.Instance.IsStateInGame)
-        {
-            currentState.UpdateState();
-        }
+        if (currentState == null || !GameMgr.Instance.IsGameRunning)
+            return;
+
+        currentState.UpdateState();
     }
     #endregion
-
-    private void LoadData()
-    {
-        this.moveSpeed = scriptPlayer.moveSpeed;
-        this.angleSpeed = scriptPlayer.angleSpeed;
-        //
-        this.speedIncrease = scriptPlayer.speedIncrease;
-        this.timerSpeedUp = scriptPlayer.timerSpeedUp;
-        this.engineForce = scriptPlayer.engineForce;
-        this.turnSpeed = scriptPlayer.turnSpeed;
-
-        sliderProcess.gameObject.SetActive(false);
-    }
 
 
     public void ChangeState(StateCharacter newState)
     {
-        if(currentState != null)
+        if (currentState != null)
         {
             currentState.EndState();
         }
 
         currentState = newState;
 
-        if(currentState != null)
+        if (currentState != null)
         {
-            currentState.Owner = this;
             currentState.StartState();
         }
     }
@@ -107,34 +111,67 @@ public class MainCharacter : Singleton<MainCharacter>
     {
         this.GetComponent<Collider>().enabled = false;
         this.animator.SetBool("Dead", true);
-        this.ChangeState(this.m_characterNone);
+        this.ChangeState(this.mCharacterMove);
     }
-    
+
     public void Reset()
     {//
         //
-        m_characterMove.Reset();
+        mCharacterMove.Reset();
 
-        isFirstTriggerPower = false;
+        firstTriggerPower = false;
         animator.SetBool("Moving", false);
         animator.SetBool("Dead", false);
         transform.position = Vector3.zero;
         transform.rotation = Quaternion.Euler(Vector3.zero);
         transform.localScale = Vector3.one;
 
-        //this.GetComponentInChildren<BallPower>().Reset();
-        
-        ChangeState(m_characterMove);
+        ChangeState(mCharacterMove);
     }
 
 
-    public bool isStateMove()
+    public bool IsStateMove()
     {
-        return currentState == m_characterMove;
+        return currentState == mCharacterMove;
     }
 
     public Transform GetTransform()
     {
         return gameObject.transform;
     }
+
+    public void IncreaseSpeed()
+    {
+        moveSpeed += speedIncrease;
+    }
+
+    public void ResetSpeed()
+    {
+        moveSpeed = CONFIG_CHARACTER.moveSpeed;
+        angleSpeed = CONFIG_CHARACTER.angleSpeed;
+    }
+
+
+    private void CacheDefine()
+    {
+        moveSpeed = CONFIG_CHARACTER.moveSpeed;
+        angleSpeed = CONFIG_CHARACTER.angleSpeed;
+
+        speedIncrease = CONFIG_CHARACTER.speedIncrease;
+        timerSpeedUp = CONFIG_CHARACTER.timerSpeedUp;
+        engineForce = CONFIG_CHARACTER.engineForce;
+        turnSpeed = CONFIG_CHARACTER.turnSpeed;
+
+    }
+
+    private void CacheComponent()
+    {
+        mRigidbody = GetComponent<Rigidbody>();
+        mCharacterMove = GetComponent<CharacterMove>();
+        mCharacterHolding = GetComponent<CharacterHolding>();
+        mCharacterAbility = GetComponent<CharacterAbility>();
+        mCharacterNone = GetComponent<CharacterNone>();
+
+    }
+
 }

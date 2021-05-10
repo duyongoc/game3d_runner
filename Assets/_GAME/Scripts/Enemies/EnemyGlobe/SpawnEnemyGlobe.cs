@@ -56,7 +56,7 @@ public class SpawnEnemyGlobe : MonoBehaviour
 
     private void Update()
     {
-        if(!isStart && GameMgr.Instance.IsStateInGame)
+        if(!isStart && GameMgr.Instance.IsGameRunning)
         {
             timeProcessDelay += Time.deltaTime;
             if(timeProcessDelay >= timeDelay)
@@ -66,7 +66,7 @@ public class SpawnEnemyGlobe : MonoBehaviour
             }
         }
 
-        if (isStart && GameMgr.Instance.IsStateInGame)
+        if (isStart && GameMgr.Instance.IsGameRunning)
         {
             switch (currentState)
             {

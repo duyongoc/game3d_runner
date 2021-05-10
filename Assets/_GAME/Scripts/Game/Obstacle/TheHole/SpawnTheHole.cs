@@ -20,7 +20,7 @@ public class SpawnTheHole : MonoBehaviour
 
         if(!isCreated)
         {
-            if(GameMgr.Instance.IsStateInGame)
+            if(GameMgr.Instance.IsGameRunning)
             {
                 SpawHole();
                 isCreated = true;

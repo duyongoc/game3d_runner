@@ -66,7 +66,7 @@ public class EnemySeek : MonoBehaviour, IOnDestroy
 
     private void FixedUpdate()
     {
-        if (GameMgr.Instance.IsStateInGame)
+        if (GameMgr.Instance.IsGameRunning)
         {
             switch (currentState)
             {

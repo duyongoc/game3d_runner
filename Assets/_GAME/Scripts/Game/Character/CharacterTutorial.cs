@@ -12,11 +12,24 @@ public class CharacterTutorial : StateCharacter
 
     //
     //= private
-    private MainCharacter mainCharacter = default;
+    private MainCharacter character;
     private float timerProcess = 0f;
     private float timer = 1.5f;
 
 
+    #region UNTIY
+    private void Start()
+    {
+
+    }
+
+    // private void Update()
+    // {
+    // }
+    #endregion
+
+
+    #region STATE
     public override void StartState()
     {
         base.StartState();
@@ -31,25 +44,25 @@ public class CharacterTutorial : StateCharacter
         {
             case Touch.Move:
                 {
-                    mainCharacter.animator.SetBool("Moving", true);
-                    mainCharacter.transform.Translate(Vector3.forward * mainCharacter.moveSpeed * Time.deltaTime);
+                    character.GetAnimator.SetBool("Moving", true);
+                    character.transform.Translate(Vector3.forward * character.GetMoveSpeed * Time.deltaTime);
 
                     break;
                 }
             case Touch.Left:
                 {
-                    mainCharacter.animator.SetBool("Moving", false);
+                    character.GetAnimator.SetBool("Moving", false);
                     float moveTurn = Input.mousePosition.x;
                     if (Input.GetMouseButton(0) && (moveTurn < Screen.width / 2 && moveTurn > 0))
                     {
-                        mainCharacter.animator.SetBool("Moving", true);
-                        mainCharacter.transform.Translate(Vector3.forward * mainCharacter.moveSpeed * Time.deltaTime);
-                        mainCharacter.transform.Rotate(-Vector3.up, mainCharacter.angleSpeed * Time.deltaTime);
+                        character.GetAnimator.SetBool("Moving", true);
+                        character.transform.Translate(Vector3.forward * character.GetMoveSpeed * Time.deltaTime);
+                        character.transform.Rotate(-Vector3.up, character.GetAngleSpeed * Time.deltaTime);
 
                         timerProcess += Time.deltaTime;
                         if (timerProcess > timer)
                         {
-                            mainCharacter.animator.SetBool("Moving", false);
+                            character.GetAnimator.SetBool("Moving", false);
                             // SetActiveObjectTutorial(false, true, false);
                             touchScene = Touch.Right;
 
@@ -60,18 +73,18 @@ public class CharacterTutorial : StateCharacter
                 }
             case Touch.Right:
                 {
-                    mainCharacter.animator.SetBool("Moving", false);
+                    character.GetAnimator.SetBool("Moving", false);
                     float moveTurn = Input.mousePosition.x;
                     if (Input.GetMouseButton(0) && (moveTurn > Screen.width / 2 && moveTurn < Screen.width))
                     {
-                        mainCharacter.animator.SetBool("Moving", true);
-                        mainCharacter.transform.Translate(Vector3.forward * mainCharacter.moveSpeed * Time.deltaTime);
-                        mainCharacter.transform.Rotate(Vector3.up, mainCharacter.angleSpeed * Time.deltaTime);
+                        character.GetAnimator.SetBool("Moving", true);
+                        character.transform.Translate(Vector3.forward * character.GetMoveSpeed * Time.deltaTime);
+                        character.transform.Rotate(Vector3.up, character.GetAngleSpeed * Time.deltaTime);
 
                         timerProcess += Time.deltaTime;
                         if (timerProcess > timer)
                         {
-                            mainCharacter.animator.SetBool("Moving", false);
+                            character.GetAnimator.SetBool("Moving", false);
 
                             touchScene = Touch.None;
                             timerProcess = 0;
@@ -85,6 +98,8 @@ public class CharacterTutorial : StateCharacter
                 }
         }
     }
+    #endregion
+
 
     public override void EndState()
     {
@@ -95,6 +110,12 @@ public class CharacterTutorial : StateCharacter
     {
         // SetActiveObjectTutorial(true, false, false);
         touchScene = Touch.Left;
+    }
+
+
+    private void CacheComponent()
+    {
+        character = MainCharacter.Instance;
     }
 
 }

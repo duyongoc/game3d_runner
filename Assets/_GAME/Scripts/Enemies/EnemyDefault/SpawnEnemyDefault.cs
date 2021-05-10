@@ -54,7 +54,7 @@ public class SpawnEnemyDefault : MonoBehaviour, ISpawnObject
 
     private void Update()
     {
-        if (GameMgr.Instance.IsStateInGame)
+        if (GameMgr.Instance.IsGameRunning)
         {
             switch (currentState)
             {

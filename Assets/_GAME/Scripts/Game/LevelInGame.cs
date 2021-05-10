@@ -26,7 +26,7 @@ public class LevelInGame : MonoBehaviour
         if (phaseEnd)
             return;
 
-        if (GameMgr.Instance.IsStateInGame)
+        if (GameMgr.Instance.IsGameRunning)
         {
             // Debug.Log("Change phase:--- " );
             timeDt += Time.deltaTime;

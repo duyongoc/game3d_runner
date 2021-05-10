@@ -49,7 +49,7 @@ public class SpawnMeteorite : MonoBehaviour
 
     private void Update()
     {
-        if(!isStart && GameMgr.Instance.IsStateInGame)
+        if(!isStart && GameMgr.Instance.IsGameRunning)
         {
             timeProcessDelay += Time.deltaTime;
             if(timeProcessDelay >= timeDelay)
@@ -59,7 +59,7 @@ public class SpawnMeteorite : MonoBehaviour
             }
         }
 
-        if (isStart && GameMgr.Instance.IsStateInGame)
+        if (isStart && GameMgr.Instance.IsGameRunning)
         {
             switch (currentState)
             {

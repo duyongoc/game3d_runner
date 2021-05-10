@@ -12,6 +12,12 @@ public class CharacterHolding : StateCharacter
     private float timerProcess = 0f;
     private Transform target;
 
+
+    //
+    //= private
+    private MainCharacter character;
+
+
     public override void StartState()
     {
         base.StartState();
@@ -31,14 +37,14 @@ public class CharacterHolding : StateCharacter
         if(timerProcess >= timerLoad)
         {
             // explosion when player dead
-            Instantiate(owner.ballExplosion, transform.position, Quaternion.identity);
+            // Instantiate(character.ballExplosion, transform.position, Quaternion.identity);
 
             // loading gameover scene;
             // var mgr = SceneMgr.GetInstance();
             // mgr.ChangeState(mgr.m_sceneGameOver);
 
             //set state none the ball when game over
-            owner.ChangeState(owner.m_characterNone);
+            character.ChangeState(character.GetCharacterNone);
             this.gameObject.SetActive(false);
             timerProcess = 0f;
         }
@@ -54,6 +60,12 @@ public class CharacterHolding : StateCharacter
     public void SetTarget(Transform tran)
     {
         target = tran;
+    }
+
+
+    private void CacheComponent()
+    {
+        character = MainCharacter.Instance;
     }
 
 }

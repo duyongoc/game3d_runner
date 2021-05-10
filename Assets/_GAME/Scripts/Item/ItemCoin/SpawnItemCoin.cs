@@ -21,7 +21,7 @@ public class SpawnItemCoin : MonoBehaviour
     {
         if(!isCreated)
         {
-            if(GameMgr.Instance.IsStateInGame)
+            if(GameMgr.Instance.IsGameRunning)
             {
                 SpawnPowerWhenGameStart();
                 isCreated = true;
@@ -29,7 +29,7 @@ public class SpawnItemCoin : MonoBehaviour
         }
         
         // create power per timeSpawn second
-        if(GameMgr.Instance.IsStateInGame)     
+        if(GameMgr.Instance.IsGameRunning)     
         {
             timer += Time.deltaTime;
             if(timer > timeSpawn)

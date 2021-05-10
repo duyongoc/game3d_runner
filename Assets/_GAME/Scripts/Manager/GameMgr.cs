@@ -15,7 +15,6 @@ public enum STATEGAME
 public class GameMgr : Singleton<GameMgr>
 {
 
-
     //
     //= public 
     public CONFIG_GAME CONFIG_GAME;
@@ -34,7 +33,7 @@ public class GameMgr : Singleton<GameMgr>
 
     //
     //= properties
-    public bool IsStateInGame { get => currentState == STATEGAME.INGAME; }
+    public bool IsGameRunning { get => currentState == STATEGAME.INGAME; }
 
 
     private void LoadData()

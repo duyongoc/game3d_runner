@@ -26,7 +26,7 @@ public class Flycam : MonoBehaviour
 
     void Update()
     {
-        if (GameMgr.Instance.IsStateInGame)
+        if (GameMgr.Instance.IsGameRunning)
         {
             switch (currentState)
             {

@@ -48,7 +48,7 @@ public class SpawnTornado : MonoBehaviour
 
     private void Update()
     {
-        if(!isStart && GameMgr.Instance.IsStateInGame)
+        if(!isStart && GameMgr.Instance.IsGameRunning)
         {
             timeProcessDelay += Time.deltaTime;
             if(timeProcessDelay >= timeDelay)
@@ -58,7 +58,7 @@ public class SpawnTornado : MonoBehaviour
             }
         }
 
-        if (isStart && GameMgr.Instance.IsStateInGame)
+        if (isStart && GameMgr.Instance.IsGameRunning)
         {
             switch (currentState)
             {

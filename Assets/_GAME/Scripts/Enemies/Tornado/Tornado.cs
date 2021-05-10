@@ -41,7 +41,7 @@ public class Tornado : MonoBehaviour
 
     private void Update()
     {
-        if (GameMgr.Instance.IsStateInGame)
+        if (GameMgr.Instance.IsGameRunning)
         {
             switch (currentState)
             {

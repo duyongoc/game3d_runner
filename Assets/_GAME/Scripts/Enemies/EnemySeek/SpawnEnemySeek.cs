@@ -62,7 +62,7 @@ public class SpawnEnemySeek : MonoBehaviour, ISpawnObject
 
     private void Update()
     {
-        if (GameMgr.Instance.IsStateInGame)
+        if (GameMgr.Instance.IsGameRunning)
         {
             // spawn enemy after time delay
             if (!isStart) 

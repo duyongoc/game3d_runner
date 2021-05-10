@@ -2,13 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterAbility : StateCharacter
+public class CharacterShield : StateCharacter
 {
-    [Header("The time power")]
-    public float timerPower = 15f;
-    public float timerFinish = 12f;
-    public float timerPowerProcess = 0f;
-    public float timerFinishProcess = 0f;
+    
+    //
+    //= private 
+    private float timeShield = 15f;
+    private float timeShieldFinish = 12f;
+    private float timeShieldRemain = 0f;
+    private float timeFinishRemain = 0f;
 
     [Header("Particle change")]
     public GameObject shieldEffect;
@@ -37,17 +39,31 @@ public class CharacterAbility : StateCharacter
     private MainCharacter character;
 
 
+    #region UNITY
+    private void Start()
+    {
+        CacheComponent();
+        CacheDefine();
+    }
+
+    // private void Update()
+    // {
+    // }
+    #endregion
+
+
+    #region STATE OF CHARACTER
     public override void StartState()
     {
         base.StartState();
 
-        timerPowerProcess = timerPower;
-        timerFinishProcess = timerFinish;
+        timeShieldRemain = timeShield;
+        timeFinishRemain = timeShieldFinish;
         shieldEffect.SetActive(false);
 
         //
-        // character.timeProcessFinish = timerPowerProcess;
-        // character.currentTimeProcess = timerPowerProcess;
+        // character.timeProcessFinish = timeShieldRemain;
+        // character.currentTimeProcess = timeShieldRemain;
         // character.sliderProcess.gameObject.SetActive(true);
         // character.sliderProcess.value = 1;
 
@@ -63,26 +79,26 @@ public class CharacterAbility : StateCharacter
     {
         base.UpdateState();
 
-        timerPowerProcess -= Time.deltaTime;
-        timerFinishProcess -= Time.deltaTime;
+        timeShieldRemain -= Time.deltaTime;
+        timeFinishRemain -= Time.deltaTime;
 
         //load slider 
         // character.currentTimeProcess -= Time.deltaTime;
         // character.sliderProcess.value = (float)character.currentTimeProcess / timerFinish;
 
-        if (timerPowerProcess <= 0)
+        if (timeShieldRemain <= 0)
         {
             character.ChangeState(character.GetCharacterMove);
 
             Reset();
-            timerPowerProcess = timerPower;
-            timerFinishProcess = timerFinish;
+            timeShieldRemain = timeShield;
+            timeFinishRemain = timeShieldFinish;
         }
 
-        if (timerFinishProcess <= 0f)
+        if (timeFinishRemain <= 0f)
         {
             StartCoroutine("PowerProcessFinish", 2.4f);
-            timerFinishProcess = timerFinish;
+            timeFinishRemain = timeShieldFinish;
         }
         //UpdatePlayerMovement();
 
@@ -115,6 +131,8 @@ public class CharacterAbility : StateCharacter
         // character.sliderProcess.value = 1;
         // character.GetCurrentTimeProcess  = 0;
     }
+    #endregion
+
 
     private void Moving()
     {
@@ -245,7 +263,8 @@ public class CharacterAbility : StateCharacter
 
     private void CacheDefine()
     {
-
+        timeShield = character.CONFIG_CHARACTER.timeShield;
+        timeShieldFinish = character.CONFIG_CHARACTER.timeShieldFinish;
     }
 
     private void CacheComponent()

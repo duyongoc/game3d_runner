@@ -38,7 +38,7 @@ public class SpawnCrazyPlace : MonoBehaviour
     {
         if (!isCreated)
         {
-            if (GameMgr.Instance.IsStateInGame)
+            if (GameMgr.Instance.IsGameRunning)
             {
                 SpawCrazyPlace();
                 isCreated = true;

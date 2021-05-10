@@ -19,7 +19,7 @@ public class SpawnItemFire : MonoBehaviour
     {
         if(!isCreated)
         {
-            // if(SceneMgr.GetInstance().IsStateInGame())
+            // if(SceneMgr.GetInstance().IsGameRunning)
             {
                 SpawnPowerWhenGameStart();
                 isCreated = true;
@@ -27,7 +27,7 @@ public class SpawnItemFire : MonoBehaviour
         }
         
         // create power per timeSpawn second
-        // if(SceneMgr.GetInstance().IsStateInGame() && iSValid())     
+        // if(SceneMgr.GetInstance().IsGameRunning && iSValid())     
         {
             timer += Time.deltaTime;
             if(timer > timeSpawn)

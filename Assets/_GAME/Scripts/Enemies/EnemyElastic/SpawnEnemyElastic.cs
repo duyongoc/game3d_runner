@@ -55,7 +55,7 @@ public class SpawnEnemyElastic : MonoBehaviour, ISpawnObject
 
     private void Update()
     {
-        if(!isStart && GameMgr.Instance.IsStateInGame)
+        if(!isStart && GameMgr.Instance.IsGameRunning)
         {
             timeProcessDelay += Time.deltaTime;
             if(timeProcessDelay >= timeDelay)
@@ -65,7 +65,7 @@ public class SpawnEnemyElastic : MonoBehaviour, ISpawnObject
             }
         }
 
-        if (isStart && GameMgr.Instance.IsStateInGame)
+        if (isStart && GameMgr.Instance.IsGameRunning)
         {
             switch (currentState)
             {

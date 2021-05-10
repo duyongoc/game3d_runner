@@ -7,7 +7,7 @@ public class SpawnEnemyJump : MonoBehaviour, ISpawnObject
 {
     [Header("Active object")]
     public bool isActive = false;
-    
+
     [Header("Load data Enemy Jump")]
     public ScriptEnemyJump scriptEnemy;
 
@@ -56,7 +56,7 @@ public class SpawnEnemyJump : MonoBehaviour, ISpawnObject
     public static SpawnEnemyJump s_instance;
     private void Awake()
     {
-        if(s_instance != null)
+        if (s_instance != null)
             return;
 
         s_instance = this;
@@ -82,8 +82,8 @@ public class SpawnEnemyJump : MonoBehaviour, ISpawnObject
         //         timeProcessDelay = 0;
         //     }
         // }
-        
-        if ( GameMgr.Instance.IsStateInGame)
+
+        if (GameMgr.Instance.IsGameRunning)
         {
             switch (currentState)
             {
@@ -93,19 +93,19 @@ public class SpawnEnemyJump : MonoBehaviour, ISpawnObject
                 //     break;
                 // }
                 case SpawnState.SpawnWarning:
-                {
-                    SpawnEnenyWithWarning();
-                    break;
-                }
+                    {
+                        SpawnEnenyWithWarning();
+                        break;
+                    }
                 case SpawnState.Spawn:
-                {   
-                    SpawnEnemy();
-                    break;
-                }
+                    {
+                        SpawnEnemy();
+                        break;
+                    }
                 case SpawnState.None:
-                {
-                    break;
-                }
+                    {
+                        break;
+                    }
             }
             // Debug.Log(currentState);
         }
@@ -122,26 +122,25 @@ public class SpawnEnemyJump : MonoBehaviour, ISpawnObject
 
     private void SpawnEnenyWithWarning()
     {
-        if( !isWarning)
+        if (!isWarning)
         {
             currentState = SpawnState.Spawn;
             return;
         }
 
         timerProcessSpawn += Time.deltaTime;
-        if ( numberOfWarning >= 0 && timerProcessSpawn >= timeToSpawn)
+        if (numberOfWarning >= 0 && timerProcessSpawn >= timeToSpawn)
         {
             GameObject obj = Instantiate(enemyPrefab, GetRandomPoint(), Quaternion.identity);
             obj.GetComponent<EnemyJump>().SetWarning(true);
 
             enemyWasCreated.Add(obj);
-            
+
             numberOfWarning--;
-            if(numberOfWarning == 0)
+            if (numberOfWarning == 0)
             {
                 isWarning = false;
             }
-
             timerProcessSpawn = 0;
         }
 
@@ -193,7 +192,7 @@ public class SpawnEnemyJump : MonoBehaviour, ISpawnObject
         enemyWasCreated.Add(ene);
     }
 
-    public static SpawnEnemyJump GetInstance() 
+    public static SpawnEnemyJump GetInstance()
     {
         return s_instance;
     }

@@ -33,6 +33,10 @@ public class VirtualMovement : MonoBehaviour, IDragHandler, IPointerUpHandler, I
         CacheComponent();
         CacheDefine();
     }
+
+    // private void Update()
+    // {
+    // }
     #endregion
 
     public void OnDrag(PointerEventData ped)

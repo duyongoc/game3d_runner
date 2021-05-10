@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class StateCharacter : MonoBehaviour
 {
-    protected MainCharacter owner;
-    public MainCharacter Owner { get => owner; set => owner = value; }
 
     //Method called to prepare state
     public virtual void StartState() {}

@@ -45,7 +45,7 @@ public class TheHole : MonoBehaviour
     void Update()
     {
         
-        if (GameMgr.Instance.IsStateInGame)
+        if (GameMgr.Instance.IsGameRunning)
         {
             switch (currentState)
             {
