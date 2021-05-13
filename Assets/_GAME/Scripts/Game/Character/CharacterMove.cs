@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CharacterMove : StateCharacter
 {
+
     [Header("Set Speed up")]
     public GameObject speedUpEffect;
     private float timer = 0;
@@ -14,19 +15,22 @@ public class CharacterMove : StateCharacter
     public Transform centerPos2;
 
     //
-    public GameObject ParticleTurning;
-    public float timeParTurning = 0.2f;
-    private float timerTurning = 0f;
 
-    public GameObject trail;
     GameObject temp = null;
     bool isCreate = false;
+
 
     //
     //= private 
     private MainCharacter character;
-    private Vector3 vectorMovement;
     private int indexFoot = 0;
+
+    private GameObject prefabMovingParticle;
+    private GameObject prefabMovingTrail;
+    private Vector3 vectorMovement;
+
+    private float timeParticleMove = 0.2f;
+    private float timeParticleRemain = 0f;
 
 
     #region UNITY
@@ -40,6 +44,7 @@ public class CharacterMove : StateCharacter
     // {
     // }
     #endregion
+
 
 
     #region STATE OF CHARACTER
@@ -60,7 +65,6 @@ public class CharacterMove : StateCharacter
 
         UpdateVirtualMovement();
         // UpdateTouchMovement();
-
     }
 
     public override void EndState()
@@ -78,25 +82,29 @@ public class CharacterMove : StateCharacter
 
     private void UpdateVirtualMovement()
     {
-        float moveHorizontal = character.VirtualMovement.GetDirection.x;
-        float moveVertical = character.VirtualMovement.GetDirection.y;
-        vectorMovement.Set(moveHorizontal, 0, moveVertical);
+        vectorMovement.Set(character.VirtualMovement.GetDirection.x, 0, character.VirtualMovement.GetDirection.y);
         vectorMovement = vectorMovement.normalized * Time.deltaTime * character.GetMoveSpeed;
+        float rotationY = Mathf.Atan2(vectorMovement.x, vectorMovement.z) * Mathf.Rad2Deg;
 
+        CreateMoveTrail();
+        UpdateAnimation(vectorMovement.magnitude);
+
+        if (vectorMovement.magnitude == 0) return;
+
+        character.transform.localRotation = Quaternion.Euler(0f, rotationY, 0f);
         character.GetRigidbody.MovePosition(transform.position + vectorMovement);
     }
 
 
     private void UpdateTouchMovement()
     {
-        if (!character.GetAnimator.GetCurrentAnimatorStateInfo(0).IsName("FastRun"))
-            character.GetAnimator.SetBool("Moving", true);
+        character.SetAnimationMoving();
 
         if (Input.GetMouseButton(0))
         {
             if (!isCreate)
             {
-                temp = Instantiate(trail, transform.position, Quaternion.identity);
+                temp = Instantiate(prefabMovingTrail, transform.position, Quaternion.identity);
                 temp.transform.parent = transform;
                 isCreate = true;
             }
@@ -123,12 +131,6 @@ public class CharacterMove : StateCharacter
                 character.GetRigidbody.AddTorque(-vec.normalized * character.GetEngineForce * 2, ForceMode.Impulse);
 
                 shape.localRotation = Quaternion.Lerp(shape.localRotation, Quaternion.Euler(0f, 0f, -100f), Time.deltaTime * 5);
-            }
-            timerTurning += Time.deltaTime;
-            if (timerTurning > timeParTurning)
-            {
-                Instantiate(ParticleTurning, transform.position, Quaternion.identity);
-                timerTurning = 0;
             }
 
         }
@@ -164,6 +166,23 @@ public class CharacterMove : StateCharacter
 
     }
 
+    private void CreateMoveTrail()
+    {
+        timeParticleRemain += Time.deltaTime;
+        if (timeParticleRemain > timeParticleMove)
+        {
+            Instantiate(prefabMovingParticle, transform.position, Quaternion.identity);
+            timeParticleRemain = 0;
+        }
+    }
+
+    private void UpdateAnimation(float valueMovement)
+    {
+        if (valueMovement > 0)
+            character.SetAnimationMoving();
+        else
+            character.SetAnimationIdle();
+    }
 
     private Vector3 Forward()
     {
@@ -176,13 +195,6 @@ public class CharacterMove : StateCharacter
         {
             character.ChangeState(character.GetCharacterHolding);
             character.GetCharacterHolding.SetTarget(other.transform);
-        }
-        else if (other.tag.Contains("Enemy") && this.gameObject.tag != "PlayerAbility")
-        {
-            character.SetPlayerDead();
-
-            // loading gameover scene;
-            // SceneMgr.GetInstance().ChangeState(SceneMgr.GetInstance().m_sceneGameOver);
         }
         else if (other.tag == "ItemSpeed")
         {
@@ -226,7 +238,9 @@ public class CharacterMove : StateCharacter
 
     private void CacheDefine()
     {
-
+        prefabMovingParticle = character.CONFIG_CHARACTER.prefabMovingParticle;
+        prefabMovingTrail = character.CONFIG_CHARACTER.prefabMovingTrail;
+        timeParticleMove = character.CONFIG_CHARACTER.timeParticleMove;
     }
 
     private void CacheComponent()

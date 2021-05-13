@@ -1,5 +1,0 @@
-﻿
-interface ICollision
-{
-    void TakeImpact();
-}

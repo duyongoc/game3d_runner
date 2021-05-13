@@ -12,9 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b1b9c7b1d3cd714190a9ef4a0fa37bf, type: 3}
   m_Name: CONFIG_CHARACTER
   m_EditorClassIdentifier: 
+  prefabMovingParticle: {fileID: 4722992213558414803, guid: f9918f935fffff8468df1b30b346a56d,
+    type: 3}
+  prefabMovingTrail: {fileID: 5025872277434088396, guid: 95ad568097d5ec94a9f7b2f997e77673,
+    type: 3}
   moveSpeed: 5
   angleSpeed: 100
   speedIncrease: 1.5
   timerSpeedUp: 3.5
   engineForce: 1.7
   turnSpeed: 170
+  prefabShield: {fileID: 0}
+  timeShield: 12
+  timeShieldFinish: 8

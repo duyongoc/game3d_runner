@@ -29,14 +29,42 @@ public class SceneInGame : StateScene
     public SpawnStaticObstacle spawnStaticObstacle;
     public SpawnSoftObstacle spawnSoftObstacle;
 
-    [Header("Text Intro")]
-
-
     [Header("Make score game")]
     public Text textScore;
     public ScoreMgr scoreMgr;
 
+    
+    //
+    //= private 
+    private GameMgr gameMgr;
 
+
+    #region UNITY
+    private void Start()
+    {
+        CacheComponent();
+    }
+
+    private void Update()
+    {
+        if (!gameMgr.IsPlaying && Input.GetMouseButtonDown(0))
+        {
+            textTapToPlay.SetActive(false);
+            textScore.gameObject.SetActive(true);
+            textSurvival.SetActive(true);
+            textScore.text = scoreMgr.score.ToString("00");
+            SoundMgr.GetInstance().PlaySound(m_audioBackground);
+
+            Invoke("SetFalseTextSurvival", 3.5f);
+
+            //setup camera
+            cameraFollow.isStart = true;
+            
+            gameMgr.IsPlaying = true;
+            gameMgr.ChangeState(STATEGAME.INGAME);
+        }
+    }
+    #endregion
 
     public override void StartState()
     {
@@ -49,46 +77,29 @@ public class SceneInGame : StateScene
         //
         spawnStaticObstacle.isStart = true;
         spawnSoftObstacle.isStart = true;
-        isPlaying = false;
+
     }
 
     public override void UpdateState()
     {
         base.UpdateState();
-        //Debug.Log("isPlaying: " + isPlaying + " textTapToPlay.SetActive " + textTapToPlay.activeSelf);
 
-        if (!isPlaying)
+        //
+        if (cameraFollow.IsSetUpCamera())
         {
-            if (Input.GetMouseButtonDown(0))
-            {
-                textTapToPlay.SetActive(false);
-                textScore.gameObject.SetActive(true);
-                SoundMgr.GetInstance().PlaySound(m_audioBackground);
-
-                textSurvival.SetActive(true);
-                Invoke("SetFalseTextSurvival", 3.5f);
-                textScore.text = scoreMgr.score.ToString("00");
-
-                //setup camera
-                cameraFollow.isStart = true;
-            }
-            //
-            if (cameraFollow.IsSetUpCamera())
-            {
-                isPlaying = true;
-            }
+            isPlaying = true;
         }
 
-        if (isPlaying)
-        {
-            scoreMgr.score += Time.deltaTime;
-            textScore.text = scoreMgr.score.ToString("00");
+        // if (isPlaying)
+        // {
+        //     scoreMgr.score += Time.deltaTime;
+        //     textScore.text = scoreMgr.score.ToString("00");
 
-            if (scoreMgr.score > scoreMgr.highscore)
-                scoreMgr.highscore = (int)scoreMgr.score;
+        //     if (scoreMgr.score > scoreMgr.highscore)
+        //         scoreMgr.highscore = (int)scoreMgr.score;
 
-            PlayerPrefs.GetInt("highscore", scoreMgr.highscore);
-        }
+        //     PlayerPrefs.GetInt("highscore", scoreMgr.highscore);
+        // }
     }
 
     public override void EndState()
@@ -98,20 +109,25 @@ public class SceneInGame : StateScene
         isPlaying = false;
 
         // if (!owner.m_sceneGameOver.mainCharacter.isStateMove())
-            // scoreMgr.score = 0;
+        // scoreMgr.score = 0;
     }
 
-    #region Handler event of button
+
     public void OnPressButtonPauseGame()
     {
         //Owner.ChangeState(Owner.m_pauseGameScene);
     }
-    #endregion
 
 
     private void SetFalseTextSurvival()
     {
         textSurvival.SetActive(false);
+    }
+
+
+    private void CacheComponent()
+    {
+        gameMgr = GameMgr.Instance;
     }
 
 }

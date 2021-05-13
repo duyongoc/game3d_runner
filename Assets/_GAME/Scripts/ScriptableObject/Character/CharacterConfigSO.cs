@@ -8,8 +8,12 @@ public class CharacterConfigSO : ScriptableObject
 
     [Header("Character's param", order = 1)]
     [Header("Character speed", order = 2)]
+    public GameObject prefabMovingParticle;
+    public GameObject prefabMovingTrail;
     public float moveSpeed = 5f;
     public float angleSpeed = 100;
+    public float timeParticleMove = 0.05f;
+
 
     [Header("Other speed ")]
     public float speedIncrease = 3f;

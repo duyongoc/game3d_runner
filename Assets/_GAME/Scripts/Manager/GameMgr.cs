@@ -22,6 +22,8 @@ public class GameMgr : Singleton<GameMgr>
 
     //
     //= private 
+    private bool isPlaying = false;
+
     private bool isSkipTutorial;
     private bool isMovingCamera;
 
@@ -34,7 +36,7 @@ public class GameMgr : Singleton<GameMgr>
     //
     //= properties
     public bool IsGameRunning { get => currentState == STATEGAME.INGAME; }
-
+    public bool IsPlaying { get => isPlaying; set => isPlaying = value; }
 
     private void LoadData()
     {
@@ -54,7 +56,39 @@ public class GameMgr : Singleton<GameMgr>
     #endregion
 
 
+    public void ChangeState(STATEGAME newState)
+    {
+        currentState = newState;
+    }
 
 
 
 }
+
+
+// God bless my code to be bug free 
+//
+//                       _oo0oo_
+//                      o8888888o
+//                      88" . "88
+//                      (| -_- |)
+//                      0\  =  /0
+//                    ___/`---'\___
+//                  .' \\|     |// '.
+//                 / \\|||  :  |||// \
+//                / _||||| -:- |||||- \
+//               |   | \\\  -  /// |   |
+//               | \_|  ''\---/''  |_/ |
+//               \  .-\__  '-'  ___/-. /
+//             ___'. .'  /--.--\  `. .'___
+//          ."" '<  `.___\_<|>_/___.' >' "".
+//         | | :  `- \`.;`\ _ /`;.`/ - ` : | |
+//         \  \ `_.   \_ __\ /__ _/   .-` /  /
+//     =====`-.____`.___ \_____/___.-`___.-'=====
+//                       `=---='
+//
+//
+//     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//
+//               佛祖保佑         永无BUG
+//

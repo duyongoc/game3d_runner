@@ -82,9 +82,7 @@ public class CharacterShield : StateCharacter
         timeShieldRemain -= Time.deltaTime;
         timeFinishRemain -= Time.deltaTime;
 
-        //load slider 
-        // character.currentTimeProcess -= Time.deltaTime;
-        // character.sliderProcess.value = (float)character.currentTimeProcess / timerFinish;
+
 
         if (timeShieldRemain <= 0)
         {
@@ -100,13 +98,6 @@ public class CharacterShield : StateCharacter
             StartCoroutine("PowerProcessFinish", 2.4f);
             timeFinishRemain = timeShieldFinish;
         }
-        //UpdatePlayerMovement();
-
-        if (GameMgr.Instance.IsGameRunning && character.FirstTriggerPower)
-        {
-            Moving();
-        }
-
     }
 
     public override void EndState()
@@ -133,81 +124,6 @@ public class CharacterShield : StateCharacter
     }
     #endregion
 
-
-    private void Moving()
-    {
-        if (Input.GetMouseButton(0))
-        {
-            if (!isCreate)
-            {
-                temp = Instantiate(trail, transform.position, Quaternion.identity);
-                temp.transform.parent = transform;
-                isCreate = true;
-            }
-
-
-            float moveTurn = Input.mousePosition.x;
-            if (moveTurn < Screen.width / 2 && moveTurn > 0)
-            {
-                transform.Rotate(-Vector3.up, character.GetTurnSpeed * Time.deltaTime, Space.World);
-
-                Vector3 vec = centerPos1.position - transform.position;
-                //vec =  new Vector3(vec.x, 0f, vec.z);
-                character.GetRigidbody.AddForce(vec.normalized * character.GetEngineForce, ForceMode.Impulse);
-                character.GetRigidbody.AddTorque(vec.normalized * character.GetEngineForce * 2, ForceMode.Impulse);
-
-                shape.localRotation = Quaternion.Lerp(shape.localRotation, Quaternion.Euler(0f, 0f, 100f), Time.deltaTime * 5);
-
-            }
-            else if (moveTurn > Screen.width / 2 && moveTurn < Screen.width)
-            {
-                transform.Rotate(Vector3.up, character.GetTurnSpeed * Time.deltaTime, Space.World);
-
-                Vector3 vec = centerPos2.position - transform.position;
-                //vec =  new Vector3(vec.x, 0f, vec.z);
-                character.GetRigidbody.AddForce(-vec.normalized * character.GetEngineForce, ForceMode.Impulse);
-                character.GetRigidbody.AddTorque(-vec.normalized * character.GetEngineForce * 2, ForceMode.Impulse);
-
-                shape.localRotation = Quaternion.Lerp(shape.localRotation, Quaternion.Euler(0f, 0f, -100f), Time.deltaTime * 5);
-            }
-            timerTurning += Time.deltaTime;
-            if (timerTurning > timeParTurning)
-            {
-                Instantiate(ParticleTurning, transform.position, Quaternion.identity);
-                timerTurning = 0;
-            }
-
-        }
-        else
-        {
-            if (isCreate)
-            {
-                if (temp != null)
-                {
-                    temp.transform.parent = null;
-                    Destroy(temp, 2f);
-                }
-
-                isCreate = false;
-            }
-            else
-            {
-                timer += Time.deltaTime;
-                if (timer > character.GetTimeParMoving)
-                {
-                    int rand = Random.Range(0, 180);
-                    Instantiate(character.GetParticleMoving, transform.position, Quaternion.Euler(0, 0, rand));
-                    timer = 0;
-                }
-            }
-        }
-
-        if (shape.rotation.z != 0f)
-            shape.localRotation = Quaternion.Lerp(shape.localRotation, Quaternion.Euler(0f, 0f, 0f), Time.deltaTime * 5);
-
-        transform.Translate(Vector3.forward * character.GetMoveSpeed * Time.deltaTime);
-
-    }
 
     IEnumerator ScaleTheBall()
     {

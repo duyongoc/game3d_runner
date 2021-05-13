@@ -133,7 +133,7 @@ public class EnemyDefault : MonoBehaviour, IOnDestroy
         animator.SetBool("Dead", true);
         Instantiate(explosion, transform.localPosition, Quaternion.identity);
         GetComponent<Collider>().enabled = false;
-        
+
         ChangeState(EnemyState.None);
         Invoke("DestroyObject", 3);
     }
@@ -151,23 +151,23 @@ public class EnemyDefault : MonoBehaviour, IOnDestroy
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "EnemyDefault")
+        switch (other.tag)
         {
-            var temp = other.GetComponent<IOnDestroy>();
-            if (temp != null)
-                temp.TakeDestroy();
-            this.TakeDestroy();
+            case "Player":
+                other.GetComponent<IDamage>()?.TakeDamage(0); 
+                break;
+
+            case "EnemyDefault":
+                this.TakeDestroy();
+                other.GetComponent<IOnDestroy>()?.TakeDestroy();
+                break;
+
+            case "EnemySeek":
+            case "PlayerAbility":
+                this.TakeDestroy();
+                break;
         }
-        else if(other.tag == "EnemySeek")
-        {
-            this.TakeDestroy();
-        }
-        else if(other.tag == "PlayerAbility")
-        {
-            this.TakeDestroy();
-            // this.TakeForce();
-        }
-        
+
     }
 
 

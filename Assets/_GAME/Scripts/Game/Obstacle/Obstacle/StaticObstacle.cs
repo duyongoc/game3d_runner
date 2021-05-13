@@ -33,7 +33,7 @@ public class StaticObstacle : MonoBehaviour
         }
         else if(other.tag == "Player")
         {
-            other.gameObject.GetComponent<MainCharacter>().SetPlayerDead();
+            // other.gameObject.GetComponent<MainCharacter>().SetPlayerDead();
             Instantiate(particle, this.transform.position, Quaternion.Euler(-90f, 0f, 0f));
             
             // SceneMgr.GetInstance().ChangeState(SceneMgr.GetInstance().m_sceneGameOver);

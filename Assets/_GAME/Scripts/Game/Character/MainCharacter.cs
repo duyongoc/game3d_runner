@@ -15,6 +15,7 @@ public class MainCharacter : Singleton<MainCharacter>
     //
     //= inspector
     [Header("Character's param")]
+    [SerializeField] private GameObject characterModel;
     [SerializeField] private VirtualMovement virtualMovement;
     [SerializeField] private Transform[] characterFeet;
     [SerializeField] private Renderer shapeRenderer;
@@ -23,7 +24,7 @@ public class MainCharacter : Singleton<MainCharacter>
     //
     //= private
     private Rigidbody mRigidbody;
-    private Animator animator;
+    private Animator mAnimator;
     private CharacterMove mCharacterMove;
     private CharacterHolding mCharacterHolding;
     private CharacterAbility mCharacterAbility;
@@ -45,10 +46,17 @@ public class MainCharacter : Singleton<MainCharacter>
     private GameObject particleMoving;
 
 
+    // ANIMATION STATE
+    private string currentAnimator;
+    private const string CHARACTER_IDLE = "Character_Idle";
+    private const string CHARACTER_RUN = "Character_Run";
+    private const string CHARACTER_DEAD = "Character_Dead";
+
+
     //
     //= properties
     public Rigidbody GetRigidbody { get => mRigidbody; set => mRigidbody = value; }
-    public Animator GetAnimator { get => animator; }
+    public Animator GetAnimator { get => mAnimator; }
     public StateCharacter CurrentState { get => currentState; set => currentState = value; }
     public CharacterMove GetCharacterMove { get => mCharacterMove; }
     public CharacterHolding GetCharacterHolding { get => mCharacterHolding; }
@@ -107,29 +115,36 @@ public class MainCharacter : Singleton<MainCharacter>
     }
 
 
-    public void SetPlayerDead()
+    public void PlayerDead()
     {
+        SetAnimationDead();
         this.GetComponent<Collider>().enabled = false;
-        this.animator.SetBool("Dead", true);
-        this.ChangeState(this.mCharacterMove);
+        this.ChangeState(this.mCharacterNone);
     }
 
-    public void Reset()
-    {//
-        //
-        mCharacterMove.Reset();
+    private void SetAnimationState(string newState)
+    {
+        if (currentAnimator == newState)
+            return;
 
-        firstTriggerPower = false;
-        animator.SetBool("Moving", false);
-        animator.SetBool("Dead", false);
-        transform.position = Vector3.zero;
-        transform.rotation = Quaternion.Euler(Vector3.zero);
-        transform.localScale = Vector3.one;
-
-        ChangeState(mCharacterMove);
+        mAnimator.Play(newState);
+        currentAnimator = newState;
     }
 
+    public void SetAnimationIdle()
+    {
+        SetAnimationState(CHARACTER_IDLE);
+    }
+    public void SetAnimationMoving()
+    {
+        SetAnimationState(CHARACTER_RUN);
+    }
+    public void SetAnimationDead()
+    {
+        SetAnimationState(CHARACTER_DEAD);
+    }
 
+    
     public bool IsStateMove()
     {
         return currentState == mCharacterMove;
@@ -151,6 +166,19 @@ public class MainCharacter : Singleton<MainCharacter>
         angleSpeed = CONFIG_CHARACTER.angleSpeed;
     }
 
+    public void Reset()
+    {
+        mCharacterMove.Reset();
+
+        firstTriggerPower = false;
+        mAnimator.SetBool("Moving", false);
+        mAnimator.SetBool("Dead", false);
+        transform.position = Vector3.zero;
+        transform.rotation = Quaternion.Euler(Vector3.zero);
+        transform.localScale = Vector3.one;
+
+        ChangeState(mCharacterMove);
+    }
 
     private void CacheDefine()
     {
@@ -167,6 +195,8 @@ public class MainCharacter : Singleton<MainCharacter>
     private void CacheComponent()
     {
         mRigidbody = GetComponent<Rigidbody>();
+        mAnimator = characterModel.GetComponent<Animator>();
+
         mCharacterMove = GetComponent<CharacterMove>();
         mCharacterHolding = GetComponent<CharacterHolding>();
         mCharacterAbility = GetComponent<CharacterAbility>();

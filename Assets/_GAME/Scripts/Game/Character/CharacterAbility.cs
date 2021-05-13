@@ -22,11 +22,6 @@ public class CharacterAbility : StateCharacter
     public Transform centerPos1;
     public Transform centerPos2;
 
-    public GameObject ParticleTurning;
-    public float timeParTurning = 0.2f;
-    private float timerTurning = 0f;
-
-    public GameObject trail;
     GameObject temp = null;
     private float timer = 0;
     bool isCreate = false;
@@ -35,6 +30,13 @@ public class CharacterAbility : StateCharacter
     //
     //= private 
     private MainCharacter character;
+    private Vector3 vectorMovement;
+
+    private GameObject prefabMovingParticle;
+    private GameObject prefabMovingTrail;
+
+    private float timeParticleMove = 0.2f;
+    private float timeParticleRemain = 0f;
 
 
     public override void StartState()
@@ -44,12 +46,6 @@ public class CharacterAbility : StateCharacter
         timerPowerProcess = timerPower;
         timerFinishProcess = timerFinish;
         shieldEffect.SetActive(false);
-
-        //
-        // character.timeProcessFinish = timerPowerProcess;
-        // character.currentTimeProcess = timerPowerProcess;
-        // character.sliderProcess.gameObject.SetActive(true);
-        // character.sliderProcess.value = 1;
 
         // if(!SoundMgr.GetInstance().IsPlaying(SceneMgr.GetInstance().m_sceneInGame.m_audioPower))
         //     SoundMgr.GetInstance().PlaySound(SceneMgr.GetInstance().m_sceneInGame.m_audioPower);  
@@ -63,12 +59,11 @@ public class CharacterAbility : StateCharacter
     {
         base.UpdateState();
 
+        if (!GameMgr.Instance.IsGameRunning)
+            return;
+
         timerPowerProcess -= Time.deltaTime;
         timerFinishProcess -= Time.deltaTime;
-
-        //load slider 
-        // character.currentTimeProcess -= Time.deltaTime;
-        // character.sliderProcess.value = (float)character.currentTimeProcess / timerFinish;
 
         if (timerPowerProcess <= 0)
         {
@@ -84,12 +79,8 @@ public class CharacterAbility : StateCharacter
             StartCoroutine("PowerProcessFinish", 2.4f);
             timerFinishProcess = timerFinish;
         }
-        //UpdatePlayerMovement();
 
-        if (GameMgr.Instance.IsGameRunning && character.FirstTriggerPower)
-        {
-            Moving();
-        }
+        UpdateVirtualMovement();
 
     }
 
@@ -116,79 +107,37 @@ public class CharacterAbility : StateCharacter
         // character.GetCurrentTimeProcess  = 0;
     }
 
-    private void Moving()
+    private void UpdateVirtualMovement()
     {
-        if (Input.GetMouseButton(0))
+        vectorMovement.Set(character.VirtualMovement.GetDirection.x, 0, character.VirtualMovement.GetDirection.y);
+        vectorMovement = vectorMovement.normalized * Time.deltaTime * character.GetMoveSpeed;
+        float rotationY = Mathf.Atan2(vectorMovement.x, vectorMovement.z) * Mathf.Rad2Deg;
+
+        CreateMoveTrail();
+        UpdateAnimation(vectorMovement.magnitude);
+
+        if (vectorMovement.magnitude == 0) return;
+
+        character.transform.localRotation = Quaternion.Euler(0f, rotationY, 0f);
+        character.GetRigidbody.MovePosition(transform.position + vectorMovement);
+    }
+
+    private void CreateMoveTrail()
+    {
+        timeParticleRemain += Time.deltaTime;
+        if (timeParticleRemain > timeParticleMove)
         {
-            if (!isCreate)
-            {
-                temp = Instantiate(trail, transform.position, Quaternion.identity);
-                temp.transform.parent = transform;
-                isCreate = true;
-            }
-
-
-            float moveTurn = Input.mousePosition.x;
-            if (moveTurn < Screen.width / 2 && moveTurn > 0)
-            {
-                transform.Rotate(-Vector3.up, character.GetTurnSpeed * Time.deltaTime, Space.World);
-
-                Vector3 vec = centerPos1.position - transform.position;
-                //vec =  new Vector3(vec.x, 0f, vec.z);
-                character.GetRigidbody.AddForce(vec.normalized * character.GetEngineForce, ForceMode.Impulse);
-                character.GetRigidbody.AddTorque(vec.normalized * character.GetEngineForce * 2, ForceMode.Impulse);
-
-                shape.localRotation = Quaternion.Lerp(shape.localRotation, Quaternion.Euler(0f, 0f, 100f), Time.deltaTime * 5);
-
-            }
-            else if (moveTurn > Screen.width / 2 && moveTurn < Screen.width)
-            {
-                transform.Rotate(Vector3.up, character.GetTurnSpeed * Time.deltaTime, Space.World);
-
-                Vector3 vec = centerPos2.position - transform.position;
-                //vec =  new Vector3(vec.x, 0f, vec.z);
-                character.GetRigidbody.AddForce(-vec.normalized * character.GetEngineForce, ForceMode.Impulse);
-                character.GetRigidbody.AddTorque(-vec.normalized * character.GetEngineForce * 2, ForceMode.Impulse);
-
-                shape.localRotation = Quaternion.Lerp(shape.localRotation, Quaternion.Euler(0f, 0f, -100f), Time.deltaTime * 5);
-            }
-            timerTurning += Time.deltaTime;
-            if (timerTurning > timeParTurning)
-            {
-                Instantiate(ParticleTurning, transform.position, Quaternion.identity);
-                timerTurning = 0;
-            }
-
+            Instantiate(prefabMovingParticle, transform.position, Quaternion.identity);
+            timeParticleRemain = 0;
         }
+    }
+
+    private void UpdateAnimation(float valueMovement)
+    {
+        if (valueMovement > 0)
+            character.SetAnimationMoving();
         else
-        {
-            if (isCreate)
-            {
-                if (temp != null)
-                {
-                    temp.transform.parent = null;
-                    Destroy(temp, 2f);
-                }
-
-                isCreate = false;
-            }
-            else
-            {
-                timer += Time.deltaTime;
-                if (timer > character.GetTimeParMoving)
-                {
-                    int rand = Random.Range(0, 180);
-                    Instantiate(character.GetParticleMoving, transform.position, Quaternion.Euler(0, 0, rand));
-                    timer = 0;
-                }
-            }
-        }
-
-        if (shape.rotation.z != 0f)
-            shape.localRotation = Quaternion.Lerp(shape.localRotation, Quaternion.Euler(0f, 0f, 0f), Time.deltaTime * 5);
-
-        transform.Translate(Vector3.forward * character.GetMoveSpeed * Time.deltaTime);
-
+            character.SetAnimationIdle();
     }
 
     IEnumerator ScaleTheBall()
@@ -245,7 +194,9 @@ public class CharacterAbility : StateCharacter
 
     private void CacheDefine()
     {
-
+        prefabMovingParticle = character.CONFIG_CHARACTER.prefabMovingParticle;
+        prefabMovingTrail = character.CONFIG_CHARACTER.prefabMovingTrail;
+        timeParticleMove = character.CONFIG_CHARACTER.timeParticleMove;
     }
 
     private void CacheComponent()
