@@ -23,8 +23,6 @@ public class CharacterAbility : StateCharacter
     public Transform centerPos2;
 
     GameObject temp = null;
-    private float timer = 0;
-    bool isCreate = false;
 
 
     //

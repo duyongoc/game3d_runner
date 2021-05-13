@@ -11,9 +11,6 @@ public class EnemyDefault : MonoBehaviour, IOnDestroy
     public GameObject explosion;
     public GameObject explosionSpecial;
 
-    [Header("Animation")]
-    public Animator animator;
-
     [Header("Warning the player")]
     public GameObject warningIcon;
     public bool isWarning = false;
@@ -22,37 +19,33 @@ public class EnemyDefault : MonoBehaviour, IOnDestroy
     public EnemyState currentState = EnemyState.Moving;
     public enum EnemyState { Moving, Holding, None }
 
-    [Header("Enemy's target")]
-    public Transform target;
+    public Material marDissolve;
+    private Material marDefault;
+    public GameObject render;
 
-    // private variable
+    //
+    //= private
+    private Rigidbody mRigidbody;
+    private Animator mAnimator;
+
     private float moveSpeed = 0f;
-    private Rigidbody m_rigidbody;
+    private Transform target;
     private float distanceWarning = 0;
 
+
+
     //
-    // property
-    //
+    // properties
     public float MoveSpeed { get => moveSpeed; set => moveSpeed = value; }
 
-    #region UNITY
-    private void LoadData()
-    {
-        //agent.speed = scriptEnemy.moveSpeed;
-        MoveSpeed = scriptEnemy.moveSpeed;
-        distanceWarning = scriptEnemy.distanceWarning;
-    }
 
+    #region UNITY
     private void Start()
     {
-        LoadData();
+        CacheComponent();
+        CacheDefine();
 
-        warningIcon.SetActive(false);
-        m_rigidbody = GetComponent<Rigidbody>();
-        target = MainCharacter.Instance.GetTransform();
-
-        // StartCoroutine("ParticleMoving", timeParMoving);
-        transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+        DissolveObstacle();
     }
 
     private void Update()
@@ -63,11 +56,9 @@ public class EnemyDefault : MonoBehaviour, IOnDestroy
             {
                 case EnemyState.Moving:
                     EnemyMoving();
-
                     break;
                 case EnemyState.Holding:
                     EnenmyHolding();
-
                     break;
                 case EnemyState.None:
                     break;
@@ -130,7 +121,7 @@ public class EnemyDefault : MonoBehaviour, IOnDestroy
     //Collision
     public void TakeDestroy()
     {
-        animator.SetBool("Dead", true);
+        mAnimator.SetBool("Dead", true);
         Instantiate(explosion, transform.localPosition, Quaternion.identity);
         GetComponent<Collider>().enabled = false;
 
@@ -141,7 +132,7 @@ public class EnemyDefault : MonoBehaviour, IOnDestroy
     public void TakeForce()
     {
         var vecDir = transform.position - target.position;
-        m_rigidbody.AddForce(vecDir * 10);
+        mRigidbody.AddForce(vecDir * 10);
     }
 
     public void DestroyObject()
@@ -149,12 +140,39 @@ public class EnemyDefault : MonoBehaviour, IOnDestroy
         Destroy(this.gameObject);
     }
 
+    public void DissolveObstacle()
+    {
+        render.GetComponent<Renderer>().material = marDissolve;
+        GetComponent<Collider>().enabled = false;
+        StartCoroutine("OnDissolve");
+    }
+
+    IEnumerator OnDissolve()
+    {
+        float timer = 1;
+        float process = 1;
+
+        while (timer >= 0)
+        {
+            yield return new WaitForSeconds(0.01f);
+
+            timer -= 0.01f;
+            process -= 0.01f;
+            marDissolve.SetFloat("_processDissolve", process);
+        };
+
+        marDissolve.SetFloat("_processDissolve", 0);
+        render.GetComponent<SkinnedMeshRenderer>().material = marDefault;
+        GetComponent<Collider>().enabled = true;
+        // gameObject.SetActive(false);
+    }
+
     void OnTriggerEnter(Collider other)
     {
         switch (other.tag)
         {
             case "Player":
-                other.GetComponent<IDamage>()?.TakeDamage(0); 
+                other.GetComponent<IDamage>()?.TakeDamage(0);
                 break;
 
             case "EnemyDefault":
@@ -170,6 +188,23 @@ public class EnemyDefault : MonoBehaviour, IOnDestroy
 
     }
 
+
+    private void CacheDefine()
+    {
+        MoveSpeed = scriptEnemy.moveSpeed;
+        distanceWarning = scriptEnemy.distanceWarning;
+
+        transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+        warningIcon.SetActive(false);
+    }
+
+    private void CacheComponent()
+    {
+        target = MainCharacter.Instance.GetTransform();
+        mRigidbody = GetComponent<Rigidbody>();
+        mAnimator = GetComponentInChildren<Animator>();
+        marDefault = render.GetComponent<SkinnedMeshRenderer>().material;
+    }
 
 
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CharacterShield : StateCharacter
 {
-    
+
     //
     //= private 
     private float timeShield = 15f;
@@ -15,28 +15,24 @@ public class CharacterShield : StateCharacter
     [Header("Particle change")]
     public GameObject shieldEffect;
 
-    private bool isFirst = false;
 
-    //
-    [Header("Test")]
+
+
+    public GameObject ParticleTurning;
     public Transform shape;
 
     public Transform centerPos1;
     public Transform centerPos2;
 
-    public GameObject ParticleTurning;
-    public float timeParTurning = 0.2f;
-    private float timerTurning = 0f;
 
     public GameObject trail;
     GameObject temp = null;
-    private float timer = 0;
-    bool isCreate = false;
 
 
     //
     //= private 
     private MainCharacter character;
+    private bool isFirst = false;
 
 
     #region UNITY
