@@ -2,36 +2,41 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyDefault : MonoBehaviour, IOnDestroy
+public class EnemyDefault : Enemy, IDamage
 {
-    [Header("Load data Enemy 0")]
+
+    //
+    //= public
+    [Header("Config Enemy")]
     public ScriptEnemyDefault scriptEnemy;
-
-    [Header("Enemy dead explosion")]
-    public GameObject explosion;
-    public GameObject explosionSpecial;
-
-    [Header("Warning the player")]
-    public GameObject warningIcon;
-    public bool isWarning = false;
-
-    [Header("Enmey state")]
     public EnemyState currentState = EnemyState.Moving;
-    public enum EnemyState { Moving, Holding, None }
+    public enum EnemyState { Scream, Moving, Stun, None }
 
-    public Material marDissolve;
-    private Material marDefault;
-    public GameObject render;
+
+    //
+    //= inspector
+    [Header("Enemy's param")]
+    [SerializeField] private GameObject warningIcon;
+    [SerializeField] private GameObject skinedMeshRender;
+
+    // ANIMATION STATE
+    private string currentAnimator;
+    private const string ENEMY_SCREAM = "Enemy_Scream";
+    private const string ENEMY_RUN = "Enemy_Run";
+    private const string ENEMY_DEAD = "Enemy_Dead";
+    private const string ENEMY_SEEK = "Enemy_Seek";
+
 
     //
     //= private
-    private Rigidbody mRigidbody;
-    private Animator mAnimator;
-
+    private bool isWarning = false;
+    private float distanceWarning = 0;
     private float moveSpeed = 0f;
     private Transform target;
-    private float distanceWarning = 0;
 
+    //explosion
+    private GameObject prefabExplosion;
+    private GameObject prefabExplosionSpecial;
 
 
     //
@@ -44,57 +49,80 @@ public class EnemyDefault : MonoBehaviour, IOnDestroy
     {
         CacheComponent();
         CacheDefine();
-
-        DissolveObstacle();
+        Init();
     }
 
     private void Update()
     {
-        if (GameMgr.Instance.IsGameRunning)
+        if (!GameMgr.Instance.IsGameRunning)
+            return;
+
+        switch (currentState)
         {
-            switch (currentState)
-            {
-                case EnemyState.Moving:
-                    EnemyMoving();
-                    break;
-                case EnemyState.Holding:
-                    EnenmyHolding();
-                    break;
-                case EnemyState.None:
-                    break;
-            }
+            case EnemyState.Scream:
+                break;
+
+            case EnemyState.Moving:
+                EnemyMoving();
+                break;
+
+            case EnemyState.Stun:
+                EnenmyStun();
+                break;
+
+            case EnemyState.None:
+                break;
         }
     }
     #endregion
 
-    #region Function of State
+
+    private void Init()
+    {
+        EnemyAppear();
+        SetAnimationState(ENEMY_SCREAM);
+        ChangeState(EnemyState.Scream);
+
+        StartCoroutine(Utils.DelayEvent(() => { ChangeState(EnemyState.Moving); }, 2.5f));
+    }
+
+
     private void EnemyMoving()
     {
         if (isWarning)
-        {
             GetWarningFromEnemy();
-        }
 
-        Vector3 vec = new Vector3(target.position.x, 0, target.position.z);
-        transform.LookAt(vec);
-        transform.position = Vector3.MoveTowards(transform.position, target.position, Time.deltaTime * MoveSpeed);
+
+        SetAnimationState(ENEMY_RUN);
+        Vector3 vecDir = new Vector3(target.position.x, 0, target.position.z);
+
+        transform.LookAt(vecDir);
+        transform.position = Vector3.MoveTowards(transform.position, target.position, Time.deltaTime * moveSpeed);
     }
 
-    private void EnenmyHolding()
+    private void EnenmyStun()
     {
-        transform.position = Vector3.MoveTowards(transform.position, target.position, Time.deltaTime * MoveSpeed);
-
+        transform.position = Vector3.MoveTowards(transform.position, target.position, Time.deltaTime * moveSpeed);
         if (Vector3.Distance(transform.position, target.position) <= 1f)
         {
-            Instantiate(explosion, transform.position, Quaternion.identity);
+            Instantiate(prefabExplosion, transform.position, Quaternion.identity);
             Destroy(this.gameObject);
         }
     }
-    #endregion
+
 
     public void ChangeState(EnemyState newState)
     {
         currentState = newState;
+    }
+
+    private void SetAnimationState(string newState)
+    {
+        if (currentAnimator == newState)
+            return;
+
+        mAnimator.Play(newState);
+        currentAnimator = newState;
     }
 
     private void GetWarningFromEnemy()
@@ -118,56 +146,23 @@ public class EnemyDefault : MonoBehaviour, IOnDestroy
         isWarning = false;
     }
 
-    //Collision
-    public void TakeDestroy()
+    public void TakeDamage(float damage)
     {
-        mAnimator.SetBool("Dead", true);
-        Instantiate(explosion, transform.localPosition, Quaternion.identity);
-        GetComponent<Collider>().enabled = false;
+        SelfDestroy();
+    }
+
+    public void SelfDestroy()
+    {
+        mCollider.enabled = false;
+        SetAnimationState(ENEMY_DEAD);
+        prefabExplosion.SpawnToGarbage(transform.localPosition, Quaternion.identity);
 
         ChangeState(EnemyState.None);
-        Invoke("DestroyObject", 3);
+        StartCoroutine(Utils.DelayEvent(() => { Destroy(this.gameObject); }, 3f));
     }
 
-    public void TakeForce()
-    {
-        var vecDir = transform.position - target.position;
-        mRigidbody.AddForce(vecDir * 10);
-    }
 
-    public void DestroyObject()
-    {
-        Destroy(this.gameObject);
-    }
-
-    public void DissolveObstacle()
-    {
-        render.GetComponent<Renderer>().material = marDissolve;
-        GetComponent<Collider>().enabled = false;
-        StartCoroutine("OnDissolve");
-    }
-
-    IEnumerator OnDissolve()
-    {
-        float timer = 1;
-        float process = 1;
-
-        while (timer >= 0)
-        {
-            yield return new WaitForSeconds(0.01f);
-
-            timer -= 0.01f;
-            process -= 0.01f;
-            marDissolve.SetFloat("_processDissolve", process);
-        };
-
-        marDissolve.SetFloat("_processDissolve", 0);
-        render.GetComponent<SkinnedMeshRenderer>().material = marDefault;
-        GetComponent<Collider>().enabled = true;
-        // gameObject.SetActive(false);
-    }
-
-    void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         switch (other.tag)
         {
@@ -176,35 +171,44 @@ public class EnemyDefault : MonoBehaviour, IOnDestroy
                 break;
 
             case "EnemyDefault":
-                this.TakeDestroy();
-                other.GetComponent<IOnDestroy>()?.TakeDestroy();
+                other.GetComponent<IDamage>()?.TakeDamage(0);
+                SelfDestroy();
                 break;
 
             case "EnemySeek":
             case "PlayerAbility":
-                this.TakeDestroy();
+                SelfDestroy();
                 break;
         }
-
     }
 
 
     private void CacheDefine()
     {
-        MoveSpeed = scriptEnemy.moveSpeed;
+        moveSpeed = scriptEnemy.moveSpeed;
         distanceWarning = scriptEnemy.distanceWarning;
+        marDissolve = scriptEnemy.marDissolve;
+        prefabExplosion = scriptEnemy.prefabExplosion;
+        prefabExplosionSpecial = scriptEnemy.prefabExplosionSpecial;
 
         transform.position = new Vector3(transform.position.x, 0, transform.position.z);
         warningIcon.SetActive(false);
     }
 
+
     private void CacheComponent()
     {
-        target = MainCharacter.Instance.GetTransform();
         mRigidbody = GetComponent<Rigidbody>();
         mAnimator = GetComponentInChildren<Animator>();
-        marDefault = render.GetComponent<SkinnedMeshRenderer>().material;
+        mCollider = GetComponent<Collider>();
+
+        target = MainCharacter.Instance.GetTransform();
+
+        // Get materials-meshes default
+        d_skinedMeshRender = new Dictionary<SkinnedMeshRenderer, Material>();
+        var arrayRender = skinedMeshRender.GetComponentsInChildren<SkinnedMeshRenderer>();
+        foreach (SkinnedMeshRenderer skin in arrayRender)
+            d_skinedMeshRender.Add(skin, skin.material);
+
     }
-
-
 }

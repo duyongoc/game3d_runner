@@ -11,7 +11,7 @@ public class HoleCollider : MonoBehaviour
         {
             var obj = other.gameObject.GetComponent<EnemyDefault>();
             // obj.target = transform;
-            obj.currentState = EnemyDefault.EnemyState.Holding;
+            obj.currentState = EnemyDefault.EnemyState.Stun;
         }
         else if(other.tag == "EnemyJump")
         {

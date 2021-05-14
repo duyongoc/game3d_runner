@@ -1,57 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1102 &-5739606689732391830
-AnimatorState:
-  serializedVersion: 5
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Walk Aggro
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 5d18ef434ed02bd4a897f62e4c03153c, type: 3}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
---- !u!1102 &-701941573602162955
-AnimatorState:
-  serializedVersion: 5
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Death
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 09eace0ccfb35304b869ab7b561c7ead, type: 3}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
 --- !u!91 &9100000
 AnimatorController:
   m_ObjectHideFlags: 0
@@ -80,14 +28,14 @@ AnimatorController:
     m_IKPass: 0
     m_SyncedLayerAffectsTiming: 0
     m_Controller: {fileID: 9100000}
---- !u!1102 &1210559364171501157
+--- !u!1102 &1428800577669886812
 AnimatorState:
   serializedVersion: 5
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Walk
+  m_Name: Zombie Running 1
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -100,20 +48,21 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 2170b0397498e1640be0c2b7b04975bc, type: 3}
+  m_Motion: {fileID: -203655887218126122, guid: ce1b8e2f3a504d64e981eba0d31246d6,
+    type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
---- !u!1102 &2736870619666746866
+--- !u!1102 &4433046895690864353
 AnimatorState:
   serializedVersion: 5
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Worried
+  m_Name: Zombie Running 2
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -126,20 +75,21 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: f3e2c29b97438214797a46d523eddfff, type: 3}
+  m_Motion: {fileID: -203655887218126122, guid: eca560875ee5fb642b899d76c9de4689,
+    type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
---- !u!1102 &3480537799990725030
+--- !u!1102 &5250353752856555195
 AnimatorState:
   serializedVersion: 5
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Scream
+  m_Name: Enemy_Scream
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -152,21 +102,22 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: c1a3ae148984a8f489f5f757c02cffaf, type: 3}
+  m_Motion: {fileID: -203655887218126122, guid: 77ddf2b99bec8c848946f9d0394a6a09,
+    type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
---- !u!1102 &5553371796889140067
+--- !u!1102 &5542208416089857579
 AnimatorState:
   serializedVersion: 5
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Biting
-  m_Speed: 1
+  m_Name: zombie walk
+  m_Speed: 2
   m_CycleOffset: 0
   m_Transitions: []
   m_StateMachineBehaviours: []
@@ -178,7 +129,8 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 629b9ee5625905f46b79c67e0d39a033, type: 3}
+  m_Motion: {fileID: -203655887218126122, guid: 335e74bbf030bee4489b54ef4ce88819,
+    type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -194,26 +146,14 @@ AnimatorStateMachine:
   m_Name: Base Layer
   m_ChildStates:
   - serializedVersion: 1
-    m_State: {fileID: -5739606689732391830}
-    m_Position: {x: 260, y: 320, z: 0}
+    m_State: {fileID: 9017305293062208144}
+    m_Position: {x: 630, y: 260, z: 0}
   - serializedVersion: 1
-    m_State: {fileID: 1210559364171501157}
-    m_Position: {x: 250, y: 180, z: 0}
+    m_State: {fileID: 5250353752856555195}
+    m_Position: {x: 400, y: 30, z: 0}
   - serializedVersion: 1
-    m_State: {fileID: -701941573602162955}
-    m_Position: {x: 596.26935, y: 45.96794, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: 5553371796889140067}
-    m_Position: {x: 580, y: 350, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: 8384019625078584558}
-    m_Position: {x: 568.84717, y: -63.720703, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: 3480537799990725030}
-    m_Position: {x: 260, y: 60, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: 2736870619666746866}
-    m_Position: {x: 590, y: 110, z: 0}
+    m_State: {fileID: 5542208416089857579}
+    m_Position: {x: 400, y: 110, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -223,15 +163,15 @@ AnimatorStateMachine:
   m_EntryPosition: {x: 40, y: 100, z: 0}
   m_ExitPosition: {x: 800, y: 120, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
-  m_DefaultState: {fileID: 3480537799990725030}
---- !u!1102 &8384019625078584558
+  m_DefaultState: {fileID: 5250353752856555195}
+--- !u!1102 &9017305293062208144
 AnimatorState:
   serializedVersion: 5
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Run
+  m_Name: Thriller Part 2
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -244,7 +184,8 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: e8a1d965cbebf3f40b45efc62e2168be, type: 3}
+  m_Motion: {fileID: -203655887218126122, guid: df2332fc7f8157c46a102ee182be329c,
+    type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 

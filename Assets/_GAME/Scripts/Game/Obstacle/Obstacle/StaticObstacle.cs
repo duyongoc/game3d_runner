@@ -27,9 +27,8 @@ public class StaticObstacle : MonoBehaviour
         if (other.tag == "EnemyDefault" || other.tag == "EnemySeek")
         {
             Instantiate(particle, this.transform.position, Quaternion.Euler(-90f, 0f, 0f));
-            var temp = other.GetComponent<IOnDestroy>();
-            if(temp != null)
-                temp.TakeDestroy();
+            var temp = other.GetComponent<IDamage>();
+            temp?.TakeDamage(0);
         }
         else if(other.tag == "Player")
         {

@@ -11,9 +11,8 @@ public class EffectMeteorite : MonoBehaviour
     {
         if(other.tag.Contains("Enemy"))
         {
-            var temp = other.GetComponent<IOnDestroy>();
-            if(temp != null)
-                temp.TakeDestroy();
+            var temp = other.GetComponent<IDamage>();
+            temp?.TakeDamage(0);
 
             Instantiate(boomEffect, transform.localPosition, Quaternion.identity);
         }

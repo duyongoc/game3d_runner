@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-public class EnemyElastic : MonoBehaviour, IOnDestroy
+public class EnemyElastic : MonoBehaviour, IDamage
 {
     [Header("Load data Enemy Elastic")]
     public ScriptEnemyElastic scriptEnemy;
@@ -181,9 +181,8 @@ public class EnemyElastic : MonoBehaviour, IOnDestroy
         {
             Instantiate(explosion, transform.localPosition, Quaternion.identity);
 
-            var temp = other.GetComponent<IOnDestroy>();
-            if (temp != null)
-                temp.TakeDestroy();
+            var temp = other.GetComponent<IDamage>();
+            temp?.TakeDamage(0);
         }
         else if (other.gameObject.tag == "Player")
         {
@@ -200,5 +199,10 @@ public class EnemyElastic : MonoBehaviour, IOnDestroy
         {
             this.TakeDestroy();
         }
+    }
+
+    public void TakeDamage(float damage)
+    {
+        throw new System.NotImplementedException();
     }
 }

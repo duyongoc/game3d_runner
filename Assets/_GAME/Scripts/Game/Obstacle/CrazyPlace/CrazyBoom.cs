@@ -16,15 +16,14 @@ public class CrazyBoom : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if(other.tag.Contains("Enemy"))
+        if (other.tag.Contains("Enemy"))
         {
-            var temp = other.GetComponent<IOnDestroy>();
-            if(temp != null)
-                temp.TakeDestroy();
+            var temp = other.GetComponent<IDamage>();
+            temp?.TakeDamage(0);
 
             Instantiate(boomEffect, transform.localPosition, Quaternion.identity);
         }
-        else if(other.tag == "Player")
+        else if (other.tag == "Player")
         {
             Instantiate(boomEffect, other.transform.position, Quaternion.identity);
 
@@ -34,7 +33,7 @@ public class CrazyBoom : MonoBehaviour
         else if (other.tag == "Elastic" || other.tag == "Tornado")
         {
             Instantiate(boomEffect, other.transform.position, Quaternion.identity);
-            Destroy(other.gameObject); 
-        }     
+            Destroy(other.gameObject);
+        }
     }
 }

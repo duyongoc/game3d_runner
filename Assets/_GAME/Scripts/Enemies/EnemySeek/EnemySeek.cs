@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemySeek : MonoBehaviour, IOnDestroy
+public class EnemySeek : MonoBehaviour, IDamage
 {
     [Header("Load data Enemy Seek")]
     public ScriptEnemySeek scriptEnemy;
@@ -159,7 +159,7 @@ public class EnemySeek : MonoBehaviour, IOnDestroy
         animator.SetBool("Dead", true);
         Instantiate(explosion, transform.localPosition, Quaternion.identity);
         GetComponent<Collider>().enabled = false;
-        
+
         ChangeState(EnemyState.None);
         Invoke("DestroyObject", 3);
     }
@@ -171,12 +171,11 @@ public class EnemySeek : MonoBehaviour, IOnDestroy
 
     void OnTriggerEnter(Collider other)
     {
-        if ( other.tag == "EnemySeek" || other.tag == "EnemyJump")
+        if (other.tag == "EnemySeek" || other.tag == "EnemyJump")
         {
-            var temp = other.GetComponent<IOnDestroy>();
-            if (temp != null)
-                temp.TakeDestroy();
-                
+            var temp = other.GetComponent<IDamage>();
+            temp?.TakeDamage(0);
+
             this.TakeDestroy();
         }
         if (other.tag == "PlayerAbility")
@@ -186,4 +185,8 @@ public class EnemySeek : MonoBehaviour, IOnDestroy
         }
     }
 
+    public void TakeDamage(float damage)
+    {
+        
+    }
 }

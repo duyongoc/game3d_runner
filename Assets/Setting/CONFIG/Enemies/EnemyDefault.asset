@@ -13,9 +13,13 @@ MonoBehaviour:
   m_Name: EnemyDefault
   m_EditorClassIdentifier: 
   setWarning: 0
-  moveSpeed: 3.5
-  timeProcessSpawn: 0
-  timeSpawn: 5
-  minRangeSpawn: 15
-  maxRangeSpawn: 30
   distanceWarning: 10
+  timeSpawn: 5
+  moveSpeed: 3.5
+  minRangeSpawn: 10
+  maxRangeSpawn: 15
+  marDissolve: {fileID: 2100000, guid: 782eda6f18fd4884a81062d1d0979d94, type: 2}
+  prefabExplosion: {fileID: 6397745968173550320, guid: 803fdd6a26331db47883ee3e0ee0e967,
+    type: 3}
+  prefabExplosionSpecial: {fileID: 4126954584141556711, guid: e3a9ab43ffde4364b95454e4415e1d90,
+    type: 3}

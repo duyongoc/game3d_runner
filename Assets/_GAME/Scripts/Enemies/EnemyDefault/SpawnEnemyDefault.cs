@@ -30,7 +30,7 @@ public class SpawnEnemyDefault : MonoBehaviour, ISpawnObject
     [Header("Game's param change in phase")]
     public float moveSpeed;
     public float timeToSpawn;
-    private float timerProcessSpawn;
+    private float timerRemainSpawn = 0f;
 
     private void LoadData()
     {
@@ -42,7 +42,6 @@ public class SpawnEnemyDefault : MonoBehaviour, ISpawnObject
 
         moveSpeed = scriptEnemy.moveSpeed;
         timeToSpawn = scriptEnemy.timeSpawn;
-        timerProcessSpawn = scriptEnemy.timeProcessSpawn;
     }
 
     #region UNITY
@@ -60,15 +59,14 @@ public class SpawnEnemyDefault : MonoBehaviour, ISpawnObject
             {
                 case SpawnState.Init:
                     InitSpawnWarningEnemy();
-
                     break;
+
                 case SpawnState.Spawn:  
                     SpawnEnemy();
-
                     break;
+                    
                 case SpawnState.None:
                     break;
-                
             }
         }
     }
@@ -79,30 +77,30 @@ public class SpawnEnemyDefault : MonoBehaviour, ISpawnObject
     {
         if(!isWarning)
         {
-            CreateEnemyWarning(false, new Vector3(0,0,40));
-            CreateEnemyWarning(false, new Vector3(20,0,10));
-            CreateEnemyWarning(false, new Vector3(-20,0,10));
+            CreateEnemyWarning(false, new Vector3(0,0,10));
+            CreateEnemyWarning(false, new Vector3(10,0,10));
+            CreateEnemyWarning(false, new Vector3(-10,0,10));
             currentState = SpawnState.Spawn;
             return;
         }
 
-        CreateEnemyWarning(true, new Vector3(0,0,40));
-        CreateEnemyWarning(true, new Vector3(20,0,10));
-        CreateEnemyWarning(true, new Vector3(-20,0,10));
+        CreateEnemyWarning(true, new Vector3(0,0,10));
+        CreateEnemyWarning(true, new Vector3(10,0,10));
+        CreateEnemyWarning(true, new Vector3(-10,0,10));
         isWarning = false;
         currentState = SpawnState.Spawn;
     }
 
     private void SpawnEnemy()
     {
-        timerProcessSpawn += Time.deltaTime;
-        if (timerProcessSpawn >= timeToSpawn)
+        timerRemainSpawn += Time.deltaTime;
+        if (timerRemainSpawn >= timeToSpawn)
         {
             GameObject obj = Instantiate(enemyPrefab, GetRandomPoint(), Quaternion.identity);
             obj.GetComponent<EnemyDefault>().MoveSpeed = moveSpeed;
 
             enemyWasCreated.Add(obj);
-            timerProcessSpawn = 0;
+            timerRemainSpawn = 0;
         }
     }
     #endregion
@@ -143,7 +141,7 @@ public class SpawnEnemyDefault : MonoBehaviour, ISpawnObject
         }
         enemyWasCreated.Clear();
 
-        timerProcessSpawn = 0f;
+        timerRemainSpawn = 0f;
         
         //Game's param change in phase
         moveSpeed = 0;

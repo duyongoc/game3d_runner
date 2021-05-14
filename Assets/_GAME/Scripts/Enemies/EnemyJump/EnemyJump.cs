@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-public class EnemyJump : MonoBehaviour, IOnDestroy
+public class EnemyJump : MonoBehaviour, IDamage
 {
 
     [Header("Load data Enemy Jump")]
@@ -225,9 +225,9 @@ public class EnemyJump : MonoBehaviour, IOnDestroy
 
         if (other.tag == "EnemyDefault" || other.tag == "EnemySeek" || other.tag == "EnemyJump")
         {
-            var temp = other.GetComponent<IOnDestroy>();
+            var temp = other.GetComponent<IDamage>();
             if (temp != null)
-                temp.TakeDestroy();
+                temp?.TakeDamage(0);
             this.TakeDestroy();
         }
         else if (other.tag == "AlertShape")
@@ -240,5 +240,10 @@ public class EnemyJump : MonoBehaviour, IOnDestroy
             this.TakeDestroy();
         }
 
+    }
+
+    public void TakeDamage(float damage)
+    {
+        
     }
 }

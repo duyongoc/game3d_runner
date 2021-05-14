@@ -8,15 +8,13 @@ public class FirePrefabDamage : MonoBehaviour
     {
         if (other.gameObject.tag.Contains("Enemy"))
         {
-            var temp = other.GetComponent<IOnDestroy>();
-            if(temp != null)
-                temp.TakeDestroy();
+            var temp = other.GetComponent<IDamage>();
+            temp?.TakeDamage(0);
 
-            var temp2 = other.GetComponentInParent<IOnDestroy>();
-            if(temp2 != null)
-                temp2.TakeDestroy();
+            var temp2 = other.GetComponentInParent<IDamage>();
+            temp2?.TakeDamage(0);
         }
-        
+
 
     }
 }
