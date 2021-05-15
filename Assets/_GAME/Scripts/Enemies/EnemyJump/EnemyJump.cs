@@ -3,65 +3,54 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-public class EnemyJump : MonoBehaviour, IDamage
+public class EnemyJump : Enemy, IDamage
 {
 
-    [Header("Load data Enemy Jump")]
-    public ScriptEnemyJump scriptEnemy;
-
-    [Header("Animator")]
-    public Animator animator;
-
-    [Header("Enemy dead explosion")]
-    public GameObject explosion;
-    public GameObject jumpExplosion;
-    public GameObject shape;
-
-    [Header("Warning the player")]
-    public GameObject warningIcon;
-    public bool isWarning = false;
-
-    public float distanceAttack = 5f;
-
     //
-    private float moveSpeed = 0f;
-    private Rigidbody2D m_rigidbody2D;
-    private float distanceWarning = 0;
-
-    //enmey state
-    public enum EnemyState { Stop, Moving, Jumping, Holding, None }
+    //= public
+    [Header("CONFIG")]
+    public ScriptEnemyJump scriptEnemy;
+    public enum EnemyState { Scream, Stop, Moving, Jumping, Stun, None }
     public EnemyState currentState = EnemyState.Jumping;
 
-    [Header("Enemy's target")]
-    public Transform target;
 
+    //
+    //= inspector
+    [Header("Enemy's param")]
+    [SerializeField] private GameObject warningIcon;
+    [SerializeField] private GameObject skinedMeshRender;
+
+    // ANIMATION STATE
+    private string currentAnimator;
+    private const string ENEMY_SCREAM = "Enemy_Scream";
+    private const string ENEMY_RUN = "Enemy_Run";
+    private const string ENEMY_JUMP = "Enemy_Jump";
+    private const string ENEMY_DEAD = "Enemy_Dead";
+    private const string ENEMY_DANCE = "Enemy_Dance";
+
+
+    //
+    //= private
+    private Transform target;
     private float timeWaiting = 2f;
     private float processWaiting = 0f;
+    private float distanceAttack = 5f;
+    private float moveSpeed = 0f;
+    private float distanceWarning = 0;
 
     private Vector3 currentTarget;
-    private GameObject alertShape = null;
+    private GameObject prefabExplosion;
+    private GameObject prefabJumpExplosion;
+    private GameObject shapeArlet;
+    private GameObject alertShapeBackup;
 
-    private void LoadData()
-    {
-        moveSpeed = scriptEnemy.moveSpeed;
-        distanceWarning = scriptEnemy.distanceWarning;
-
-    }
 
     #region UNITY
     private void Start()
     {
-        LoadData();
-
-        warningIcon.SetActive(false);
-        m_rigidbody2D = GetComponent<Rigidbody2D>();
-        target = MainCharacter.Instance.GetTransform();
-
-        // transform.DOJump( target.position, 5, 3, 3, false );
-
-        currentTarget = target.position;
-        SetAlertPlacement(Vector3.zero, false);
-
+        CacheComponent();
+        CacheDefine();
+        Init();
     }
 
     private void FixedUpdate()
@@ -70,47 +59,49 @@ public class EnemyJump : MonoBehaviour, IDamage
         {
             switch (currentState)
             {
+                case EnemyState.Scream:
+                    break;
+
                 case EnemyState.Moving:
-                    {
-                        EnemyMoving();
-                        break;
-                    }
+                    EnemyMoving();
+                    break;
+
                 case EnemyState.Jumping:
-                    {
-                        EnemyJumping();
-                        break;
-                    }
-                case EnemyState.Holding:
-                    {
-                        EnenmyHolding();
-                        break;
-                    }
+                    EnemyJumping();
+                    break;
+
+                case EnemyState.Stun:
+                    EnenmyStun();
+                    break;
+
                 case EnemyState.Stop:
-                    {
-                        EnemyStop();
-                        break;
-                    }
+                    EnemyStop();
+                    break;
+
                 case EnemyState.None:
-                    {
-                        break;
-                    }
+                    break;
             }
-            // Debug.Log(currentState);
         }
     }
     #endregion
 
-    #region State FUNCTION
+
+    private void Init()
+    {
+        EnemyAppear();
+        SetAnimationState(ENEMY_SCREAM);
+        ChangeState(EnemyState.Scream);
+
+        StartCoroutine(Utils.DelayEvent(() => { ChangeState(EnemyState.Moving); }, 2.5f));
+    }
+
+
     private void EnemyMoving()
     {
-        if(!animator.GetCurrentAnimatorStateInfo(0).IsName("Moving"))
-            animator.SetBool("Jump", false);
-
         if (isWarning)
-        {
             GetWarningFromEnemy();
-        }
 
+        SetAnimationState(ENEMY_RUN);
         transform.LookAt(target.position);
         transform.position = Vector3.MoveTowards(transform.position, target.position, Time.deltaTime * moveSpeed);
 
@@ -119,16 +110,12 @@ public class EnemyJump : MonoBehaviour, IDamage
             Vector3 vec = (target.position - transform.position).normalized;
             currentTarget = target.position + vec * 3f;
             SetAlertPlacement(new Vector3(currentTarget.x, 0.5f, currentTarget.z), true);
-
-            
             ChangeState(EnemyState.Jumping);
         }
     }
 
     private void EnemyStop()
     {
-        //animator.SetBool("Moving", false);
-
         transform.LookAt(target.position);
         processWaiting += Time.deltaTime;
 
@@ -143,8 +130,7 @@ public class EnemyJump : MonoBehaviour, IDamage
 
     private void EnemyJumping()
     {
-        if(!animator.GetCurrentAnimatorStateInfo(0).IsName("Jump"))
-            animator.SetBool("Jump", true);
+        SetAnimationState(ENEMY_JUMP);
 
         if (gameObject != null)
             transform.DOJump(currentTarget, 5f, 1, 1.2f, false);
@@ -152,32 +138,41 @@ public class EnemyJump : MonoBehaviour, IDamage
         ChangeState(EnemyState.Stop);
     }
 
-    private void EnenmyHolding()
+    private void EnenmyStun()
     {
         transform.position = Vector3.MoveTowards(transform.position, target.position, Time.deltaTime * moveSpeed);
 
         if (Vector3.Distance(transform.position, target.position) <= 0.1f)
         {
-            Instantiate(explosion, transform.position, Quaternion.identity);
+            prefabExplosion.SpawnToGarbage(transform.position, Quaternion.identity);
             Destroy(this.gameObject);
         }
     }
-    #endregion
+
 
     private void ChangeState(EnemyState newState)
     {
         currentState = newState;
     }
 
+    private void SetAnimationState(string newState)
+    {
+        if (currentAnimator == newState)
+            return;
+
+        mAnimator.Play(newState);
+        currentAnimator = newState;
+    }
+
     private void SetAlertPlacement(Vector3 pos, bool active)
     {
-        if (alertShape == null)
+        if (alertShapeBackup == null)
         {
-            alertShape = Instantiate(shape);
-            SpawnEnemyJump.GetInstance().AddEnemyWasCreated(alertShape);
+            alertShapeBackup = Instantiate(shapeArlet);
+            SpawnEnemyJump.GetInstance().AddEnemyWasCreated(alertShapeBackup);
         }
-        alertShape.SetActive(active);
-        alertShape.transform.position = pos;
+        alertShapeBackup.SetActive(active);
+        alertShapeBackup.transform.position = pos;
     }
 
     private void GetWarningFromEnemy()
@@ -189,11 +184,6 @@ public class EnemyJump : MonoBehaviour, IDamage
         }
     }
 
-    public void SetWarning(bool warning)
-    {
-        isWarning = warning;
-    }
-
     IEnumerator FinishWarningEnemyJump()
     {
         yield return new WaitForSeconds(2f);
@@ -201,49 +191,84 @@ public class EnemyJump : MonoBehaviour, IDamage
         warningIcon.SetActive(false);
     }
 
-    //Collision
-    public void TakeDestroy()
+    public void TakeDamage(float damage)
     {
-        Destroy(alertShape.gameObject);
-        animator.SetBool("Dead", true);
-        Instantiate(explosion, transform.localPosition, Quaternion.identity);
-        GetComponent<Collider>().enabled = false;
-        
+        SelfDestroy();
+    }
+
+    public void SelfDestroy()
+    {
+        mCollider.enabled = false;
+        SetAnimationState(ENEMY_DEAD);
+        Destroy(alertShapeBackup.gameObject);
+        prefabExplosion.SpawnToGarbage(transform.localPosition, Quaternion.identity);
+
         ChangeState(EnemyState.None);
-        Invoke("DestroyObject", 3);
+        StartCoroutine(Utils.DelayEvent(() => { DestroyObject(); }, 3f));
     }
 
     public void DestroyObject()
     {
-        Destroy(alertShape.gameObject);
+        Destroy(alertShapeBackup.gameObject);
         Destroy(this.gameObject);
     }
 
 
     void OnTriggerEnter(Collider other)
     {
+        switch (other.tag)
+        {
+            case "Player":
+                other.GetComponent<IDamage>()?.TakeDamage(0);
+                break;
 
-        if (other.tag == "EnemyDefault" || other.tag == "EnemySeek" || other.tag == "EnemyJump")
-        {
-            var temp = other.GetComponent<IDamage>();
-            if (temp != null)
-                temp?.TakeDamage(0);
-            this.TakeDestroy();
-        }
-        else if (other.tag == "AlertShape")
-        {
-            Instantiate(jumpExplosion, transform.localPosition, Quaternion.identity);
-        }
-        else if(other.tag == "PlayerAbility")
-        {
-            Instantiate(jumpExplosion, transform.localPosition, Quaternion.identity);
-            this.TakeDestroy();
-        }
+            case "PlayerAbility":
+                prefabJumpExplosion.SpawnToGarbage(transform.localPosition, Quaternion.identity);
+                Destroy(gameObject);
+                break;
 
+            case "EnemyDefault":
+            case "EnemySeek":
+            case "EnemyJump":
+                other.GetComponent<IDamage>()?.TakeDamage(0);
+                SelfDestroy();
+                break;
+
+            case "AlertShape":
+                prefabJumpExplosion.SpawnToGarbage(transform.localPosition, Quaternion.identity);
+                break;
+        }
     }
 
-    public void TakeDamage(float damage)
+
+    private void CacheDefine()
     {
-        
+        moveSpeed = scriptEnemy.moveSpeed;
+        distanceWarning = scriptEnemy.distanceWarning;
+        marDissolve = scriptEnemy.marDissolve;
+        prefabExplosion = scriptEnemy.prefabExplosion;
+        prefabJumpExplosion = scriptEnemy.prefabJumpExplosion;
+        shapeArlet = scriptEnemy.shapeArlet;
+
+        transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+        SetAlertPlacement(Vector3.zero, false);
+        currentTarget = target.position;
+        warningIcon.SetActive(false);
+    }
+
+
+    private void CacheComponent()
+    {
+        mRigidbody = GetComponent<Rigidbody>();
+        mAnimator = GetComponentInChildren<Animator>();
+        mCollider = GetComponent<Collider>();
+
+        target = MainCharacter.Instance.GetTransform();
+
+        // Get materials-meshes default
+        d_skinedMeshRender = new Dictionary<SkinnedMeshRenderer, Material>();
+        var arrayRender = skinedMeshRender.GetComponentsInChildren<SkinnedMeshRenderer>();
+        foreach (SkinnedMeshRenderer skin in arrayRender)
+            d_skinedMeshRender.Add(skin, skin.material);
     }
 }

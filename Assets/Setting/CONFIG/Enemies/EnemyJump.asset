@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   setWarning: 0
   numberOfWarning: 4
+  distanceWarning: 10
+  distanceAttack: 5
   jumpSpeed: 0.7
   jumpHigh: 3.5
   moveSpeed: 6
@@ -22,4 +24,10 @@ MonoBehaviour:
   timeDelay: 0
   minRangeSpawn: 15
   maxRangeSpawn: 30
-  distanceWarning: 10
+  marDissolve: {fileID: 2100000, guid: abb05fd4cc96dac499a327506bbc9632, type: 2}
+  prefabExplosion: {fileID: 2994373425931151387, guid: 2da0e8749505ee04c8c70cc244091dd4,
+    type: 3}
+  prefabJumpExplosion: {fileID: 1402148328917832637, guid: 0d290ecc95f3a9f4d9bd0839b6b4892d,
+    type: 3}
+  shapeArlet: {fileID: 4168033239984476647, guid: 6d0dc0b07e1fa3f41b51b024efc4ccfe,
+    type: 3}

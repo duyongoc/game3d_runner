@@ -3,94 +3,103 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-public class EnemyElastic : MonoBehaviour, IDamage
+public class EnemyElastic : Enemy, IDamage
 {
-    [Header("Load data Enemy Elastic")]
-    public ScriptEnemyElastic scriptEnemy;
-
-    [Header("Animation")]
-    public Animator animator;
-
-    [Header("Enemy dead explosion")]
-    public GameObject explosion;
-
-    [Header("Particle preparing")]
-    public GameObject parPrepare;
-
-    [Header("State of Enemy")]
-    public EnemyState currentState = EnemyState.Moving;
-    public enum EnemyState { Moving, Preparing, Attack, Stop, None }
-
-    [Header("Target of enemy")]
-    public Transform target;
-
-    [Header("Effect attack")]
-    public GameObject affectAttack;
 
     //
-    private float moveSpeed = 0f;
-    private Rigidbody m_rigidbody;
-    public GameObject arrow;
-    // private float distanceWarning = 0;
+    //= public
+    [Header("Config Enemy")]
+    [Header("Load data Enemy Elastic")]
+    public ScriptEnemyElastic scriptEnemy;
+    public EnemyState currentState = EnemyState.Moving;
+    public enum EnemyState { Scream, Moving, Preparing, Attack, Stop, None }
 
-    public float distanceAttack = 5f;
+
+    //
+    //= inspector
+    [Header("Enemy's param")]
+    [SerializeField] private GameObject arrowAttack;
+    [SerializeField] private GameObject affectAttack;
+    [SerializeField] private GameObject skinedMeshRender;
+
+
+    // ANIMATION STATE
+    private string currentAnimator;
+    private const string ENEMY_SCREAM = "Enemy_Scream";
+    private const string ENEMY_IDLE = "Enemy_Idle";
+    private const string ENEMY_RUN = "Enemy_Run";
+    private const string ENEMY_ATTACK = "Enemy_Attack";
+    private const string ENEMY_DEAD = "Enemy_Dead";
+    private const string ENEMY_DANCE = "Enemy_Dance";
+
 
     // Elastic Enemy
-    public float timeCharge = 2f;
-    public float timeAttack = 0.7f;
+    private Transform target;
+    private float moveSpeed = 0f;
+    private float distanceAttack = 5f;
+    private float timeCharge = 0f;
+    private float timeAttack = 0f;
 
     private Vector3 attackPosition;
     private bool isAttack = false;
     private bool isPrepare = false;
 
+    //explosion
+    private GameObject prefabExplosion;
+    private GameObject prefabPrepareAttack;
 
-    private void LoadData()
-    {
-        //agent.speed = scriptEnemy.moveSpeed;
-        moveSpeed = scriptEnemy.moveSpeed;
-    }
+
 
     #region  UNITY
     private void Start()
     {
-        LoadData();
-
-        m_rigidbody = GetComponent<Rigidbody>();
-        target = MainCharacter.Instance.GetTransform();
+        CacheComponent();
+        CacheDefine();
+        Init();
     }
 
     private void Update()
     {
-        if (GameMgr.Instance.IsGameRunning)
+        if (!GameMgr.Instance.IsGameRunning)
+            return;
+
+        switch (currentState)
         {
-            switch (currentState)
-            {
-                case EnemyState.Moving:
-                    EnemyMoving();
+            case EnemyState.Moving:
+                EnemyMoving();
+                break;
 
-                    break;
-                case EnemyState.Preparing:
-                    EnemyPreparing();
+            case EnemyState.Preparing:
+                EnemyPreparing();
+                break;
 
-                    break;
-                case EnemyState.Attack:
-                    EnemyAttacking();
-                    
-                    break;
-                case EnemyState.None:
-                    break;
-            }
-            //Debug.Log(currentState);
+            case EnemyState.Attack:
+                EnemyAttacking();
+                break;
+
+            case EnemyState.None:
+                break;
         }
     }
     #endregion
 
-    #region Function of state
+
+    private void Init()
+    {
+        EnemyAppear();
+        SetAnimationState(ENEMY_SCREAM);
+        ChangeState(EnemyState.Scream);
+
+        StartCoroutine(Utils.DelayEvent(() => { ChangeState(EnemyState.Moving); }, 2.5f));
+    }
+
+
     private void EnemyMoving()
     {
-        animator.SetTrigger("Move");
+        SetAnimationState(ENEMY_RUN);
         transform.LookAt(target.position);
         transform.position = Vector3.MoveTowards(transform.position, target.position, Time.deltaTime * moveSpeed);
+
         if (Vector3.Distance(this.transform.position, target.position) < distanceAttack)
         {
             ChangeState(EnemyState.Preparing);
@@ -101,24 +110,24 @@ public class EnemyElastic : MonoBehaviour, IDamage
     {
         if (!isPrepare)
         {
-            arrow.SetActive(true);
-            animator.SetTrigger("Attack");
+            arrowAttack.SetActive(true);
+            SetAnimationState(ENEMY_ATTACK);
             Invoke("ChangeStateAttack", timeCharge);
             isAttack = false;
             isPrepare = true;
         }
 
-        transform.LookAt(target.position);       
+        transform.LookAt(target.position);
     }
 
     private void EnemyAttacking()
     {
-        if(isAttack)
+        if (isAttack)
             return;
-        
-        arrow.SetActive(false);
+
+        arrowAttack.SetActive(false);
         affectAttack.SetActive(true);
-        // animator.SetTrigger("Attack");
+
         attackPosition = transform.position + (transform.forward * 15f);
         transform.DOMove(attackPosition, timeAttack, false).SetEase(Ease.OutCubic);
 
@@ -126,11 +135,20 @@ public class EnemyElastic : MonoBehaviour, IDamage
         isPrepare = false;
         isAttack = true;
     }
-    #endregion
+
 
     private void ChangeState(EnemyState state = EnemyState.Attack)
     {
         currentState = state;
+    }
+
+    private void SetAnimationState(string newState)
+    {
+        if (currentAnimator == newState)
+            return;
+
+        mAnimator.Play(newState);
+        currentAnimator = newState;
     }
 
     private void ChangeStateAttack()
@@ -147,62 +165,91 @@ public class EnemyElastic : MonoBehaviour, IDamage
     private void ChangeStatePreparing()
     {
         currentState = EnemyState.Preparing;
-
     }
 
-    public void OnCreateEffectPrepare()
+    public void CreateEffectPrepare()
     {
-        Instantiate(parPrepare, transform.position, Quaternion.identity);
-    }
-
-    //Collision
-    public void TakeDestroy()
-    {
-        CancelInvoke();
-        arrow.SetActive(false);
-        DOTween.Kill(transform); 
-        ChangeState(EnemyState.None);
-
-        animator.SetBool("Dead", true);
-        Instantiate(explosion, transform.localPosition, Quaternion.identity);
-
-        GetComponent<Collider>().enabled = false;
-        Invoke("DestroyObject", 3);
-    }
-
-    public void DestroyObject()
-    {
-        Destroy(this.gameObject);
-    }
-
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.tag.Contains("Enemy"))
-        {
-            Instantiate(explosion, transform.localPosition, Quaternion.identity);
-
-            var temp = other.GetComponent<IDamage>();
-            temp?.TakeDamage(0);
-        }
-        else if (other.gameObject.tag == "Player")
-        {
-            Instantiate(explosion, transform.localPosition, Quaternion.identity);
-            other.gameObject.SetActive(false);
-            // SceneMgr.GetInstance().ChangeState(SceneMgr.GetInstance().m_sceneGameOver);
-        }
-        else if (other.tag == "Obstacle")
-        {
-            other.gameObject.GetComponent<StaticObstacle>().DissolveObstacle();
-            Instantiate(explosion, transform.localPosition, Quaternion.identity);
-        }
-        else if(other.tag == "PlayerAbility")
-        {
-            this.TakeDestroy();
-        }
+        prefabPrepareAttack.SpawnToGarbage(transform.position, Quaternion.identity);
     }
 
     public void TakeDamage(float damage)
     {
-        throw new System.NotImplementedException();
+        SelfDestroy();
     }
+
+    public void SelfDestroy()
+    {
+        CancelInvoke();
+        mCollider.enabled = false;
+        arrowAttack.SetActive(false);
+        DOTween.Kill(transform);
+
+        ChangeState(EnemyState.None);
+        SetAnimationState(ENEMY_DEAD);
+
+        prefabExplosion.SpawnToGarbage(transform.localPosition, Quaternion.identity);
+        StartCoroutine(Utils.DelayEvent(() => { Destroy(gameObject); }, 3f));
+    }
+
+
+    void OnTriggerEnter(Collider other)
+    {
+        switch (other.tag)
+        {
+            case "Player":
+                prefabExplosion.SpawnToGarbage(transform.localPosition, Quaternion.identity);
+                other.GetComponent<IDamage>()?.TakeDamage(0);
+                other.gameObject.SetActive(false);
+                break;
+
+            case "PlayerAbility":
+                SelfDestroy();
+                break;
+
+            case "EnemyDefault":
+            case "EnemySeek":
+            case "EnemyJump":
+            case "EnemyElastic":
+                prefabExplosion.SpawnToGarbage(transform.localPosition, Quaternion.identity);
+                other.GetComponent<IDamage>()?.TakeDamage(0);
+                break;
+
+            case "Obstacle":
+                other.gameObject.GetComponent<StaticObstacle>().DissolveObstacle();
+                prefabExplosion.SpawnToGarbage(transform.localPosition, Quaternion.identity);
+                break;
+        }
+    }
+
+
+    private void CacheDefine()
+    {
+        moveSpeed = scriptEnemy.moveSpeed;
+        distanceAttack = scriptEnemy.distanceAttack;
+        timeCharge = scriptEnemy.timeCharge;
+        timeAttack = scriptEnemy.timeAttack;
+
+        marDissolve = scriptEnemy.marDissolve;
+        prefabExplosion = scriptEnemy.prefabExplosion;
+        prefabPrepareAttack = scriptEnemy.prefabPrepareAttack;
+
+        transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+    }
+
+
+    private void CacheComponent()
+    {
+        mRigidbody = GetComponent<Rigidbody>();
+        mAnimator = GetComponentInChildren<Animator>();
+        mCollider = GetComponent<Collider>();
+
+        target = MainCharacter.Instance.GetTransform();
+
+        // Get materials-meshes default
+        d_skinedMeshRender = new Dictionary<SkinnedMeshRenderer, Material>();
+        var arrayRender = skinedMeshRender.GetComponentsInChildren<SkinnedMeshRenderer>();
+        foreach (SkinnedMeshRenderer skin in arrayRender)
+            d_skinedMeshRender.Add(skin, skin.material);
+    }
+
 }

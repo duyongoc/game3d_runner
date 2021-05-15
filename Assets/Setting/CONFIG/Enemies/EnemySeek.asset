@@ -12,13 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e01c10e1081d0a942979b4e7d59ce0ba, type: 3}
   m_Name: EnemySeek
   m_EditorClassIdentifier: 
-  timeDelay: 10
   setWarning: 1
+  distanceWarning: 8
   numberOfWarning: 3
-  moveSpeed: 6
   slowdownTurning: 0.1
+  moveSpeed: 6
+  timeDelay: 10
   timeProcessSpawn: 0
   timeSpawn: 3.5
   minRangeSpawn: 15
   maxRangeSpawn: 30
-  distanceWarning: 8
+  marDissolve: {fileID: 2100000, guid: 8d154d5d01a5bc54aa4b44f7e13d0ba7, type: 2}
+  prefabExplosion: {fileID: 2994373425931151387, guid: 79b736aed2a5f974b97eac691f619428,
+    type: 3}
+  prefabExplosionSpecial: {fileID: 2080798593184762722, guid: 08fa107d1ed3cd940be53945f7dbbd6b,
+    type: 3}
+  prefabMoveTurning: {fileID: 4745901120304445359, guid: 4d8bac08eb963a0429be17722847c850,
+    type: 3}

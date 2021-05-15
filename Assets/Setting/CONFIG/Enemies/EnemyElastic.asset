@@ -14,9 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   setWarning: 1
   numberOfWarning: 3
+  timeDelay: 0
+  distanceAttack: 5
+  timeCharge: 1.5
+  timeAttack: 2
   moveSpeed: 5
   timeProcessSpawn: 7
-  timeSpawn: 10
+  timeToSpawn: 3
   minRangeSpawn: 15
   maxRangeSpawn: 30
-  timeDelay: 0
+  marDissolve: {fileID: 2100000, guid: f735f74e1d364d747b5dc61c0396b04a, type: 2}
+  prefabExplosion: {fileID: 5741075057805179664, guid: 430f071eff4502b4090c79bc93377650,
+    type: 3}
+  prefabPrepareAttack: {fileID: 2179281533842398566, guid: 97c79b2808db916478c01718e39b9e80,
+    type: 3}

@@ -8,30 +8,28 @@ public class ScriptEnemyJump : ScriptableObject
 
     [Header("Do we have set up warning for this enemy")]
     public SetUp.Warning setWarning = SetUp.Warning.Disabe;
-
-    [Header("Number of enemy have warning when spawn")]
     public int numberOfWarning = 3;
+    public float distanceWarning = 10f;
 
-    [Header("Jump speed enemy jump", order = 2)]
+
+    [Header("Enemy's param", order = 2)]
+    public float distanceAttack = 5f;
     public float jumpSpeed = 1f;
-
-    [Header("Jump high enemy jump")]
     public float jumpHigh = 3.5f;
-
-    [Header("Move speed of the enemy jump")]
     public float moveSpeed = 5f;
 
-    [Header("Time to spawn enemy jump")]
+    [Header("Enemies spawning")]
     public float timeProcessSpawn = 2.5f;
     public float timeToSpawn = 3f;
-
-    [Header("Time delay spawn when game start")]
     public float timeDelay = 10f;
-
-    [Header("Range to create enemy jump")]
     public float minRangeSpawn = 15f;
     public float maxRangeSpawn = 30f;
 
-    [Header("Distance trigger warning from enemy jump")]
-    public float distanceWarning = 10f;
+    [Header("Other")]
+    public Material marDissolve;
+     public GameObject prefabExplosion;
+    public GameObject prefabJumpExplosion;
+    public GameObject shapeArlet;
+
+    
 }

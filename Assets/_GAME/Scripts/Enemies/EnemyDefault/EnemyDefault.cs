@@ -24,12 +24,11 @@ public class EnemyDefault : Enemy, IDamage
     private const string ENEMY_SCREAM = "Enemy_Scream";
     private const string ENEMY_RUN = "Enemy_Run";
     private const string ENEMY_DEAD = "Enemy_Dead";
-    private const string ENEMY_SEEK = "Enemy_Seek";
+    private const string ENEMY_DANCE = "Enemy_Dance";
 
 
     //
     //= private
-    private bool isWarning = false;
     private float distanceWarning = 0;
     private float moveSpeed = 0f;
     private Transform target;
@@ -38,10 +37,6 @@ public class EnemyDefault : Enemy, IDamage
     private GameObject prefabExplosion;
     private GameObject prefabExplosionSpecial;
 
-
-    //
-    // properties
-    public float MoveSpeed { get => moveSpeed; set => moveSpeed = value; }
 
 
     #region UNITY
@@ -134,10 +129,6 @@ public class EnemyDefault : Enemy, IDamage
         }
     }
 
-    public void SetWarning(bool warning)
-    {
-        isWarning = warning;
-    }
 
     IEnumerator FinishWarningEnemyDefault()
     {
@@ -209,6 +200,6 @@ public class EnemyDefault : Enemy, IDamage
         var arrayRender = skinedMeshRender.GetComponentsInChildren<SkinnedMeshRenderer>();
         foreach (SkinnedMeshRenderer skin in arrayRender)
             d_skinedMeshRender.Add(skin, skin.material);
-
     }
+
 }

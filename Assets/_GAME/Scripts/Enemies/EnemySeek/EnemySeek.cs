@@ -2,90 +2,86 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemySeek : MonoBehaviour, IDamage
+public class EnemySeek : Enemy, IDamage
 {
-    [Header("Load data Enemy Seek")]
+
+    //
+    //= public
+    [Header("Config Enemy")]
     public ScriptEnemySeek scriptEnemy;
+    public EnemyState currentState = EnemyState.Moving;
+    public enum EnemyState { Scream, Moving, Stun, None }
 
-    [Header("Animator")]
-    public Animator animator;
 
-    [Header("Enemy dead Explosion")]
-    public GameObject explosion;
-    public GameObject explosionSpecial;
+    //
+    //= inspector
+    [Header("Enemy's param")]
+    [SerializeField] private GameObject warningIcon;
+    [SerializeField] private GameObject skinedMeshRender;
 
-    [Header("Warning the Player")]
-    public GameObject warningIcon;
-    public bool isWarning = false;
 
-    [Header("Set effect up when enemy turning")]
-    public GameObject prefabsParTurning;
-    public float timeTurning = 0.2f;
-    private float processTurning = 0f;
+    // ANIMATION STATE
+    private string currentAnimator;
+    private const string ENEMY_SCREAM = "Enemy_Scream";
+    private const string ENEMY_RUN = "Enemy_Run";
+    private const string ENEMY_DEAD = "Enemy_Dead";
+    private const string ENEMY_DANCE = "Enemy_Dance";
 
     // private variable
-    private Rigidbody2D m_rigidbody2D;
     private float moveSpeed = 0f;
     private float slowdownTurning = 0f;
     private float distanceWarning = 0f;
     private Vector3 veclocity = Vector3.zero;
+    private Transform target;
 
-    [Header("Enmey state")]
-    public EnemyState currentState = EnemyState.Moving;
-    public enum EnemyState { Moving, Holding, None }
+    //explosion
+    private GameObject prefabExplosion;
+    private GameObject prefabExplosionSpecial;
+    private GameObject prefabMoveTurning;
+    private float timeTurning = 0.1f;
+    private float processTurning = 0f;
 
-    [Header("Enemy's target")]
-    public Transform target;
-
-    //
-    // property
-    //
-    public float MoveSpeed { get => moveSpeed; set => moveSpeed = value; }
-
-    public void OnSetWarning(bool warning)
-    {
-        isWarning = warning;
-    }
-
-    private void LoadData()
-    {
-        MoveSpeed = scriptEnemy.moveSpeed;
-        slowdownTurning = scriptEnemy.slowdownTurning;
-        distanceWarning = scriptEnemy.distanceWarning;
-    }
 
     #region UNITY
     private void Start()
     {
-        LoadData();
-
-        warningIcon.SetActive(false);
-        m_rigidbody2D = GetComponent<Rigidbody2D>();
-        target = MainCharacter.Instance.GetTransform();
+        CacheComponent();
+        CacheDefine();
+        Init();
     }
 
     private void FixedUpdate()
     {
-        if (GameMgr.Instance.IsGameRunning)
+        if (!GameMgr.Instance.IsGameRunning)
+            return;
+
+        switch (currentState)
         {
-            switch (currentState)
-            {
-                case EnemyState.Moving:
-                    EnemyMoving();
+            case EnemyState.Moving:
+                EnemyMoving();
+                break;
 
-                    break;
-                case EnemyState.Holding:
-                    EnenmyHolding();
+            case EnemyState.Stun:
+                EnenmyStun();
+                break;
 
-                    break;
-                case EnemyState.None:
-                    break;
-            }
+            case EnemyState.None:
+                break;
         }
     }
     #endregion
 
-    #region Function of State
+
+    private void Init()
+    {
+        EnemyAppear();
+        SetAnimationState(ENEMY_SCREAM);
+        ChangeState(EnemyState.Scream);
+
+        StartCoroutine(Utils.DelayEvent(() => { ChangeState(EnemyState.Moving); }, 2.5f));
+    }
+
+
     private void EnemyMoving()
     {
         if (isWarning)
@@ -93,17 +89,17 @@ public class EnemySeek : MonoBehaviour, IDamage
             GetWarningFromEnemy();
         }
 
+        SetAnimationState(ENEMY_RUN);
         Vector3 vec = new Vector3(target.position.x, 0, target.position.z);
         transform.LookAt(vec);
 
         //seeking the target - MC
         Vector3 distance = (target.position - transform.position);
-        Vector3 desired = distance.normalized * MoveSpeed;
+        Vector3 desired = distance.normalized * moveSpeed;
         Vector3 steering = desired - veclocity;
         veclocity += steering * Time.deltaTime;
         transform.position += veclocity * Time.deltaTime;
 
-        // trail effect
         float dot = transform.eulerAngles.y - target.eulerAngles.y;
         //Debug.Log(transform.eulerAngles.y + " - " + target.eulerAngles.y + " =  " + dot);
 
@@ -114,27 +110,35 @@ public class EnemySeek : MonoBehaviour, IDamage
             processTurning += Time.deltaTime;
             if (processTurning > timeTurning)
             {
-                Instantiate(prefabsParTurning, transform.position, Quaternion.identity);
+                prefabMoveTurning.SpawnToGarbage(transform.position, Quaternion.identity);
                 processTurning = 0;
             }
         }
     }
 
-    private void EnenmyHolding()
+    private void EnenmyStun()
     {
-        transform.position = Vector3.MoveTowards(transform.position, target.position, Time.deltaTime * MoveSpeed);
+        transform.position = Vector3.MoveTowards(transform.position, target.position, Time.deltaTime * moveSpeed);
 
         if (Vector3.Distance(transform.position, target.position) <= 1f)
         {
-            Instantiate(explosion, transform.position, Quaternion.identity);
+            prefabExplosion.SpawnToGarbage(transform.position, Quaternion.identity);
             Destroy(this.gameObject);
         }
     }
-    #endregion
 
     public void ChangeState(EnemyState newState)
     {
         currentState = newState;
+    }
+
+    private void SetAnimationState(string newState)
+    {
+        if (currentAnimator == newState)
+            return;
+
+        mAnimator.Play(newState);
+        currentAnimator = newState;
     }
 
     private void GetWarningFromEnemy()
@@ -153,40 +157,78 @@ public class EnemySeek : MonoBehaviour, IDamage
         isWarning = false;
     }
 
-    //Collision
-    public void TakeDestroy()
+    public void TakeDamage(float damage)
     {
-        animator.SetBool("Dead", true);
-        Instantiate(explosion, transform.localPosition, Quaternion.identity);
-        GetComponent<Collider>().enabled = false;
+        SelfDestroy();
+    }
+
+    public void SelfDestroy()
+    {
+        mCollider.enabled = false;
+        SetAnimationState(ENEMY_DEAD);
+        prefabExplosion.SpawnToGarbage(transform.localPosition, Quaternion.identity);
 
         ChangeState(EnemyState.None);
-        Invoke("DestroyObject", 3);
+        StartCoroutine(Utils.DelayEvent(() => { Destroy(this.gameObject); }, 3f));
     }
 
-    public void DestroyObject()
-    {
-        Destroy(this.gameObject);
-    }
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "EnemySeek" || other.tag == "EnemyJump")
+        switch (other.tag)
         {
-            var temp = other.GetComponent<IDamage>();
-            temp?.TakeDamage(0);
+            case "Player":
+                other.GetComponent<IDamage>()?.TakeDamage(0);
+                break;
 
-            this.TakeDestroy();
-        }
-        if (other.tag == "PlayerAbility")
-        {
-            Instantiate(explosionSpecial, transform.localPosition, Quaternion.identity);
-            Destroy(this.gameObject);
+            case "PlayerAbility":
+                prefabExplosionSpecial.SpawnToGarbage(transform.localPosition, Quaternion.identity);
+                Destroy(gameObject);
+                break;
+
+            case "EnemyDefault":
+                other.GetComponent<IDamage>()?.TakeDamage(0);
+                SelfDestroy();
+                break;
+
+            case "EnemySeek":
+            case "EnemyJump":
+                other.GetComponent<IDamage>()?.TakeDamage(0);
+                SelfDestroy();
+                break;
         }
     }
 
-    public void TakeDamage(float damage)
+
+    private void CacheDefine()
     {
-        
+        moveSpeed = scriptEnemy.moveSpeed;
+        distanceWarning = scriptEnemy.distanceWarning;
+        slowdownTurning = scriptEnemy.slowdownTurning;
+
+        marDissolve = scriptEnemy.marDissolve;
+        prefabExplosion = scriptEnemy.prefabExplosion;
+        prefabExplosionSpecial = scriptEnemy.prefabExplosionSpecial;
+        prefabMoveTurning = scriptEnemy.prefabMoveTurning;
+
+        transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+        warningIcon.SetActive(false);
     }
+
+
+    private void CacheComponent()
+    {
+        mRigidbody = GetComponent<Rigidbody>();
+        mAnimator = GetComponentInChildren<Animator>();
+        mCollider = GetComponent<Collider>();
+
+        target = MainCharacter.Instance.GetTransform();
+
+        // Get materials-meshes default
+        d_skinedMeshRender = new Dictionary<SkinnedMeshRenderer, Material>();
+        var arrayRender = skinedMeshRender.GetComponentsInChildren<SkinnedMeshRenderer>();
+        foreach (SkinnedMeshRenderer skin in arrayRender)
+            d_skinedMeshRender.Add(skin, skin.material);
+    }
+
 }

@@ -97,7 +97,6 @@ public class SpawnEnemyDefault : MonoBehaviour, ISpawnObject
         if (timerRemainSpawn >= timeToSpawn)
         {
             GameObject obj = Instantiate(enemyPrefab, GetRandomPoint(), Quaternion.identity);
-            obj.GetComponent<EnemyDefault>().MoveSpeed = moveSpeed;
 
             enemyWasCreated.Add(obj);
             timerRemainSpawn = 0;
@@ -108,7 +107,7 @@ public class SpawnEnemyDefault : MonoBehaviour, ISpawnObject
     private void CreateEnemyWarning( bool warn, Vector3 vec)
     {
         GameObject obj = Instantiate(enemyPrefab, vec, Quaternion.identity);
-        obj.GetComponent<EnemyDefault>().SetWarning(warn);
+        obj.GetComponent<Enemy>().SetWarning(warn);
         enemyWasCreated.Add(obj);
     }
 

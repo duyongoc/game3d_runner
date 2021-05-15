@@ -10,13 +10,18 @@ public class Enemy : MonoBehaviour
     protected Rigidbody mRigidbody;
     protected Animator mAnimator;
     protected Collider mCollider;
+    protected bool isWarning = false;
 
     //Appear with effect
     protected Dictionary<SkinnedMeshRenderer, Material> d_skinedMeshRender;
     protected Material marDissolve;
 
 
-
+    public void SetWarning(bool warning)
+    {
+        isWarning = warning;
+    }
+    
     protected void EnemyAppear()
     {
         foreach (KeyValuePair<SkinnedMeshRenderer, Material> item in d_skinedMeshRender)

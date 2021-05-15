@@ -5,24 +5,27 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "EnemyElastic", menuName = "CONFIG/Enemy/EnemyElastic")]
 public class ScriptEnemyElastic : ScriptableObject
 {
-    [Header("Do we have set up warning for this enemy")]
-    public SetUp.Warning setWarning = SetUp.Warning.Disabe;
 
-    [Header("Number of enemy have warning when spawn")]
+    [Header("CONFIG")]
+    public SetUp.Warning setWarning = SetUp.Warning.Disabe;
     public int numberOfWarning = 3;
 
-    [Header("Move speed of the Enemy Elastic")]
+    [Header("Enemy's param")]
+    public float timeDelay = 30f;
+    public float distanceAttack = 5f;
+    public float timeCharge = 1.5f;
+    public float timeAttack = 2f;
     public float moveSpeed = 5f;
 
-    [Header("Time to spawn Enemy Elastic")]
+    [Header("Enemy' spawning")]
     public float timeProcessSpawn = 2.5f;
     public float timeToSpawn = 3f;
-    
-    [Header("Range to create Enemy Elastic")]
     public float minRangeSpawn = 15f;
     public float maxRangeSpawn = 30f;
 
-    [Header("Time delay spawn when game start")]
-    public float timeDelay = 30f;
+    [Header("Other")]
+    public Material marDissolve;
+    public GameObject prefabExplosion;
+    public GameObject prefabPrepareAttack;
 
 }

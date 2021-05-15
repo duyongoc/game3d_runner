@@ -17,13 +17,13 @@ public class HoleCollider : MonoBehaviour
         {
             var obj = other.gameObject.GetComponentInParent<EnemyJump>();
             // obj.target = transform;
-            obj.currentState = EnemyJump.EnemyState.Holding;
+            obj.currentState = EnemyJump.EnemyState.Stun;
         }
         else if(other.tag == "EnemySeek")
         {
             var obj = other.gameObject.GetComponent<EnemySeek>();
             // obj.target = transform;
-            obj.currentState = EnemySeek.EnemyState.Holding;
+            obj.currentState = EnemySeek.EnemyState.Stun;
         }
 
         

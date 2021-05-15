@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Dissolve
+  m_Name: Jump_enemy
   m_Shader: {fileID: -6465566751694194690, guid: f11a807a8c883324197c74cb9122c617,
     type: 3}
   m_ShaderKeywords: 
@@ -70,11 +70,11 @@ Material:
     - _Surface: 0
     - _WorkflowMode: 1
     - _ZWrite: 1
-    - _processDissolve: 0
+    - _processDissolve: 0.6100004
     - processDissolve: 0
     m_Colors:
-    - Color_44929418: {r: 0, g: 138.11462, b: 79.45303, a: 1}
-    - Color_F2556ADB: {r: 0, g: 0, b: 0, a: 1}
+    - Color_44929418: {r: 0, g: 246.18022, b: 0, a: 1}
+    - Color_F2556ADB: {r: 0.12375402, g: 0.254717, b: 0.16740833, a: 1}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}

@@ -132,8 +132,7 @@ public class SpawnEnemyJump : MonoBehaviour, ISpawnObject
         if (numberOfWarning >= 0 && timerProcessSpawn >= timeToSpawn)
         {
             GameObject obj = Instantiate(enemyPrefab, GetRandomPoint(), Quaternion.identity);
-            obj.GetComponent<EnemyJump>().SetWarning(true);
-
+            obj.GetComponent<Enemy>().SetWarning(true);
             enemyWasCreated.Add(obj);
 
             numberOfWarning--;
