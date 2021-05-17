@@ -28,7 +28,7 @@ public class CharacterHealth : MonoBehaviour, IDamage
     public void TakeDamage(float damage)
     {
         character.PlayerDead();
-        GameMgr.Instance.ChangeState(STATEGAME.GAMEOVER);
+        GameMgr.Instance.LoadGameOver();
     }
 
 
@@ -36,5 +36,6 @@ public class CharacterHealth : MonoBehaviour, IDamage
     {
         character = MainCharacter.Instance;
     }   
+    
 
 }

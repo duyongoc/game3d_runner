@@ -25,8 +25,7 @@ public class SceneMenu : StateScene
     // }
     #endregion
 
-    
-    #region Handler events of button
+
     public void OnClickButtonPlay()
     {
         
@@ -36,5 +35,5 @@ public class SceneMenu : StateScene
     {
         Application.Quit();
     }
-    #endregion
+
 }

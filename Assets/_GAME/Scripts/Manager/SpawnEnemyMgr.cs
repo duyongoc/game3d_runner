@@ -2,50 +2,49 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpawnEnemyMgr : MonoBehaviour
+public class SpawnEnemyMgr : Singleton<SpawnEnemyMgr>
 {
-    #region singleton
-    public static SpawnEnemyMgr s_instane; 
 
-    private void Awake()
+    //
+    //= inspector
+    [SerializeField] private SpawnEnemy[] spawnObject;
+
+
+    #region UNITY
+    private void Start()
     {
-        if(s_instane != null)
-        {
-            return;
-        }
-        
-        s_instane = this;
-
-        return;
+        GameMgr.Instance.EVENT_RESET_INGAME += Reset;
     }
 
-    public static SpawnEnemyMgr GetInstance()
-    {
-        return s_instane;
-    }
-
-    #endregion  
-    
-    public GameObject[] spawnObject;
+    // private void Update()
+    // {
+    // }
+    #endregion
 
 
     public void SetActiceInPhase(Phase newPhase)
-    {   
-        foreach(GameObject go in spawnObject)
+    {
+        foreach (SpawnEnemy item in spawnObject)
         {
-            go.GetComponent<ISpawnObject>().SetInPhaseObject(false);
-            foreach( EnemyInPhase ene in  newPhase.enemies)
+            item.GetComponent<ISpawnObject>().SetInPhaseObject(false);
+            foreach (EnemyInPhase ene in newPhase.enemies)
             {
                 // Debug.Log("go.name" + go.name + " / " + name.enemyType.ToString());
-                if(go != null && go.name.Contains(ene.enemyType.ToString()))
+                if (item != null && item.name.Contains(ene.enemyType.ToString()))
                 {
                     // Debug.Log("--- / " + name.enemyType.ToString());
-                    go.GetComponent<ISpawnObject>().SetInPhaseObject(
-                        true, ene.speedIncrease, ene.timeSpawn);
-                    
+                    item.GetComponent<ISpawnObject>().SetInPhaseObject(true, ene.speedIncrease, ene.timeSpawn);
                 }
             }
         }
     }
 
+
+    public void Reset()
+    {
+        foreach (SpawnEnemy item in spawnObject)
+        {
+            item.Reset();
+        }
+    }
 }

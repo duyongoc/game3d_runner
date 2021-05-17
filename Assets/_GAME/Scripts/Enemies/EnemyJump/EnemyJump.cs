@@ -51,6 +51,8 @@ public class EnemyJump : Enemy, IDamage
         CacheComponent();
         CacheDefine();
         Init();
+
+        MainCharacter.Instance.EVENT_PLAYER_DEAD += OnEventPlayerDead;
     }
 
     private void FixedUpdate()
@@ -162,6 +164,11 @@ public class EnemyJump : Enemy, IDamage
 
         mAnimator.Play(newState);
         currentAnimator = newState;
+    }
+
+    private void OnEventPlayerDead()
+    {
+        SetAnimationState(ENEMY_DANCE);
     }
 
     private void SetAlertPlacement(Vector3 pos, bool active)

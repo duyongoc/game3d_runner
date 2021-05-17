@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class SpawnEnemySeek : MonoBehaviour, ISpawnObject
+public class SpawnEnemySeek : SpawnEnemy, ISpawnObject
 {
     [Header("Active object")]
     public bool isActive = false;
@@ -159,7 +159,7 @@ public class SpawnEnemySeek : MonoBehaviour, ISpawnObject
         return vec;
     }
 
-    public void Reset()
+    public override void Reset()
     {
         foreach (GameObject obj in enemyWasCreated)
         {

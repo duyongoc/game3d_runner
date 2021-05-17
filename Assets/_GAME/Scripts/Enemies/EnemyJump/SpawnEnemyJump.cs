@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class SpawnEnemyJump : MonoBehaviour, ISpawnObject
+public class SpawnEnemyJump : SpawnEnemy, ISpawnObject
 {
     [Header("Active object")]
     public bool isActive = false;
@@ -196,15 +196,15 @@ public class SpawnEnemyJump : MonoBehaviour, ISpawnObject
         return s_instance;
     }
 
-    public void Reset()
+    public override void Reset()
     {
         foreach (GameObject obj in enemyWasCreated)
         {
             if (obj != null)
                 Destroy(obj);
         }
+        
         enemyWasCreated.Clear();
-
         numberOfWarning = scriptEnemy.numberOfWarning;
         // timeProcessDelay = 0;
         // isStart = false;

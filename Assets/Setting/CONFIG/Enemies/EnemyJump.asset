@@ -21,7 +21,7 @@ MonoBehaviour:
   moveSpeed: 6
   timeProcessSpawn: 0
   timeToSpawn: 6
-  timeDelay: 0
+  timeDelay: 10
   minRangeSpawn: 15
   maxRangeSpawn: 30
   marDissolve: {fileID: 2100000, guid: abb05fd4cc96dac499a327506bbc9632, type: 2}

@@ -2,30 +2,37 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SoundMgr : MonoBehaviour
+public class SoundMgr : Singleton<SoundMgr>
 {
-    public static SoundMgr s_instance;
-    private AudioSource audioSource;
 
-    private void Awake()
-    {
-        if(s_instance != null)
-            return;
-        
-        s_instance = this;
-    }
+    //
+    //= inspector
+    [SerializeField] private SoundConfigSO soundConfig;
 
+
+    //
+    //= private
+    private static AudioSource audioSource;
+
+
+    //define
+    public AudioClip SFX_BACKGROUND;
+    public AudioClip SFX_CHARACTER_SHILE;
+
+
+    #region UNITY
     private void Start()
     {
-        audioSource = GetComponent<AudioSource>();
+        CacheComponent();
+        CacheDefine();
     }
 
-    public void PlaySoundOneShot(AudioClip audi)
-    {
-        audioSource.PlayOneShot(audi);
-    }
-    
-    public void PlaySound(AudioClip audi)
+    // private void Update()
+    // {
+    // }
+    #endregion
+
+    public static void PlaySound(AudioClip audi)
     {
         audioSource.Stop();
 
@@ -34,21 +41,32 @@ public class SoundMgr : MonoBehaviour
         audioSource.loop = true;
     }
 
-    public bool IsPlaying(AudioClip audi)
-    {
-        return audioSource.clip == audi && audioSource.isPlaying;
-    }
-
     public void StopSound()
     {
         audioSource.Stop();
     }
 
-    public static SoundMgr GetInstance()
+    public void PlaySoundOneShot(AudioClip audi)
     {
-        return s_instance;
+        audioSource.PlayOneShot(audi);
     }
 
-    
+    public bool IsPlaying(AudioClip audi)
+    {
+        return audioSource.clip == audi && audioSource.isPlaying;
+    }
+
+
+
+    private void CacheDefine()
+    {
+        SFX_BACKGROUND = soundConfig.sfx_backgound;
+        SFX_CHARACTER_SHILE = soundConfig.sfx_characterShield;
+    }
+
+    private void CacheComponent()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
 
 }

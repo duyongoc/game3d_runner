@@ -27,6 +27,7 @@ public class SpawnTornado : MonoBehaviour
 
     public enum SpawnState { SpawnInit, Spawn, None };
     private SpawnState currentState = SpawnState.SpawnInit;
+    
 
     private void LoadData()
     {
@@ -80,7 +81,7 @@ public class SpawnTornado : MonoBehaviour
     #region Function of state
     private void SpawnEnemyInit()
     {
-        Camera.main.GetComponent<CameraFollow>().isFlowCamera = true;
+        Camera.main.GetComponent<CameraFollow>().IsFlowCamera = true;
         currentState = SpawnState.Spawn;
     }
 

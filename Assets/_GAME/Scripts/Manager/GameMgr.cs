@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using Doozy.Engine;
 using UnityEngine;
 
 
@@ -14,6 +16,11 @@ public enum STATEGAME
 
 public class GameMgr : Singleton<GameMgr>
 {
+
+    //
+    //= event 
+    public Action EVENT_RESET_INGAME;
+
 
     //
     //= public 
@@ -62,6 +69,30 @@ public class GameMgr : Singleton<GameMgr>
     }
 
 
+
+    public void LoadReplayGame()
+    {
+        Reset();
+        ChangeState(STATEGAME.INGAME);
+    }
+
+    public void LoadMenuGame()
+    {
+        ChangeState(STATEGAME.MENU);
+        GameEventMessage.SendEvent("LoadMenu");
+    }
+
+    public void LoadGameOver()
+    {
+        ChangeState(STATEGAME.GAMEOVER);
+        StartCoroutine(Utils.DelayEvent(() => { GameEventMessage.SendEvent("LoadGameOver"); }, 2.5f));
+    }
+
+
+    public void Reset()
+    {
+        EVENT_RESET_INGAME?.Invoke();
+    }
 
 }
 

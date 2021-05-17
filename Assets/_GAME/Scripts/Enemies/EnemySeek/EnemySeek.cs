@@ -48,6 +48,8 @@ public class EnemySeek : Enemy, IDamage
         CacheComponent();
         CacheDefine();
         Init();
+
+        MainCharacter.Instance.EVENT_PLAYER_DEAD += OnEventPlayerDead;
     }
 
     private void FixedUpdate()
@@ -155,6 +157,11 @@ public class EnemySeek : Enemy, IDamage
         yield return new WaitForSeconds(2f);
         warningIcon.SetActive(false);
         isWarning = false;
+    }
+
+    private void OnEventPlayerDead()
+    {
+        SetAnimationState(ENEMY_DANCE);
     }
 
     public void TakeDamage(float damage)

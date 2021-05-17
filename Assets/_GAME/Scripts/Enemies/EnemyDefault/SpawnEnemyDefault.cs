@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class SpawnEnemyDefault : MonoBehaviour, ISpawnObject
+public class SpawnEnemyDefault : SpawnEnemy, ISpawnObject
 {
     [Header("Active object")]
     public bool isActive = false;
@@ -131,7 +131,7 @@ public class SpawnEnemyDefault : MonoBehaviour, ISpawnObject
         return vec;
     }
 
-    public void Reset()
+    public override void Reset()
     {
         foreach (GameObject obj in enemyWasCreated)
         {

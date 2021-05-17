@@ -33,7 +33,7 @@ public class LevelInGame : MonoBehaviour
             if (indexPhase + 1 < phases.Length && timeDt > phases[indexPhase].timePhase)
             {
                 // Debug.Log("Change Phase index: " + indexPhase);
-                SpawnEnemyMgr.GetInstance().SetActiceInPhase(phases[++indexPhase]);
+                SpawnEnemyMgr.Instance.SetActiceInPhase(phases[++indexPhase]);
                 timeDt = 0;
 
                 if (indexPhase + 1 == phases.Length)
@@ -47,7 +47,7 @@ public class LevelInGame : MonoBehaviour
 
     private void StartPhase()
     {
-        SpawnEnemyMgr.GetInstance().SetActiceInPhase(phases[indexPhase]);
+        SpawnEnemyMgr.Instance.SetActiceInPhase(phases[indexPhase]);
         //Debug.Log("Change Phase index: " + indexPhase);
     }
 

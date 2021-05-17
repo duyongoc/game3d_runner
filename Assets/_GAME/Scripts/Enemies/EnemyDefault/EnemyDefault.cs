@@ -45,6 +45,8 @@ public class EnemyDefault : Enemy, IDamage
         CacheComponent();
         CacheDefine();
         Init();
+
+        MainCharacter.Instance.EVENT_PLAYER_DEAD += OnEventPlayerDead;
     }
 
     private void Update()
@@ -127,6 +129,11 @@ public class EnemyDefault : Enemy, IDamage
             warningIcon.SetActive(true);
             StartCoroutine("FinishWarningEnemyDefault");
         }
+    }
+
+    private void OnEventPlayerDead()
+    {
+        SetAnimationState(ENEMY_DANCE);
     }
 
 

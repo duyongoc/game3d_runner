@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraFollow : MonoBehaviour
+public class CameraFollow : Singleton<CameraFollow>
 {
+
     //
     //= public
     public float smoothFactor = 0.15f;
@@ -14,41 +15,36 @@ public class CameraFollow : MonoBehaviour
     public float moveSpeed = 5f;
     public bool isStart = false;
 
-    [Header("//Debug")]
-    public float currentY = 0f;
-    public float currentZ = 0f;
-
-    public bool isFlowCamera = false;
 
     //
-    //= private variable
-    private Vector3 velocity = Vector3.zero;
+    //= private 
+    private Vector3 velocity;
+    private Transform target;
 
-    private Animator m_animator;
-    private Transform mTarget;
+    private bool isFlowCamera = false;
+    private float currentY = 0f;
+    private float currentZ = 0f;
 
 
-    private void OnLoad()
-    {
-        currentY = originY;
-        currentZ = originZ;
-    }
+    //
+    //= properties
+    public bool IsFlowCamera { get => isFlowCamera; set => isFlowCamera = value; }
+
+
 
     #region UNITY
     private void Start()
     {
         CacheComponent();
-        this.OnLoad();
+        CacheDefine();
     }
 
     private void FixedUpdate()
     {
-        if (mTarget == null)
-        {
-            mTarget = MainCharacter.Instance.GetTransform();
-        }
+        if (target == null)
+            target = MainCharacter.Instance.GetTransform();
 
-        Vector3 newPostion = new Vector3(mTarget.position.x, transform.position.y, mTarget.position.z);
+        Vector3 newPostion = new Vector3(target.position.x, transform.position.y, target.position.z);
         newPostion.z += currentZ;
         transform.position = Vector3.SmoothDamp(transform.position, newPostion, ref velocity, smoothFactor * Time.deltaTime);
 
@@ -61,18 +57,19 @@ public class CameraFollow : MonoBehaviour
         }
 
     }
+    #endregion
 
     public void ChangeTarget(Transform tar, float smoother)
     {
         smoothFactor = smoother;
-        mTarget = tar;
+        target = tar;
     }
-    #endregion
 
     private void ZoomMainCamera(Vector3 origin, Vector3 target, float speed)
     {
         transform.position = Vector3.MoveTowards(origin, target, Time.deltaTime * speed);
     }
+
 
     public bool IsSetUpCamera()
     {
@@ -94,7 +91,6 @@ public class CameraFollow : MonoBehaviour
 
     public void MakeCameraShake(float duration, float magnitude)
     {
-        //m_animator.SetTrigger("Shake");
         StartCoroutine(Shake(duration, magnitude));
     }
 
@@ -117,17 +113,24 @@ public class CameraFollow : MonoBehaviour
 
     public void Reset()
     {
+        currentY = originY;
+        currentZ = originZ;
         isStart = false;
-        this.OnLoad();
 
         Camera.main.fieldOfView = 60f;
         transform.position = new Vector3(transform.position.x, currentY, currentZ);
     }
 
+
+    private void CacheDefine()
+    {
+        velocity = Vector3.zero;
+        currentY = originY;
+        currentZ = originZ;
+    }
+
     private void CacheComponent()
     {
-        mTarget = MainCharacter.Instance.GetTransform();
-        m_animator = GetComponent<Animator>();
-
+        target = MainCharacter.Instance.GetTransform();
     }
 }

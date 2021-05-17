@@ -56,6 +56,8 @@ public class EnemyElastic : Enemy, IDamage
         CacheComponent();
         CacheDefine();
         Init();
+
+        MainCharacter.Instance.EVENT_PLAYER_DEAD += OnEventPlayerDead;
     }
 
     private void Update()
@@ -170,6 +172,11 @@ public class EnemyElastic : Enemy, IDamage
     public void CreateEffectPrepare()
     {
         prefabPrepareAttack.SpawnToGarbage(transform.position, Quaternion.identity);
+    }
+
+    private void OnEventPlayerDead()
+    {
+        SetAnimationState(ENEMY_DANCE);
     }
 
     public void TakeDamage(float damage)

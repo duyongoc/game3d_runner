@@ -230,8 +230,7 @@ public class CharacterMove : StateCharacter
     {
         if (temp != null)
             Destroy(temp);
-
-        character.GetComponent<Collider>().enabled = true;
+        
         shape.localRotation = Quaternion.Euler(0f, 0f, 0f);
     }
 

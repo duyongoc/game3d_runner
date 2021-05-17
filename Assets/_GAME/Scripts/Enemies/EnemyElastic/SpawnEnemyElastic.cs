@@ -2,21 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpawnEnemyElastic : MonoBehaviour, ISpawnObject
+public class SpawnEnemyElastic : SpawnEnemy, ISpawnObject
 {
     [Header("Active object")]
     public bool isActive = false;
 
     [Header("Data for Elastic")]
     public ScriptEnemyElastic scriptEnemy;
-    
+
     [Header("Enemies prefab")]
     public GameObject enemyPrefab;
 
     [Header("State of Enemy")]
     public SpawnState currentState = SpawnState.Spawn;
     public enum SpawnState { Spawn, None };
-    
+
     [Header("Enemy's target")]
     public Transform target;
 
@@ -55,10 +55,10 @@ public class SpawnEnemyElastic : MonoBehaviour, ISpawnObject
 
     private void Update()
     {
-        if(!isStart && GameMgr.Instance.IsGameRunning)
+        if (!isStart && GameMgr.Instance.IsGameRunning)
         {
             timeProcessDelay += Time.deltaTime;
-            if(timeProcessDelay >= timeDelay)
+            if (timeProcessDelay >= timeDelay)
             {
                 isStart = true;
                 timeProcessDelay = 0;
@@ -70,15 +70,15 @@ public class SpawnEnemyElastic : MonoBehaviour, ISpawnObject
             switch (currentState)
             {
                 case SpawnState.Spawn:
-                {    
-                    StateSpawn();
-                    break;
-                }
+                    {
+                        StateSpawn();
+                        break;
+                    }
                 case SpawnState.None:
-                {
+                    {
 
-                    break;
-                }
+                        break;
+                    }
             }
         }
     }
@@ -123,7 +123,7 @@ public class SpawnEnemyElastic : MonoBehaviour, ISpawnObject
         return vec;
     }
 
-    public void Reset()
+    public override void Reset()
     {
         foreach (GameObject obj in enemyWasCreated)
         {

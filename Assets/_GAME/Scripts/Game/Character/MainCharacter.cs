@@ -1,10 +1,16 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class MainCharacter : Singleton<MainCharacter>
 {
+
+    //
+    //= event
+    public Action EVENT_PLAYER_DEAD;
+
 
     //
     //= public
@@ -19,12 +25,13 @@ public class MainCharacter : Singleton<MainCharacter>
     [SerializeField] private VirtualMovement virtualMovement;
     [SerializeField] private Transform[] characterFeet;
     [SerializeField] private Renderer shapeRenderer;
-    
+
 
     //
     //= private
     private Rigidbody mRigidbody;
     private Animator mAnimator;
+    private Collider mCollider;
     private CharacterMove mCharacterMove;
     private CharacterHolding mCharacterHolding;
     private CharacterAbility mCharacterAbility;
@@ -74,7 +81,7 @@ public class MainCharacter : Singleton<MainCharacter>
     public float GetTurnSpeed { get => turnSpeed; }
     public float GetTimeParMoving { get => timeParMoving; }
 
-    public VirtualMovement VirtualMovement { get => virtualMovement;}
+    public VirtualMovement VirtualMovement { get => virtualMovement; }
     public GameObject GetParticleMoving { get => particleMoving; }
     public bool FirstTriggerPower { get => firstTriggerPower; set => firstTriggerPower = value; }
 
@@ -85,8 +92,9 @@ public class MainCharacter : Singleton<MainCharacter>
     {
         CacheComponent();
         CacheDefine();
+        Init();
 
-        ChangeState(mCharacterMove);
+        GameMgr.Instance.EVENT_RESET_INGAME += CharacterReset;
     }
 
     private void FixedUpdate()
@@ -98,6 +106,12 @@ public class MainCharacter : Singleton<MainCharacter>
     }
     #endregion
 
+
+
+    private void Init()
+    {
+        ChangeState(mCharacterMove);
+    }
 
     public void ChangeState(StateCharacter newState)
     {
@@ -118,8 +132,10 @@ public class MainCharacter : Singleton<MainCharacter>
     public void PlayerDead()
     {
         SetAnimationDead();
-        this.GetComponent<Collider>().enabled = false;
-        this.ChangeState(this.mCharacterNone);
+        EVENT_PLAYER_DEAD?.Invoke();
+
+        mCollider.enabled = false;
+        ChangeState(mCharacterNone);
     }
 
     private void SetAnimationState(string newState)
@@ -144,7 +160,7 @@ public class MainCharacter : Singleton<MainCharacter>
         SetAnimationState(CHARACTER_DEAD);
     }
 
-    
+
     public bool IsStateMove()
     {
         return currentState == mCharacterMove;
@@ -166,17 +182,14 @@ public class MainCharacter : Singleton<MainCharacter>
         angleSpeed = CONFIG_CHARACTER.angleSpeed;
     }
 
-    public void Reset()
+    public void CharacterReset()
     {
+        // firstTriggerPower = false;
+        SetAnimationIdle();
+        mCollider.enabled = true;
+        gameObject.ResetTransform();
+
         mCharacterMove.Reset();
-
-        firstTriggerPower = false;
-        mAnimator.SetBool("Moving", false);
-        mAnimator.SetBool("Dead", false);
-        transform.position = Vector3.zero;
-        transform.rotation = Quaternion.Euler(Vector3.zero);
-        transform.localScale = Vector3.one;
-
         ChangeState(mCharacterMove);
     }
 
@@ -196,6 +209,7 @@ public class MainCharacter : Singleton<MainCharacter>
     {
         mRigidbody = GetComponent<Rigidbody>();
         mAnimator = characterModel.GetComponent<Animator>();
+        mCollider = GetComponent<Collider>();
 
         mCharacterMove = GetComponent<CharacterMove>();
         mCharacterHolding = GetComponent<CharacterHolding>();
