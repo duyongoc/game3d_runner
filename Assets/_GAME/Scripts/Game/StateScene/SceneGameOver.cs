@@ -82,10 +82,6 @@ public class SceneGameOver : StateScene
     public override void StartState()
     {
         base.EndState();
-
-        //sound
-        SoundMgr.Instance.StopSound();
-        SoundMgr.Instance.PlaySoundOneShot(m_audioEnd);
     }
 
 

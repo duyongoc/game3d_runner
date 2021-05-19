@@ -2,26 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpawnCrazyPlace : MonoBehaviour
+public class SpawnCrazyPlace : Obstacle
 {
-    [Header("Spawn Crazy Place")]
-    [SerializeField] private GameObject prefabsCrazyPlace = default;
-
-    [Header("Transform to create Crazy Place")]
-    [SerializeField] private Transform[] transArr = default;
-
-    public int size = 3;
-
-    //
-    private bool isCreated = false;
-    public List<GameObject> crazyPlaceWasCreated;
-
-
-    //
-    // private 
-    //
-    public List<int> listIndex = default;
-
 
     #region Init
     public static SpawnCrazyPlace s_instance;
@@ -33,16 +15,42 @@ public class SpawnCrazyPlace : MonoBehaviour
     }
     #endregion
 
+
+    //
+    //= inspector
+    [SerializeField] private GameObject prefabsCrazyPlace = default;
+    [SerializeField] private int size = 3;
+    [SerializeField] private Transform[] transArr = default;
+
+
+    //
+    // private 
+    private bool isCreated = false;
+    private List<int> listIndex;
+    private List<GameObject> listCrazyPlaceCreated;
+
+
+    //
+    //= properties
+    public List<GameObject> ListCrazyPlaceCreated { get => listCrazyPlaceCreated; set => listCrazyPlaceCreated = value; }
+
+
+
     #region UNITY
+    private void Start()
+    {
+        CacheComponent();
+    }
+
     private void Update()
     {
-        if (!isCreated)
+        if (isCreated)
+            return;
+
+        if (GameMgr.Instance.IsGameRunning)
         {
-            if (GameMgr.Instance.IsGameRunning)
-            {
-                SpawCrazyPlace();
-                isCreated = true;
-            }
+            SpawCrazyPlace();
+            isCreated = true;
         }
     }
     #endregion
@@ -62,24 +70,31 @@ public class SpawnCrazyPlace : MonoBehaviour
                     if (ind == rand)
                         repeat = true;
 
-                //Debug.Log(repeat);            
             } while (repeat);
 
-            GameObject obj = Instantiate(prefabsCrazyPlace, transArr[rand].position, Quaternion.identity);
+            GameObject obj = Instantiate(prefabsCrazyPlace, transArr[rand].position, Quaternion.identity, transform);
             listIndex.Add(rand);
-            crazyPlaceWasCreated.Add(obj);
+            listCrazyPlaceCreated.Add(obj);
         }
     }
 
-    public void Reset()
+    public override void Reset()
     {
-        foreach (GameObject obj in crazyPlaceWasCreated)
+        foreach (GameObject obj in listCrazyPlaceCreated)
         {
             Destroy(obj);
         }
-        crazyPlaceWasCreated.Clear();
-        listIndex.Clear();
 
         isCreated = false;
+        
+        listIndex.Clear();
+        listCrazyPlaceCreated.Clear();
     }
+
+    private void CacheComponent()
+    {
+        listCrazyPlaceCreated = new List<GameObject>();
+        listIndex = new List<int>();
+    }
+    
 }

@@ -91,6 +91,7 @@ public class GameMgr : Singleton<GameMgr>
 
     public void Reset()
     {
+        SoundMgr.PlaySound(SoundMgr.Instance.SFX_BACKGROUND);
         EVENT_RESET_INGAME?.Invoke();
     }
 

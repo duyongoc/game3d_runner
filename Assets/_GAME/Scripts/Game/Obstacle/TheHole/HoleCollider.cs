@@ -4,29 +4,24 @@ using UnityEngine;
 
 public class HoleCollider : MonoBehaviour
 {
-    
-    void OnTriggerEnter(Collider other)
-    {
-        if(other.tag == "EnemyDefault")
-        {
-            var obj = other.gameObject.GetComponent<EnemyDefault>();
-            // obj.target = transform;
-            obj.currentState = EnemyDefault.EnemyState.Stun;
-        }
-        else if(other.tag == "EnemyJump")
-        {
-            var obj = other.gameObject.GetComponentInParent<EnemyJump>();
-            // obj.target = transform;
-            obj.currentState = EnemyJump.EnemyState.Stun;
-        }
-        else if(other.tag == "EnemySeek")
-        {
-            var obj = other.gameObject.GetComponent<EnemySeek>();
-            // obj.target = transform;
-            obj.currentState = EnemySeek.EnemyState.Stun;
-        }
 
-        
+    private void OnTriggerEnter(Collider other)
+    {
+
+        switch (other.tag)
+        {
+            case "EnemyDefault":
+                other.GetComponent<EnemyDefault>().EffectFromTheHole(this.transform);
+                break;
+
+            case "EnemyJump":
+                other.GetComponent<EnemyJump>().EffectFromTheHole(this.transform);
+                break;
+
+            case "EnemySeek":
+                other.GetComponent<EnemySeek>().EffectFromTheHole(this.transform);
+                break;
+        }
 
     }
 }

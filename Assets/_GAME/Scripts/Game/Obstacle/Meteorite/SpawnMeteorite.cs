@@ -2,57 +2,45 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpawnMeteorite : MonoBehaviour
+public class SpawnMeteorite : Obstacle
 {
 
-    [Header("Data for Meteorte")]
-    public ScriptMeteorite scriptMeteorite;
-
-    [Header("Spawn the power ")]
-    [SerializeField]private GameObject prefabMeteorite = default;
-    //[SerializeField]private float timeSpawn = 3f;
-    //private float timer = 0f;
-
-    private float minRangeSpawn;
-    private float maxRangeSpawn ;
-    
-    private float timeSpawn ;
-    private float timerProcessSpawn;
-
     //
-    public float timeProcessDelay = 0f;
-    public float timeDelay = 0f;
-    private bool isStart = false;
-
-    private Transform target;
-    public List<GameObject> theMeteoriteCreated;
-
+    //= inspector
+    [SerializeField] private ScriptMeteorite scriptMeteorite;
+    [SerializeField] private GameObject prefabMeteorite = default;
     public enum SpawnState { Spawn, None };
     private SpawnState currentState = SpawnState.Spawn;
 
-     private void LoadData()
-    {
-        timeSpawn = scriptMeteorite.timeSpawn;
-        timerProcessSpawn = scriptMeteorite.timeProcessSpawn;
+    //
+    //= private
+    private float timeDelay = 0f;
+    private float timeProcessDelay = 0f;
+    private bool isStart = false;
 
-        timeDelay = scriptMeteorite.timeDelay;
+    private float minRangeSpawn;
+    private float maxRangeSpawn;
 
-        minRangeSpawn = scriptMeteorite.minRangeSpawn;
-        maxRangeSpawn = scriptMeteorite.maxRangeSpawn;
-    }
+    private float timeSpawn;
+    private float timerProcessSpawn;
 
+    private List<GameObject> listMeteoriteCreated;
+    private Transform target;
+
+
+    #region UNITY
     private void Start()
     {
-        LoadData();
-        target = MainCharacter.Instance.GetTransform();
+        CacheComponent();
+        CacheDefine();
     }
 
     private void Update()
     {
-        if(!isStart && GameMgr.Instance.IsGameRunning)
+        if (!isStart && GameMgr.Instance.IsGameRunning)
         {
             timeProcessDelay += Time.deltaTime;
-            if(timeProcessDelay >= timeDelay)
+            if (timeProcessDelay >= timeDelay)
             {
                 isStart = true;
                 timeProcessDelay = 0;
@@ -64,29 +52,26 @@ public class SpawnMeteorite : MonoBehaviour
             switch (currentState)
             {
                 case SpawnState.Spawn:
-                {    
                     StateSpawn();
                     break;
-                }
-                case SpawnState.None:
-                {
 
+                case SpawnState.None:
                     break;
-                }
             }
         }
     }
+    #endregion
+
 
     private void StateSpawn()
     {
         timerProcessSpawn += Time.deltaTime;
         if (timerProcessSpawn >= timeSpawn)
         {
-            Vector3 vec = GetRandomPoint();
-            GameObject obj = Instantiate(prefabMeteorite, vec, Quaternion.identity);
+            GameObject obj = Instantiate(prefabMeteorite,  GetRandomPoint(), Quaternion.identity, transform);
             //obj.GetComponent<Enemy4>().OnSetWarning(true);
 
-            theMeteoriteCreated.Add(obj);
+            listMeteoriteCreated.Add(obj);
             timerProcessSpawn = 0;
         }
     }
@@ -119,19 +104,37 @@ public class SpawnMeteorite : MonoBehaviour
 
     private bool iSValid()
     {
-        if(theMeteoriteCreated.Count < 3)
+        if (listMeteoriteCreated.Count < 3)
             return true;
         return false;
     }
 
-    public void Reset()
+    public override void Reset()
     {
-        foreach(GameObject obj in theMeteoriteCreated)
+        foreach (GameObject obj in listMeteoriteCreated)
         {
             Destroy(obj);
         }
 
-        theMeteoriteCreated.Clear();
+        listMeteoriteCreated.Clear();
         timerProcessSpawn = 0;
     }
+
+    private void CacheDefine()
+    {
+        timeSpawn = scriptMeteorite.timeSpawn;
+        timerProcessSpawn = scriptMeteorite.timeProcessSpawn;
+
+        timeDelay = scriptMeteorite.timeDelay;
+
+        minRangeSpawn = scriptMeteorite.minRangeSpawn;
+        maxRangeSpawn = scriptMeteorite.maxRangeSpawn;
+    }
+
+    private void CacheComponent()
+    {
+        target = MainCharacter.Instance.GetTransform();
+        listMeteoriteCreated = new List<GameObject>();
+    }
+
 }

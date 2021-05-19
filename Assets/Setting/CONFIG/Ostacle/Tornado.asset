@@ -17,4 +17,4 @@ MonoBehaviour:
   timeSpawn: 10
   minRangeSpawn: 15
   maxRangeSpawn: 30
-  timeDelay: 35
+  timeDelay: 50

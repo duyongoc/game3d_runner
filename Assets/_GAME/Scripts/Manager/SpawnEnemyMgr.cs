@@ -44,7 +44,9 @@ public class SpawnEnemyMgr : Singleton<SpawnEnemyMgr>
     {
         foreach (SpawnEnemy item in spawnObject)
         {
-            item.Reset();
+            item.GetComponent<ISpawnObject>().SetInPhaseObject(true);
+            item?.Reset();
         }
     }
+    
 }

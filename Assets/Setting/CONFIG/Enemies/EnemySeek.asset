@@ -20,8 +20,9 @@ MonoBehaviour:
   timeDelay: 10
   timeProcessSpawn: 0
   timeSpawn: 3.5
-  minRangeSpawn: 15
-  maxRangeSpawn: 30
+  timeTurning: 0.1
+  minRangeSpawn: 10
+  maxRangeSpawn: 15
   marDissolve: {fileID: 2100000, guid: 8d154d5d01a5bc54aa4b44f7e13d0ba7, type: 2}
   prefabExplosion: {fileID: 2994373425931151387, guid: 79b736aed2a5f974b97eac691f619428,
     type: 3}

@@ -20,10 +20,10 @@ MonoBehaviour:
   jumpHigh: 3.5
   moveSpeed: 6
   timeProcessSpawn: 0
-  timeToSpawn: 6
+  timeToSpawn: 7
   timeDelay: 10
-  minRangeSpawn: 15
-  maxRangeSpawn: 30
+  minRangeSpawn: 10
+  maxRangeSpawn: 15
   marDissolve: {fileID: 2100000, guid: abb05fd4cc96dac499a327506bbc9632, type: 2}
   prefabExplosion: {fileID: 2994373425931151387, guid: 2da0e8749505ee04c8c70cc244091dd4,
     type: 3}

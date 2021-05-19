@@ -171,7 +171,7 @@ public class CharacterMove : StateCharacter
         timeParticleRemain += Time.deltaTime;
         if (timeParticleRemain > timeParticleMove)
         {
-            Instantiate(prefabMovingParticle, transform.position, Quaternion.identity);
+            prefabMovingParticle.SpawnToGarbage(transform.position, Quaternion.identity);
             timeParticleRemain = 0;
         }
     }

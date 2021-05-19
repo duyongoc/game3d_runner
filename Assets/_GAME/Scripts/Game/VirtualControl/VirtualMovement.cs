@@ -79,6 +79,14 @@ public class VirtualMovement : MonoBehaviour, IDragHandler, IPointerUpHandler, I
         jsTarget.rectTransform.anchoredPosition = Vector3.zero;
     }
 
+    public void Reset()
+    {
+        isTouch = false;
+        firstTouch = true;
+        direction = Vector3.zero;
+        touchZone.localPosition = Vector2.zero;
+        jsTarget.rectTransform.anchoredPosition = Vector3.zero;
+    }
 
     private void CacheDefine()
     {

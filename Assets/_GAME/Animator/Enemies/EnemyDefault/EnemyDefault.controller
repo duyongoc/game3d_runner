@@ -46,7 +46,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -203655887218126122, guid: 18dc23ab596406948b59861ecdb26fd6,
+  m_Motion: {fileID: -203655887218126122, guid: c6969c92146696546888cec2e0026c14,
     type: 3}
   m_Tag: 
   m_SpeedParameter: 
@@ -170,7 +170,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Enemy_Scream
-  m_Speed: 1
+  m_Speed: 0.5
   m_CycleOffset: 0
   m_Transitions: []
   m_StateMachineBehaviours: []

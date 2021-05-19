@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f425ee9ac6eda62489d4fd00ac677b67, type: 3}
   m_Name: EnemyGlobe
   m_EditorClassIdentifier: 
+  timeDelay: 5
   setWarning: 0
   numberOfWarning: 3
   moveSpeed: 3
   timeProcessSpawn: 5
   timeSpawn: 7
-  minRangeSpawn: 15
-  maxRangeSpawn: 30
+  minRangeSpawn: 10
+  maxRangeSpawn: 15
   distanceWarning: 8
-  timeDelay: 5

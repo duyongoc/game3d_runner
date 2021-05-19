@@ -39,13 +39,7 @@ public class CharacterHolding : StateCharacter
             // explosion when player dead
             // Instantiate(character.ballExplosion, transform.position, Quaternion.identity);
 
-            // loading gameover scene;
-            // var mgr = SceneMgr.GetInstance();
-            // mgr.ChangeState(mgr.m_sceneGameOver);
-
-            //set state none the ball when game over
-            character.ChangeState(character.GetCharacterNone);
-            this.gameObject.SetActive(false);
+            character.PlayerDead();
             timerProcess = 0f;
         }
 

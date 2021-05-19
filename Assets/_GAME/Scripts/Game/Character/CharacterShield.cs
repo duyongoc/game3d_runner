@@ -5,34 +5,37 @@ using UnityEngine;
 public class CharacterShield : StateCharacter
 {
 
-    //
-    //= private 
-    private float timeShield = 15f;
-    private float timeShieldFinish = 12f;
-    private float timeShieldRemain = 0f;
-    private float timeFinishRemain = 0f;
+    [Header("The time power")]
+    public float timerPower = 15f;
+    public float timerFinish = 12f;
+    public float timerPowerProcess = 0f;
+    public float timerFinishProcess = 0f;
 
     [Header("Particle change")]
     public GameObject shieldEffect;
+    private bool isFirst = false;
 
-
-
-
-    public GameObject ParticleTurning;
+    //
+    [Header("Test")]
     public Transform shape;
 
     public Transform centerPos1;
     public Transform centerPos2;
 
-
-    public GameObject trail;
     GameObject temp = null;
 
 
     //
     //= private 
     private MainCharacter character;
-    private bool isFirst = false;
+    private Vector3 vectorMovement;
+
+    private GameObject prefabMovingParticle;
+    private GameObject prefabMovingTrail;
+
+    private float timeParticleMove = 0.2f;
+    private float timeParticleRemain = 0f;
+
 
 
     #region UNITY
@@ -48,23 +51,16 @@ public class CharacterShield : StateCharacter
     #endregion
 
 
-    #region STATE OF CHARACTER
     public override void StartState()
     {
         base.StartState();
 
-        timeShieldRemain = timeShield;
-        timeFinishRemain = timeShieldFinish;
+        timerPowerProcess = timerPower;
+        timerFinishProcess = timerFinish;
         shieldEffect.SetActive(false);
 
-        //
-        // character.timeProcessFinish = timeShieldRemain;
-        // character.currentTimeProcess = timeShieldRemain;
-        // character.sliderProcess.gameObject.SetActive(true);
-        // character.sliderProcess.value = 1;
-
-        // if(!SoundMgr.GetInstance().IsPlaying(SceneMgr.GetInstance().m_sceneInGame.m_audioPower))
-        //     SoundMgr.GetInstance().PlaySound(SceneMgr.GetInstance().m_sceneInGame.m_audioPower);  
+       if (!SoundMgr.Instance.IsPlaying(SoundMgr.Instance.SFX_CHARACTER_SHIELD))
+            SoundMgr.PlaySound(SoundMgr.Instance.SFX_CHARACTER_SHIELD);
 
         SetUpBallPower(1f, "PlayerAbility", true, true, false);
         StartCoroutine("ScaleTheBall");
@@ -75,25 +71,29 @@ public class CharacterShield : StateCharacter
     {
         base.UpdateState();
 
-        timeShieldRemain -= Time.deltaTime;
-        timeFinishRemain -= Time.deltaTime;
+        if (!GameMgr.Instance.IsGameRunning)
+            return;
 
+        timerPowerProcess -= Time.deltaTime;
+        timerFinishProcess -= Time.deltaTime;
 
-
-        if (timeShieldRemain <= 0)
+        if (timerPowerProcess <= 0)
         {
             character.ChangeState(character.GetCharacterMove);
-
             Reset();
-            timeShieldRemain = timeShield;
-            timeFinishRemain = timeShieldFinish;
+
+            timerPowerProcess = timerPower;
+            timerFinishProcess = timerFinish;
         }
 
-        if (timeFinishRemain <= 0f)
+        if (timerFinishProcess <= 0f)
         {
             StartCoroutine("PowerProcessFinish", 2.4f);
-            timeFinishRemain = timeShieldFinish;
+            timerFinishProcess = timerFinish;
         }
+
+        UpdateVirtualMovement();
+
     }
 
     public override void EndState()
@@ -101,7 +101,7 @@ public class CharacterShield : StateCharacter
         base.EndState();
 
         StopAllCoroutines();
-        // SoundMgr.GetInstance().PlaySound(SceneMgr.GetInstance().m_sceneInGame.m_audioBackground);
+        SoundMgr.PlaySound(SoundMgr.Instance.SFX_BACKGROUND);
 
         SetUpBallPower(0f, "Player", false, false, true);
         transform.localScale = Vector3.one;
@@ -112,14 +112,40 @@ public class CharacterShield : StateCharacter
             temp.transform.parent = null;
             Destroy(temp, 2f);
         }
-
-        //
-        // character.sliderProcess.gameObject.SetActive(false);
-        // character.sliderProcess.value = 1;
-        // character.GetCurrentTimeProcess  = 0;
     }
-    #endregion
 
+    private void UpdateVirtualMovement()
+    {
+        vectorMovement.Set(character.VirtualMovement.GetDirection.x, 0, character.VirtualMovement.GetDirection.y);
+        vectorMovement = vectorMovement.normalized * Time.deltaTime * character.GetMoveSpeed;
+        float rotationY = Mathf.Atan2(vectorMovement.x, vectorMovement.z) * Mathf.Rad2Deg;
+
+        CreateMoveTrail();
+        UpdateAnimation(vectorMovement.magnitude);
+
+        if (vectorMovement.magnitude == 0) return;
+
+        character.transform.localRotation = Quaternion.Euler(0f, rotationY, 0f);
+        character.GetRigidbody.MovePosition(transform.position + vectorMovement);
+    }
+
+    private void CreateMoveTrail()
+    {
+        timeParticleRemain += Time.deltaTime;
+        if (timeParticleRemain > timeParticleMove)
+        {
+            prefabMovingParticle.SpawnToGarbage(transform.position, Quaternion.identity);
+            timeParticleRemain = 0;
+        }
+    }
+
+    private void UpdateAnimation(float valueMovement)
+    {
+        if (valueMovement > 0)
+            character.SetAnimationMoving();
+        else
+            character.SetAnimationIdle();
+    }
 
     IEnumerator ScaleTheBall()
     {
@@ -175,8 +201,9 @@ public class CharacterShield : StateCharacter
 
     private void CacheDefine()
     {
-        timeShield = character.CONFIG_CHARACTER.timeShield;
-        timeShieldFinish = character.CONFIG_CHARACTER.timeShieldFinish;
+        prefabMovingParticle = character.CONFIG_CHARACTER.prefabMovingParticle;
+        prefabMovingTrail = character.CONFIG_CHARACTER.prefabMovingTrail;
+        timeParticleMove = character.CONFIG_CHARACTER.timeParticleMove;
     }
 
     private void CacheComponent()

@@ -34,7 +34,7 @@ public class MainCharacter : Singleton<MainCharacter>
     private Collider mCollider;
     private CharacterMove mCharacterMove;
     private CharacterHolding mCharacterHolding;
-    private CharacterAbility mCharacterAbility;
+    private CharacterShield mCharacterShield;
     private CharacterNone mCharacterNone;
 
     private StateCharacter currentState;
@@ -67,7 +67,7 @@ public class MainCharacter : Singleton<MainCharacter>
     public StateCharacter CurrentState { get => currentState; set => currentState = value; }
     public CharacterMove GetCharacterMove { get => mCharacterMove; }
     public CharacterHolding GetCharacterHolding { get => mCharacterHolding; }
-    public CharacterAbility GetCharacterAbility { get => mCharacterAbility; }
+    public CharacterShield GetCharacterShield { get => mCharacterShield; }
     public CharacterNone GetCharacterNone { get => mCharacterNone; }
     public Transform[] GetCharacterFeet { get => characterFeet; }
 
@@ -133,6 +133,7 @@ public class MainCharacter : Singleton<MainCharacter>
     {
         SetAnimationDead();
         EVENT_PLAYER_DEAD?.Invoke();
+        SoundMgr.PlaySoundOneShot(SoundMgr.Instance.SFX_CHARACTER_DEAD);
 
         mCollider.enabled = false;
         ChangeState(mCharacterNone);
@@ -186,6 +187,7 @@ public class MainCharacter : Singleton<MainCharacter>
     {
         // firstTriggerPower = false;
         SetAnimationIdle();
+        virtualMovement.Reset();
         mCollider.enabled = true;
         gameObject.ResetTransform();
 
@@ -213,7 +215,7 @@ public class MainCharacter : Singleton<MainCharacter>
 
         mCharacterMove = GetComponent<CharacterMove>();
         mCharacterHolding = GetComponent<CharacterHolding>();
-        mCharacterAbility = GetComponent<CharacterAbility>();
+        mCharacterShield = GetComponent<CharacterShield>();
         mCharacterNone = GetComponent<CharacterNone>();
 
     }

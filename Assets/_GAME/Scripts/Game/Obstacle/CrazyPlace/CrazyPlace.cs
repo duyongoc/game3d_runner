@@ -68,7 +68,7 @@ public class CrazyPlace : MonoBehaviour
     private void CrazyTimeStart()
     {
         GameObject tmp = Instantiate(crazyBoom, transform.position, Quaternion.identity);
-        SpawnCrazyPlace.s_instance.crazyPlaceWasCreated.Add(tmp);
+        SpawnCrazyPlace.s_instance.ListCrazyPlaceCreated.Add(tmp);
         
         isTrigger = true;
     }

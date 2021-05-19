@@ -16,8 +16,9 @@ public class SoundMgr : Singleton<SoundMgr>
 
 
     //define
-    public AudioClip SFX_BACKGROUND;
-    public AudioClip SFX_CHARACTER_SHILE;
+    [HideInInspector] public AudioClip SFX_BACKGROUND;
+    [HideInInspector] public AudioClip SFX_CHARACTER_SHIELD;
+    [HideInInspector] public AudioClip SFX_CHARACTER_DEAD;
 
 
     #region UNITY
@@ -41,13 +42,14 @@ public class SoundMgr : Singleton<SoundMgr>
         audioSource.loop = true;
     }
 
-    public void StopSound()
+    public static void StopSound()
     {
         audioSource.Stop();
     }
 
-    public void PlaySoundOneShot(AudioClip audi)
+    public static void PlaySoundOneShot(AudioClip audi)
     {
+        StopSound();
         audioSource.PlayOneShot(audi);
     }
 
@@ -61,7 +63,8 @@ public class SoundMgr : Singleton<SoundMgr>
     private void CacheDefine()
     {
         SFX_BACKGROUND = soundConfig.sfx_backgound;
-        SFX_CHARACTER_SHILE = soundConfig.sfx_characterShield;
+        SFX_CHARACTER_SHIELD = soundConfig.sfx_characterShield;
+        SFX_CHARACTER_DEAD = soundConfig.sfx_characterDead;
     }
 
     private void CacheComponent()

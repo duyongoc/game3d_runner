@@ -10,13 +10,12 @@ public class CharacterHealth : MonoBehaviour, IDamage
     //= private 
     private MainCharacter character;
 
-
+    
 
     #region UNITY
     private void Start()
     {   
         CacheComponent();
-
     }
 
     // private void Update()

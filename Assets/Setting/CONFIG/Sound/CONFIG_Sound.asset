@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sfx_backgound: {fileID: 8300000, guid: 65cdbd3396bc19e4c8d53ce16ab92914, type: 3}
   sfx_characterShield: {fileID: 8300000, guid: b2ea5a3d5a013604f827906000a870b4, type: 3}
+  sfx_characterDead: {fileID: 8300000, guid: 4201e35414855dc458f717692ad7df0a, type: 3}
