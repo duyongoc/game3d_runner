@@ -124,11 +124,11 @@ public class SpawnEnemyElastic : SpawnEnemy, ISpawnObject
     public override void Reset()
     {
         RemoveListEnemy();
-
         isStart = false;
+
         moveSpeed = 0;
-        timerProcessSpawn = 0;
         timeCountDelay = 0;
+        timerProcessSpawn = 0;
 
         timeToSpawn = scriptEnemy.timeToSpawn;
         timeDelay = scriptEnemy.timeDelay;
