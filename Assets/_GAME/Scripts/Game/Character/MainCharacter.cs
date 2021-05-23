@@ -21,8 +21,9 @@ public class MainCharacter : Singleton<MainCharacter>
     //
     //= inspector
     [Header("Character's param")]
-    [SerializeField] private GameObject characterModel;
     [SerializeField] private VirtualMovement virtualMovement;
+    [SerializeField] private GameObject characterModel;
+    [SerializeField] private GameObject shieldEffect;
     [SerializeField] private Transform[] characterFeet;
     [SerializeField] private Renderer shapeRenderer;
 
@@ -69,6 +70,7 @@ public class MainCharacter : Singleton<MainCharacter>
     public CharacterHolding GetCharacterHolding { get => mCharacterHolding; }
     public CharacterShield GetCharacterShield { get => mCharacterShield; }
     public CharacterNone GetCharacterNone { get => mCharacterNone; }
+    public GameObject GetShieldEffect { get => shieldEffect; }
     public Transform[] GetCharacterFeet { get => characterFeet; }
 
     public float GetMoveSpeed { get => moveSpeed; }

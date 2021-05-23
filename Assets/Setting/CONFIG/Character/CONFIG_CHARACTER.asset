@@ -18,10 +18,11 @@ MonoBehaviour:
     type: 3}
   moveSpeed: 5
   angleSpeed: 100
+  timeParticleMove: 0.05
   speedIncrease: 1.5
   timerSpeedUp: 3.5
   engineForce: 1.7
   turnSpeed: 170
   prefabShield: {fileID: 0}
   timeShield: 12
-  timeShieldFinish: 8
+  timeShieldFinish: 0

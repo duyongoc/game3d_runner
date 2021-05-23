@@ -11,9 +11,11 @@ public enum EBoost
     None
 }
 
-public class Abilities : MonoBehaviour
+
+public class PowerController : Singleton<PowerController>
 {
     
+    public ShieldPower shieldPower;
 
     #region UNITY
     // private void Start()

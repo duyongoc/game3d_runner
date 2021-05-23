@@ -23,8 +23,7 @@ public class ItemShield : MonoBehaviour
         switch (other.tag)
         {
             case "Player":
-                var character = other.GetComponent<MainCharacter>();
-                character.ChangeState(character.GetCharacterShield);
+                PowerController.Instance.shieldPower.TriggerAbility(0);
                 SelfDestroy();
             break;
         }

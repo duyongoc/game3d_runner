@@ -18,7 +18,6 @@ public class CharacterShield : StateCharacter
     //
     [Header("Test")]
     public Transform shape;
-
     public Transform centerPos1;
     public Transform centerPos2;
 
