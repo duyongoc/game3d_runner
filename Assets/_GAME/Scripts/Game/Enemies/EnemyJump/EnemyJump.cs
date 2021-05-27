@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
@@ -55,35 +55,34 @@ public class EnemyJump : Enemy, IDamage
         MainCharacter.Instance.EVENT_PLAYER_DEAD += OnEventPlayerDead;
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
-        if (GameMgr.Instance.IsGameRunning)
+        if (!GameMgr.Instance.IsGameRunning)
+            return;
+
+        switch (currentState)
         {
-            switch (currentState)
-            {
-                case EnemyState.Scream:
-                    break;
+            case EnemyState.Moving:
+                EnemyMoving();
+                break;
 
-                case EnemyState.Moving:
-                    EnemyMoving();
-                    break;
+            case EnemyState.Jumping:
+                EnemyJumping();
+                break;
 
-                case EnemyState.Jumping:
-                    EnemyJumping();
-                    break;
+            case EnemyState.Stun:
+                EnenmyStun();
+                break;
 
-                case EnemyState.Stun:
-                    EnenmyStun();
-                    break;
+            case EnemyState.Stop:
+                EnemyStop();
+                break;
 
-                case EnemyState.Stop:
-                    EnemyStop();
-                    break;
-
-                case EnemyState.None:
-                    break;
-            }
+            case EnemyState.Scream:
+            case EnemyState.None:
+                break;
         }
+
     }
     #endregion
 
@@ -94,7 +93,11 @@ public class EnemyJump : Enemy, IDamage
         SetAnimationState(ENEMY_SCREAM);
         ChangeState(EnemyState.Scream);
 
-        StartCoroutine(Utils.DelayEvent(() => { ChangeState(EnemyState.Moving); }, 2.5f));
+        StartCoroutine(Utils.DelayEvent(() =>
+        {
+            mCollider.enabled = true;
+            ChangeState(EnemyState.Moving);
+        }, 2.5f));
     }
 
 
@@ -212,18 +215,18 @@ public class EnemyJump : Enemy, IDamage
     public void SelfDestroy()
     {
         mCollider.enabled = false;
-        SetAnimationState(ENEMY_DEAD);
+        ChangeState(EnemyState.None);
         Destroy(alertShapeBackup.gameObject);
         prefabExplosion.SpawnToGarbage(transform.localPosition, Quaternion.identity);
 
-        ChangeState(EnemyState.None);
+        SetAnimationState(ENEMY_DEAD);
         StartCoroutine(Utils.DelayEvent(() => { DestroyObject(); }, 3f));
     }
 
     public void DestroyObject()
     {
         Destroy(alertShapeBackup.gameObject);
-        Destroy(this.gameObject);
+        Destroy(gameObject);
     }
 
 

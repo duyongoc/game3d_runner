@@ -92,7 +92,11 @@ public class EnemyElastic : Enemy, IDamage
         SetAnimationState(ENEMY_SCREAM);
         ChangeState(EnemyState.Scream);
 
-        StartCoroutine(Utils.DelayEvent(() => { ChangeState(EnemyState.Moving); }, 2.5f));
+        StartCoroutine(Utils.DelayEvent(() =>
+        {
+            mCollider.enabled = true;
+            ChangeState(EnemyState.Moving);
+        }, 2.5f));
     }
 
 

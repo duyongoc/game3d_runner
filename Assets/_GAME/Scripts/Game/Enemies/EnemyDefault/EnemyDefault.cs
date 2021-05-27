@@ -57,9 +57,6 @@ public class EnemyDefault : Enemy, IDamage
 
         switch (currentState)
         {
-            case EnemyState.Scream:
-                break;
-
             case EnemyState.Moving:
                 EnemyMoving();
                 break;
@@ -68,6 +65,7 @@ public class EnemyDefault : Enemy, IDamage
                 EnenmyStun();
                 break;
 
+            case EnemyState.Scream:
             case EnemyState.None:
                 break;
         }
@@ -81,14 +79,13 @@ public class EnemyDefault : Enemy, IDamage
         SetAnimationState(ENEMY_SCREAM);
         ChangeState(EnemyState.Scream);
 
-        Invoke(nameof(ChangeStateMoving), 3f);
-        // StartCoroutine(Utils.DelayEvent(() => {  }, 2.5f));
+        StartCoroutine(Utils.DelayEvent(() =>
+        {
+            mCollider.enabled = true;
+            ChangeState(EnemyState.Moving);
+        }, 2.5f));
     }
 
-    private void ChangeStateMoving()
-    {
-        ChangeState(EnemyState.Moving);
-    }
 
     private void EnemyMoving()
     {

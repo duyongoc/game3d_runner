@@ -69,7 +69,6 @@ public class SpawnTornado : Obstacle
     #region Function of state
     private void SpawnEnemyInit()
     {
-        Camera.main.GetComponent<CameraFollow>().IsFlowCamera = true;
         currentState = SpawnState.Spawn;
     }
 

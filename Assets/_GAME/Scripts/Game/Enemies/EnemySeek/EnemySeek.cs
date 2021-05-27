@@ -52,7 +52,7 @@ public class EnemySeek : Enemy, IDamage
         MainCharacter.Instance.EVENT_PLAYER_DEAD += OnEventPlayerDead;
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         if (!GameMgr.Instance.IsGameRunning)
             return;
@@ -80,7 +80,11 @@ public class EnemySeek : Enemy, IDamage
         SetAnimationState(ENEMY_SCREAM);
         ChangeState(EnemyState.Scream);
 
-        StartCoroutine(Utils.DelayEvent(() => { ChangeState(EnemyState.Moving); }, 2.5f));
+        StartCoroutine(Utils.DelayEvent(() =>
+        {
+            mCollider.enabled = true;
+            ChangeState(EnemyState.Moving);
+        }, 2.5f));
     }
 
 
@@ -136,7 +140,7 @@ public class EnemySeek : Enemy, IDamage
 
     private void SetAnimationState(string newState)
     {
-        if (currentAnimator == newState || mAnimator == null)
+        if (mAnimator == null)
             return;
 
         mAnimator.Play(newState);

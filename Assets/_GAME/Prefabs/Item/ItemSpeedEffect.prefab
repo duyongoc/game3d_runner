@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5682388694096565713}
   - component: {fileID: 5682388694096669809}
   - component: {fileID: -501836912109408156}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: ItemSpeedEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -171,7 +171,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 3
-      scalar: -2
+      scalar: 0
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -809,7 +809,7 @@ ParticleSystem:
           m_PostInfinity: 2
           m_RotationOrder: 4
   EmissionModule:
-    enabled: 1
+    enabled: 0
     serializedVersion: 4
     rateOverTime:
       serializedVersion: 2
@@ -978,7 +978,7 @@ ParticleSystem:
       repeatInterval: 0.01
       probability: 1
   SizeModule:
-    enabled: 1
+    enabled: 0
     curve:
       serializedVersion: 2
       minMaxState: 1
@@ -1302,7 +1302,7 @@ ParticleSystem:
         m_RotationOrder: 4
     separateAxes: 0
   ColorModule:
-    enabled: 1
+    enabled: 0
     gradient:
       serializedVersion: 2
       minMaxState: 1
@@ -4717,7 +4717,6 @@ ParticleSystemRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 1e6706fa6ad36f849a6f1949623d9389, type: 2}
-  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4868,7 +4867,7 @@ GameObject:
   - component: {fileID: 5682388694082408597}
   - component: {fileID: 5682388694096565717}
   - component: {fileID: 5682388694096669813}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: star_out
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4884,7 +4883,7 @@ Transform:
   m_GameObject: {fileID: 5682388694082636981}
   m_LocalRotation: {x: 0, y: 0.00000016292068, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: -0.4583446, y: -0.4583446, z: -0.4583446}
+  m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
   m_Children: []
   m_Father: {fileID: 5682388694082408593}
   m_RootOrder: 1
@@ -4897,7 +4896,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5682388694082636981}
   serializedVersion: 6
-  lengthInSec: 2
+  lengthInSec: 1
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 3
@@ -4972,7 +4971,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1.5
+      scalar: 0.5
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -5025,8 +5024,8 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 2.5
-      minScalar: 1.5
+      scalar: 1
+      minScalar: 0.5
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -5462,7 +5461,7 @@ ParticleSystem:
   ShapeModule:
     serializedVersion: 6
     enabled: 1
-    type: 6
+    type: 0
     angle: 25
     length: 5
     boxThickness: {x: 0, y: 0, z: 0}
@@ -9571,7 +9570,6 @@ ParticleSystemRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 1e6706fa6ad36f849a6f1949623d9389, type: 2}
-  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -9626,7 +9624,7 @@ GameObject:
   - component: {fileID: 5682388694082408599}
   - component: {fileID: 5682388694096565719}
   - component: {fileID: 5682388694096669815}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: star_line
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9642,7 +9640,7 @@ Transform:
   m_GameObject: {fileID: 5682388694082636983}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.0030968003, y: 0.0030968003, z: 0.0030968003}
+  m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
   m_Children: []
   m_Father: {fileID: 5682388694082408593}
   m_RootOrder: 0
@@ -13054,7 +13052,7 @@ ParticleSystem:
     curve:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 5.042256
+      scalar: 5.2359877
       minScalar: 0.7853982
       maxCurve:
         serializedVersion: 2
@@ -14329,7 +14327,6 @@ ParticleSystemRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 1e6706fa6ad36f849a6f1949623d9389, type: 2}
-  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

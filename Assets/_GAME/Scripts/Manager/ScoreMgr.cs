@@ -2,30 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ScoreMgr : MonoBehaviour
+public class ScoreMgr : Singleton<ScoreMgr>
 {
-    [Header("Score")]
+
+    //
+    //= public
     public float score;
-    public int highscore;
+    public float highscore;
 
-    public static ScoreMgr s_instance;
-    
-    private void Awake()
+
+    #region UNITY
+    private void Start()
     {
-        if(s_instance != null)
-            return;
-        s_instance = this;
+        GameMgr.Instance.EVENT_RESET_INGAME += Reset;
     }
 
-    public static ScoreMgr GetInstance()
-    {
-        return s_instance;
-    }
+    // private void Update()
+    // {
+    // }
+    #endregion
 
-    public void PlusScore(int score)
-    {
-        this.score += score;   
-    }
 
     public void Reset()
     {

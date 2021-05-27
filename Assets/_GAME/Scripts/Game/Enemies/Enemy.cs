@@ -24,6 +24,7 @@ public class Enemy : MonoBehaviour
     
     protected void EnemyAppear()
     {
+        mCollider.enabled = false;
         foreach (KeyValuePair<SkinnedMeshRenderer, Material> item in d_skinedMeshRender)
         {
             DissolveEnemy(item.Key, item.Value);

@@ -7,14 +7,19 @@ public class ItemCoin : MonoBehaviour
     public int score;
     public GameObject prefabsTextCoin;
     
+
     void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag == "Player" || other.gameObject.tag == "PlayerAbility")
+        switch (other.tag)
         {
-            ScoreMgr.GetInstance().PlusScore(score);
-            Instantiate(prefabsTextCoin, transform.position, Quaternion.identity);
-            
-            Destroy(this.gameObject);
+            case "Player":
+            case "PlayerAbility":
+                prefabsTextCoin.SpawnToGarbage(transform.position, Quaternion.identity);
+                Destroy(this.gameObject);
+                break;
+
         }
     }
+
+
 }

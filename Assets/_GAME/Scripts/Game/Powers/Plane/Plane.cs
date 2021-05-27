@@ -5,10 +5,16 @@ using UnityEngine;
 public class Plane : MonoBehaviour
 {
 
+    //
+    //= public
+    public enum PlaneState { Wait, Move, None }
+    public PlaneState curState = PlaneState.Wait;
+
 
     //
     //= private 
     private MainCharacter character;
+    private Vector3 curTarget;
     private float moveSpeed = 5f;
     private float distance = 5.5f;
 
@@ -21,9 +27,40 @@ public class Plane : MonoBehaviour
 
     private void Update()
     {
-        MovetoCharacter();
+        switch (curState)
+        {
+            case PlaneState.Wait:
+                StateWaitPlane();
+                break;
+
+            case PlaneState.Move:
+                StateMovePlane();
+                break;
+
+            case PlaneState.None:
+                StateNone();
+                break;
+        }
     }
     #endregion
+
+
+    private void StateWaitPlane()
+    {
+
+    }
+
+    private void StateMovePlane()
+    {
+
+    }
+
+    private void StateNone()
+    {
+
+    }
+
+    // MovetoCharacter();
 
     private void MovetoCharacter()
     {

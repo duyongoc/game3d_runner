@@ -98,8 +98,6 @@ public class CharacterShield : StateCharacter
     public override void EndState()
     {
         base.EndState();
-
-        StopAllCoroutines();
         SoundMgr.PlaySound(SoundMgr.Instance.SFX_BACKGROUND);
 
         SetUpBallPower(0f, "Player", false, false, true);

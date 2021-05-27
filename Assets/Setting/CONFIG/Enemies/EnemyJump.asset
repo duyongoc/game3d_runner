@@ -15,12 +15,12 @@ MonoBehaviour:
   setWarning: 0
   numberOfWarning: 4
   distanceWarning: 10
-  distanceAttack: 5
+  moveSpeed: 6
   jumpSpeed: 0.7
   jumpHigh: 3.5
-  moveSpeed: 6
+  distanceAttack: 5
+  timeToSpawn: 8
   timeProcessSpawn: 0
-  timeToSpawn: 7
   timeDelay: 10
   minRangeSpawn: 10
   maxRangeSpawn: 15

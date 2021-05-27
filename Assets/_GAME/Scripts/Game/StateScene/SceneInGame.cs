@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,22 +13,15 @@ public class SceneInGame : StateScene
     [SerializeField] private GameObject virtualMovement;
 
     [Header("Text display")]
+    [SerializeField] private TMP_Text txtScore;
     [SerializeField] private GameObject textTapToPlay;
     [SerializeField] private GameObject textSurvival;
-
-
-    [Header(" Spawn Obstacle")]
-    public SpawnStaticObstacle spawnStaticObstacle;
-    public SpawnSoftObstacle spawnSoftObstacle;
-
-    [Header("Make score game")]
-    public Text textScore;
-    public ScoreMgr scoreMgr;
 
 
     //
     //= private 
     private GameMgr gameMgr;
+    private ScoreMgr scoreMgr;
     private CameraFollow cameraFollow;
     private MainCharacter character;
 
@@ -44,20 +38,38 @@ public class SceneInGame : StateScene
 
     private void Update()
     {
-        if (gameMgr.IsPlaying)
+        UpdateScore();
+        CheckStartGame();
+    }
+    #endregion
+
+
+    private void UpdateScore()
+    {
+        if (!gameMgr.IsGameRunning)
             return;
 
-        if (Input.GetMouseButtonDown(0))
+        scoreMgr.score += Time.deltaTime;
+        float minutes = Mathf.FloorToInt(scoreMgr.score / 60);
+        float seconds = Mathf.FloorToInt(scoreMgr.score % 60);
+        txtScore.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+
+        if (scoreMgr.score > scoreMgr.highscore)
+            scoreMgr.highscore = (int)scoreMgr.score;
+        PlayerPrefs.GetFloat("HighScore", scoreMgr.highscore);
+    }
+
+    private void CheckStartGame()
+    {
+        if (!gameMgr.IsPlaying && Input.GetMouseButtonDown(0))
         {
             SetUpStartGame();
-            cameraFollow.isStart = true;
+            cameraFollow.HasStart = true;
 
             gameMgr.IsPlaying = true;
             gameMgr.ChangeState(STATEGAME.INGAME);
         }
     }
-    #endregion
-
 
     private void SetUpStartGame()
     {
@@ -89,24 +101,15 @@ public class SceneInGame : StateScene
     {
         textTapToPlay.SetActive(true);
         virtualMovement.SetActive(false);
-
-        // spawnStaticObstacle.isStart = true;
-        // spawnSoftObstacle.isStart = true;
     }
 
     private void CacheComponent()
     {
         gameMgr = GameMgr.Instance;
+        scoreMgr = ScoreMgr.Instance;
         cameraFollow = CameraFollow.Instance;
         character = MainCharacter.Instance;
     }
 
-    // textScore.gameObject.SetActive(true);
-    // textScore.text = scoreMgr.score.ToString("00");
-    //     scoreMgr.score += Time.deltaTime;
-    //     textScore.text = scoreMgr.score.ToString("00");
-    //     if (scoreMgr.score > scoreMgr.highscore)
-    //         scoreMgr.highscore = (int)scoreMgr.score;
-    //     PlayerPrefs.GetInt("highscore", scoreMgr.highscore);
 
 }

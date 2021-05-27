@@ -18,8 +18,8 @@ public class ScriptEnemyElastic : ScriptableObject
     public float moveSpeed = 5f;
 
     [Header("Enemy' spawning")]
-    public float timeProcessSpawn = 2.5f;
     public float timeToSpawn = 3f;
+    public float timeProcessSpawn = 2.5f;
     public float minRangeSpawn = 15f;
     public float maxRangeSpawn = 30f;
 

@@ -19,43 +19,46 @@ public class LevelInGame : MonoBehaviour
     {
         phases = CONFIG_Phase.phases;
         StartPhase();
+
+        GameMgr.Instance.EVENT_RESET_INGAME += Reset;
     }
 
     private void Update()
     {
-        if (phaseEnd)
+        if (phaseEnd || !GameMgr.Instance.IsGameRunning)
             return;
 
-        if (GameMgr.Instance.IsGameRunning)
-        {
-            // Debug.Log("Change phase:--- " );
-            timeDt += Time.deltaTime;
-            if (indexPhase + 1 < phases.Length && timeDt > phases[indexPhase].timePhase)
-            {
-                // Debug.Log("Change Phase index: " + indexPhase);
-                SpawnEnemyMgr.Instance.SetActiceInPhase(phases[++indexPhase]);
-                timeDt = 0;
 
-                if (indexPhase + 1 == phases.Length)
-                {
-                    phaseEnd = true;
-                }
-            }
+        timeDt += Time.deltaTime;
+        if (indexPhase + 1 < phases.Length && timeDt > phases[indexPhase].timePhase)
+        {
+            SpawnEnemyMgr.Instance.SetActiceInPhase(phases[++indexPhase]);
+            timeDt = 0;
+
+            if (indexPhase + 1 == phases.Length)
+                phaseEnd = true;
         }
+
+        
     }
     #endregion
+
 
     private void StartPhase()
     {
         SpawnEnemyMgr.Instance.SetActiceInPhase(phases[indexPhase]);
-        //Debug.Log("Change Phase index: " + indexPhase);
+    }
+
+    private void CheckZoomCamera()
+    {
+
     }
 
     public void Reset()
     {
-        indexPhase = 0;
         StartPhase();
 
+        indexPhase = 0;
         phaseEnd = false;
     }
 

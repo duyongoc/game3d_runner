@@ -31,25 +31,19 @@ public class GameMgr : Singleton<GameMgr>
     //= private 
     private bool isPlaying = false;
 
-    private bool isSkipTutorial;
-    private bool isMovingCamera;
-
 
     //
     //= private
     private STATEGAME currentState = STATEGAME.NONE;
+    private float timePlay = 0f;
 
 
     //
     //= properties
     public bool IsGameRunning { get => currentState == STATEGAME.INGAME; }
     public bool IsPlaying { get => isPlaying; set => isPlaying = value; }
+    public float GetTimePlay { get => timePlay; }
 
-    private void LoadData()
-    {
-        isSkipTutorial = CONFIG_GAME.isSkipTutotial;
-        isMovingCamera = CONFIG_GAME.isMovingCamera;
-    }
 
 
     #region UNTIY
@@ -60,6 +54,12 @@ public class GameMgr : Singleton<GameMgr>
     // private void Update()
     // {
     // }
+
+    private void FixedUpdate()
+    {
+        timePlay += Time.deltaTime;
+
+    }
     #endregion
 
 
@@ -91,6 +91,7 @@ public class GameMgr : Singleton<GameMgr>
 
     public void Reset()
     {
+        timePlay = 0f;
         SoundMgr.PlaySound(SoundMgr.Instance.SFX_BACKGROUND);
         EVENT_RESET_INGAME?.Invoke();
     }

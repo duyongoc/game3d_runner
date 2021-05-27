@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,7 +8,7 @@ public class TextCoin : MonoBehaviour
 {
     [Header("Coin parameter")]
     public int numCoin;
-    public Text textCoin;
+    public TMP_Text textCoin;
     public float moveSpeed = 5f;
 
     [Header("Time Destroy")]

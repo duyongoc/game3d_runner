@@ -13,14 +13,14 @@ public class ScriptEnemyJump : ScriptableObject
 
 
     [Header("Enemy's param", order = 2)]
-    public float distanceAttack = 5f;
+    public float moveSpeed = 5f;
     public float jumpSpeed = 1f;
     public float jumpHigh = 3.5f;
-    public float moveSpeed = 5f;
+    public float distanceAttack = 5f;
 
     [Header("Enemies spawning")]
-    public float timeProcessSpawn = 2.5f;
     public float timeToSpawn = 3f;
+    public float timeProcessSpawn = 2.5f;
     public float timeDelay = 10f;
     public float minRangeSpawn = 15f;
     public float maxRangeSpawn = 30f;
