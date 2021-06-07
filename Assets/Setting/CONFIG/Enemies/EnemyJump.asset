@@ -19,7 +19,7 @@ MonoBehaviour:
   jumpSpeed: 0.7
   jumpHigh: 3.5
   distanceAttack: 5
-  timeToSpawn: 8
+  timeToSpawn: 10
   timeProcessSpawn: 0
   timeDelay: 10
   minRangeSpawn: 10
