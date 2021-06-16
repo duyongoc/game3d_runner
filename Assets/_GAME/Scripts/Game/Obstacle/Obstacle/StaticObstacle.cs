@@ -7,7 +7,7 @@ public class StaticObstacle : MonoBehaviour
     [Header("Make dissolve effect when destroy obstacle")]
     public Material marDissolve;
     private Material marDefault;
-    
+
     [Header("Renderer obstacle")]
     public GameObject render;
 
@@ -22,28 +22,6 @@ public class StaticObstacle : MonoBehaviour
     }
     #endregion
 
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.tag == "EnemyDefault" || other.tag == "EnemySeek")
-        {
-            Instantiate(particle, this.transform.position, Quaternion.Euler(-90f, 0f, 0f));
-            var temp = other.GetComponent<IDamage>();
-            temp?.TakeDamage(0);
-        }
-        else if(other.tag == "Player")
-        {
-            // other.gameObject.GetComponent<MainCharacter>().SetPlayerDead();
-            Instantiate(particle, this.transform.position, Quaternion.Euler(-90f, 0f, 0f));
-            
-            // SceneMgr.GetInstance().ChangeState(SceneMgr.GetInstance().m_sceneGameOver);
-        }
-        else if (other.tag == "PlayerAbility")
-        {
-            DissolveObstacle();
-            Instantiate(particle, this.transform.position, Quaternion.Euler(-90f, 0f, 0f));
-        }
-    }
-
     public void DissolveObstacle()
     {
         Instantiate(particle, this.transform.position, Quaternion.Euler(-90f, 0f, 0f));
@@ -56,8 +34,8 @@ public class StaticObstacle : MonoBehaviour
     {
         float timer = 1;
         float process = 0;
-        
-        while(timer >= 0)
+
+        while (timer >= 0)
         {
             yield return new WaitForSeconds(0.01f);
 
@@ -65,11 +43,34 @@ public class StaticObstacle : MonoBehaviour
             process += 0.01f;
             marDissolve.SetFloat("_processDissolve", process);
         };
-        
+
         marDissolve.SetFloat("_processDissolve", 0);
         render.GetComponent<Renderer>().material = marDefault;
         GetComponent<Collider>().enabled = true;
         gameObject.SetActive(false);
     }
-    
+
+
+    private void OnTriggerEnter(Collider other)
+    {
+        switch (other.tag)
+        {
+            case "EnemyDefault":
+            case "EnemySeek":
+                particle.SpawnToGarbage(transform.localPosition, Quaternion.identity);
+                other.GetComponent<IDamage>()?.TakeDamage(0);
+                break;
+
+            case "Player":
+                particle.SpawnToGarbage(transform.localPosition, Quaternion.identity);
+                other.GetComponent<IDamage>()?.TakeDamage(0);
+                break;
+
+            case "PlayerAbility":
+                DissolveObstacle();
+                particle.SpawnToGarbage(transform.localPosition, Quaternion.identity);
+                break;
+        }
+    }
+
 }

@@ -16,6 +16,8 @@ MonoBehaviour:
     type: 3}
   prefabMovingTrail: {fileID: 5025872277434088396, guid: 95ad568097d5ec94a9f7b2f997e77673,
     type: 3}
+  prefabExplosion: {fileID: 9024049333608683959, guid: b64a98d576b894f45816eb0d394580d3,
+    type: 3}
   moveSpeed: 5
   angleSpeed: 100
   timeParticleMove: 0.05

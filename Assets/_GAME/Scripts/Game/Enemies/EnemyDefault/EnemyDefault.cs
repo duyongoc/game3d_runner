@@ -160,6 +160,7 @@ public class EnemyDefault : Enemy, IDamage
 
     public void SelfDestroy()
     {
+        isDead = true;
         mCollider.enabled = false;
         SetAnimationState(ENEMY_DEAD);
         prefabExplosion.SpawnToGarbage(transform.localPosition, Quaternion.identity);

@@ -4,18 +4,23 @@ using UnityEngine;
 
 public class TheWall : MonoBehaviour
 {
-    void OnTriggerEnter(Collider other)
+
+
+    private void OnTriggerEnter(Collider other)
     {
-        if (other.tag.Contains("Enemy"))
+        switch (other.tag)
         {
-            var temp = other.GetComponent<IDamage>();
-            temp?.TakeDamage(0);
+            case "EnemyDefault":
+            case "EnemySeek":
+            case "EnemyJump":
+            case "EnemyElastic":
+                other.GetComponent<IDamage>()?.TakeDamage(0);
+                break;
+
+            case "Player":
+                other.GetComponent<IDamage>()?.TakeDamage(0);
+                other.gameObject.SetActive(false);
+                break;
         }
-        else if(other.tag == "Player")
-        {
-            other.gameObject.SetActive(false);
-            // SceneMgr.GetInstance().ChangeState(SceneMgr.GetInstance().m_sceneGameOver);
-        }
-        
     }
 }

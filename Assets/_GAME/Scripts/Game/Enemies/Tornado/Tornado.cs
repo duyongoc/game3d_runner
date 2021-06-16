@@ -69,7 +69,6 @@ public class Tornado : MonoBehaviour
             case "Player":
                 explosion.SpawnToGarbage(transform.localPosition, Quaternion.identity);
                 other.GetComponent<IDamage>()?.TakeDamage(0);
-                // other.gameObject.SetActive(false);
                 break;
 
             case "EnemyDefault":

@@ -236,7 +236,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 68021691667e41745913058504a1d954, type: 2}
+  - {fileID: 2100000, guid: 780c052f0fede104286d71d2bede8154, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1888,7 +1888,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: cf43ddaa00b608643bd665e40282c46e, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
@@ -2037,6 +2037,7 @@ GameObject:
   - component: {fileID: 4971479304091386709}
   - component: {fileID: 4971479304091386706}
   - component: {fileID: 4971479304091386711}
+  - component: {fileID: 2704979316333507134}
   - component: {fileID: 4971479304091386710}
   m_Layer: 0
   m_Name: EnemySeek
@@ -2091,6 +2092,21 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 4
   m_CollisionDetection: 0
+--- !u!114 &2704979316333507134
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4971479304091386705}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7261733a0c194de46b8a96e0a4a29e4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  distance: 5
+  enemies: []
+  detected: []
 --- !u!114 &4971479304091386710
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -38774,6 +38774,7 @@ GameObject:
   - component: {fileID: 8788146237025025765}
   - component: {fileID: 498631558944792051}
   - component: {fileID: 5565088888829232906}
+  - component: {fileID: 422943421623356202}
   - component: {fileID: 4426696479931875143}
   m_Layer: 0
   m_Name: Tornado
@@ -38839,6 +38840,21 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 2.5, z: 1}
   m_Center: {x: 0, y: 3.5, z: 0}
+--- !u!114 &422943421623356202
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8788146237025025784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7261733a0c194de46b8a96e0a4a29e4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  distance: 5
+  enemies: []
+  detected: []
 --- !u!114 &4426696479931875143
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -38855,4 +38871,3 @@ MonoBehaviour:
   explosion: {fileID: 8380655801588175004, guid: a2c84fcb9ac6c4f40aaff4474ac532f3,
     type: 3}
   currentState: 0
-  target: {fileID: 0}

@@ -12,5 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 581cef6d4d3631d43bfa9d55eeb75312, type: 3}
   m_Name: CONFIG_GAME
   m_EditorClassIdentifier: 
-  isSkipTutotial: 0
-  isMovingCamera: 0
+  moveSpeed: 4
+  smoothFactor: 10
+  timeZoomCamera: 30
+  posOriginX: 0
+  posOriginY: 15
+  posOriginZ: -10
+  tmp: 0

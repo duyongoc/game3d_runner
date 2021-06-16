@@ -9,31 +9,40 @@ public class CrazyBoom : MonoBehaviour
 
     public int timeDestroy = 5;
 
+    #region UNITY
     private void Start()
     {
         Destroy(this.gameObject, timeDestroy);
     }
 
-    void OnTriggerEnter(Collider other)
+    // private void Update()
+    // {
+    // }
+    #endregion
+
+
+    private void OnTriggerEnter(Collider other)
     {
-        if (other.tag.Contains("Enemy"))
+        switch (other.tag)
         {
-            var temp = other.GetComponent<IDamage>();
-            temp?.TakeDamage(0);
+            case "Player":
+                boomEffect.SpawnToGarbage(transform.localPosition, Quaternion.identity);
+                other.GetComponent<IDamage>()?.TakeDamage(0);
+                break;
 
-            Instantiate(boomEffect, transform.localPosition, Quaternion.identity);
-        }
-        else if (other.tag == "Player")
-        {
-            Instantiate(boomEffect, other.transform.position, Quaternion.identity);
+            case "EnemyDefault":
+            case "EnemySeek":
+            case "EnemyJump":
+            case "EnemyElastic":
+                boomEffect.SpawnToGarbage(transform.localPosition, Quaternion.identity);
+                other.GetComponent<IDamage>()?.TakeDamage(0);
+                break;
 
-            other.gameObject.SetActive(false);
-            // SceneMgr.GetInstance().ChangeState(SceneMgr.GetInstance().m_sceneGameOver);
-        }
-        else if (other.tag == "Elastic" || other.tag == "Tornado")
-        {
-            Instantiate(boomEffect, other.transform.position, Quaternion.identity);
-            Destroy(other.gameObject);
+            case "Elastic":
+            case "Tornado":
+                boomEffect.SpawnToGarbage(transform.localPosition, Quaternion.identity);
+                Destroy(other.gameObject);
+                break;
         }
     }
 }

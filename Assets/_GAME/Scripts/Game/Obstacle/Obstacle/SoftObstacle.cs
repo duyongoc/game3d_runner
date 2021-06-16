@@ -4,22 +4,31 @@ using UnityEngine;
 
 public class SoftObstacle : MonoBehaviour
 {
-    public GameObject particle;
 
-    void OnTriggerEnter(Collider other)
+    //
+    //= ínpector
+    [SerializeField] private GameObject particle;
+
+
+    private void OnTriggerEnter(Collider other)
     {
-        
-        if (other.tag.Contains("Enemy"))
+        switch (other.tag)
         {
-            Instantiate(particle, new Vector3(transform.position.x, 0.5f, transform.position.z), Quaternion.identity);
-            gameObject.SetActive(false);
+            case "EnemyDefault":
+            case "EnemySeek":
+            case "EnemyJump":
+            case "EnemyElastic":
+                particle.SpawnToGarbage(transform.localPosition, Quaternion.identity);
+                gameObject.SetActive(false);
+                break;
+
+            case "Player":
+            case "PlayerAbility":
+                particle.SpawnToGarbage(transform.localPosition, Quaternion.identity);
+                gameObject.SetActive(false);
+                break;
         }
-        else if(other.tag == "Player" || other.tag == "PlayerAbility")
-        {
-            Instantiate(particle, new Vector3(transform.position.x, 0.5f, transform.position.z), Quaternion.identity);
-            gameObject.SetActive(false);
-        }
-        
+
     }
 
 }

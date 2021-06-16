@@ -105,9 +105,9 @@ public class EnemySeek : Enemy, IDamage
         Vector3 steering = desired - veclocity;
         veclocity += steering * Time.deltaTime;
         transform.position += veclocity * Time.deltaTime;
+        transform.position = new Vector3(transform.position.x, 0f, transform.position.z);
 
         float dot = transform.eulerAngles.y - target.eulerAngles.y;
-        //Debug.Log(transform.eulerAngles.y + " - " + target.eulerAngles.y + " =  " + dot);
 
         //check spawn trail temporary, need to research other way better
         bool hasTrail = Mathf.Abs(dot) > 40f && Mathf.Abs(dot) < 100f;

@@ -10,6 +10,7 @@ public class Enemy : MonoBehaviour
     protected Rigidbody mRigidbody;
     protected Animator mAnimator;
     protected Collider mCollider;
+    protected bool isDead = false;
     protected bool isWarning = false;
 
     //Appear with effect
@@ -17,11 +18,17 @@ public class Enemy : MonoBehaviour
     protected Material marDissolve;
 
 
+    //
+    //= properties 
+    public bool IsDead { get => isDead; set => isDead = value; }
+
+
+
     public void SetWarning(bool warning)
     {
         isWarning = warning;
     }
-    
+
     protected void EnemyAppear()
     {
         mCollider.enabled = false;

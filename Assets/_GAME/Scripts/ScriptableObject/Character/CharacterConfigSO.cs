@@ -10,6 +10,7 @@ public class CharacterConfigSO : ScriptableObject
     [Header("Character speed", order = 2)]
     public GameObject prefabMovingParticle;
     public GameObject prefabMovingTrail;
+    public GameObject prefabExplosion;
     public float moveSpeed = 5f;
     public float angleSpeed = 100;
     public float timeParticleMove = 0.05f;

@@ -7,26 +7,31 @@ public class EffectMeteorite : MonoBehaviour
     [Header("Crazy boom effect")]
     public GameObject boomEffect;
 
-    void OnTriggerEnter(Collider other)
+
+    private void OnTriggerEnter(Collider other)
     {
-        if(other.tag.Contains("Enemy"))
-        {
-            var temp = other.GetComponent<IDamage>();
-            temp?.TakeDamage(0);
 
-            Instantiate(boomEffect, transform.localPosition, Quaternion.identity);
-        }
-        else if(other.tag == "Player")
+        switch (other.tag)
         {
-            Instantiate(boomEffect, other.transform.position, Quaternion.identity);
+            case "Player":
+                boomEffect.SpawnToGarbage(transform.localPosition, Quaternion.identity);
+                other.GetComponent<IDamage>()?.TakeDamage(0);
+                break;
 
-            other.gameObject.SetActive(false);
-            // SceneMgr.GetInstance().ChangeState(SceneMgr.GetInstance().m_sceneGameOver);
+            case "EnemyDefault":
+            case "EnemySeek":
+            case "EnemyJump":
+                boomEffect.SpawnToGarbage(transform.localPosition, Quaternion.identity);
+                other.GetComponent<IDamage>()?.TakeDamage(0);
+                break;
+
+            case "EnemyElastic":
+            case "Tornado":
+            case "Obstacle":
+                boomEffect.SpawnToGarbage(transform.localPosition, Quaternion.identity);
+                Destroy(other.gameObject);
+                break;
+
         }
-        else if (other.tag == "Elastic" || other.tag == "Tornado" || other.tag == "Obstacle")
-        {
-            Instantiate(boomEffect, other.transform.position, Quaternion.identity);
-            Destroy(other.gameObject); 
-        }     
     }
 }

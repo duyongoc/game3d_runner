@@ -110,8 +110,8 @@ Material:
     - _ZWrite: 1
     - __dirty: 1
     m_Colors:
-    - Color_61DB3F56: {r: 1, g: 1, b: 1, a: 0}
-    - Color_8948C9C: {r: 0.31132078, g: 0.086641155, b: 0.086641155, a: 0}
+    - Color_61DB3F56: {r: 1, g: 0, b: 0, a: 0}
+    - Color_8948C9C: {r: 1, g: 0.2028302, b: 0.2028302, a: 0}
     - _BloodColor: {r: 0.541, g: 0.160677, b: 0.160677, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0.13235295, g: 0.13235295, b: 0.13235295, a: 0}

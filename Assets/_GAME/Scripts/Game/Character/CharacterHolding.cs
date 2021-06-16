@@ -4,24 +4,37 @@ using UnityEngine;
 
 public class CharacterHolding : StateCharacter
 {
-    [Header("Move speed")]
-    public float moveSpeed = 5f;
 
-    [Header("Timer load Game Over Scene")]
-    public float timerLoad = 2f;
-    private float timerProcess = 0f;
-    private Transform target;
+    //
+    //= inspector
+    [SerializeField] private float moveSpeed = 5f;
+    [SerializeField] private float timerLoad = 2f;
 
 
     //
     //= private
+    private Transform target;
     private MainCharacter character;
+    private GameObject charExplosion;
+    private float timerProcess = 0f;
+
+
+    #region UNTIY
+    private void Start()
+    {
+
+    }
+
+    // private void Update()
+    // {
+    // }
+    #endregion
+
 
 
     public override void StartState()
     {
         base.StartState();
-
         timerProcess = 0;
     }
 
@@ -31,15 +44,12 @@ public class CharacterHolding : StateCharacter
 
         transform.position = Vector3.MoveTowards(transform.position, target.position, Time.deltaTime * moveSpeed);
 
-
-        //
         timerProcess += Time.deltaTime;
-        if(timerProcess >= timerLoad)
+        if (timerProcess >= timerLoad)
         {
-            // explosion when player dead
-            // Instantiate(character.ballExplosion, transform.position, Quaternion.identity);
-
+            charExplosion.SpawnToGarbage(transform.position, Quaternion.identity);
             character.PlayerDead();
+            
             timerProcess = 0f;
         }
 
@@ -48,7 +58,7 @@ public class CharacterHolding : StateCharacter
     public override void EndState()
     {
         base.EndState();
-        
+
     }
 
     public void SetTarget(Transform tran)
@@ -60,6 +70,7 @@ public class CharacterHolding : StateCharacter
     private void CacheComponent()
     {
         character = MainCharacter.Instance;
+        charExplosion = character.CONFIG_CHARACTER.prefabExplosion;
     }
 
 }
