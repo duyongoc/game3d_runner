@@ -70,7 +70,7 @@ Material:
     - _Surface: 0
     - _WorkflowMode: 1
     - _ZWrite: 1
-    - _processDissolve: 0.46000051
+    - _processDissolve: 0
     - processDissolve: 0
     m_Colors:
     - Color_44929418: {r: 0, g: 138.11462, b: 79.45303, a: 1}
