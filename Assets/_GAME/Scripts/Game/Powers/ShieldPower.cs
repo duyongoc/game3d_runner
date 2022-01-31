@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ShieldPower : MonoBehaviour
 {
-    
+
     //
     //= private 
     private MainCharacter character;
@@ -25,21 +25,10 @@ public class ShieldPower : MonoBehaviour
     {
         switch (currentState)
         {
-            case EBoost.Start:
-                StartBoost();
-                break;
-
-            case EBoost.Process:
-                ProcessBoost();
-                break;
-
-            case EBoost.End:
-                EndBoost();
-                break;
-
-            case EBoost.None:
-                NoneBoost();
-                break;
+            case EBoost.Start: StartBoost(); break;
+            case EBoost.Process: ProcessBoost(); break;
+            case EBoost.End: EndBoost(); break;
+            case EBoost.None: NoneBoost(); break;
         }
     }
     #endregion
@@ -81,7 +70,7 @@ public class ShieldPower : MonoBehaviour
     public void TriggerAbility(float duration)
     {
         currentState = EBoost.Start;
-        // this.duration = duration;
+        this.duration = duration;
     }
 
     private void SetShieldPower(float y, string tagName, bool visibleShield, bool useGravity)
@@ -111,5 +100,5 @@ public class ShieldPower : MonoBehaviour
         shieldEffect = character.GetShieldEffect;
         duration = character.CONFIG_CHARACTER.timeShield;
     }
-    
+
 }

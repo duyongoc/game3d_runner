@@ -23,7 +23,7 @@ public class ItemShield : MonoBehaviour
         switch (other.tag)
         {
             case "Player":
-                PowerController.Instance.shieldPower.TriggerAbility(0);
+                PowerController.Instance.shieldPower.TriggerAbility(10);
                 SelfDestroy();
             break;
         }
