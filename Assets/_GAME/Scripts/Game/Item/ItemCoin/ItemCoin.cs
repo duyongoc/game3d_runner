@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class ItemCoin : MonoBehaviour
 {
-    public int score;
-    public GameObject prefabsTextCoin;
-    
 
-    void OnTriggerEnter(Collider other)
+    [Header("[Setting]")]
+    public GameObject prefabsTextCoin;
+    public int score;
+
+
+    private void OnTriggerEnter(Collider other)
     {
         switch (other.tag)
         {

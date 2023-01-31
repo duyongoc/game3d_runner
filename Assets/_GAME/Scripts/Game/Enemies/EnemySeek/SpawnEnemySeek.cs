@@ -6,17 +6,21 @@ using UnityEngine.AI;
 public class SpawnEnemySeek : SpawnEnemy, ISpawnObject
 {
 
-    //
-    //= inspector
-    [Header("CONFIG")]
+    public enum SpawnState
+    {
+        Warning,
+        Spawn,
+        None
+    };
+
+
+    [Header("[CONFIG]")]
     [SerializeField] private ScriptEnemySeek scriptEnemy;
     [SerializeField] private GameObject enemyPrefab;
     public SpawnState currentState;
-    public enum SpawnState { Warning, Spawn, None };
 
 
-    //
-    //= private
+    // [private]
     private List<GameObject> listEnemyCreated;
     private Transform target;
 
@@ -62,19 +66,17 @@ public class SpawnEnemySeek : SpawnEnemy, ISpawnObject
             switch (currentState)
             {
                 case SpawnState.Warning:
-                    SpawnEnemyWarning();
-                    break;
+                    SpawnEnemyWarning(); break;
 
                 case SpawnState.Spawn:
-                    SpawnEnemy();
-                    break;
+                    SpawnEnemy(); break;
 
-                case SpawnState.None:
-                    break;
+                case SpawnState.None: break;
             }
         }
     }
     #endregion
+
 
     #region Function of State
     private void SpawnEnemyWarning()
@@ -97,7 +99,6 @@ public class SpawnEnemySeek : SpawnEnemy, ISpawnObject
             {
                 isWarning = false;
             }
-
             timerProcessSpawn = 0;
         }
     }
@@ -110,11 +111,11 @@ public class SpawnEnemySeek : SpawnEnemy, ISpawnObject
         {
             GameObject obj = Instantiate(enemyPrefab, GetRandomPoint(), Quaternion.identity, transform);
             listEnemyCreated.Add(obj);
-
             timerProcessSpawn = 0;
         }
     }
     #endregion
+
 
     private Vector3 GetRandomPoint()
     {
@@ -136,6 +137,7 @@ public class SpawnEnemySeek : SpawnEnemy, ISpawnObject
         return vec;
     }
 
+
     public override void Reset()
     {
         foreach (GameObject obj in listEnemyCreated)
@@ -154,6 +156,7 @@ public class SpawnEnemySeek : SpawnEnemy, ISpawnObject
         timeToSpawn = scriptEnemy.timeSpawn;
         currentState = SpawnState.Spawn;
     }
+
 
     public void SetInPhaseObject(bool active, float speed = 0, float spawn = 0)
     {
@@ -175,6 +178,7 @@ public class SpawnEnemySeek : SpawnEnemy, ISpawnObject
         numberOfWarning = scriptEnemy.numberOfWarning;
         timerProcessSpawn = scriptEnemy.timeProcessSpawn;
     }
+
 
     private void CacheComponent()
     {

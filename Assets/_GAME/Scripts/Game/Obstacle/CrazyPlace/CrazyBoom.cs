@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class CrazyBoom : MonoBehaviour
 {
+
+
     [Header("Crazy boom effect")]
     public GameObject boomEffect;
-
     public int timeDestroy = 5;
+
 
     #region UNITY
     private void Start()

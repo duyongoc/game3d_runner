@@ -6,24 +6,27 @@ using DG.Tweening;
 public class EnemyElastic : Enemy, IDamage
 {
 
-    //
-    //= public
-    [Header("Config Enemy")]
-    [Header("Load data Enemy Elastic")]
+    public enum EnemyState
+    {
+        Scream,
+        Moving,
+        Preparing,
+        Attack,
+        Stop, None
+    }
+
+
+    [Header("[Config Enemy]")]
     public ScriptEnemyElastic scriptEnemy;
     public EnemyState currentState = EnemyState.Moving;
-    public enum EnemyState { Scream, Moving, Preparing, Attack, Stop, None }
 
-
-    //
-    //= inspector
-    [Header("Enemy's param")]
+    [Header("[Enemy's param]")]
     [SerializeField] private GameObject arrowAttack;
     [SerializeField] private GameObject affectAttack;
     [SerializeField] private GameObject skinedMeshRender;
 
 
-    // ANIMATION STATE
+    // [ANIMATION STATE]
     private string currentAnimator;
     private const string ENEMY_SCREAM = "Enemy_Scream";
     private const string ENEMY_IDLE = "Enemy_Idle";
@@ -33,7 +36,7 @@ public class EnemyElastic : Enemy, IDamage
     private const string ENEMY_DANCE = "Enemy_Dance";
 
 
-    // Elastic Enemy
+    // [private]
     private Transform target;
     private float moveSpeed = 0f;
     private float distanceAttack = 5f;
@@ -44,7 +47,7 @@ public class EnemyElastic : Enemy, IDamage
     private bool isAttack = false;
     private bool isPrepare = false;
 
-    //explosion
+    // explosion
     private GameObject prefabExplosion;
     private GameObject prefabPrepareAttack;
 
@@ -68,22 +71,20 @@ public class EnemyElastic : Enemy, IDamage
         switch (currentState)
         {
             case EnemyState.Moving:
-                EnemyMoving();
-                break;
+                EnemyMoving(); break;
 
             case EnemyState.Preparing:
-                EnemyPreparing();
-                break;
+                EnemyPreparing(); break;
 
             case EnemyState.Attack:
-                EnemyAttacking();
-                break;
+                EnemyAttacking(); break;
 
             case EnemyState.None:
                 break;
         }
     }
     #endregion
+
 
 
     private void Init()
@@ -112,6 +113,7 @@ public class EnemyElastic : Enemy, IDamage
         }
     }
 
+
     private void EnemyPreparing()
     {
         if (!isPrepare)
@@ -126,6 +128,7 @@ public class EnemyElastic : Enemy, IDamage
 
         transform.LookAt(target.position);
     }
+
 
     private void EnemyAttacking()
     {
@@ -149,6 +152,7 @@ public class EnemyElastic : Enemy, IDamage
         currentState = state;
     }
 
+
     private void SetAnimationState(string newState)
     {
         if (currentAnimator == newState || mAnimator == null)
@@ -158,10 +162,12 @@ public class EnemyElastic : Enemy, IDamage
         currentAnimator = newState;
     }
 
+
     private void ChangeStateAttack()
     {
         currentState = EnemyState.Attack;
     }
+
 
     private void ChangeStateMoving()
     {
@@ -169,25 +175,30 @@ public class EnemyElastic : Enemy, IDamage
         affectAttack.SetActive(false);
     }
 
+
     private void ChangeStatePreparing()
     {
         currentState = EnemyState.Preparing;
     }
+
 
     public void CreateEffectPrepare()
     {
         prefabPrepareAttack.SpawnToGarbage(transform.position, Quaternion.identity);
     }
 
+
     private void OnEventPlayerDead()
     {
         SetAnimationState(ENEMY_DANCE);
     }
 
+
     public void TakeDamage(float damage)
     {
         SelfDestroy();
     }
+
 
     public void SelfDestroy()
     {
@@ -204,7 +215,7 @@ public class EnemyElastic : Enemy, IDamage
     }
 
 
-    void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         switch (other.tag)
         {

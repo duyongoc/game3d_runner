@@ -17,26 +17,22 @@ public class SceneMission : StateScene
     public override void StartState()
     {
         base.EndState();
-        
     }
 
     public override void UpdateState()
     {
         base.UpdateState();
-
     }
 
     public override void EndState()
     {
         base.EndState();
-
     }
 
-    #region Events of button
+
     public void OnPressButtonBackMenu()
     {
-
     }
-    #endregion
+
 
 }

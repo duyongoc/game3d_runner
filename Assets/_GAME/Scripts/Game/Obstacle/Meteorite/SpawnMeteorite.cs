@@ -5,25 +5,28 @@ using UnityEngine;
 public class SpawnMeteorite : Obstacle
 {
 
-    //
-    //= inspector
+    public enum SpawnState
+    {
+        Spawn,
+        None
+    };
+
+
+    [Header("[Setting]")]
     [SerializeField] private ScriptMeteorite scriptMeteorite;
     [SerializeField] private GameObject prefabMeteorite = default;
-    public enum SpawnState { Spawn, None };
     private SpawnState currentState = SpawnState.Spawn;
 
-    //
-    //= private
+
+    // [private]
     private float timeDelay = 0f;
     private float timeProcessDelay = 0f;
     private bool isStart = false;
 
     private float minRangeSpawn;
     private float maxRangeSpawn;
-
     private float timeSpawn;
     private float timerProcessSpawn;
-
     private List<GameObject> listMeteoriteCreated;
     private Transform target;
 
@@ -68,7 +71,7 @@ public class SpawnMeteorite : Obstacle
         timerProcessSpawn += Time.deltaTime;
         if (timerProcessSpawn >= timeSpawn)
         {
-            GameObject obj = Instantiate(prefabMeteorite,  GetRandomPoint(), Quaternion.identity, transform);
+            GameObject obj = Instantiate(prefabMeteorite, GetRandomPoint(), Quaternion.identity, transform);
             //obj.GetComponent<Enemy4>().OnSetWarning(true);
 
             listMeteoriteCreated.Add(obj);
@@ -76,11 +79,13 @@ public class SpawnMeteorite : Obstacle
         }
     }
 
+
     public void FinishWarningAlert()
     {
         timerProcessSpawn = 0;
         currentState = SpawnState.Spawn;
     }
+
 
     private Vector3 GetRandomPoint()
     {
@@ -90,7 +95,6 @@ public class SpawnMeteorite : Obstacle
             Vector3 randomDirection = Random.insideUnitSphere * maxRangeSpawn;
             randomDirection += target.position;
             UnityEngine.AI.NavMesh.SamplePosition(randomDirection, out hit, maxRangeSpawn, 1);
-
         }
         // check the point was created isn't near player which range minRangeSpawn
         while ((Vector3.SqrMagnitude(hit.position - target.position) <= minRangeSpawn * minRangeSpawn)
@@ -102,12 +106,14 @@ public class SpawnMeteorite : Obstacle
         return vec;
     }
 
+
     private bool iSValid()
     {
         if (listMeteoriteCreated.Count < 3)
             return true;
         return false;
     }
+
 
     public override void Reset()
     {
@@ -120,16 +126,17 @@ public class SpawnMeteorite : Obstacle
         timerProcessSpawn = 0;
     }
 
+
     private void CacheDefine()
     {
         timeSpawn = scriptMeteorite.timeSpawn;
         timerProcessSpawn = scriptMeteorite.timeProcessSpawn;
 
         timeDelay = scriptMeteorite.timeDelay;
-
         minRangeSpawn = scriptMeteorite.minRangeSpawn;
         maxRangeSpawn = scriptMeteorite.maxRangeSpawn;
     }
+
 
     private void CacheComponent()
     {

@@ -7,8 +7,7 @@ using Doozy.Engine.UI;
 public class SceneMenu : StateScene
 {
 
-    //
-    //== inspector
+    [Header("[UI]")]
     [SerializeField] private UIButton btPlay;
     [SerializeField] private UIButton btnQuit;
     
@@ -26,9 +25,9 @@ public class SceneMenu : StateScene
     #endregion
 
 
+
     public void OnClickButtonPlay()
     {
-        
     }
 
     public void OnClickButtonExit()

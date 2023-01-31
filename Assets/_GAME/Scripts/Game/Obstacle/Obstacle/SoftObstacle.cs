@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class SoftObstacle : MonoBehaviour
 {
+    
 
-    //
-    //= ínpector
+    [Header("[Setting]")]
     [SerializeField] private GameObject particle;
 
 

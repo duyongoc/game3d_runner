@@ -5,15 +5,13 @@ using UnityEngine;
 public class SpawnItemSpeed : Item
 {
 
-    //
-    //= inspector
+    [Header("[Setting]")]
     [SerializeField]private GameObject prefabIcon = default;
     [SerializeField]private int numberPower = 20;
     [SerializeField]private float timeSpawn = 3f;
     
 
-    //
-    //= private 
+    // [private] 
     private List<GameObject> listPowerCreated;
     private float timer = 0;
 
@@ -45,7 +43,6 @@ public class SpawnItemSpeed : Item
                 float posZ = Random.Range( -30f, 50f);
                 GameObject obj = Instantiate(prefabIcon, new Vector3(posX, 0.5f, posZ), Quaternion.identity, transform);
                 listPowerCreated.Add(obj);
-
                 timer = 0;
             }
         }
@@ -61,6 +58,7 @@ public class SpawnItemSpeed : Item
         return false;
     }
 
+
     private void SpawnPowerWhenGameStart()
     {
         for(int i = 0 ; i < numberPower; i++ )
@@ -71,6 +69,7 @@ public class SpawnItemSpeed : Item
             listPowerCreated.Add(obj);
         }
     }
+
 
     public override void Reset()
     {

@@ -16,6 +16,7 @@ public class Obstacle : MonoBehaviour
     // }
     #endregion
 
+
     public virtual void Reset() { }
 
 }

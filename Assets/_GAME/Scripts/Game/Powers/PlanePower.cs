@@ -4,14 +4,13 @@ using UnityEngine;
 
 public class PlanePower : MonoBehaviour
 {
-    
-    //
-    //= inspector
+
+
+    [Header("[Setting]")]
     [SerializeField] private GameObject prefabPlane;
 
 
-    //
-    //= private 
+    // [private] 
     private MainCharacter character;
     private EBoost currentState = EBoost.None;
 
@@ -31,23 +30,20 @@ public class PlanePower : MonoBehaviour
         switch (currentState)
         {
             case EBoost.Start:
-                StartBoost();
-                break;
+                StartBoost(); break;
 
             case EBoost.Process:
-                ProcessBoost();
-                break;
+                ProcessBoost(); break;
 
             case EBoost.End:
-                EndBoost();
-                break;
+                EndBoost(); break;
 
             case EBoost.None:
-                NoneBoost();
-                break;
+                NoneBoost(); break;
         }
     }
     #endregion
+
 
 
     private void StartBoost()
@@ -55,10 +51,9 @@ public class PlanePower : MonoBehaviour
         if (!SoundMgr.Instance.IsPlaying(SoundMgr.Instance.SFX_CHARACTER_SHIELD))
             SoundMgr.PlaySound(SoundMgr.Instance.SFX_CHARACTER_SHIELD);
 
-        
-
         currentState = EBoost.Process;
     }
+
 
     private void ProcessBoost()
     {
@@ -67,13 +62,14 @@ public class PlanePower : MonoBehaviour
             currentState = EBoost.End;
     }
 
+
     private void EndBoost()
     {
         SoundMgr.PlaySound(SoundMgr.Instance.SFX_BACKGROUND);
         character.transform.localScale = Vector3.one;
-
         currentState = EBoost.None;
     }
+
 
     private void NoneBoost()
     {
@@ -87,13 +83,12 @@ public class PlanePower : MonoBehaviour
         // this.duration = duration;
     }
 
-    
+
     private void CreateThePlane()
     {
         thePlane = Instantiate(prefabPlane, transform);
-        
     }
-    
+
 
     private void CacheComponent()
     {

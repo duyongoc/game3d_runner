@@ -11,16 +11,13 @@ public class HoleCollider : MonoBehaviour
         switch (other.tag)
         {
             case "EnemyDefault":
-                other.GetComponent<EnemyDefault>().EffectFromTheHole(this.transform);
-                break;
+                other.GetComponent<EnemyDefault>().EffectFromTheHole(this.transform); break;
 
             case "EnemyJump":
-                other.GetComponent<EnemyJump>().EffectFromTheHole(this.transform);
-                break;
+                other.GetComponent<EnemyJump>().EffectFromTheHole(this.transform); break;
 
             case "EnemySeek":
-                other.GetComponent<EnemySeek>().EffectFromTheHole(this.transform);
-                break;
+                other.GetComponent<EnemySeek>().EffectFromTheHole(this.transform); break;
         }
 
     }

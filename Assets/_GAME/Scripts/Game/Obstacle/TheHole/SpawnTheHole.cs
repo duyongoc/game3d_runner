@@ -5,14 +5,12 @@ using UnityEngine;
 public class SpawnTheHole : Obstacle
 {
 
-    //
-    //= inspector 
+    [Header("Setting")]
     [SerializeField] private GameObject prefabsTheHole = default;
     [SerializeField] private Transform[] transArr = default;
 
 
-    //
-    //= private
+    // [private]
     private bool isCreated = false;
     private List<GameObject> listHoleCreated;
 
@@ -37,6 +35,7 @@ public class SpawnTheHole : Obstacle
     #endregion
 
     
+
     private void SpawHole()
     {
         for (int i = 0; i < transArr.Length; i++)
@@ -46,6 +45,7 @@ public class SpawnTheHole : Obstacle
         }
     }
 
+
     public void FinishWarningAlert()
     {
         foreach (GameObject obj in listHoleCreated)
@@ -53,6 +53,7 @@ public class SpawnTheHole : Obstacle
             obj.GetComponent<TheHole>()?.OnSetWarning(true);
         }
     }
+
 
     public override void Reset()
     {

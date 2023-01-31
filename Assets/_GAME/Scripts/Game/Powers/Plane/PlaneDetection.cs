@@ -5,8 +5,7 @@ using UnityEngine;
 public class PlaneDetection : MonoBehaviour
 {
 
-    //
-    //= private
+    // [private]
     private Entity mEntity;
 
 
@@ -24,7 +23,8 @@ public class PlaneDetection : MonoBehaviour
             {
                 mEntity.detected.Remove(enemy);
             }
-            //else if(enemy.health == 0) mEntity.detected.Remove(enemy);
+            // else if (enemy.health == 0)
+            //     mEntity.detected.Remove(enemy);
         }
     }
     #endregion

@@ -5,7 +5,8 @@ using UnityEngine;
 public class CharacterShield : StateCharacter
 {
 
-    [Header("The time power")]
+
+    [Header("[Setting]")]
     public float timerPower = 15f;
     public float timerFinish = 12f;
     public float timerPowerProcess = 0f;
@@ -13,25 +14,20 @@ public class CharacterShield : StateCharacter
 
     [Header("Particle change")]
     public GameObject shieldEffect;
-    private bool isFirst = false;
-
-    //
-    [Header("Test")]
     public Transform shape;
     public Transform centerPos1;
     public Transform centerPos2;
 
-    GameObject temp = null;
 
-
-    //
-    //= private 
+    // [private] 
+    private GameObject temp = null;
     private MainCharacter character;
     private Vector3 vectorMovement;
 
     private GameObject prefabMovingParticle;
     private GameObject prefabMovingTrail;
 
+    private bool isFirst = false;
     private float timeParticleMove = 0.2f;
     private float timeParticleRemain = 0f;
 
@@ -53,12 +49,11 @@ public class CharacterShield : StateCharacter
     public override void StartState()
     {
         base.StartState();
-
         timerPowerProcess = timerPower;
         timerFinishProcess = timerFinish;
         shieldEffect.SetActive(false);
 
-       if (!SoundMgr.Instance.IsPlaying(SoundMgr.Instance.SFX_CHARACTER_SHIELD))
+        if (!SoundMgr.Instance.IsPlaying(SoundMgr.Instance.SFX_CHARACTER_SHIELD))
             SoundMgr.PlaySound(SoundMgr.Instance.SFX_CHARACTER_SHIELD);
 
         SetUpBallPower(1f, "PlayerAbility", true, true, false);
@@ -66,10 +61,10 @@ public class CharacterShield : StateCharacter
         Invoke("SetMovingPlayerAbility", 2f);
     }
 
+
     public override void UpdateState()
     {
         base.UpdateState();
-
         if (!GameMgr.Instance.IsGameRunning)
             return;
 
@@ -92,17 +87,16 @@ public class CharacterShield : StateCharacter
         }
 
         UpdateVirtualMovement();
-
     }
+
 
     public override void EndState()
     {
         base.EndState();
-        SoundMgr.PlaySound(SoundMgr.Instance.SFX_BACKGROUND);
 
+        SoundMgr.PlaySound(SoundMgr.Instance.SFX_BACKGROUND);
         SetUpBallPower(0f, "Player", false, false, true);
         transform.localScale = Vector3.one;
-
 
         if (temp != null)
         {
@@ -110,6 +104,7 @@ public class CharacterShield : StateCharacter
             Destroy(temp, 2f);
         }
     }
+
 
     private void UpdateVirtualMovement()
     {
@@ -120,11 +115,13 @@ public class CharacterShield : StateCharacter
         CreateMoveTrail();
         UpdateAnimation(vectorMovement.magnitude);
 
-        if (vectorMovement.magnitude == 0) return;
+        if (vectorMovement.magnitude == 0)
+            return;
 
         character.transform.localRotation = Quaternion.Euler(0f, rotationY, 0f);
         character.GetRigidbody.MovePosition(transform.position + vectorMovement);
     }
+
 
     private void CreateMoveTrail()
     {
@@ -136,6 +133,7 @@ public class CharacterShield : StateCharacter
         }
     }
 
+
     private void UpdateAnimation(float valueMovement)
     {
         if (valueMovement > 0)
@@ -144,7 +142,8 @@ public class CharacterShield : StateCharacter
             character.SetAnimationIdle();
     }
 
-    IEnumerator ScaleTheBall()
+
+    private IEnumerator ScaleTheBall()
     {
         float marValue = 0;
         while (transform.localScale.x < 2f)
@@ -156,22 +155,21 @@ public class CharacterShield : StateCharacter
             marValue = marValue >= 1 ? 1 : (marValue + 0.05f);
             var mar = shieldEffect.GetComponent<Renderer>().material;
             mar.SetFloat("shieldEffectAlpha", marValue);
-
             yield return new WaitForSeconds(0.05f);
         }
     }
 
-    IEnumerator PowerProcessFinish(float timer)
+
+    private IEnumerator PowerProcessFinish(float timer)
     {
         while (timer >= 0)
         {
             yield return new WaitForSeconds(0.25f);
             timer -= 0.25f;
         }
-
     }
 
-    //
+
     private void SetUpBallPower(float y, string tagName, bool visibleEffect, bool visibleShield, bool useGravity)
     {
         transform.position = new Vector3(transform.position.x, y, transform.position.z);
@@ -180,7 +178,7 @@ public class CharacterShield : StateCharacter
         character.GetRigidbody.useGravity = useGravity;
     }
 
-    //
+
     private void SetMovingPlayerAbility()
     {
         if (!isFirst)
@@ -189,6 +187,7 @@ public class CharacterShield : StateCharacter
             isFirst = true;
         }
     }
+
 
     public void Reset()
     {
@@ -202,6 +201,7 @@ public class CharacterShield : StateCharacter
         prefabMovingTrail = character.CONFIG_CHARACTER.prefabMovingTrail;
         timeParticleMove = character.CONFIG_CHARACTER.timeParticleMove;
     }
+
 
     private void CacheComponent()
     {

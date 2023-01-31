@@ -7,10 +7,9 @@ public class SpawnEnemy : MonoBehaviour
 
 
     #region UNITY
-    private void Start()
-    {
-
-    }
+    // private void Start()
+    // {
+    // }
 
     // private void Update()
     // {

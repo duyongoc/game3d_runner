@@ -9,19 +9,16 @@ using UnityEngine.UI;
 public class SceneGameOver : StateScene
 {
 
-    //
-    //== inspector
-    [Header("Buttons in GameOver Scene")]
+    [Header("[Button]")]
     [SerializeField] private UIButton btRePlay;
     [SerializeField] private UIButton btMenu;
     [SerializeField] private UIButton btnQuit;
 
-    [Header("Show text score")]
+    [Header("[Text]")]
     [SerializeField] private TMP_Text scoreText;
 
 
-    //
-    //= private 
+    // [private]
     private GameMgr gameMgr;
     private ScoreMgr scoreMgr;
 
@@ -47,15 +44,18 @@ public class SceneGameOver : StateScene
     #endregion
 
 
+
     public void OnClickButtonReplay()
     {
         gameMgr.LoadReplayGame();
     }
 
+
     public void OnClickButtonMenu()
     {
         gameMgr.LoadMenuGame();
     }
+    
 
     public void OnClickButtonExit()
     {

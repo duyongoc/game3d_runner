@@ -6,8 +6,7 @@ public class CharacterHealth : MonoBehaviour, IDamage
 {
 
 
-    //
-    //= private 
+    // [private] 
     private MainCharacter character;
 
     
@@ -22,6 +21,7 @@ public class CharacterHealth : MonoBehaviour, IDamage
     // {
     // }
     #endregion
+
 
 
     public void TakeDamage(float damage)

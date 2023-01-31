@@ -5,21 +5,17 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
 
-    //
-    //= protected
+    // [protected] 
     protected Rigidbody mRigidbody;
     protected Animator mAnimator;
     protected Collider mCollider;
+    protected Material marDissolve;
+    protected Dictionary<SkinnedMeshRenderer, Material> d_skinedMeshRender;
     protected bool isDead = false;
     protected bool isWarning = false;
 
-    //Appear with effect
-    protected Dictionary<SkinnedMeshRenderer, Material> d_skinedMeshRender;
-    protected Material marDissolve;
 
-
-    //
-    //= properties 
+    // [properties] 
     public bool IsDead { get => isDead; set => isDead = value; }
 
 
@@ -28,6 +24,7 @@ public class Enemy : MonoBehaviour
     {
         isWarning = warning;
     }
+
 
     protected void EnemyAppear()
     {
@@ -38,6 +35,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
+
     protected void DissolveEnemy(SkinnedMeshRenderer skin, Material marDefault)
     {
         marDissolve.SetFloat("_processDissolve", 1);
@@ -46,7 +44,8 @@ public class Enemy : MonoBehaviour
         StartCoroutine(DissolveSkin(skin, marDefault));
     }
 
-    IEnumerator DissolveSkin(SkinnedMeshRenderer skin, Material marDefault)
+
+    private IEnumerator DissolveSkin(SkinnedMeshRenderer skin, Material marDefault)
     {
         float timer = 1;
         float process = 1;

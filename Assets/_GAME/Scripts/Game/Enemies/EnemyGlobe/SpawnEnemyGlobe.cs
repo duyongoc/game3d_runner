@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class SpawnEnemyGlobe : MonoBehaviour
 {
+
     [Header("Data for Enemy Globe")]
     public ScriptEnemyGlobe scriptEnemy;
-    
+
     [Header("Enemies prefab")]
     public GameObject enemyPrefab;
 
@@ -16,9 +17,10 @@ public class SpawnEnemyGlobe : MonoBehaviour
 
     [Header("Enemy's target")]
     public Transform target;
-    
     public List<GameObject> enemyWasCreated;
 
+
+    // [private]
     private float timeProcessDelay = 0f;
     private float timeDelay = 0f;
 
@@ -27,9 +29,11 @@ public class SpawnEnemyGlobe : MonoBehaviour
     private int numberOfWarning = 0;
 
     private float minRangeSpawn;
-    private float maxRangeSpawn ;
-    private float timeSpawn ;
+    private float maxRangeSpawn;
+    private float timeSpawn;
     private float timerProcessSpawn;
+
+
 
     private void LoadData()
     {
@@ -42,7 +46,6 @@ public class SpawnEnemyGlobe : MonoBehaviour
 
         //
         timeDelay = scriptEnemy.timeDelay;
-
         minRangeSpawn = scriptEnemy.minRangeSpawn;
         maxRangeSpawn = scriptEnemy.maxRangeSpawn;
     }
@@ -54,12 +57,13 @@ public class SpawnEnemyGlobe : MonoBehaviour
         target = MainCharacter.Instance.GetTransform();
     }
 
+
     private void Update()
     {
-        if(!isStart && GameMgr.Instance.IsGameRunning)
+        if (!isStart && GameMgr.Instance.IsGameRunning)
         {
             timeProcessDelay += Time.deltaTime;
-            if(timeProcessDelay >= timeDelay)
+            if (timeProcessDelay >= timeDelay)
             {
                 isStart = true;
                 timeProcessDelay = 0;
@@ -71,22 +75,21 @@ public class SpawnEnemyGlobe : MonoBehaviour
             switch (currentState)
             {
                 case SpawnState.Warning:
-                    SpawnEnemyWarning();
+                    SpawnEnemyWarning(); break;
 
-                    break;
                 case SpawnState.Spawn:
-                    SpawnEnemy();
+                    SpawnEnemy(); break;
 
-                    break;
                 case SpawnState.None:
                     break;
             }
         }
     }
 
+
     private void SpawnEnemyWarning()
     {
-        if( !isWarning)
+        if (!isWarning)
         {
             currentState = SpawnState.Spawn;
             return;
@@ -100,14 +103,14 @@ public class SpawnEnemyGlobe : MonoBehaviour
             enemyWasCreated.Add(obj);
 
             numberOfWarning--;
-            if(numberOfWarning == 0)
+            if (numberOfWarning == 0)
             {
                 isWarning = false;
             }
-            
             timerProcessSpawn = 0;
         }
     }
+
 
     private void SpawnEnemy()
     {
@@ -116,10 +119,10 @@ public class SpawnEnemyGlobe : MonoBehaviour
         {
             GameObject obj = Instantiate(enemyPrefab, GetRandomPoint(), Quaternion.identity);
             enemyWasCreated.Add(obj);
-            
             timerProcessSpawn = 0;
         }
     }
+
 
     private Vector3 GetRandomPoint()
     {
@@ -140,6 +143,7 @@ public class SpawnEnemyGlobe : MonoBehaviour
         Vector3 vec = new Vector3(hit.position.x, 0, hit.position.z);
         return vec;
     }
+    
 
     public void Reset()
     {

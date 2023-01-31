@@ -5,32 +5,35 @@ using UnityEngine;
 public class Plane : MonoBehaviour
 {
 
-    //
-    //= public
-    public enum PlaneState { Wait, Move, None }
-    public PlaneState curState = PlaneState.Wait;
+
+    public enum PlaneState
+    {
+        Wait,
+        Move,
+        None
+    }
 
 
-    //
-    //= inspector
-    [Header("Param")]
+    [Header("[Param]")]
     [SerializeField] private float distance = 5.5f;
     [SerializeField] private float moveSpeed = 5f;
+    public PlaneState curState = PlaneState.Wait;
+    public List<Entity> enemies;
 
-    [Header("Shooting")]
+    [Header("[Shooting]")]
     [SerializeField] private GameObject prefabBullet;
     [SerializeField] private GameObject prefabBulletExplosion;
     [SerializeField] private float timeShoot = 1f;
-    private float timeRemain = 0f;
 
-    //
-    //= private 
+
+    // [private] 
+    private float timeRemain = 0f;
     private MainCharacter character;
     private Vector3 curTarget;
 
-    public List<Entity> enemies;
     private Entity currentEnemy;
     private Entity entity;
+
 
     #region FIELDS
     public Entity GetCurrentEnemy { get => currentEnemy; }
@@ -50,16 +53,13 @@ public class Plane : MonoBehaviour
         switch (curState)
         {
             case PlaneState.Wait:
-                StateWaitPlane();
-                break;
+                StateWaitPlane(); break;
 
             case PlaneState.Move:
-                StateMovePlane();
-                break;
+                StateMovePlane(); break;
 
             case PlaneState.None:
-                StateNone();
-                break;
+                StateNone(); break;
         }
 
         OnUpdateEnemy();
@@ -68,14 +68,15 @@ public class Plane : MonoBehaviour
     #endregion
 
 
+
     private void StateWaitPlane()
     {
-
         if (Vector3.Distance(transform.position, character.transform.position) > distance)
         {
             ChangeState(PlaneState.Move);
         }
     }
+
 
     private void StateMovePlane()
     {
@@ -89,14 +90,17 @@ public class Plane : MonoBehaviour
         }
     }
 
+
     private void StateNone()
     {
     }
+
 
     private void ChangeState(PlaneState newState)
     {
         curState = newState;
     }
+
 
     private void OnUpdateAttack()
     {
@@ -105,16 +109,16 @@ public class Plane : MonoBehaviour
             timeRemain += Time.deltaTime;
             if (timeRemain > timeShoot)
             {
-                if(IsCurrentEnemyDied())
+                if (IsCurrentEnemyDied())
                     return;
 
                 var bullet = prefabBullet.SpawnToGarbage(transform.position, Quaternion.identity);
                 bullet.GetComponent<PlaneBullet>().Init(currentEnemy.transform.position, 20, prefabBulletExplosion);
-
                 timeRemain = 0;
             }
         }
     }
+
 
     private void OnUpdateEnemy()
     {
@@ -143,10 +147,12 @@ public class Plane : MonoBehaviour
         }
     }
 
+
     private bool IsCurrentEnemyDied()
     {
         return currentEnemy == null ? true : currentEnemy.GetComponent<Enemy>().IsDead;
     }
+
 
     private void CacheComponent()
     {

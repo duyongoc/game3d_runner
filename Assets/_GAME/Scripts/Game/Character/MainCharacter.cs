@@ -7,20 +7,13 @@ using UnityEngine.UI;
 public class MainCharacter : Singleton<MainCharacter>
 {
 
-    //
-    //= event
+    // [event]
     public Action EVENT_PLAYER_DEAD;
 
-
-    //
-    //= public
-    [Header("CONFIG")]
+    [Header("[CONFIG]")]
     public CharacterConfigSO CONFIG_CHARACTER;
 
-
-    //
-    //= inspector
-    [Header("Character's param")]
+    [Header("[Character's param]")]
     [SerializeField] private VirtualMovement virtualMovement;
     [SerializeField] private GameObject characterModel;
     [SerializeField] private GameObject shieldEffect;
@@ -28,8 +21,8 @@ public class MainCharacter : Singleton<MainCharacter>
     [SerializeField] private Renderer shapeRenderer;
 
 
-    //
-    //= private
+    // [private]
+    private GameObject particleMoving;
     private Rigidbody mRigidbody;
     private Animator mAnimator;
     private Collider mCollider;
@@ -37,11 +30,10 @@ public class MainCharacter : Singleton<MainCharacter>
     private CharacterHolding mCharacterHolding;
     private CharacterShield mCharacterShield;
     private CharacterNone mCharacterNone;
-
     private StateCharacter currentState;
+
     private float moveSpeed = 0f;
     private float angleSpeed = 0f;
-
     private float timeParMoving = 0.5f;
     private float timeProcessFinish = 0f;
     private float currentTimeProcess = 0;
@@ -49,20 +41,17 @@ public class MainCharacter : Singleton<MainCharacter>
     private float timerSpeedUp = 0f;
     private float engineForce = 0f;
     private float turnSpeed = 0f;
-
     private bool firstTriggerPower = false;
-    private GameObject particleMoving;
 
 
-    // ANIMATION STATE
+    // [ANIMATION STATE]
     private string currentAnimator;
     private const string CHARACTER_IDLE = "Character_Idle";
     private const string CHARACTER_RUN = "Character_Run";
     private const string CHARACTER_DEAD = "Character_Dead";
 
 
-    //
-    //= properties
+    // [properties]
     public Rigidbody GetRigidbody { get => mRigidbody; set => mRigidbody = value; }
     public Animator GetAnimator { get => mAnimator; }
     public StateCharacter CurrentState { get => currentState; set => currentState = value; }
@@ -92,11 +81,10 @@ public class MainCharacter : Singleton<MainCharacter>
     #region UNITY
     private void Start()
     {
+        GameMgr.Instance.EVENT_RESET_INGAME += CharacterReset;
         CacheComponent();
         CacheDefine();
         Init();
-
-        GameMgr.Instance.EVENT_RESET_INGAME += CharacterReset;
     }
 
     private void FixedUpdate()
@@ -114,6 +102,7 @@ public class MainCharacter : Singleton<MainCharacter>
     {
         ChangeState(mCharacterMove);
     }
+
 
     public void ChangeState(StateCharacter newState)
     {
@@ -141,6 +130,7 @@ public class MainCharacter : Singleton<MainCharacter>
         ChangeState(mCharacterNone);
     }
 
+
     private void SetAnimationState(string newState)
     {
         if (currentAnimator == newState)
@@ -150,14 +140,19 @@ public class MainCharacter : Singleton<MainCharacter>
         currentAnimator = newState;
     }
 
+
     public void SetAnimationIdle()
     {
         SetAnimationState(CHARACTER_IDLE);
     }
+
+
     public void SetAnimationMoving()
     {
         SetAnimationState(CHARACTER_RUN);
     }
+
+
     public void SetAnimationDead()
     {
         SetAnimationState(CHARACTER_DEAD);
@@ -169,21 +164,25 @@ public class MainCharacter : Singleton<MainCharacter>
         return currentState == mCharacterMove;
     }
 
+
     public Transform GetTransform()
     {
         return gameObject.transform;
     }
+
 
     public void IncreaseSpeed()
     {
         moveSpeed += speedIncrease;
     }
 
+
     public void ResetSpeed()
     {
         moveSpeed = CONFIG_CHARACTER.moveSpeed;
         angleSpeed = CONFIG_CHARACTER.angleSpeed;
     }
+
 
     public void CharacterReset()
     {
@@ -197,6 +196,7 @@ public class MainCharacter : Singleton<MainCharacter>
         ChangeState(mCharacterMove);
     }
 
+
     private void CacheDefine()
     {
         moveSpeed = CONFIG_CHARACTER.moveSpeed;
@@ -206,8 +206,8 @@ public class MainCharacter : Singleton<MainCharacter>
         timerSpeedUp = CONFIG_CHARACTER.timerSpeedUp;
         engineForce = CONFIG_CHARACTER.engineForce;
         turnSpeed = CONFIG_CHARACTER.turnSpeed;
-
     }
+
 
     private void CacheComponent()
     {
@@ -219,7 +219,6 @@ public class MainCharacter : Singleton<MainCharacter>
         mCharacterHolding = GetComponent<CharacterHolding>();
         mCharacterShield = GetComponent<CharacterShield>();
         mCharacterNone = GetComponent<CharacterNone>();
-
     }
 
 }

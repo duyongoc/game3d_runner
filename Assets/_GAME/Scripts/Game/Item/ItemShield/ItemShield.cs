@@ -5,10 +5,10 @@ using UnityEngine;
 public class ItemShield : MonoBehaviour
 {
 
-    //
-    //= inspector 
+
+    [Header("[Setting]")]
     [SerializeField] private GameObject particle;
-    
+
 
 
     private void SelfDestroy()
@@ -25,7 +25,7 @@ public class ItemShield : MonoBehaviour
             case "Player":
                 PowerController.Instance.shieldPower.TriggerAbility(10);
                 SelfDestroy();
-            break;
+                break;
         }
     }
 

@@ -5,14 +5,16 @@ using UnityEngine;
 public class LevelInGame : MonoBehaviour
 {
 
-    //
-    //== inspector 
+    [Header("[Setting]")]
     [SerializeField] private CONFIG_Phase CONFIG_Phase;
-
     public Phase[] phases;
+
+    // [private]
     private int indexPhase = 0;
     private bool phaseEnd = false;
     private float timeDt = 0;
+
+
 
     #region UNITY
     private void Start()
@@ -38,10 +40,9 @@ public class LevelInGame : MonoBehaviour
             if (indexPhase + 1 == phases.Length)
                 phaseEnd = true;
         }
-
-        
     }
     #endregion
+
 
 
     private void StartPhase()
@@ -49,19 +50,17 @@ public class LevelInGame : MonoBehaviour
         SpawnEnemyMgr.Instance.SetActiceInPhase(phases[indexPhase]);
     }
 
+
     private void CheckZoomCamera()
     {
-
     }
+
 
     public void Reset()
     {
         StartPhase();
-
         indexPhase = 0;
         phaseEnd = false;
     }
-
-
 
 }

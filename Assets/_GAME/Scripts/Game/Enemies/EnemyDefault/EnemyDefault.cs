@@ -6,21 +6,17 @@ using UnityEngine;
 public class EnemyDefault : Enemy, IDamage
 {
 
-    //
-    //= public
-    [Header("Config Enemy")]
+    [Header("[Config Enemy]")]
     public ScriptEnemyDefault scriptEnemy;
     public EnemyState currentState = EnemyState.Moving;
     public enum EnemyState { Scream, Moving, Stun, None }
 
-
-    //
-    //= inspector
-    [Header("Enemy's param")]
+    [Header("[Enemy's param]")]
     [SerializeField] private GameObject warningIcon;
     [SerializeField] private GameObject skinedMeshRender;
 
-    // ANIMATION STATE
+
+    // [ANIMATION STATE]
     private string currentAnimator;
     private const string ENEMY_SCREAM = "Enemy_Scream";
     private const string ENEMY_RUN = "Enemy_Run";
@@ -28,13 +24,12 @@ public class EnemyDefault : Enemy, IDamage
     private const string ENEMY_DANCE = "Enemy_Dance";
 
 
-    //
-    //= private
+    // [private]
     private float distanceWarning = 0;
     private float moveSpeed = 0f;
     private Transform target;
 
-    //explosion
+    // explosion
     private GameObject prefabExplosion;
     private GameObject prefabExplosionSpecial;
 
@@ -43,11 +38,11 @@ public class EnemyDefault : Enemy, IDamage
     #region UNITY
     private void Start()
     {
+        MainCharacter.Instance.EVENT_PLAYER_DEAD += OnEventPlayerDead;
+
         CacheComponent();
         CacheDefine();
         Init();
-
-        MainCharacter.Instance.EVENT_PLAYER_DEAD += OnEventPlayerDead;
     }
 
     private void Update()
@@ -58,12 +53,10 @@ public class EnemyDefault : Enemy, IDamage
         switch (currentState)
         {
             case EnemyState.Moving:
-                EnemyMoving();
-                break;
+                EnemyMoving(); break;
 
             case EnemyState.Stun:
-                EnenmyStun();
-                break;
+                EnenmyStun(); break;
 
             case EnemyState.Scream:
             case EnemyState.None:

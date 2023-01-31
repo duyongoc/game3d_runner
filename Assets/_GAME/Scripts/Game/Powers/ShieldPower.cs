@@ -5,8 +5,7 @@ using UnityEngine;
 public class ShieldPower : MonoBehaviour
 {
 
-    //
-    //= private 
+    // [private] 
     private MainCharacter character;
     private EBoost currentState = EBoost.None;
 
@@ -34,6 +33,7 @@ public class ShieldPower : MonoBehaviour
     #endregion
 
 
+
     private void StartBoost()
     {
         if (!SoundMgr.Instance.IsPlaying(SoundMgr.Instance.SFX_CHARACTER_SHIELD))
@@ -45,6 +45,7 @@ public class ShieldPower : MonoBehaviour
         currentState = EBoost.Process;
     }
 
+
     private void ProcessBoost()
     {
         duration -= Time.deltaTime;
@@ -52,14 +53,15 @@ public class ShieldPower : MonoBehaviour
             currentState = EBoost.End;
     }
 
+
     private void EndBoost()
     {
         SoundMgr.PlaySound(SoundMgr.Instance.SFX_BACKGROUND);
         SetShieldPower(0f, "Player", false, true);
         character.transform.localScale = Vector3.one;
-
         currentState = EBoost.None;
     }
+
 
     private void NoneBoost()
     {
@@ -73,6 +75,7 @@ public class ShieldPower : MonoBehaviour
         this.duration = duration;
     }
 
+
     private void SetShieldPower(float y, string tagName, bool visibleShield, bool useGravity)
     {
         shieldEffect.SetActive(visibleShield);
@@ -81,7 +84,8 @@ public class ShieldPower : MonoBehaviour
         character.transform.position = new Vector3(character.transform.position.x, y, character.transform.position.z);
     }
 
-    IEnumerator ScalingTheShield()
+
+    private IEnumerator ScalingTheShield()
     {
         float marValue = 0;
         while (transform.localScale.x < 2f)
@@ -93,6 +97,7 @@ public class ShieldPower : MonoBehaviour
             yield return new WaitForSeconds(0.05f);
         }
     }
+
 
     private void CacheComponent()
     {

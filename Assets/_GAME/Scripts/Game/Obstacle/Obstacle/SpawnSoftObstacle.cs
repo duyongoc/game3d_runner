@@ -4,20 +4,23 @@ using UnityEngine;
 
 public class SpawnSoftObstacle : MonoBehaviour
 {
-    public SoftObstacle[] listObstacle;
 
+    [Header("Setting")]
+    public SoftObstacle[] listObstacle;
     public bool isStart = false;
+
+
 
     private void Start()
     {
         listObstacle = this.GetComponentsInChildren<SoftObstacle>();
-
         foreach(SoftObstacle ob in listObstacle)
         {
             ob.gameObject.SetActive(false);
         }
     }
     
+
     private void OnSetup()
     {
         foreach(SoftObstacle ob in listObstacle)
@@ -38,6 +41,7 @@ public class SpawnSoftObstacle : MonoBehaviour
         }
     }
 
+
     private void Update()
     {
         if(isStart)
@@ -46,6 +50,7 @@ public class SpawnSoftObstacle : MonoBehaviour
             isStart = false;
         }
     }
+    
 
     public void Reset()
     {

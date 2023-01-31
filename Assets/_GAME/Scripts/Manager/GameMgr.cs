@@ -17,29 +17,21 @@ public enum STATEGAME
 public class GameMgr : Singleton<GameMgr>
 {
 
-    //
-    //= event 
+    // [event] 
     public Action EVENT_RESET_INGAME;
 
 
-    //
-    //= public 
+    [Header("[SEtting]")] 
     public CONFIG_GAME CONFIG_GAME;
 
 
-    //
-    //= private 
-    private bool isPlaying = false;
-
-
-    //
-    //= private
+    // [private]
     private STATEGAME currentState = STATEGAME.NONE;
+    private bool isPlaying = false;
     private float timePlay = 0f;
 
 
-    //
-    //= properties
+    // [properties]
     public bool IsGameRunning { get => currentState == STATEGAME.INGAME; }
     public bool IsPlaying { get => isPlaying; set => isPlaying = value; }
     public float GetTimePlay { get => timePlay; }
@@ -63,11 +55,11 @@ public class GameMgr : Singleton<GameMgr>
     #endregion
 
 
+
     public void ChangeState(STATEGAME newState)
     {
         currentState = newState;
     }
-
 
 
     public void LoadReplayGame()
@@ -76,11 +68,13 @@ public class GameMgr : Singleton<GameMgr>
         ChangeState(STATEGAME.INGAME);
     }
 
+
     public void LoadMenuGame()
     {
         ChangeState(STATEGAME.MENU);
         GameEventMessage.SendEvent("LoadMenu");
     }
+
 
     public void LoadGameOver()
     {

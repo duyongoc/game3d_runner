@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class TextCoin : MonoBehaviour
 {
+
     [Header("Coin parameter")]
     public int numCoin;
     public TMP_Text textCoin;
@@ -14,11 +15,13 @@ public class TextCoin : MonoBehaviour
     [Header("Time Destroy")]
     public int timeDestroy;
 
+
     private void Start()
     {
         textCoin.text = "+" + numCoin.ToString();
         Destroy(this.gameObject, timeDestroy);
     }   
+
 
     private void Update()
     {

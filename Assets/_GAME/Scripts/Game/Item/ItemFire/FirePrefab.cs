@@ -6,15 +6,16 @@ public class FirePrefab : MonoBehaviour
 {
 
     [Header("Effect of Fire")]
-    public GameObject effect; 
+    public GameObject effect;
     public float moveSpeed = 400;
     public Vector3 vectorDir = new Vector3(0.5f, 1, 0);
 
-    //
+
+    // [private]
     private Rigidbody body;
 
-    // Start is called before the first frame update
-    void Start()
+
+    private void Start()
     {
         body = this.gameObject.GetComponent<Rigidbody>();
         body.AddForce(vectorDir * moveSpeed);
@@ -24,11 +25,12 @@ public class FirePrefab : MonoBehaviour
         transform.localRotation = Quaternion.Euler(rotX, transform.rotation.y, rotZ);
     }
 
-    void OnTriggerEnter(Collider other)
+
+    private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "ThePlane")
+        if (other.tag == "ThePlane")
         {
-            Instantiate(effect, new Vector3(transform.position.x, transform.position.y + 0.5f,transform.position.z ), Quaternion.Euler(-90,0,0));
+            Instantiate(effect, new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z), Quaternion.Euler(-90, 0, 0));
             Destroy(this.gameObject);
         }
 

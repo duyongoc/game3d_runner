@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class EffectMeteorite : MonoBehaviour
 {
+
     [Header("Crazy boom effect")]
     public GameObject boomEffect;
 
 
     private void OnTriggerEnter(Collider other)
     {
-
         switch (other.tag)
         {
             case "Player":
@@ -31,7 +31,7 @@ public class EffectMeteorite : MonoBehaviour
                 boomEffect.SpawnToGarbage(transform.localPosition, Quaternion.identity);
                 Destroy(other.gameObject);
                 break;
-
         }
     }
+    
 }

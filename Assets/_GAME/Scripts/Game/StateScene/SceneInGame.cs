@@ -7,19 +7,16 @@ using UnityEngine.UI;
 public class SceneInGame : StateScene
 {
 
-    //
-    //=  inspector 
-    [Header("Param")]
+    [Header("[Param]")]
     [SerializeField] private GameObject virtualMovement;
 
-    [Header("Text display")]
+    [Header("[Text]")]
     [SerializeField] private TMP_Text txtScore;
     [SerializeField] private GameObject textTapToPlay;
     [SerializeField] private GameObject textSurvival;
 
 
-    //
-    //= private 
+    // [private]  
     private GameMgr gameMgr;
     private ScoreMgr scoreMgr;
     private CameraFollow cameraFollow;
@@ -44,6 +41,7 @@ public class SceneInGame : StateScene
     #endregion
 
 
+
     private void UpdateScore()
     {
         if (!gameMgr.IsGameRunning)
@@ -59,6 +57,7 @@ public class SceneInGame : StateScene
         PlayerPrefs.GetFloat("HighScore", scoreMgr.highscore);
     }
 
+
     private void CheckStartGame()
     {
         if (!gameMgr.IsPlaying && Input.GetMouseButtonDown(0))
@@ -70,6 +69,7 @@ public class SceneInGame : StateScene
             gameMgr.ChangeState(STATEGAME.INGAME);
         }
     }
+
 
     private void SetUpStartGame()
     {
@@ -87,21 +87,24 @@ public class SceneInGame : StateScene
         virtualMovement.SetActive(false);
     }
 
+
     private void OnEventResetGame()
     {
         virtualMovement.SetActive(true);
     }
 
+
     public void OnPressButtonPauseGame()
     {
-
     }
+
 
     private void CacheDefine()
     {
         textTapToPlay.SetActive(true);
         virtualMovement.SetActive(false);
     }
+
 
     private void CacheComponent()
     {

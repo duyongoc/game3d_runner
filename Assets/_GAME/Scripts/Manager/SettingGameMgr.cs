@@ -5,6 +5,7 @@ using UnityEngine;
 public class SettingGameMgr : MonoBehaviour
 {
 
+
     #region Singleton
     public static SettingGameMgr s_instance;
     private void Awake()
@@ -19,7 +20,5 @@ public class SettingGameMgr : MonoBehaviour
         return s_instance;
     }
     #endregion
-
-    
 
 }

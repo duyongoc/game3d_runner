@@ -6,8 +6,7 @@ using UnityEngine;
 public class CharacterConfigSO : ScriptableObject
 {
 
-    [Header("Character's param", order = 1)]
-    [Header("Character speed", order = 2)]
+    [Header("[Character's param]")]
     public GameObject prefabMovingParticle;
     public GameObject prefabMovingTrail;
     public GameObject prefabExplosion;

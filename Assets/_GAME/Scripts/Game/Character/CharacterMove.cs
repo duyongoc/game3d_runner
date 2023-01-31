@@ -5,24 +5,18 @@ using UnityEngine;
 public class CharacterMove : StateCharacter
 {
 
-    [Header("Set Speed up")]
+    [Header("[Setting]")]
     public GameObject speedUpEffect;
-    private float timer = 0;
-
-    [Header("Test")]
     public Transform shape;
     public Transform centerPos1;
     public Transform centerPos2;
 
-    //
 
-    GameObject temp = null;
-    bool isCreate = false;
-
-
-    //
-    //= private 
+    // [private] 
+    private GameObject temp = null;
     private MainCharacter character;
+    private bool isCreate = false;
+    private float timer = 0;
     private int indexFoot = 0;
 
     private GameObject prefabMovingParticle;
@@ -153,18 +147,19 @@ public class CharacterMove : StateCharacter
                     //int rand = Random.Range(0, 180);
                     indexFoot = indexFoot == 2 ? 0 : 1;
                     Instantiate(character.GetParticleMoving, character.GetCharacterFeet[indexFoot++].position, Quaternion.Euler(-90, 0, 0));
-
                     timer = 0;
                 }
             }
         }
 
         if (shape.rotation.z != 0f)
+        {
             shape.localRotation = Quaternion.Lerp(shape.localRotation, Quaternion.Euler(0f, 0f, 0f), Time.deltaTime * 5);
+        }
 
         transform.Translate(Vector3.forward * character.GetMoveSpeed * Time.deltaTime);
-
     }
+
 
     private void CreateMoveTrail()
     {
@@ -176,6 +171,7 @@ public class CharacterMove : StateCharacter
         }
     }
 
+
     private void UpdateAnimation(float valueMovement)
     {
         if (valueMovement > 0)
@@ -184,10 +180,12 @@ public class CharacterMove : StateCharacter
             character.SetAnimationIdle();
     }
 
+
     private Vector3 Forward()
     {
         return Vector3.forward * Vector3.Dot(character.GetRigidbody.velocity, transform.up);
     }
+
 
     private void OnTriggerEnter(Collider other)
     {
@@ -204,8 +202,8 @@ public class CharacterMove : StateCharacter
             other.gameObject.GetComponent<ItemSpeed>().MakeEffect();
             Invoke("ResetSpeed", character.GetTimerSpeedUp);
         }
-
     }
+
 
     private void OnCollisionEnter(Collision other)
     {
@@ -214,11 +212,11 @@ public class CharacterMove : StateCharacter
             // loading gameover scene;
             // var mgr = SceneMgr.GetInstance();
             // mgr.ChangeState(mgr.m_sceneGameOver);
-
             // Instantiate(character.ballExplosion, transform.position, Quaternion.identity);
             gameObject.SetActive(false);
         }
     }
+
 
     public void ResetSpeed()
     {
@@ -226,11 +224,12 @@ public class CharacterMove : StateCharacter
         speedUpEffect.SetActive(false);
     }
 
+
     public void Reset()
     {
         if (temp != null)
             Destroy(temp);
-        
+
         shape.localRotation = Quaternion.Euler(0f, 0f, 0f);
     }
 
@@ -241,6 +240,7 @@ public class CharacterMove : StateCharacter
         prefabMovingTrail = character.CONFIG_CHARACTER.prefabMovingTrail;
         timeParticleMove = character.CONFIG_CHARACTER.timeParticleMove;
     }
+
 
     private void CacheComponent()
     {

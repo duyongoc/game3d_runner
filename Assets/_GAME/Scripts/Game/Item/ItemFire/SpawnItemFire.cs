@@ -4,16 +4,21 @@ using UnityEngine;
 
 public class SpawnItemFire : MonoBehaviour
 {
+
+
     [Header("Spawn the power ")]
     [SerializeField]private GameObject prefabIcon = default;
 
     [Header("Num of power will be create")]
     public int numberPower = 20;
     public float timeSpawn = 3f;
-    private float timer = 0;
-
     public List<GameObject> thePowerWasCreated;
+
+
+    // [private]
+    private float timer = 0;
     private bool isCreated = false;
+
 
     private void Update()
     {
@@ -36,12 +41,11 @@ public class SpawnItemFire : MonoBehaviour
                 float posZ = Random.Range( -30f, 50f);
                 GameObject obj = Instantiate(prefabIcon, new Vector3(posX, 0f, posZ), Quaternion.identity);
                 thePowerWasCreated.Add(obj);
-
                 timer = 0;
             }
         }
-        
     }
+
 
     private bool iSValid()
     {
@@ -50,6 +54,7 @@ public class SpawnItemFire : MonoBehaviour
 
         return false;
     }
+
 
     private void SpawnPowerWhenGameStart()
     {
@@ -62,6 +67,7 @@ public class SpawnItemFire : MonoBehaviour
         }
     }
 
+
     public void Reset()
     {
         foreach(GameObject obj in thePowerWasCreated)
@@ -72,4 +78,5 @@ public class SpawnItemFire : MonoBehaviour
         thePowerWasCreated.Clear();
         isCreated = false;
     }
+
 }

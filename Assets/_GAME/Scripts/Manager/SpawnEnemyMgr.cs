@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class SpawnEnemyMgr : Singleton<SpawnEnemyMgr>
 {
+    
 
-    //
-    //= inspector
+    [Header("[Setting]")]
     [SerializeField] private SpawnEnemy[] spawnObject;
+
 
 
     #region UNITY
@@ -20,6 +21,7 @@ public class SpawnEnemyMgr : Singleton<SpawnEnemyMgr>
     // {
     // }
     #endregion
+
 
 
     public void SetActiceInPhase(Phase newPhase)

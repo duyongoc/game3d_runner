@@ -5,9 +5,8 @@ using UnityEngine;
 
 public class FeedBackMgr : Singleton<FeedBackMgr>
 {
-    
-    //
-    //= inspector 
+
+    [Header("[Setting]")]
     public MMFeedbacks ENMEY_JUMP;
     public MMFeedbacks ENMEY_ELASTIC;
 

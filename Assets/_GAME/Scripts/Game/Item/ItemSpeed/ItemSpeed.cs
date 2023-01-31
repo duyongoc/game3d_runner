@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ItemSpeed : MonoBehaviour
 {
+
     public GameObject iconEffect;
 
     public void MakeEffect()
@@ -11,4 +12,5 @@ public class ItemSpeed : MonoBehaviour
         Instantiate(iconEffect, transform.position, Quaternion.identity);
         Destroy(this.gameObject);
     }
+    
 }

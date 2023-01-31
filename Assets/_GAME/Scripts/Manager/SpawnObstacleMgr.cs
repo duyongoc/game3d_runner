@@ -5,9 +5,7 @@ using UnityEngine;
 public class SpawnObstacleMgr : MonoBehaviour
 {
 
-
-    //
-    //= inspector
+    [Header("[Setting]")]
     [SerializeField] private Obstacle[] spawnObject;
 
 
@@ -21,6 +19,7 @@ public class SpawnObstacleMgr : MonoBehaviour
     // {
     // }
     #endregion
+
 
     public void Reset()
     {

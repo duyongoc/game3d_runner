@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CrazyPlace : MonoBehaviour
 {
+
+
     [Header("Trigger crazy time")]
     public float timeTrigger = 2f;
     public float timeTriggerFinish = 5f;
@@ -11,45 +13,42 @@ public class CrazyPlace : MonoBehaviour
 
     [Header("Crazy Boom")]
     public GameObject crazyBoom;
-
     public GameObject placement;
-    
 
 
-    //
-    //private
-    //
+    // [private]
     private bool rotatePlacement = false;
     private Animator m_animator;
     private Collider m_collider;
+
 
     #region UNITY
     private void Start()
     {
         m_animator = this.GetComponent<Animator>();
         m_collider = this.GetComponent<Collider>();
-
     }
 
     private void Update()
     {
-        if(isTrigger)
+        if (isTrigger)
         {
-
             Invoke("CrazyTimeFinish", timeTriggerFinish);
-            isTrigger = false; 
+            isTrigger = false;
         }
 
-        if(rotatePlacement)
+        if (rotatePlacement)
             placement.transform.Rotate(new Vector3(0, -1, 0) * 2);
     }
     #endregion
-    
-    void OnTriggerEnter(Collider other)
+
+
+
+    private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Player")
-        {   
-            if(!isTrigger)
+        if (other.tag == "Player")
+        {
+            if (!isTrigger)
             {
                 m_animator.SetBool("Attack", true);
                 rotatePlacement = true;
@@ -58,6 +57,7 @@ public class CrazyPlace : MonoBehaviour
         }
     }
 
+
     private void CrazyTimeFinish()
     {
         m_animator.SetBool("Attack", false);
@@ -65,11 +65,11 @@ public class CrazyPlace : MonoBehaviour
         isTrigger = false;
     }
 
+
     private void CrazyTimeStart()
     {
         GameObject tmp = Instantiate(crazyBoom, transform.position, Quaternion.identity);
         SpawnCrazyPlace.s_instance.ListCrazyPlaceCreated.Add(tmp);
-        
         isTrigger = true;
     }
 

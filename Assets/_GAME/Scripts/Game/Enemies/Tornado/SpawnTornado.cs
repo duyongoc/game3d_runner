@@ -5,16 +5,23 @@ using UnityEngine;
 public class SpawnTornado : Obstacle
 {
 
-    //
-    //= inspector
+    public enum SpawnState
+    {
+        SpawnInit,
+        Spawn,
+        None
+    };
+
+
+    [Header("[Setting]")]
     [SerializeField] private ScriptTornado scriptTornado;
     [SerializeField] private GameObject enemyPrefab;
-    public enum SpawnState { SpawnInit, Spawn, None };
-    private SpawnState currentState = SpawnState.SpawnInit;
+    public List<GameObject> listEnemyCreated;
+    public SpawnState currentState = SpawnState.SpawnInit;
 
 
-    //
-    //= private
+    // [private]
+    private Transform target;
     private float timeProcessDelay = 0f;
     private float timeDelay = 0f;
     private bool isStart = false;
@@ -24,8 +31,6 @@ public class SpawnTornado : Obstacle
     private float timeSpawn;
     private float timerProcessSpawn;
 
-    private Transform target;
-    public List<GameObject> listEnemyCreated;
 
 
     #region UNITY
@@ -52,12 +57,10 @@ public class SpawnTornado : Obstacle
             switch (currentState)
             {
                 case SpawnState.SpawnInit:
-                    SpawnEnemyInit();
-                    break;
+                    SpawnEnemyInit(); break;
 
                 case SpawnState.Spawn:
-                    SpawnEnemy();
-                    break;
+                    SpawnEnemy(); break;
 
                 case SpawnState.None:
                     break;
@@ -66,11 +69,14 @@ public class SpawnTornado : Obstacle
     }
     #endregion
 
+
+
     #region Function of state
     private void SpawnEnemyInit()
     {
         currentState = SpawnState.Spawn;
     }
+
 
     private void SpawnEnemy()
     {
@@ -79,17 +85,18 @@ public class SpawnTornado : Obstacle
         {
             GameObject obj = Instantiate(enemyPrefab, GetRandomPoint(), Quaternion.identity, transform);
             listEnemyCreated.Add(obj);
-
             timerProcessSpawn = 0;
         }
     }
     #endregion
+
 
     public void FinishWarningAlert()
     {
         timerProcessSpawn = 0;
         currentState = SpawnState.Spawn;
     }
+
 
     private Vector3 GetRandomPoint()
     {
@@ -111,6 +118,7 @@ public class SpawnTornado : Obstacle
         return new Vector3(hit.position.x, 0, hit.position.z);
     }
 
+
     public override void Reset()
     {
         foreach (GameObject obj in listEnemyCreated)
@@ -126,16 +134,17 @@ public class SpawnTornado : Obstacle
         timerProcessSpawn = 0;
     }
 
+
     private void CacheDefine()
     {
         timeSpawn = scriptTornado.timeSpawn;
         timerProcessSpawn = scriptTornado.timeProcessSpawn;
-
         timeDelay = scriptTornado.timeDelay;
 
         minRangeSpawn = scriptTornado.minRangeSpawn;
         maxRangeSpawn = scriptTornado.maxRangeSpawn;
     }
+
 
     private void CacheComponent()
     {

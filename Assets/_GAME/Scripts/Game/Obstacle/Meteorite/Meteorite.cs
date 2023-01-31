@@ -4,16 +4,17 @@ using UnityEngine;
 
 public class Meteorite : MonoBehaviour
 {
+
     public GameObject shape;
+    public GameObject effect;
+    public ParticleSystem particle;
     public float speed = 5;
 
-    public GameObject effect;
 
-    public ParticleSystem particle;
 
+    #region UNITY
     private void Start()
     {
-
     }
 
     private void Update()
@@ -32,9 +33,10 @@ public class Meteorite : MonoBehaviour
             Destroy(shape);
             Invoke("OnDestroy", 2);
             //Instantiate(effect, shape.transform.position, Quaternion.identity);
-
         }
     }
+    #endregion
+
 
     private void OnDestroy()
     {

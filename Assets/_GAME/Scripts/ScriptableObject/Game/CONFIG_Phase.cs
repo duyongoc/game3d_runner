@@ -19,7 +19,6 @@ public class SceneConfigEditor : Editor
     public override void OnInspectorGUI()
     {
         CONFIG_Phase configScene = (CONFIG_Phase)target;
-
         GUIStyle title = new GUIStyle ();
         title.richText = true;
         GUILayout.Label("<size=15><color=yellow>This is a Label in a Custom Editor</color></size>",title);

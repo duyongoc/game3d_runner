@@ -6,17 +6,21 @@ using UnityEngine.AI;
 public class SpawnEnemyDefault : SpawnEnemy, ISpawnObject
 {
 
-    //
-    //= inspector
-    [Header("CONFIG")]
+    public enum SpawnState
+    {
+        Init,
+        Spawn,
+        None
+    };
+
+
+    [Header("[CONFIG]")]
     [SerializeField] private ScriptEnemyDefault scriptEnemy;
     [SerializeField] private GameObject enemyPrefab;
-    public enum SpawnState { Init, Spawn, None };
     public SpawnState currentState;
 
 
-    //
-    //= private
+    // [private]
     private List<GameObject> listEnemiesCreated;
     private Transform target;
 
@@ -44,12 +48,10 @@ public class SpawnEnemyDefault : SpawnEnemy, ISpawnObject
             switch (currentState)
             {
                 case SpawnState.Init:
-                    InitSpawnWarningEnemy();
-                    break;
+                    InitSpawnWarningEnemy(); break;
 
                 case SpawnState.Spawn:
-                    SpawnEnemy();
-                    break;
+                    SpawnEnemy(); break;
 
                 case SpawnState.None:
                     break;
@@ -57,6 +59,7 @@ public class SpawnEnemyDefault : SpawnEnemy, ISpawnObject
         }
     }
     #endregion
+
 
     #region Function of State
     private void InitSpawnWarningEnemy()
@@ -77,6 +80,7 @@ public class SpawnEnemyDefault : SpawnEnemy, ISpawnObject
         currentState = SpawnState.Spawn;
     }
 
+
     private void SpawnEnemy()
     {
         timerRemainSpawn += Time.deltaTime;
@@ -90,12 +94,14 @@ public class SpawnEnemyDefault : SpawnEnemy, ISpawnObject
     }
     #endregion
 
+
     private void CreateEnemyWarning(bool warn, Vector3 vec)
     {
         GameObject obj = Instantiate(enemyPrefab, vec, Quaternion.identity, transform.parent);
         obj.GetComponent<Enemy>().SetWarning(warn);
         listEnemiesCreated.Add(obj);
     }
+
 
     private Vector3 GetRandomPoint()
     {
@@ -105,7 +111,6 @@ public class SpawnEnemyDefault : SpawnEnemy, ISpawnObject
             Vector3 randomDirection = Random.insideUnitSphere * maxRangeSpawn;
             randomDirection += target.position;
             NavMesh.SamplePosition(randomDirection, out hit, maxRangeSpawn, 1);
-
         }
         // check the point was created isn't near player which range minRangeSpawn
         while ((Vector3.SqrMagnitude(hit.position - target.position) <= minRangeSpawn * minRangeSpawn)
@@ -116,6 +121,7 @@ public class SpawnEnemyDefault : SpawnEnemy, ISpawnObject
         Vector3 vec = new Vector3(hit.position.x, 0, hit.position.z);
         return vec;
     }
+
 
     public override void Reset()
     {
@@ -132,6 +138,7 @@ public class SpawnEnemyDefault : SpawnEnemy, ISpawnObject
         timeToSpawn = scriptEnemy.timeSpawn;
         currentState = SpawnState.Init;
     }
+
 
     public void SetInPhaseObject(bool active, float speed = 0, float spawn = 0)
     {
@@ -152,6 +159,7 @@ public class SpawnEnemyDefault : SpawnEnemy, ISpawnObject
         moveSpeed = scriptEnemy.moveSpeed;
         timeToSpawn = scriptEnemy.timeSpawn;
     }
+
 
     private void CacheComponent()
     {

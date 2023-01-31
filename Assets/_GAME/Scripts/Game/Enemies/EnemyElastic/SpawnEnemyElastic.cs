@@ -5,17 +5,20 @@ using UnityEngine;
 public class SpawnEnemyElastic : SpawnEnemy, ISpawnObject
 {
 
-    //
-    //= inspector
-    [Header("CONFIG")]
+    public enum SpawnState
+    {
+        Spawn,
+        None
+    };
+
+
+    [Header("[CONFIG]")]
     [SerializeField] private ScriptEnemyElastic scriptEnemy;
     [SerializeField] private GameObject enemyPrefab;
     public SpawnState currentState = SpawnState.Spawn;
-    public enum SpawnState { Spawn, None };
 
 
-    //
-    //= private
+    // [private]
     private List<GameObject> listEnemyCreated;
     private Transform target;
     private float minRangeSpawn;
@@ -28,6 +31,7 @@ public class SpawnEnemyElastic : SpawnEnemy, ISpawnObject
     private float moveSpeed;
     private float timeToSpawn;
     private float timerProcessSpawn = 0;
+
 
 
     #region UNITY
@@ -57,11 +61,9 @@ public class SpawnEnemyElastic : SpawnEnemy, ISpawnObject
             switch (currentState)
             {
                 case SpawnState.Spawn:
-                    StateSpawn();
-                    break;
+                    StateSpawn(); break;
 
-                case SpawnState.None:
-                    break;
+                case SpawnState.None: break;
             }
         }
     }
@@ -75,16 +77,17 @@ public class SpawnEnemyElastic : SpawnEnemy, ISpawnObject
         {
             GameObject obj = Instantiate(enemyPrefab, GetRandomPoint(), Quaternion.identity, transform);
             listEnemyCreated.Add(obj);
-
             timerProcessSpawn = 0;
         }
     }
+
 
     public void FinishWarningAlert()
     {
         timerProcessSpawn = 0;
         currentState = SpawnState.Spawn;
     }
+
 
     private Vector3 GetRandomPoint()
     {
@@ -121,6 +124,7 @@ public class SpawnEnemyElastic : SpawnEnemy, ISpawnObject
         listEnemyCreated.Clear();
     }
 
+
     public override void Reset()
     {
         RemoveListEnemy();
@@ -135,6 +139,7 @@ public class SpawnEnemyElastic : SpawnEnemy, ISpawnObject
         currentState = SpawnState.Spawn;
     }
 
+
     public void SetInPhaseObject(bool active, float speed = 0, float spawn = 0)
     {
         gameObject.SetActive(active);
@@ -148,10 +153,10 @@ public class SpawnEnemyElastic : SpawnEnemy, ISpawnObject
         timeDelay = scriptEnemy.timeDelay;
         minRangeSpawn = scriptEnemy.minRangeSpawn;
         maxRangeSpawn = scriptEnemy.maxRangeSpawn;
-
         moveSpeed = scriptEnemy.moveSpeed;
         timeToSpawn = scriptEnemy.timeToSpawn;
     }
+
 
     private void CacheComponent()
     {

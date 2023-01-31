@@ -16,22 +16,19 @@ public class SpawnCrazyPlace : Obstacle
     #endregion
 
 
-    //
-    //= inspector
+    [Header("[Setting]")]
     [SerializeField] private GameObject prefabsCrazyPlace = default;
     [SerializeField] private int size = 3;
     [SerializeField] private Transform[] transArr = default;
 
 
-    //
-    // private 
+    // [private] 
     private bool isCreated = false;
     private List<int> listIndex;
     private List<GameObject> listCrazyPlaceCreated;
 
 
-    //
-    //= properties
+    // [properties]
     public List<GameObject> ListCrazyPlaceCreated { get => listCrazyPlaceCreated; set => listCrazyPlaceCreated = value; }
 
 
@@ -54,6 +51,7 @@ public class SpawnCrazyPlace : Obstacle
         }
     }
     #endregion
+
 
     private void SpawCrazyPlace()
     {
@@ -78,6 +76,7 @@ public class SpawnCrazyPlace : Obstacle
         }
     }
 
+
     public override void Reset()
     {
         foreach (GameObject obj in listCrazyPlaceCreated)
@@ -86,15 +85,15 @@ public class SpawnCrazyPlace : Obstacle
         }
 
         isCreated = false;
-        
         listIndex.Clear();
         listCrazyPlaceCreated.Clear();
     }
+
 
     private void CacheComponent()
     {
         listCrazyPlaceCreated = new List<GameObject>();
         listIndex = new List<int>();
     }
-    
+
 }

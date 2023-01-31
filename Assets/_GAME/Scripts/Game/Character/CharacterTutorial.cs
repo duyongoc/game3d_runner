@@ -5,23 +5,26 @@ using UnityEngine;
 public class CharacterTutorial : StateCharacter
 {
 
+    public enum Touch
+    {
+        Move,
+        Left,
+        Right,
+        None
+    };
 
-    // isTouch will check 
-    public enum Touch { Move, Left, Right, None };
+
+    // [private]
     private Touch touchScene = Touch.Move;
-
-    //
-    //= private
     private MainCharacter character;
     private float timerProcess = 0f;
     private float timer = 1.5f;
 
 
     #region UNTIY
-    private void Start()
-    {
-
-    }
+    // private void Start()
+    // {
+    // }
 
     // private void Update()
     // {
@@ -43,12 +46,10 @@ public class CharacterTutorial : StateCharacter
         switch (touchScene)
         {
             case Touch.Move:
-                {
-                    character.GetAnimator.SetBool("Moving", true);
-                    character.transform.Translate(Vector3.forward * character.GetMoveSpeed * Time.deltaTime);
+                character.GetAnimator.SetBool("Moving", true);
+                character.transform.Translate(Vector3.forward * character.GetMoveSpeed * Time.deltaTime);
+                break;
 
-                    break;
-                }
             case Touch.Left:
                 {
                     character.GetAnimator.SetBool("Moving", false);
@@ -93,18 +94,18 @@ public class CharacterTutorial : StateCharacter
                     break;
                 }
             case Touch.None:
-                {
-                    break;
-                }
+                break;
         }
     }
     #endregion
+
 
 
     public override void EndState()
     {
         base.EndState();
     }
+
 
     private void SetUpTouchLeftFirst()
     {

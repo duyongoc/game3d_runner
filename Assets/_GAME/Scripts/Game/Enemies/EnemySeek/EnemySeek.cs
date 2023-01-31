@@ -5,36 +5,40 @@ using UnityEngine;
 public class EnemySeek : Enemy, IDamage
 {
 
-    //
-    //= public
-    [Header("Config Enemy")]
+    public enum EnemyState
+    {
+        Scream,
+        Moving,
+        Stun,
+        None
+    }
+
+
+    [Header("[Config]")]
     public ScriptEnemySeek scriptEnemy;
     public EnemyState currentState = EnemyState.Moving;
-    public enum EnemyState { Scream, Moving, Stun, None }
 
 
-    //
-    //= inspector
-    [Header("Enemy's param")]
+    [Header("[Enemy's param]")]
     [SerializeField] private GameObject warningIcon;
     [SerializeField] private GameObject skinedMeshRender;
 
 
-    // ANIMATION STATE
+    // [ANIMATION STATE]
     private string currentAnimator;
     private const string ENEMY_SCREAM = "Enemy_Scream";
     private const string ENEMY_RUN = "Enemy_Run";
     private const string ENEMY_DEAD = "Enemy_Dead";
     private const string ENEMY_DANCE = "Enemy_Dance";
 
-    // private variable
+    // [private]
     private float moveSpeed = 0f;
     private float slowdownTurning = 0f;
     private float distanceWarning = 0f;
     private Vector3 veclocity = Vector3.zero;
     private Transform target;
 
-    //explosion
+    // explosion
     private GameObject prefabExplosion;
     private GameObject prefabExplosionSpecial;
     private GameObject prefabMoveTurning;
@@ -60,12 +64,10 @@ public class EnemySeek : Enemy, IDamage
         switch (currentState)
         {
             case EnemyState.Moving:
-                EnemyMoving();
-                break;
+                EnemyMoving(); break;
 
             case EnemyState.Stun:
-                EnenmyStun();
-                break;
+                EnenmyStun(); break;
 
             case EnemyState.None:
                 break;
@@ -122,10 +124,10 @@ public class EnemySeek : Enemy, IDamage
         }
     }
 
+
     private void EnenmyStun()
     {
         transform.position = Vector3.MoveTowards(transform.position, target.position, Time.deltaTime * moveSpeed);
-
         if (Vector3.Distance(transform.position, target.position) <= 1f)
         {
             prefabExplosion.SpawnToGarbage(transform.position, Quaternion.identity);
@@ -133,10 +135,12 @@ public class EnemySeek : Enemy, IDamage
         }
     }
 
+
     public void ChangeState(EnemyState newState)
     {
         currentState = newState;
     }
+
 
     private void SetAnimationState(string newState)
     {
@@ -147,6 +151,7 @@ public class EnemySeek : Enemy, IDamage
         currentAnimator = newState;
     }
 
+
     private void GetWarningFromEnemy()
     {
         if (Vector3.SqrMagnitude(transform.position - target.position) <= distanceWarning * distanceWarning)
@@ -156,12 +161,14 @@ public class EnemySeek : Enemy, IDamage
         }
     }
 
-    IEnumerator FinishWarningEnemySeek()
+
+    private IEnumerator FinishWarningEnemySeek()
     {
         yield return new WaitForSeconds(2f);
         warningIcon.SetActive(false);
         isWarning = false;
     }
+
 
     public void EffectFromTheHole(Transform newTarget)
     {
@@ -169,15 +176,18 @@ public class EnemySeek : Enemy, IDamage
         ChangeState(EnemyState.Stun);
     }
 
+
     private void OnEventPlayerDead()
     {
         SetAnimationState(ENEMY_DANCE);
     }
 
+
     public void TakeDamage(float damage)
     {
         SelfDestroy();
     }
+
 
     public void SelfDestroy()
     {
@@ -190,7 +200,7 @@ public class EnemySeek : Enemy, IDamage
     }
 
 
-    void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         switch (other.tag)
         {

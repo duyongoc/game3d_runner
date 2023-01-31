@@ -6,13 +6,12 @@ using UnityEngine;
 public class GroundController : MonoBehaviour
 {
 
-    //
-    //= inspector
+
+    [Header("[Setting]")]
     [SerializeField] private Transform[] arrayGround;
 
 
-    //
-    //= private 
+    // [private] 
     private Transform[,] array2D = new Transform[3, 3];
 
 
@@ -28,6 +27,7 @@ public class GroundController : MonoBehaviour
     // {
     // }
     #endregion
+
 
     public void ArrangeMap(Vector3 originPos)
     {
@@ -58,6 +58,5 @@ public class GroundController : MonoBehaviour
             }
         }
     }
-
 
 }

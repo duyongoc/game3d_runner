@@ -5,8 +5,7 @@ using UnityEngine;
 public class Ground : MonoBehaviour
 {
 
-    //
-    //= private
+    // [private]
     private GroundController groundController;
 
 

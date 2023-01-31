@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class StaticObstacle : MonoBehaviour
 {
+
+
     [Header("Make dissolve effect when destroy obstacle")]
     public Material marDissolve;
+    public GameObject render;
+    public GameObject particle;
+
+
+    // [private]
     private Material marDefault;
 
-    [Header("Renderer obstacle")]
-    public GameObject render;
-
-    [Header("Particle ostacle")]
-    public GameObject particle;
 
 
     #region UNITY
@@ -20,7 +22,12 @@ public class StaticObstacle : MonoBehaviour
     {
         marDefault = render.GetComponent<Renderer>().material;
     }
+
+    // private void Update()
+    // {
+    // }
     #endregion
+
 
     public void DissolveObstacle()
     {
@@ -30,7 +37,8 @@ public class StaticObstacle : MonoBehaviour
         StartCoroutine("OnDissolve");
     }
 
-    IEnumerator OnDissolve()
+
+    private IEnumerator OnDissolve()
     {
         float timer = 1;
         float process = 0;

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ScenePauseGame : StateScene
 {
+
+
     public override void StartState()
     {
         base.EndState();
@@ -37,7 +39,6 @@ public class ScenePauseGame : StateScene
     public void OnPressButtonExit()
     {
         //Application.Quit();
-
         // Owner.ChangeState(Owner.m_sceneGameOver);
     }
     #endregion

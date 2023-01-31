@@ -13,8 +13,5 @@ public class SoundConfigSO : ScriptableObject
     public AudioClip sfx_characterShield;
     public AudioClip sfx_characterDead;
 
-    
-
-
 
 }

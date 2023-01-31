@@ -5,8 +5,7 @@ using UnityEngine;
 public class ScoreMgr : Singleton<ScoreMgr>
 {
 
-    //
-    //= public
+    [Header("[Setting]")]
     public float score;
     public float highscore;
 
@@ -27,7 +26,5 @@ public class ScoreMgr : Singleton<ScoreMgr>
     {
         score = 0;
     }
-
-
 
 }

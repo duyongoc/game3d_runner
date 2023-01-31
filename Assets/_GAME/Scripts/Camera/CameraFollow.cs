@@ -5,8 +5,7 @@ using UnityEngine;
 public class CameraFollow : Singleton<CameraFollow>
 {
 
-    //
-    //= private 
+    // [private] 
     private GameMgr gameMgr;
     private Vector3 velocity;
     private Transform target;
@@ -23,8 +22,7 @@ public class CameraFollow : Singleton<CameraFollow>
     private float currentZ = 0f;
 
 
-    //
-    //= properties
+    // [properties]
     public bool HasStart { get => hasStart; set => hasStart = value; }
 
 
@@ -52,11 +50,14 @@ public class CameraFollow : Singleton<CameraFollow>
     }
     #endregion
 
+
+
     public void ChangeTarget(Transform tar, float smoother)
     {
         smoothFactor = smoother;
         target = tar;
     }
+
 
     private void CheckZoomCamera()
     {
@@ -90,12 +91,14 @@ public class CameraFollow : Singleton<CameraFollow>
         return false;
     }
 
+
     public void MakeCameraShake(float duration, float magnitude)
     {
         StartCoroutine(Shake(duration, magnitude));
     }
 
-    IEnumerator Shake(float duration, float magnitude)
+
+    private IEnumerator Shake(float duration, float magnitude)
     {
         Vector3 originalPos = transform.position;
         float elapsed = 0.0f;
@@ -107,10 +110,10 @@ public class CameraFollow : Singleton<CameraFollow>
 
             transform.localPosition = new Vector3(transform.position.x + x, originalPos.y, transform.position.z + z);
             elapsed += Time.deltaTime;
-
             yield return null;
         }
     }
+
 
     public void Reset()
     {
@@ -133,6 +136,7 @@ public class CameraFollow : Singleton<CameraFollow>
         currentZ = originZ = gameMgr.CONFIG_GAME.posOriginZ;
         velocity = Vector3.zero;
     }
+
 
     private void CacheComponent()
     {

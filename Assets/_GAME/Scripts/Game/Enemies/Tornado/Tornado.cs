@@ -5,17 +5,20 @@ using UnityEngine;
 public class Tornado : MonoBehaviour
 {
 
-    //
-    //= inspector
-    [Header("CONFIG")]
+    public enum EnemyState
+    {
+        Moving,
+        None
+    }
+
+
+    [Header("[CONFIG]")]
     [SerializeField] private ScriptTornado scriptTornado;
     [SerializeField] private GameObject explosion;
     public EnemyState currentState = EnemyState.Moving;
-    public enum EnemyState { Moving, None }
 
 
-    //
-    //= private
+    // [private]
     private Rigidbody2D mRigidbody2D;
     private Transform target;
     private float moveSpeed = 0f;
@@ -41,7 +44,6 @@ public class Tornado : MonoBehaviour
 
             case EnemyState.None:
                 break;
-
         }
     }
     #endregion
@@ -93,7 +95,6 @@ public class Tornado : MonoBehaviour
                 explosion.SpawnToGarbage(transform.localPosition, Quaternion.Euler(-90, 0, 0));
                 break;
         }
-        
     }
 
 
@@ -102,6 +103,7 @@ public class Tornado : MonoBehaviour
         moveSpeed = scriptTornado.moveSpeed;
         //agent.speed = scriptEnemy.moveSpeed;
     }
+    
 
     private void CacheComponent()
     {

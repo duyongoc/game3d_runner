@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class FirePrefabDamage : MonoBehaviour
 {
-    void OnTriggerEnter(Collider other)
+
+    private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag.Contains("Enemy"))
         {
@@ -14,7 +15,5 @@ public class FirePrefabDamage : MonoBehaviour
             var temp2 = other.GetComponentInParent<IDamage>();
             temp2?.TakeDamage(0);
         }
-
-
     }
 }

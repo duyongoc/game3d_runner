@@ -5,16 +5,12 @@ using UnityEngine;
 public class SceneTutorial : StateScene
 {
 
-    [Header("Slider process")]
+    [Header("[Setting]")]
     public GameObject textScore;
-    // public GameObject sliderProcess;
-    
+    public GameObject buttonOK;
     public GameObject[] handLeftTutorial;
     public GameObject[] handRightTutorial;
-    public GameObject buttonOK;
-
-    //
-    //= private
+    // public GameObject sliderProcess;
 
 
 
@@ -23,24 +19,18 @@ public class SceneTutorial : StateScene
         base.EndState();
 
         // Owner.SetActivePanelScene(this.name);
-
-        textScore.SetActive(false);
         // sliderProcess.SetActive(false);
-        
+        textScore.SetActive(false);
+
         // set false all gameobject when load tutorial scene
         SetActiveObjectTutorial(false, false, false);
-        
+
     }
 
     public override void UpdateState()
     {
         base.UpdateState();
-
-        
-            
-            // default:
-            //     mainCharacter.animator.SetBool("Moving", false);
-
+        // mainCharacter.animator.SetBool("Moving", false);
     }
 
     public override void EndState()
@@ -56,17 +46,18 @@ public class SceneTutorial : StateScene
     {
         // mainCharacter.Reset();
         // Owner.ChangeState(Owner.m_sceneInGame);
-
         buttonOK.SetActive(false);
     }
     #endregion
+
 
     private void SetUpTouchLeftFirst()
     {
         SetActiveObjectTutorial(true, false, false);
     }
 
-    private void SetActiveObjectTutorial( bool handLeft, bool handRight, bool btnOK)
+
+    private void SetActiveObjectTutorial(bool handLeft, bool handRight, bool btnOK)
     {
         handLeftTutorial[0].SetActive(handLeft);
         handLeftTutorial[1].SetActive(handLeft);
@@ -75,5 +66,5 @@ public class SceneTutorial : StateScene
         buttonOK.SetActive(btnOK);
     }
 
-    
+
 }

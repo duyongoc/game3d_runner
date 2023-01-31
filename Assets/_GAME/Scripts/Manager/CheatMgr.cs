@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class CheatMgr : Singleton<CheatMgr>
 {
-    [Header("CONFIG")]
-    public CONFIG_GAME scriptConfigGame;
 
+    [Header("[CONFIG]")]
+    public CONFIG_GAME scriptConfigGame;
 
 }

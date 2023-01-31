@@ -6,17 +6,21 @@ using UnityEngine.AI;
 public class SpawnEnemyJump : SpawnEnemy, ISpawnObject
 {
 
-    //
-    //= inspector
-    [Header("CONFIG")]
+    public enum SpawnState
+    {
+        SpawnWarning,
+        Spawn,
+        None
+    };
+
+
+    [Header("[CONFIG]")]
     [SerializeField] private ScriptEnemyJump scriptEnemy;
     [SerializeField] private GameObject enemyPrefab;
     public SpawnState currentState;
-    public enum SpawnState { SpawnWarning, Spawn, None };
 
 
-    //
-    //= private
+    // [private]
     private Transform target;
     private List<GameObject> listEnemyCreated;
     private float minRangeSpawn;
@@ -34,6 +38,7 @@ public class SpawnEnemyJump : SpawnEnemy, ISpawnObject
 
 
     public static SpawnEnemyJump Instance;
+
 
     #region UNITY
     private void Awake()
@@ -70,12 +75,10 @@ public class SpawnEnemyJump : SpawnEnemy, ISpawnObject
             switch (currentState)
             {
                 case SpawnState.SpawnWarning:
-                    SpawnEnenyWithWarning();
-                    break;
+                    SpawnEnenyWithWarning(); break;
 
                 case SpawnState.Spawn:
-                    SpawnEnemy();
-                    break;
+                    SpawnEnemy(); break;
 
                 case SpawnState.None:
                     break;
@@ -84,6 +87,7 @@ public class SpawnEnemyJump : SpawnEnemy, ISpawnObject
 
     }
     #endregion
+
 
     #region Function of State Enemy
     // private void InitSpawn()
@@ -115,9 +119,8 @@ public class SpawnEnemyJump : SpawnEnemy, ISpawnObject
             }
             timerProcessSpawn = 0;
         }
-
-
     }
+
 
     private void SpawnEnemy()
     {
@@ -131,6 +134,7 @@ public class SpawnEnemyJump : SpawnEnemy, ISpawnObject
         }
     }
     #endregion
+
 
     private Vector3 GetRandomPoint()
     {
@@ -152,6 +156,7 @@ public class SpawnEnemyJump : SpawnEnemy, ISpawnObject
         return vec;
     }
 
+
     public void SetInPhaseObject(bool active, float speed = 0, float spawn = 0)
     {
         this.gameObject.SetActive(active);
@@ -159,10 +164,12 @@ public class SpawnEnemyJump : SpawnEnemy, ISpawnObject
         timeToSpawn = spawn;
     }
 
+
     public void AddEnemyCreated(GameObject ene)
     {
         listEnemyCreated.Add(ene);
     }
+
 
     private void RemoveListEnemy()
     {
@@ -178,10 +185,11 @@ public class SpawnEnemyJump : SpawnEnemy, ISpawnObject
         listEnemyCreated.Clear();
     }
 
+
     public override void Reset()
     {
         RemoveListEnemy();
-        
+
         isStart = false;
         moveSpeed = 0;
         timeCountDelay = 0;
@@ -202,10 +210,10 @@ public class SpawnEnemyJump : SpawnEnemy, ISpawnObject
         timeDelay = scriptEnemy.timeDelay;
         minRangeSpawn = scriptEnemy.minRangeSpawn;
         maxRangeSpawn = scriptEnemy.maxRangeSpawn;
-
         moveSpeed = scriptEnemy.moveSpeed;
         timeToSpawn = scriptEnemy.timeToSpawn;
     }
+    
 
     private void CacheComponent()
     {

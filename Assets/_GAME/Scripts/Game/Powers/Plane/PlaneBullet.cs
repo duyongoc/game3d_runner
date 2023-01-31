@@ -5,8 +5,7 @@ using UnityEngine;
 public class PlaneBullet : MonoBehaviour
 {
 
-    //
-    //= private 
+    // [private] 
     private Vector3 mTarget;
     private float moveSpeed = 0f;
     private GameObject bulletExplosion = null;
@@ -30,6 +29,7 @@ public class PlaneBullet : MonoBehaviour
     #endregion
 
 
+
     public void Init(Vector3 target, float speed, GameObject explosion)
     {
         mTarget = target;
@@ -37,11 +37,13 @@ public class PlaneBullet : MonoBehaviour
         bulletExplosion = explosion;
     }
 
+
     private void SelfDestroy()
     {
         bulletExplosion?.SpawnToGarbage(transform.position, Quaternion.identity);
         Destroy(gameObject);
     }
+
 
     private void OnTriggerEnter(Collider other)
     {
@@ -59,7 +61,6 @@ public class PlaneBullet : MonoBehaviour
             case "TheGround":
                 SelfDestroy();
                 break;
-
         }
     }
 

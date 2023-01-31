@@ -27,9 +27,8 @@ public class ScriptEnemyJump : ScriptableObject
 
     [Header("Other")]
     public Material marDissolve;
-     public GameObject prefabExplosion;
+    public GameObject prefabExplosion;
     public GameObject prefabJumpExplosion;
     public GameObject shapeArlet;
 
-    
 }

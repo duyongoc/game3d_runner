@@ -5,20 +5,19 @@ using UnityEngine;
 public class SoundMgr : Singleton<SoundMgr>
 {
 
-    //
-    //= inspector
+    [Header("[Setting]")]
     [SerializeField] private SoundConfigSO soundConfig;
 
 
-    //
-    //= private
+    // [private]
     private static AudioSource audioSource;
 
 
-    //define
+    // [SFX]
     [HideInInspector] public AudioClip SFX_BACKGROUND;
     [HideInInspector] public AudioClip SFX_CHARACTER_SHIELD;
     [HideInInspector] public AudioClip SFX_CHARACTER_DEAD;
+
 
 
     #region UNITY
@@ -33,6 +32,7 @@ public class SoundMgr : Singleton<SoundMgr>
     // }
     #endregion
 
+
     public static void PlaySound(AudioClip audi)
     {
         audioSource.Stop();
@@ -42,10 +42,12 @@ public class SoundMgr : Singleton<SoundMgr>
         audioSource.loop = true;
     }
 
+
     public static void StopSound()
     {
         audioSource.Stop();
     }
+
 
     public static void PlaySoundOneShot(AudioClip audi)
     {
@@ -53,11 +55,11 @@ public class SoundMgr : Singleton<SoundMgr>
         audioSource.PlayOneShot(audi);
     }
 
+
     public bool IsPlaying(AudioClip audi)
     {
         return audioSource.clip == audi && audioSource.isPlaying;
     }
-
 
 
     private void CacheDefine()
@@ -66,6 +68,7 @@ public class SoundMgr : Singleton<SoundMgr>
         SFX_CHARACTER_SHIELD = soundConfig.sfx_characterShield;
         SFX_CHARACTER_DEAD = soundConfig.sfx_characterDead;
     }
+
 
     private void CacheComponent()
     {

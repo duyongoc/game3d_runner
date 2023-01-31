@@ -5,18 +5,17 @@ using UnityEngine;
 public class SpawnItemShield : Item
 {
     
-    //
-    //= inspector
+    [Header("[Setting]")]
     [SerializeField]private GameObject prefabIcon = default;
     [SerializeField]private int numberPower = 20;
     [SerializeField]private float timeSpawn = 3f;
 
 
-    //
-    //= private 
+    // [private] 
     private List<GameObject> listPowerCreated;
     private bool isCreated = false;
     private float timer = 0;
+
 
 
     #region UNITY
@@ -46,12 +45,12 @@ public class SpawnItemShield : Item
                 float posZ = Random.Range( -30f, 50f);
                 GameObject obj = Instantiate(prefabIcon, new Vector3(posX, 0.5f, posZ), Quaternion.identity, transform);
                 listPowerCreated.Add(obj);
-
                 timer = 0;
             }
         }
     }
     #endregion
+
 
 
     private void SpawnPowerWhenGameStart()
@@ -65,12 +64,14 @@ public class SpawnItemShield : Item
         }
     }
 
+
     private bool iSValid()
     {
         if(listPowerCreated.Count < 3)
             return true;
         return false;
     }
+
 
     public override void Reset()
     {
@@ -82,6 +83,7 @@ public class SpawnItemShield : Item
         listPowerCreated.Clear();
         isCreated = false;
     }
+    
 
     private void CacheComponent()
     {

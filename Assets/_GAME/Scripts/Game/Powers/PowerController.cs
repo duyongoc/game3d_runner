@@ -14,7 +14,7 @@ public enum EBoost
 
 public class PowerController : Singleton<PowerController>
 {
-    
+
     public ShieldPower shieldPower;
 
     #region UNITY

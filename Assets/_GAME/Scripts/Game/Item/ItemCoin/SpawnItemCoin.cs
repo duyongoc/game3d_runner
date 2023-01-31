@@ -5,16 +5,14 @@ using UnityEngine;
 public class SpawnItemCoin : Item
 {
 
-    //
-    //= inspector
-    [SerializeField] private GameObject prefabIcon = default;
+    [Header("[Setting]")]
+    public GameObject prefabIcon = default;
     public int numberPower = 20;
     public float timeSpawn = 3f;
-
-
-    //
-    //= private
     public List<GameObject> listPowerCreated;
+
+
+    // [private]
     private bool isCreated = false;
     private float timer = 0;
 
@@ -46,14 +44,13 @@ public class SpawnItemCoin : Item
                 float posZ = Random.Range(-30f, 50f);
                 GameObject obj = Instantiate(prefabIcon, new Vector3(posX, 0.5f, posZ), Quaternion.identity, transform);
                 listPowerCreated.Add(obj);
-
                 timer = 0;
             }
         }
     }
     #endregion
 
-    
+
 
     private void SpawnPowerWhenGameStart()
     {
@@ -65,6 +62,7 @@ public class SpawnItemCoin : Item
             listPowerCreated.Add(obj);
         }
     }
+    
 
     public override void Reset()
     {

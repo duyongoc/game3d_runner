@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class SpawnItemMgr : MonoBehaviour
 {
-    
-    //
-    //= inspector
+
+    [Header("[Setting]")]
     [SerializeField] private Item[] spawnObject;
 
 
@@ -20,6 +19,7 @@ public class SpawnItemMgr : MonoBehaviour
     // {
     // }
     #endregion
+    
 
     public void Reset()
     {
@@ -29,5 +29,5 @@ public class SpawnItemMgr : MonoBehaviour
         }
     }
 
-    
+
 }
