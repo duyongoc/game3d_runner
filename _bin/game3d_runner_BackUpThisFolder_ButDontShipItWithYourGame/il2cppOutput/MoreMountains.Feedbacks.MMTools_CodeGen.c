@@ -1,0 +1,308 @@
+﻿#include "pch-c.h"
+#ifndef _MSC_VER
+# include <alloca.h>
+#else
+# include <malloc.h>
+#endif
+
+
+#include "codegen/il2cpp-codegen-metadata.h"
+
+
+
+
+
+// 0x00000001 System.Void MoreMountains.Feedbacks.MMFeedbackBlink::CustomPlayFeedback(UnityEngine.Vector3,System.Single)
+extern void MMFeedbackBlink_CustomPlayFeedback_m2416EE9D350651A963D2242870F7737D4CFE8E57 (void);
+// 0x00000002 System.Void MoreMountains.Feedbacks.MMFeedbackBlink::.ctor()
+extern void MMFeedbackBlink__ctor_m97C23A3ABA4217F0C8EFC6597D17BE5D55544B7C (void);
+// 0x00000003 System.Single MoreMountains.Feedbacks.MMFeedbackDebugLog::get_FeedbackDuration()
+extern void MMFeedbackDebugLog_get_FeedbackDuration_m9C688F957794AB1AEE2DF1485863505C459AA6AF (void);
+// 0x00000004 System.Void MoreMountains.Feedbacks.MMFeedbackDebugLog::CustomPlayFeedback(UnityEngine.Vector3,System.Single)
+extern void MMFeedbackDebugLog_CustomPlayFeedback_m95931BC6E0072274592033F227C4EEB95AFF3793 (void);
+// 0x00000005 System.Void MoreMountains.Feedbacks.MMFeedbackDebugLog::.ctor()
+extern void MMFeedbackDebugLog__ctor_mE7DA63F88FF2BA1255E129DAC8AD299EA0FD312A (void);
+// 0x00000006 System.Single MoreMountains.Feedbacks.MMFeedbackFade::get_FeedbackDuration()
+extern void MMFeedbackFade_get_FeedbackDuration_m3F2B418A585D0B989195E666AE20EAD5767DB85C (void);
+// 0x00000007 System.Void MoreMountains.Feedbacks.MMFeedbackFade::CustomPlayFeedback(UnityEngine.Vector3,System.Single)
+extern void MMFeedbackFade_CustomPlayFeedback_m3C18EDF3AD8AD16F9C12822319C4A8F0B0846BE1 (void);
+// 0x00000008 UnityEngine.Vector3 MoreMountains.Feedbacks.MMFeedbackFade::GetPosition(UnityEngine.Vector3)
+extern void MMFeedbackFade_GetPosition_m6BE8557E1890174BD1C7A07C78E773E608613F34 (void);
+// 0x00000009 System.Void MoreMountains.Feedbacks.MMFeedbackFade::.ctor()
+extern void MMFeedbackFade__ctor_m82BA585E469E3769D025900BC789487FAABD4DF9 (void);
+// 0x0000000A System.Single MoreMountains.Feedbacks.MMFeedbackFloatController::get_FeedbackDuration()
+extern void MMFeedbackFloatController_get_FeedbackDuration_mB2CB258F6F61AF5C1E347B62204AF2EFE8A47562 (void);
+// 0x0000000B System.Void MoreMountains.Feedbacks.MMFeedbackFloatController::CustomInitialization(UnityEngine.GameObject)
+extern void MMFeedbackFloatController_CustomInitialization_m5A39E6C29EE4447ABD7659F74279FA0DBC6A689F (void);
+// 0x0000000C System.Void MoreMountains.Feedbacks.MMFeedbackFloatController::CustomPlayFeedback(UnityEngine.Vector3,System.Single)
+extern void MMFeedbackFloatController_CustomPlayFeedback_m55A556183E1F468E144AB0810A0AA7E06F20DF6B (void);
+// 0x0000000D System.Void MoreMountains.Feedbacks.MMFeedbackFloatController::CustomReset()
+extern void MMFeedbackFloatController_CustomReset_mD52B1C491AB37E61DEC555F873FA8947935F6A62 (void);
+// 0x0000000E System.Void MoreMountains.Feedbacks.MMFeedbackFloatController::.ctor()
+extern void MMFeedbackFloatController__ctor_m4CF2F4B4A991A8EBC97DD14DFCB77CF2C7B35233 (void);
+// 0x0000000F System.Single MoreMountains.Feedbacks.MMFeedbackPPMovingFilter::get_FeedbackDuration()
+extern void MMFeedbackPPMovingFilter_get_FeedbackDuration_m35D415D51BC0C094B8DD32405EB01A765ACD222A (void);
+// 0x00000010 System.Void MoreMountains.Feedbacks.MMFeedbackPPMovingFilter::CustomPlayFeedback(UnityEngine.Vector3,System.Single)
+extern void MMFeedbackPPMovingFilter_CustomPlayFeedback_m93B06162D7E7D4F566B1724A6556EF71AB1E7CDD (void);
+// 0x00000011 System.Void MoreMountains.Feedbacks.MMFeedbackPPMovingFilter::.ctor()
+extern void MMFeedbackPPMovingFilter__ctor_m32B57C7B09A61046ABA1A952976DE7667C6524C3 (void);
+// 0x00000012 System.Single MoreMountains.Feedbacks.MMFeedbackShaderController::get_FeedbackDuration()
+extern void MMFeedbackShaderController_get_FeedbackDuration_mC1E9527A38C9797AFD7774638CB3E46D7ABA630F (void);
+// 0x00000013 System.Void MoreMountains.Feedbacks.MMFeedbackShaderController::CustomInitialization(UnityEngine.GameObject)
+extern void MMFeedbackShaderController_CustomInitialization_m22B692A42A5EBF23527FB68884E7C99D321A5B8D (void);
+// 0x00000014 System.Void MoreMountains.Feedbacks.MMFeedbackShaderController::CustomPlayFeedback(UnityEngine.Vector3,System.Single)
+extern void MMFeedbackShaderController_CustomPlayFeedback_m62314A65070BC1FB8C654393A162E8D8014600A9 (void);
+// 0x00000015 System.Void MoreMountains.Feedbacks.MMFeedbackShaderController::CustomReset()
+extern void MMFeedbackShaderController_CustomReset_m030B82CFDCBB598D54994BE36BA95060613776E4 (void);
+// 0x00000016 System.Void MoreMountains.Feedbacks.MMFeedbackShaderController::.ctor()
+extern void MMFeedbackShaderController__ctor_m999EDC6AC071CC8E9F190B9F231E74C0F42A3407 (void);
+// 0x00000017 System.Void MoreMountains.Feedbacks.MMFeedbackBaseTarget::.ctor()
+extern void MMFeedbackBaseTarget__ctor_m7B4DE9ABDDAF280CFE8BA8C0AB5F1A350922385F (void);
+// 0x00000018 System.Single MoreMountains.Feedbacks.MMFeedbackBase::get_FeedbackDuration()
+extern void MMFeedbackBase_get_FeedbackDuration_m7226F3E3E991BC2FAC4CF8042EA608F7AF0E212D (void);
+// 0x00000019 System.Void MoreMountains.Feedbacks.MMFeedbackBase::CustomInitialization(UnityEngine.GameObject)
+extern void MMFeedbackBase_CustomInitialization_m4E65CFF5364E0572DE691AA4D11E9FC38452EDCE (void);
+// 0x0000001A System.Void MoreMountains.Feedbacks.MMFeedbackBase::PrepareTargets()
+extern void MMFeedbackBase_PrepareTargets_m23E539CA90F3AB94F293CA41DA6882CBAEF4F8C4 (void);
+// 0x0000001B System.Void MoreMountains.Feedbacks.MMFeedbackBase::OnValidate()
+extern void MMFeedbackBase_OnValidate_m3558F1D546CA4373AD8295A486B634FA5A6CD7C4 (void);
+// 0x0000001C System.Void MoreMountains.Feedbacks.MMFeedbackBase::FillTargets()
+// 0x0000001D System.Void MoreMountains.Feedbacks.MMFeedbackBase::InitializeTargets()
+extern void MMFeedbackBase_InitializeTargets_m0E0AB5BFF0199C08B410C26204EB8901249B3D7F (void);
+// 0x0000001E System.Void MoreMountains.Feedbacks.MMFeedbackBase::CustomPlayFeedback(UnityEngine.Vector3,System.Single)
+extern void MMFeedbackBase_CustomPlayFeedback_m8B9ECBB9EE00DC9F5604FCAA5A080E7C0DFCE397 (void);
+// 0x0000001F System.Void MoreMountains.Feedbacks.MMFeedbackBase::Instant()
+extern void MMFeedbackBase_Instant_mE00A7A19973B11A498D1577F28F2DC2D5CB38258 (void);
+// 0x00000020 System.Collections.IEnumerator MoreMountains.Feedbacks.MMFeedbackBase::UpdateValueSequence()
+extern void MMFeedbackBase_UpdateValueSequence_mDE2465CDA6439533957F33CA3EEED38C405DB84A (void);
+// 0x00000021 System.Void MoreMountains.Feedbacks.MMFeedbackBase::SetValues(System.Single)
+extern void MMFeedbackBase_SetValues_m1648ACA5530AF2C6F2E2F11677905CAF2B91D3F2 (void);
+// 0x00000022 System.Void MoreMountains.Feedbacks.MMFeedbackBase::CustomStopFeedback(UnityEngine.Vector3,System.Single)
+extern void MMFeedbackBase_CustomStopFeedback_mF56A30817AEF0E0807D5857AC3481D826F9B339D (void);
+// 0x00000023 System.Void MoreMountains.Feedbacks.MMFeedbackBase::Turn(System.Boolean)
+extern void MMFeedbackBase_Turn_mFB3079B3526CF6838170DB343FEAECC82E88E1F2 (void);
+// 0x00000024 System.Void MoreMountains.Feedbacks.MMFeedbackBase::.ctor()
+extern void MMFeedbackBase__ctor_m31B6978A35D0976CD6070522579E650B60ADA853 (void);
+// 0x00000025 System.Void MoreMountains.Feedbacks.MMFeedbackBase/<UpdateValueSequence>d__15::.ctor(System.Int32)
+extern void U3CUpdateValueSequenceU3Ed__15__ctor_m8B541DD5F70ACA6E73900017AA286F29ABAF97F0 (void);
+// 0x00000026 System.Void MoreMountains.Feedbacks.MMFeedbackBase/<UpdateValueSequence>d__15::System.IDisposable.Dispose()
+extern void U3CUpdateValueSequenceU3Ed__15_System_IDisposable_Dispose_mD60060A90922D1CAF1D549160981739B1728D558 (void);
+// 0x00000027 System.Boolean MoreMountains.Feedbacks.MMFeedbackBase/<UpdateValueSequence>d__15::MoveNext()
+extern void U3CUpdateValueSequenceU3Ed__15_MoveNext_m33242258CB4844AC0370B093F312CF6D7152A67A (void);
+// 0x00000028 System.Object MoreMountains.Feedbacks.MMFeedbackBase/<UpdateValueSequence>d__15::System.Collections.Generic.IEnumerator<System.Object>.get_Current()
+extern void U3CUpdateValueSequenceU3Ed__15_System_Collections_Generic_IEnumeratorU3CSystem_ObjectU3E_get_Current_m3C9452667FE8D3CE197565C49111194CD4C622D7 (void);
+// 0x00000029 System.Void MoreMountains.Feedbacks.MMFeedbackBase/<UpdateValueSequence>d__15::System.Collections.IEnumerator.Reset()
+extern void U3CUpdateValueSequenceU3Ed__15_System_Collections_IEnumerator_Reset_mFA6655AE66641FA2055C274ACA46153D0312E164 (void);
+// 0x0000002A System.Object MoreMountains.Feedbacks.MMFeedbackBase/<UpdateValueSequence>d__15::System.Collections.IEnumerator.get_Current()
+extern void U3CUpdateValueSequenceU3Ed__15_System_Collections_IEnumerator_get_Current_m1D39873860528D236F6FBEAF1B650AE9EC6CEA09 (void);
+// 0x0000002B System.Single MoreMountains.Feedbacks.MMFeedbackBroadcast::get_ThisLevel()
+extern void MMFeedbackBroadcast_get_ThisLevel_m6E28F965581EF87BFE7409B004E49A5744E822B6 (void);
+// 0x0000002C System.Void MoreMountains.Feedbacks.MMFeedbackBroadcast::set_ThisLevel(System.Single)
+extern void MMFeedbackBroadcast_set_ThisLevel_mBE956E0A00107FF7B8BDBB73009D39BA7A62C758 (void);
+// 0x0000002D System.Void MoreMountains.Feedbacks.MMFeedbackBroadcast::FillTargets()
+extern void MMFeedbackBroadcast_FillTargets_m6DBFA4907FAC79EFA7DC59D43B0819AD01312AEF (void);
+// 0x0000002E System.Void MoreMountains.Feedbacks.MMFeedbackBroadcast::Update()
+extern void MMFeedbackBroadcast_Update_mFE0E7299F04E05A8DB5956C3711CD4F912F9F1BE (void);
+// 0x0000002F System.Void MoreMountains.Feedbacks.MMFeedbackBroadcast::ProcessBroadcast()
+extern void MMFeedbackBroadcast_ProcessBroadcast_m378F1700D709E74483E00D7244CBA1526D0536C1 (void);
+// 0x00000030 System.Void MoreMountains.Feedbacks.MMFeedbackBroadcast::.ctor()
+extern void MMFeedbackBroadcast__ctor_m1BB48A287AA737B9675B24CEDEA90950C7EE1E41 (void);
+// 0x00000031 System.Void MoreMountains.Feedbacks.MMFeedbackCanvasGroup::FillTargets()
+extern void MMFeedbackCanvasGroup_FillTargets_m868E463356A56F91583665F0A90118667DEA4F53 (void);
+// 0x00000032 System.Void MoreMountains.Feedbacks.MMFeedbackCanvasGroup::.ctor()
+extern void MMFeedbackCanvasGroup__ctor_mF54F9425173DC1F4488FA4D2DB9782B5290090E8 (void);
+// 0x00000033 System.Single MoreMountains.Feedbacks.MMFeedbackProperty::get_FeedbackDuration()
+extern void MMFeedbackProperty_get_FeedbackDuration_m4D97ABE8E521DEBE22A569175E792830AEABDDAC (void);
+// 0x00000034 System.Void MoreMountains.Feedbacks.MMFeedbackProperty::CustomInitialization(UnityEngine.GameObject)
+extern void MMFeedbackProperty_CustomInitialization_m67A13987D2F6B385AE2DD60DEDAA7504BE66BF18 (void);
+// 0x00000035 System.Void MoreMountains.Feedbacks.MMFeedbackProperty::CustomPlayFeedback(UnityEngine.Vector3,System.Single)
+extern void MMFeedbackProperty_CustomPlayFeedback_m59E33B9C6C5449BDC567AFD0B599BC363B50BBA2 (void);
+// 0x00000036 System.Collections.IEnumerator MoreMountains.Feedbacks.MMFeedbackProperty::UpdateValueSequence()
+extern void MMFeedbackProperty_UpdateValueSequence_m3A164B1694522BF32E9756F9D89D72BA1E34B994 (void);
+// 0x00000037 System.Void MoreMountains.Feedbacks.MMFeedbackProperty::SetValues(System.Single)
+extern void MMFeedbackProperty_SetValues_m8E4B0D12BC0290F782DB5A64B39253772EC68A81 (void);
+// 0x00000038 System.Void MoreMountains.Feedbacks.MMFeedbackProperty::CustomStopFeedback(UnityEngine.Vector3,System.Single)
+extern void MMFeedbackProperty_CustomStopFeedback_m4DC869AA21DB6A803B3DD0EC28DD49205D0C7359 (void);
+// 0x00000039 System.Void MoreMountains.Feedbacks.MMFeedbackProperty::Turn(System.Boolean)
+extern void MMFeedbackProperty_Turn_m597BA2D47EC303B9052E77DD4A3B295F799D9950 (void);
+// 0x0000003A System.Void MoreMountains.Feedbacks.MMFeedbackProperty::.ctor()
+extern void MMFeedbackProperty__ctor_m5B3E5DBAEF9046D1FC4603B5E5CB57BE73241929 (void);
+// 0x0000003B System.Void MoreMountains.Feedbacks.MMFeedbackProperty/<UpdateValueSequence>d__15::.ctor(System.Int32)
+extern void U3CUpdateValueSequenceU3Ed__15__ctor_mFEAB9306590224E7B3C61ED4175E772D96211FE4 (void);
+// 0x0000003C System.Void MoreMountains.Feedbacks.MMFeedbackProperty/<UpdateValueSequence>d__15::System.IDisposable.Dispose()
+extern void U3CUpdateValueSequenceU3Ed__15_System_IDisposable_Dispose_mE3B942E0BA868D0B90276E16C37ADF7BE9E4CE6F (void);
+// 0x0000003D System.Boolean MoreMountains.Feedbacks.MMFeedbackProperty/<UpdateValueSequence>d__15::MoveNext()
+extern void U3CUpdateValueSequenceU3Ed__15_MoveNext_m5349AFFC8691961F53460677E9A0D41D589D02B0 (void);
+// 0x0000003E System.Object MoreMountains.Feedbacks.MMFeedbackProperty/<UpdateValueSequence>d__15::System.Collections.Generic.IEnumerator<System.Object>.get_Current()
+extern void U3CUpdateValueSequenceU3Ed__15_System_Collections_Generic_IEnumeratorU3CSystem_ObjectU3E_get_Current_mFF50F648497F401542D0E3C05B6F6F4B08B8543E (void);
+// 0x0000003F System.Void MoreMountains.Feedbacks.MMFeedbackProperty/<UpdateValueSequence>d__15::System.Collections.IEnumerator.Reset()
+extern void U3CUpdateValueSequenceU3Ed__15_System_Collections_IEnumerator_Reset_m253462D22EFFE78395A76FD2A946D3177615C88C (void);
+// 0x00000040 System.Object MoreMountains.Feedbacks.MMFeedbackProperty/<UpdateValueSequence>d__15::System.Collections.IEnumerator.get_Current()
+extern void U3CUpdateValueSequenceU3Ed__15_System_Collections_IEnumerator_get_Current_mE202A1ABD4FF5D8B682FE616E87DC44C5ACE36A9 (void);
+// 0x00000041 System.Single MoreMountains.Feedbacks.MMFeedbackRadioSignal::get_FeedbackDuration()
+extern void MMFeedbackRadioSignal_get_FeedbackDuration_m9A255F284F96F999BBA0BA451A5A53088656D547 (void);
+// 0x00000042 System.Void MoreMountains.Feedbacks.MMFeedbackRadioSignal::CustomPlayFeedback(UnityEngine.Vector3,System.Single)
+extern void MMFeedbackRadioSignal_CustomPlayFeedback_m8139B24FB2E69C3D2C072721943E50B952F525EE (void);
+// 0x00000043 System.Void MoreMountains.Feedbacks.MMFeedbackRadioSignal::.ctor()
+extern void MMFeedbackRadioSignal__ctor_m2FD015C8041B8097E890A68EE5A921017C4CA1BB (void);
+static Il2CppMethodPointer s_methodPointers[67] = 
+{
+	MMFeedbackBlink_CustomPlayFeedback_m2416EE9D350651A963D2242870F7737D4CFE8E57,
+	MMFeedbackBlink__ctor_m97C23A3ABA4217F0C8EFC6597D17BE5D55544B7C,
+	MMFeedbackDebugLog_get_FeedbackDuration_m9C688F957794AB1AEE2DF1485863505C459AA6AF,
+	MMFeedbackDebugLog_CustomPlayFeedback_m95931BC6E0072274592033F227C4EEB95AFF3793,
+	MMFeedbackDebugLog__ctor_mE7DA63F88FF2BA1255E129DAC8AD299EA0FD312A,
+	MMFeedbackFade_get_FeedbackDuration_m3F2B418A585D0B989195E666AE20EAD5767DB85C,
+	MMFeedbackFade_CustomPlayFeedback_m3C18EDF3AD8AD16F9C12822319C4A8F0B0846BE1,
+	MMFeedbackFade_GetPosition_m6BE8557E1890174BD1C7A07C78E773E608613F34,
+	MMFeedbackFade__ctor_m82BA585E469E3769D025900BC789487FAABD4DF9,
+	MMFeedbackFloatController_get_FeedbackDuration_mB2CB258F6F61AF5C1E347B62204AF2EFE8A47562,
+	MMFeedbackFloatController_CustomInitialization_m5A39E6C29EE4447ABD7659F74279FA0DBC6A689F,
+	MMFeedbackFloatController_CustomPlayFeedback_m55A556183E1F468E144AB0810A0AA7E06F20DF6B,
+	MMFeedbackFloatController_CustomReset_mD52B1C491AB37E61DEC555F873FA8947935F6A62,
+	MMFeedbackFloatController__ctor_m4CF2F4B4A991A8EBC97DD14DFCB77CF2C7B35233,
+	MMFeedbackPPMovingFilter_get_FeedbackDuration_m35D415D51BC0C094B8DD32405EB01A765ACD222A,
+	MMFeedbackPPMovingFilter_CustomPlayFeedback_m93B06162D7E7D4F566B1724A6556EF71AB1E7CDD,
+	MMFeedbackPPMovingFilter__ctor_m32B57C7B09A61046ABA1A952976DE7667C6524C3,
+	MMFeedbackShaderController_get_FeedbackDuration_mC1E9527A38C9797AFD7774638CB3E46D7ABA630F,
+	MMFeedbackShaderController_CustomInitialization_m22B692A42A5EBF23527FB68884E7C99D321A5B8D,
+	MMFeedbackShaderController_CustomPlayFeedback_m62314A65070BC1FB8C654393A162E8D8014600A9,
+	MMFeedbackShaderController_CustomReset_m030B82CFDCBB598D54994BE36BA95060613776E4,
+	MMFeedbackShaderController__ctor_m999EDC6AC071CC8E9F190B9F231E74C0F42A3407,
+	MMFeedbackBaseTarget__ctor_m7B4DE9ABDDAF280CFE8BA8C0AB5F1A350922385F,
+	MMFeedbackBase_get_FeedbackDuration_m7226F3E3E991BC2FAC4CF8042EA608F7AF0E212D,
+	MMFeedbackBase_CustomInitialization_m4E65CFF5364E0572DE691AA4D11E9FC38452EDCE,
+	MMFeedbackBase_PrepareTargets_m23E539CA90F3AB94F293CA41DA6882CBAEF4F8C4,
+	MMFeedbackBase_OnValidate_m3558F1D546CA4373AD8295A486B634FA5A6CD7C4,
+	NULL,
+	MMFeedbackBase_InitializeTargets_m0E0AB5BFF0199C08B410C26204EB8901249B3D7F,
+	MMFeedbackBase_CustomPlayFeedback_m8B9ECBB9EE00DC9F5604FCAA5A080E7C0DFCE397,
+	MMFeedbackBase_Instant_mE00A7A19973B11A498D1577F28F2DC2D5CB38258,
+	MMFeedbackBase_UpdateValueSequence_mDE2465CDA6439533957F33CA3EEED38C405DB84A,
+	MMFeedbackBase_SetValues_m1648ACA5530AF2C6F2E2F11677905CAF2B91D3F2,
+	MMFeedbackBase_CustomStopFeedback_mF56A30817AEF0E0807D5857AC3481D826F9B339D,
+	MMFeedbackBase_Turn_mFB3079B3526CF6838170DB343FEAECC82E88E1F2,
+	MMFeedbackBase__ctor_m31B6978A35D0976CD6070522579E650B60ADA853,
+	U3CUpdateValueSequenceU3Ed__15__ctor_m8B541DD5F70ACA6E73900017AA286F29ABAF97F0,
+	U3CUpdateValueSequenceU3Ed__15_System_IDisposable_Dispose_mD60060A90922D1CAF1D549160981739B1728D558,
+	U3CUpdateValueSequenceU3Ed__15_MoveNext_m33242258CB4844AC0370B093F312CF6D7152A67A,
+	U3CUpdateValueSequenceU3Ed__15_System_Collections_Generic_IEnumeratorU3CSystem_ObjectU3E_get_Current_m3C9452667FE8D3CE197565C49111194CD4C622D7,
+	U3CUpdateValueSequenceU3Ed__15_System_Collections_IEnumerator_Reset_mFA6655AE66641FA2055C274ACA46153D0312E164,
+	U3CUpdateValueSequenceU3Ed__15_System_Collections_IEnumerator_get_Current_m1D39873860528D236F6FBEAF1B650AE9EC6CEA09,
+	MMFeedbackBroadcast_get_ThisLevel_m6E28F965581EF87BFE7409B004E49A5744E822B6,
+	MMFeedbackBroadcast_set_ThisLevel_mBE956E0A00107FF7B8BDBB73009D39BA7A62C758,
+	MMFeedbackBroadcast_FillTargets_m6DBFA4907FAC79EFA7DC59D43B0819AD01312AEF,
+	MMFeedbackBroadcast_Update_mFE0E7299F04E05A8DB5956C3711CD4F912F9F1BE,
+	MMFeedbackBroadcast_ProcessBroadcast_m378F1700D709E74483E00D7244CBA1526D0536C1,
+	MMFeedbackBroadcast__ctor_m1BB48A287AA737B9675B24CEDEA90950C7EE1E41,
+	MMFeedbackCanvasGroup_FillTargets_m868E463356A56F91583665F0A90118667DEA4F53,
+	MMFeedbackCanvasGroup__ctor_mF54F9425173DC1F4488FA4D2DB9782B5290090E8,
+	MMFeedbackProperty_get_FeedbackDuration_m4D97ABE8E521DEBE22A569175E792830AEABDDAC,
+	MMFeedbackProperty_CustomInitialization_m67A13987D2F6B385AE2DD60DEDAA7504BE66BF18,
+	MMFeedbackProperty_CustomPlayFeedback_m59E33B9C6C5449BDC567AFD0B599BC363B50BBA2,
+	MMFeedbackProperty_UpdateValueSequence_m3A164B1694522BF32E9756F9D89D72BA1E34B994,
+	MMFeedbackProperty_SetValues_m8E4B0D12BC0290F782DB5A64B39253772EC68A81,
+	MMFeedbackProperty_CustomStopFeedback_m4DC869AA21DB6A803B3DD0EC28DD49205D0C7359,
+	MMFeedbackProperty_Turn_m597BA2D47EC303B9052E77DD4A3B295F799D9950,
+	MMFeedbackProperty__ctor_m5B3E5DBAEF9046D1FC4603B5E5CB57BE73241929,
+	U3CUpdateValueSequenceU3Ed__15__ctor_mFEAB9306590224E7B3C61ED4175E772D96211FE4,
+	U3CUpdateValueSequenceU3Ed__15_System_IDisposable_Dispose_mE3B942E0BA868D0B90276E16C37ADF7BE9E4CE6F,
+	U3CUpdateValueSequenceU3Ed__15_MoveNext_m5349AFFC8691961F53460677E9A0D41D589D02B0,
+	U3CUpdateValueSequenceU3Ed__15_System_Collections_Generic_IEnumeratorU3CSystem_ObjectU3E_get_Current_mFF50F648497F401542D0E3C05B6F6F4B08B8543E,
+	U3CUpdateValueSequenceU3Ed__15_System_Collections_IEnumerator_Reset_m253462D22EFFE78395A76FD2A946D3177615C88C,
+	U3CUpdateValueSequenceU3Ed__15_System_Collections_IEnumerator_get_Current_mE202A1ABD4FF5D8B682FE616E87DC44C5ACE36A9,
+	MMFeedbackRadioSignal_get_FeedbackDuration_m9A255F284F96F999BBA0BA451A5A53088656D547,
+	MMFeedbackRadioSignal_CustomPlayFeedback_m8139B24FB2E69C3D2C072721943E50B952F525EE,
+	MMFeedbackRadioSignal__ctor_m2FD015C8041B8097E890A68EE5A921017C4CA1BB,
+};
+static const int32_t s_InvokerIndices[67] = 
+{
+	2982,
+	6214,
+	6142,
+	2982,
+	6214,
+	6142,
+	2982,
+	4684,
+	6214,
+	6142,
+	5009,
+	2982,
+	6214,
+	6214,
+	6142,
+	2982,
+	6214,
+	6142,
+	5009,
+	2982,
+	6214,
+	6214,
+	6214,
+	6142,
+	5009,
+	6214,
+	6214,
+	0,
+	6214,
+	2982,
+	6214,
+	6088,
+	5061,
+	2982,
+	4910,
+	6214,
+	4975,
+	6214,
+	5999,
+	6088,
+	6214,
+	6088,
+	6142,
+	5061,
+	6214,
+	6214,
+	6214,
+	6214,
+	6214,
+	6214,
+	6142,
+	5009,
+	2982,
+	6088,
+	5061,
+	2982,
+	4910,
+	6214,
+	4975,
+	6214,
+	5999,
+	6088,
+	6214,
+	6088,
+	6142,
+	2982,
+	6214,
+};
+IL2CPP_EXTERN_C const Il2CppCodeGenModule g_MoreMountains_Feedbacks_MMTools_CodeGenModule;
+const Il2CppCodeGenModule g_MoreMountains_Feedbacks_MMTools_CodeGenModule = 
+{
+	"MoreMountains.Feedbacks.MMTools.dll",
+	67,
+	s_methodPointers,
+	0,
+	NULL,
+	s_InvokerIndices,
+	0,
+	NULL,
+	0,
+	NULL,
+	0,
+	NULL,
+	NULL,
+	NULL, // module initializer,
+	NULL,
+	NULL,
+	NULL,
+};
