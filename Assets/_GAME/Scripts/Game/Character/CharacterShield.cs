@@ -46,6 +46,7 @@ public class CharacterShield : StateCharacter
     #endregion
 
 
+
     public override void StartState()
     {
         base.StartState();

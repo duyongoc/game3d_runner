@@ -4,14 +4,15 @@ using UnityEngine;
 
 public class TriggerItem : MonoBehaviour
 {
-    
+
     [Header("Item Fire")]
+    public int count = 5;
     public GameObject fireOfItem;
     public GameObject itemFireEffect;
-    public int count = 5;
 
+    // [private]
+    private Vector3[] vector = { new Vector3(0.1f, 1f, 0f), };
 
-    Vector3[] vector = { new Vector3(0.1f, 1f, 0f), };
 
 
     private IEnumerator TriggerItemFire()

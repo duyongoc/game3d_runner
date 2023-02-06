@@ -40,15 +40,14 @@ public class SceneTutorial : StateScene
         textScore.SetActive(true);
         // sliderProcess.SetActive(true);
     }
+    
 
-    #region Events of button
     public void OnPressButtonOK()
     {
         // mainCharacter.Reset();
         // Owner.ChangeState(Owner.m_sceneInGame);
         buttonOK.SetActive(false);
     }
-    #endregion
 
 
     private void SetUpTouchLeftFirst()

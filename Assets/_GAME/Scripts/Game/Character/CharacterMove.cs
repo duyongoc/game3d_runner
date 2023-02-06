@@ -27,6 +27,7 @@ public class CharacterMove : StateCharacter
     private float timeParticleRemain = 0f;
 
 
+
     #region UNITY
     private void Start()
     {

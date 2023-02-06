@@ -5,7 +5,6 @@ using UnityEngine;
 public class CharacterHealth : MonoBehaviour, IDamage
 {
 
-
     // [private] 
     private MainCharacter character;
 

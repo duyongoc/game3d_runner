@@ -5,13 +5,13 @@ using UnityEngine;
 public class StateScene : MonoBehaviour
 {
 
-    //Method called to prepare state
+    // method called to prepare state
     public virtual void StartState() { }
 
-    //Method called to update state on every frame
+    // method called to update state on every frame
     public virtual void UpdateState() { }
 
-    //Method called to destroy state
+    // method called to destroy state
     public virtual void EndState() { }
 
 }

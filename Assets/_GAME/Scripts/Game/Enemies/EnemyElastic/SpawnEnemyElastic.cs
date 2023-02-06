@@ -70,6 +70,7 @@ public class SpawnEnemyElastic : SpawnEnemy, ISpawnObject
     #endregion
 
 
+
     private void StateSpawn()
     {
         timerProcessSpawn += Time.deltaTime;

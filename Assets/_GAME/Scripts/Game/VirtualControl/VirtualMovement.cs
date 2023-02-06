@@ -7,24 +7,21 @@ using UnityEngine.UI;
 public class VirtualMovement : MonoBehaviour, IDragHandler, IPointerUpHandler, IPointerDownHandler
 {
 
-    //
-    //= inspector
+    [Header("[Setting]")]
     [SerializeField] private Transform touchZone;
     [SerializeField] private Image jsTarget;
 
 
-    //
-    //= private
+    // [private]
     private Image jsContainer;
     private Vector3 direction;
     private bool isTouch = false;
     private bool firstTouch = true;
 
 
-    #region PROPERTIES
+    // [properties]
     public bool IsTouch { get => isTouch; set => isTouch = value; }
     public Vector3 GetDirection { get => direction; set => direction = value; }
-    #endregion
 
 
     #region UNITY
@@ -39,13 +36,11 @@ public class VirtualMovement : MonoBehaviour, IDragHandler, IPointerUpHandler, I
     // }
     #endregion
 
+
     public void OnDrag(PointerEventData ped)
     {
         Vector2 position = Vector2.zero;
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(jsContainer.rectTransform,
-                                                                ped.position,
-                                                                ped.pressEventCamera,
-                                                                out position);
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(jsContainer.rectTransform, ped.position, ped.pressEventCamera, out position);
 
         position.x = (position.x / jsContainer.rectTransform.sizeDelta.x);
         position.y = (position.y / jsContainer.rectTransform.sizeDelta.y);
@@ -56,8 +51,8 @@ public class VirtualMovement : MonoBehaviour, IDragHandler, IPointerUpHandler, I
         jsTarget.rectTransform.anchoredPosition = new Vector3(
             direction.x * (jsContainer.rectTransform.sizeDelta.x / 3),
             direction.y * (jsContainer.rectTransform.sizeDelta.y) / 3);
-
     }
+
 
     public void OnPointerDown(PointerEventData ped)
     {
@@ -70,6 +65,7 @@ public class VirtualMovement : MonoBehaviour, IDragHandler, IPointerUpHandler, I
 
     }
 
+
     public void OnPointerUp(PointerEventData ped)
     {
         isTouch = false;
@@ -78,6 +74,7 @@ public class VirtualMovement : MonoBehaviour, IDragHandler, IPointerUpHandler, I
         touchZone.localPosition = Vector2.zero;
         jsTarget.rectTransform.anchoredPosition = Vector3.zero;
     }
+
 
     public void Reset()
     {
@@ -88,13 +85,16 @@ public class VirtualMovement : MonoBehaviour, IDragHandler, IPointerUpHandler, I
         jsTarget.rectTransform.anchoredPosition = Vector3.zero;
     }
 
+
     private void CacheDefine()
     {
         direction = Vector3.zero;
     }
 
+
     private void CacheComponent()
     {
         jsContainer = touchZone.GetComponent<Image>();
     }
+
 }

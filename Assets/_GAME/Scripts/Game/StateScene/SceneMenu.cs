@@ -10,8 +10,8 @@ public class SceneMenu : StateScene
     [Header("[UI]")]
     [SerializeField] private UIButton btPlay;
     [SerializeField] private UIButton btnQuit;
-    
-        
+
+
     #region UNTIY
     private void Start()
     {
@@ -29,6 +29,7 @@ public class SceneMenu : StateScene
     public void OnClickButtonPlay()
     {
     }
+
 
     public void OnClickButtonExit()
     {

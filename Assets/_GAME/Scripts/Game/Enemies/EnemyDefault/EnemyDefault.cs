@@ -66,6 +66,7 @@ public class EnemyDefault : Enemy, IDamage
     #endregion
 
 
+
     private void Init()
     {
         EnemyAppear();
@@ -93,6 +94,7 @@ public class EnemyDefault : Enemy, IDamage
         transform.position = Vector3.MoveTowards(transform.position, target.position, Time.deltaTime * moveSpeed);
     }
 
+
     private void EnenmyStun()
     {
         transform.position = Vector3.MoveTowards(transform.position, target.position, Time.deltaTime * moveSpeed);
@@ -109,6 +111,7 @@ public class EnemyDefault : Enemy, IDamage
         currentState = newState;
     }
 
+
     private void SetAnimationState(string newState)
     {
         if (currentAnimator == newState || mAnimator == null)
@@ -117,6 +120,7 @@ public class EnemyDefault : Enemy, IDamage
         mAnimator?.Play(newState);
         currentAnimator = newState;
     }
+
 
     private void GetWarningFromEnemy()
     {
@@ -127,10 +131,12 @@ public class EnemyDefault : Enemy, IDamage
         }
     }
 
+
     private void OnEventPlayerDead()
     {
         SetAnimationState(ENEMY_DANCE);
     }
+
 
     public void EffectFromTheHole(Transform newTarget)
     {
@@ -139,17 +145,19 @@ public class EnemyDefault : Enemy, IDamage
     }
 
 
-    IEnumerator FinishWarningEnemyDefault()
+    private IEnumerator FinishWarningEnemyDefault()
     {
         yield return new WaitForSeconds(2f);
         warningIcon.SetActive(false);
         isWarning = false;
     }
 
+
     public void TakeDamage(float damage)
     {
         SelfDestroy();
     }
+
 
     public void SelfDestroy()
     {

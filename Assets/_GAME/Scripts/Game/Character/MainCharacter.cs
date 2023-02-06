@@ -13,7 +13,7 @@ public class MainCharacter : Singleton<MainCharacter>
     [Header("[CONFIG]")]
     public CharacterConfigSO CONFIG_CHARACTER;
 
-    [Header("[Character's param]")]
+    [Header("[Setting]")]
     [SerializeField] private VirtualMovement virtualMovement;
     [SerializeField] private GameObject characterModel;
     [SerializeField] private GameObject shieldEffect;

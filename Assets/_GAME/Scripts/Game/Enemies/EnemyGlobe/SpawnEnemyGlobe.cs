@@ -76,10 +76,8 @@ public class SpawnEnemyGlobe : MonoBehaviour
             {
                 case SpawnState.Warning:
                     SpawnEnemyWarning(); break;
-
                 case SpawnState.Spawn:
                     SpawnEnemy(); break;
-
                 case SpawnState.None:
                     break;
             }
@@ -143,7 +141,7 @@ public class SpawnEnemyGlobe : MonoBehaviour
         Vector3 vec = new Vector3(hit.position.x, 0, hit.position.z);
         return vec;
     }
-    
+
 
     public void Reset()
     {

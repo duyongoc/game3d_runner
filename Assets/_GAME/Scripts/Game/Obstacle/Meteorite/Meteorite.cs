@@ -5,6 +5,7 @@ using UnityEngine;
 public class Meteorite : MonoBehaviour
 {
 
+    [Header("[Setting]")]
     public GameObject shape;
     public GameObject effect;
     public ParticleSystem particle;
@@ -19,15 +20,15 @@ public class Meteorite : MonoBehaviour
 
     private void Update()
     {
-        if(shape)
+        if (shape)
             shape.transform.Translate(Vector3.down * speed * Time.deltaTime);
 
-        if(shape && shape.transform.position.y <= 0)
+        if (shape && shape.transform.position.y <= 0)
         {
             particle.gameObject.SetActive(true);
             Camera.main.GetComponent<CameraFollow>().MakeCameraShake(1, 0.2f);
 
-            if(!particle.isPlaying)
+            if (!particle.isPlaying)
                 particle.Play();
 
             Destroy(shape);
