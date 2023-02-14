@@ -24,6 +24,7 @@ public class Flycam : MonoBehaviour
 
 
 
+    #region UNITY
     private void Start()
     {
         mainCharacter = MainCharacter.Instance.GetComponent<MainCharacter>();
@@ -39,9 +40,7 @@ public class Flycam : MonoBehaviour
                 case ObjectState.Moving:
                     // if(mainCharacter.CurrentState == mainCharacter.m_ballPower
                     //     && !mainCharacter.isFirstTriggerPower)
-                    // {
                     //     return;
-                    // }
                     FlycamMoving();
                     break;
 
@@ -51,6 +50,8 @@ public class Flycam : MonoBehaviour
             }
         }
     }
+    #endregion
+    
 
 
     private void FlycamMoving()

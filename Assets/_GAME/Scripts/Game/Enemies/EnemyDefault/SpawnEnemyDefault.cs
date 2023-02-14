@@ -49,10 +49,8 @@ public class SpawnEnemyDefault : SpawnEnemy, ISpawnObject
             {
                 case SpawnState.Init:
                     InitSpawnWarningEnemy(); break;
-
                 case SpawnState.Spawn:
                     SpawnEnemy(); break;
-
                 case SpawnState.None:
                     break;
             }
@@ -61,7 +59,7 @@ public class SpawnEnemyDefault : SpawnEnemy, ISpawnObject
     #endregion
 
 
-    #region Function of State
+
     private void InitSpawnWarningEnemy()
     {
         if (!isWarning)
@@ -92,7 +90,6 @@ public class SpawnEnemyDefault : SpawnEnemy, ISpawnObject
             timerRemainSpawn = 0;
         }
     }
-    #endregion
 
 
     private void CreateEnemyWarning(bool warn, Vector3 vec)

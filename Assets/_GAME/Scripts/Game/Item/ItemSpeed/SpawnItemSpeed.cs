@@ -12,8 +12,9 @@ public class SpawnItemSpeed : Item
     
 
     // [private] 
-    private List<GameObject> listPowerCreated;
     private float timer = 0;
+    private List<GameObject> listPowerCreated;
+
 
 
     #region UNITY
@@ -48,6 +49,7 @@ public class SpawnItemSpeed : Item
         }
     }
     #endregion
+
 
 
     private bool iSValid()

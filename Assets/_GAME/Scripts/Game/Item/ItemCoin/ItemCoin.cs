@@ -19,7 +19,6 @@ public class ItemCoin : MonoBehaviour
                 prefabsTextCoin.SpawnToGarbage(transform.position, Quaternion.identity);
                 Destroy(this.gameObject);
                 break;
-
         }
     }
 

@@ -22,6 +22,7 @@ public class CrazyPlace : MonoBehaviour
     private Collider m_collider;
 
 
+
     #region UNITY
     private void Start()
     {

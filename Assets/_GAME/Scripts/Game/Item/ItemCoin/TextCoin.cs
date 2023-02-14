@@ -16,15 +16,18 @@ public class TextCoin : MonoBehaviour
     public int timeDestroy;
 
 
+
+    #region UNITY
     private void Start()
     {
         textCoin.text = "+" + numCoin.ToString();
         Destroy(this.gameObject, timeDestroy);
-    }   
-
+    }
 
     private void Update()
     {
         transform.Translate(Vector2.up * moveSpeed * Time.deltaTime);
     }
+    #endregion
+
 }

@@ -37,6 +37,7 @@ public class VirtualMovement : MonoBehaviour, IDragHandler, IPointerUpHandler, I
     #endregion
 
 
+
     public void OnDrag(PointerEventData ped)
     {
         Vector2 position = Vector2.zero;

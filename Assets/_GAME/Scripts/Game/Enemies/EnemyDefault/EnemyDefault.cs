@@ -54,10 +54,8 @@ public class EnemyDefault : Enemy, IDamage
         {
             case EnemyState.Moving:
                 EnemyMoving(); break;
-
             case EnemyState.Stun:
                 EnenmyStun(); break;
-
             case EnemyState.Scream:
             case EnemyState.None:
                 break;

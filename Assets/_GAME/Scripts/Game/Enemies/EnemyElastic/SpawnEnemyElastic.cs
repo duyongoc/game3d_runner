@@ -60,9 +60,7 @@ public class SpawnEnemyElastic : SpawnEnemy, ISpawnObject
         {
             switch (currentState)
             {
-                case SpawnState.Spawn:
-                    StateSpawn(); break;
-
+                case SpawnState.Spawn: StateSpawn(); break;
                 case SpawnState.None: break;
             }
         }

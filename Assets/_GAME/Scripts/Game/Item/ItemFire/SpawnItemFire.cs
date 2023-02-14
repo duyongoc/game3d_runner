@@ -7,7 +7,7 @@ public class SpawnItemFire : MonoBehaviour
 
 
     [Header("Spawn the power ")]
-    [SerializeField]private GameObject prefabIcon = default;
+    [SerializeField] private GameObject prefabIcon = default;
 
     [Header("Num of power will be create")]
     public int numberPower = 20;
@@ -20,9 +20,15 @@ public class SpawnItemFire : MonoBehaviour
     private bool isCreated = false;
 
 
+
+    #region UNITY
+    // private void Start()
+    // {
+    // }
+
     private void Update()
     {
-        if(!isCreated)
+        if (!isCreated)
         {
             // if(SceneMgr.GetInstance().IsGameRunning)
             {
@@ -30,26 +36,28 @@ public class SpawnItemFire : MonoBehaviour
                 isCreated = true;
             }
         }
-        
+
         // create power per timeSpawn second
         // if(SceneMgr.GetInstance().IsGameRunning && iSValid())     
         {
             timer += Time.deltaTime;
-            if(timer > timeSpawn)
+            if (timer > timeSpawn)
             {
                 float posX = Random.Range(-40f, 40f);
-                float posZ = Random.Range( -30f, 50f);
+                float posZ = Random.Range(-30f, 50f);
                 GameObject obj = Instantiate(prefabIcon, new Vector3(posX, 0f, posZ), Quaternion.identity);
                 thePowerWasCreated.Add(obj);
                 timer = 0;
             }
         }
     }
+    #endregion
+
 
 
     private bool iSValid()
     {
-        if(thePowerWasCreated.Count < 3)
+        if (thePowerWasCreated.Count < 3)
             return true;
 
         return false;
@@ -58,10 +66,10 @@ public class SpawnItemFire : MonoBehaviour
 
     private void SpawnPowerWhenGameStart()
     {
-        for(int i = 0 ; i < numberPower; i++ )
+        for (int i = 0; i < numberPower; i++)
         {
             float posX = Random.Range(-40f, 40f);
-            float posZ = Random.Range( -30f, 50f);
+            float posZ = Random.Range(-30f, 50f);
             GameObject obj = Instantiate(prefabIcon, new Vector3(posX, 0f, posZ), Quaternion.identity);
             thePowerWasCreated.Add(obj);
         }
@@ -70,7 +78,7 @@ public class SpawnItemFire : MonoBehaviour
 
     public void Reset()
     {
-        foreach(GameObject obj in thePowerWasCreated)
+        foreach (GameObject obj in thePowerWasCreated)
         {
             Destroy(obj);
         }

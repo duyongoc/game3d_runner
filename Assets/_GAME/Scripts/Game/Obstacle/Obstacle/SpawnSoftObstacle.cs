@@ -11,19 +11,31 @@ public class SpawnSoftObstacle : MonoBehaviour
 
 
 
+    #region UNITY
     private void Start()
     {
         listObstacle = this.GetComponentsInChildren<SoftObstacle>();
-        foreach(SoftObstacle ob in listObstacle)
+        foreach (SoftObstacle ob in listObstacle)
         {
             ob.gameObject.SetActive(false);
         }
     }
-    
+
+    private void Update()
+    {
+        if (isStart)
+        {
+            OnSetup();
+            isStart = false;
+        }
+    }
+    #endregion
+
+
 
     private void OnSetup()
     {
-        foreach(SoftObstacle ob in listObstacle)
+        foreach (SoftObstacle ob in listObstacle)
         {
             // just not appy for sorf obstacle
             // float randX = Random.Range(-5f, 5f);
@@ -34,23 +46,13 @@ public class SpawnSoftObstacle : MonoBehaviour
             //     0f, 
             //     ob.gameObject.transform.position.z + randZ);
 
-            if(!ob.gameObject.activeSelf)
+            if (!ob.gameObject.activeSelf)
             {
                 ob.gameObject.SetActive(true);
             }
         }
     }
 
-
-    private void Update()
-    {
-        if(isStart)
-        {
-            OnSetup();
-            isStart = false;
-        }
-    }
-    
 
     public void Reset()
     {

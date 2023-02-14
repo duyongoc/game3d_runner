@@ -66,6 +66,7 @@ public class TheHole : MonoBehaviour
     #endregion
 
 
+
     public void OnSetWarning(bool warning)
     {
         isWarning = warning;

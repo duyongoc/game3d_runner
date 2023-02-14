@@ -32,7 +32,6 @@ public class CharacterTutorial : StateCharacter
     #endregion
 
 
-    #region STATE
     public override void StartState()
     {
         base.StartState();
@@ -86,7 +85,6 @@ public class CharacterTutorial : StateCharacter
                         if (timerProcess > timer)
                         {
                             character.GetAnimator.SetBool("Moving", false);
-
                             touchScene = Touch.None;
                             timerProcess = 0;
                         }
@@ -97,7 +95,6 @@ public class CharacterTutorial : StateCharacter
                 break;
         }
     }
-    #endregion
 
 
 

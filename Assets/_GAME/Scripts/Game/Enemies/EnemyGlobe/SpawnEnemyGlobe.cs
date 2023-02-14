@@ -51,6 +51,7 @@ public class SpawnEnemyGlobe : MonoBehaviour
     }
 
 
+    #region UNITY
     private void Start()
     {
         LoadData();
@@ -83,6 +84,7 @@ public class SpawnEnemyGlobe : MonoBehaviour
             }
         }
     }
+    #endregion
 
 
     private void SpawnEnemyWarning()
@@ -147,8 +149,7 @@ public class SpawnEnemyGlobe : MonoBehaviour
     {
         foreach (GameObject obj in enemyWasCreated)
         {
-            if (obj != null)
-                Destroy(obj);
+            if (obj != null) Destroy(obj);
         }
 
         timerProcessSpawn = 0;

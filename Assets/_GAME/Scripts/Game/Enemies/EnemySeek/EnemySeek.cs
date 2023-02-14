@@ -46,6 +46,7 @@ public class EnemySeek : Enemy, IDamage
     private float processTurning = 0f;
 
 
+
     #region UNITY
     private void Start()
     {
@@ -74,6 +75,7 @@ public class EnemySeek : Enemy, IDamage
         }
     }
     #endregion
+
 
 
     private void Init()

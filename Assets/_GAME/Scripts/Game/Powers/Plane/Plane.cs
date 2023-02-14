@@ -35,10 +35,9 @@ public class Plane : MonoBehaviour
     private Entity entity;
 
 
-    #region FIELDS
+    // [properties]
     public Entity GetCurrentEnemy { get => currentEnemy; }
     public Entity GetEntity { get => entity; }
-    #endregion
 
 
 

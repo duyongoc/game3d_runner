@@ -71,7 +71,6 @@ public class SpawnTornado : Obstacle
 
 
 
-    #region Function of state
     private void SpawnEnemyInit()
     {
         currentState = SpawnState.Spawn;
@@ -88,7 +87,6 @@ public class SpawnTornado : Obstacle
             timerProcessSpawn = 0;
         }
     }
-    #endregion
 
 
     public void FinishWarningAlert()

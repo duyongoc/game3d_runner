@@ -29,6 +29,7 @@ public class StaticObstacle : MonoBehaviour
     #endregion
 
 
+
     public void DissolveObstacle()
     {
         Instantiate(particle, this.transform.position, Quaternion.Euler(-90f, 0f, 0f));

@@ -9,6 +9,7 @@ public class SpawnObstacleMgr : MonoBehaviour
     [SerializeField] private Obstacle[] spawnObject;
 
 
+
     #region UNITY
     private void Start()
     {
@@ -19,6 +20,7 @@ public class SpawnObstacleMgr : MonoBehaviour
     // {
     // }
     #endregion
+
 
 
     public void Reset()

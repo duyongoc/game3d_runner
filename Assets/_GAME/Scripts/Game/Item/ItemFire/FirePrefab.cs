@@ -15,6 +15,7 @@ public class FirePrefab : MonoBehaviour
     private Rigidbody body;
 
 
+    #region UNITY
     private void Start()
     {
         body = this.gameObject.GetComponent<Rigidbody>();
@@ -24,6 +25,12 @@ public class FirePrefab : MonoBehaviour
         float rotZ = Random.Range(0, 360);
         transform.localRotation = Quaternion.Euler(rotX, transform.rotation.y, rotZ);
     }
+
+    // private void Update()
+    // {
+    // }
+    #endregion
+
 
 
     private void OnTriggerEnter(Collider other)

@@ -29,17 +29,10 @@ public class PlanePower : MonoBehaviour
     {
         switch (currentState)
         {
-            case EBoost.Start:
-                StartBoost(); break;
-
-            case EBoost.Process:
-                ProcessBoost(); break;
-
-            case EBoost.End:
-                EndBoost(); break;
-
-            case EBoost.None:
-                NoneBoost(); break;
+            case EBoost.Start: StartBoost(); break;
+            case EBoost.Process: ProcessBoost(); break;
+            case EBoost.End: EndBoost(); break;
+            case EBoost.None: NoneBoost(); break;
         }
     }
     #endregion

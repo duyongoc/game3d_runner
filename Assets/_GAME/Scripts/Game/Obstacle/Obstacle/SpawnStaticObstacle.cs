@@ -10,6 +10,7 @@ public class SpawnStaticObstacle : MonoBehaviour
     public bool isStart = false;
 
 
+    #region UNITY
     private void Start()
     {
         listObstacle = this.GetComponentsInChildren<StaticObstacle>();
@@ -19,6 +20,17 @@ public class SpawnStaticObstacle : MonoBehaviour
             ob.gameObject.SetActive(false);
         }
     }
+
+    private void Update()
+    {
+        if (isStart)
+        {
+            OnSetup();
+            isStart = false;
+        }
+    }
+    #endregion
+
 
 
     private void OnSetup()
@@ -39,16 +51,6 @@ public class SpawnStaticObstacle : MonoBehaviour
         }
     }
 
-
-    private void Update()
-    {
-        if (isStart)
-        {
-            OnSetup();
-            isStart = false;
-        }
-    }
-    
 
     public void Reset()
     {
